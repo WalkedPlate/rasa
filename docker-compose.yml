@@ -19,8 +19,7 @@ services:
       - rasa-actions
     networks:
       - rasa-network
-    command: |
-      bash -c "rasa run --enable-api --cors '*' --endpoints endpoints.yml"
+    command: ["rasa", "run", "--enable-api", "--cors", "*", "--endpoints", "endpoints.yml"]
 
   # RASA ACTIONS
   rasa-actions:
@@ -34,4 +33,4 @@ services:
     working_dir: /app
     networks:
       - rasa-network
-    command: rasa run actions
+    command: ["rasa", "run", "actions"]
