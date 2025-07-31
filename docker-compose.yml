@@ -11,7 +11,7 @@ services:
     ports:
       - "5055:5055"
     volumes:
-      - ./actions:/app/actions
+      - .:/app
     user: "1000:1000"
     working_dir: /app
     networks:
