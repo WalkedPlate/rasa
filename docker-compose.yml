@@ -5,23 +5,6 @@ networks:
     driver: bridge
 
 services:
-  # RASA CORE
-  rasa-core:
-    image: rasa/rasa:3.6.21
-    container_name: rasa-core
-    ports:
-      - "5005:5005"
-    volumes:
-      - .:/app
-    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
-    working_dir: /app
-    depends_on:
-      - rasa-actions
-    networks:
-      - rasa-network
-    command: ["rasa", "run", "--enable-api", "--cors", "*", "--endpoints", "endpoints.yml"]
-
-  # RASA ACTIONS
   rasa-actions:
     image: rasa/rasa:3.6.21-full
     container_name: rasa-actions
@@ -29,8 +12,23 @@ services:
       - "5055:5055"
     volumes:
       - ./actions:/app/actions
-    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    user: "1000:1000"
     working_dir: /app
     networks:
       - rasa-network
-    command: ["rasa", "run", "actions"]
+    command: rasa run actions
+
+  rasa-core:
+    image: rasa/rasa:3.6.21
+    container_name: rasa-core
+    ports:
+      - "5005:5005"
+    volumes:
+      - .:/app
+    user: "1000:1000"
+    working_dir: /app
+    depends_on:
+      - rasa-actions
+    networks:
+      - rasa-network
+    command: rasa run --enable-api --cors "*" --endpoints endpoints.yml
