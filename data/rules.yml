@@ -1,0 +1,81 @@
+version: "3.1"
+
+rules:
+
+# ========== REGLAS BÁSICAS ==========
+
+- rule: Saludar siempre
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Manejar finalización directa
+  steps:
+  - intent: finalizar_chat
+  - action: action_finalizar_chat
+
+- rule: Manejar goodbye como finalización
+  steps:
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+# ========== REGLAS SIMPLES PARA PAPELETAS ==========
+
+- rule: Pedir placa si no se proporciona
+  condition:
+  - active_loop: null
+  - slot_was_set:
+    - esperando_confirmacion: false
+  steps:
+  - intent: consultar_papeletas
+  - slot_was_set:
+    - placa: null
+  - action: utter_ask_placa
+
+- rule: Confirmar placa cuando se proporciona después de pedirla
+  condition:
+  - active_loop: null
+  - slot_was_set:
+    - esperando_confirmacion: false
+  steps:
+  - intent: provide_placa
+  - action: action_confirmar_placa
+
+# ========== REGLAS PARA IMPUESTOS ==========
+
+- rule: Pedir DNI si no se proporciona para impuestos
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_impuestos
+  - slot_was_set:
+    - dni: null
+  - action: utter_ask_dni
+
+- rule: Consultar impuestos después de proporcionar DNI
+  condition:
+  - active_loop: null
+  steps:
+  - intent: provide_dni
+  - action: action_consultar_impuestos
+
+# ========== REGLAS PARA CAMBIOS DE CONSULTA ==========
+
+- rule: Manejar cambio de consulta genérico
+  steps:
+  - intent: cambiar_consulta
+  - action: action_cambiar_consulta
+
+- rule: Cambio directo a pagos
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_pagos
+  - action: action_consultar_pagos
+
+# ========== REGLAS PARA TIMEOUT ==========
+
+- rule: Continuar sesión después de warning
+  steps:
+  - intent: continuar_sesion
+  - action: utter_greet

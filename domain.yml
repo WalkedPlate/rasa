@@ -1,0 +1,116 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - consultar_papeletas
+  - consultar_pagos
+  - consultar_impuestos
+  - provide_placa
+  - provide_dni
+  - provide_codigo_contribuyente
+  - confirm_yes
+  - confirm_no
+  - provide_correction
+  - cambiar_consulta
+  - finalizar_chat
+  - continuar_sesion
+
+entities:
+  - placa
+  - dni
+  - codigo_contribuyente
+
+slots:
+  placa:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: placa
+  
+  dni:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: dni
+      
+  codigo_contribuyente:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: codigo_contribuyente
+
+  placa_detectada:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  placa_confirmada:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  consulta_anterior:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  esperando_confirmacion:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+responses:
+  utter_greet:
+  - text: |
+      ¡Bienvenido al SAT de Lima! 👋
+      
+      Soy tu asistente virtual inteligente. Puedo ayudarte con:
+      
+      🚗 **Consultar papeletas** (necesito tu placa)
+      💳 **Pagos en línea** (papeletas e impuestos)
+      🏠 **Consultar impuestos** (predial/vehicular)
+      
+      Solo dime qué necesitas en lenguaje natural. ¿En qué puedo ayudarte?
+
+  utter_ask_placa:
+  - text: "Para consultar papeletas necesito el número de placa de tu vehículo. 🚗\n\n📝 **Formato:** ABC123, AB1234, U1A710, etc.\n\n¿Cuál es tu placa?"
+
+  utter_ask_dni:
+  - text: "Para consultar impuestos necesito tu número de DNI. 🆔\n\n📝 **Formato:** 8 dígitos\n\n¿Cuál es tu DNI?"
+  
+  utter_ask_codigo_contribuyente:
+  - text: "Por favor, proporciona tu código de contribuyente 📄"
+
+  utter_goodbye:
+  - text: "¡Gracias por usar el SAT de Lima! 👋\n\nTu conversación ha sido guardada. Puedes regresar cuando necesites ayuda escribiendo 'hola'.\n\n¡Que tengas un buen día! 😊"
+
+  utter_timeout_warning:
+  - text: "⏰ Tu sesión expirará en 1 minuto por inactividad.\n\nEscribe cualquier cosa para continuar o 'finalizar' para cerrar la conversación."
+
+  utter_timeout_final:
+  - text: "⏰ Cerrando conversación por inactividad.\n\n¡Gracias por usar el SAT de Lima! Escribe 'hola' cuando necesites ayuda nuevamente. 😊"
+
+actions:
+  - action_consultar_papeletas
+  - action_consultar_pagos
+  - action_consultar_impuestos
+  - action_confirmar_placa
+  - action_procesar_confirmacion
+  - action_procesar_correccion
+  - action_cambiar_consulta
+  - action_finalizar_chat
+  - action_check_timeout
+  - action_manejar_timeout_warning
+  - action_manejar_timeout_final
+
+session_config:
+  session_expiration_time: 5  # 5 minutos
+  carry_over_slots_to_new_session: false

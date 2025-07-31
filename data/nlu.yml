@@ -1,0 +1,192 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hola
+    - buenos días
+    - buenas tardes
+    - hey
+    - saludos
+    - bienvenido
+    - buenas
+
+- intent: goodbye
+  examples: |
+    - adiós
+    - hasta luego
+    - gracias
+    - bye
+    - nos vemos
+    - listo
+    - eso es todo
+
+# PAPELETAS
+- intent: consultar_papeletas
+  examples: |
+    - quiero consultar papeletas
+    - ver papeletas de [APS583](placa)
+    - consultar multas de mi auto
+    - tengo infracciones en [ABC123](placa)?
+    - papeletas pendientes [XYZ789](placa)
+    - revisar multas de mi vehículo
+    - mi placa [DEF456](placa) tiene papeletas?
+    - consultar infracciones vehiculares
+    - ver estado de papeletas
+    - multas de tránsito [GHI789](placa)
+    - papeletas de mi carro
+    - infracciones pendientes
+
+# PAGOS EN LÍNEA
+- intent: consultar_pagos
+  examples: |
+    - quiero pagar en línea
+    - pagos en línea
+    - pagar papeletas
+    - pagar impuestos
+    - cómo pago mi deuda
+    - pagar multas online
+    - hacer pagos por internet
+    - pagar papeletas de [APS583](placa)
+    - pagar impuestos predial
+    - pagos con tarjeta
+    - pagar deuda vehicular
+    - compromiso de pago
+    - facilidad de pago
+    - fraccionar deuda
+    - pagar a cuotas
+
+# IMPUESTOS
+- intent: consultar_impuestos
+  examples: |
+    - consultar impuestos
+    - ver mi deuda tributaria
+    - impuesto predial
+    - impuesto vehicular
+    - consultar deuda de [12345678](dni)
+    - mi cuadernillo tributario
+    - deuda de casa
+    - deuda de carro
+    - impuestos pendientes
+    - ver mi deuda
+    - consultar tributos
+    - alcabala
+    - declarar impuestos
+    - liquidar impuestos
+
+# PROPORCIONAR DATOS
+- intent: provide_placa
+  examples: |
+    - [APS583](placa)
+    - mi placa es [ABC123](placa)
+    - [XYZ789](placa)
+    - es [DEF456](placa)
+    - [U1A710](placa)
+    - [A1B234](placa)
+
+- intent: provide_dni
+  examples: |
+    - [12345678](dni)
+    - mi DNI es [87654321](dni)
+    - [11223344](dni)
+    - es [55667788](dni)
+
+- intent: provide_codigo_contribuyente
+  examples: |
+    - [COD123456](codigo_contribuyente)
+    - mi código es [COD789012](codigo_contribuyente)
+    - [COD345678](codigo_contribuyente)
+
+# ========== NUEVAS INTENCIONES ==========
+
+# CONFIRMACIONES
+- intent: confirm_yes
+  examples: |
+    - sí
+    - si
+    - correcto
+    - exacto
+    - perfecto
+    - está bien
+    - ok
+    - vale
+    - confirmo
+    - así es
+    - efectivamente
+    - claro
+
+- intent: confirm_no
+  examples: |
+    - no
+    - incorrecto
+    - está mal
+    - no es correcto
+    - error
+    - equivocado
+    - mal
+    - negativo
+    - no está bien
+    - falso
+
+# CORRECCIÓN DE DATOS
+- intent: provide_correction
+  examples: |
+    - es [ABC123](placa)
+    - la correcta es [XYZ789](placa)
+    - mejor [DEF456](placa)
+    - en realidad es [GHI789](placa)
+    - corrijo, es [U1A710](placa)
+    - no, es [A1B234](placa)
+    - la placa correcta es [T1C567](placa)
+    - quise decir [S2D890](placa)
+    - perdón, es [12345678](dni)
+    - mi DNI correcto es [87654321](dni)
+
+# CAMBIO DE CONSULTA
+- intent: cambiar_consulta
+  examples: |
+    - mejor quiero consultar pagos
+    - prefiero ver impuestos
+    - cambio de tema
+    - otra consulta
+    - quiero hacer otra pregunta
+    - mejor pregunto sobre pagos
+    - olvida eso, quiero consultar impuestos
+    - cambiemos el tema
+    - otra cosa
+    - diferente consulta
+    - mejor hablemos de pagos en línea
+    - prefiero consultar mi deuda tributaria
+    - quiero cambiar de consulta
+    - algo diferente
+
+# FINALIZAR CHAT
+- intent: finalizar_chat
+  examples: |
+    - finalizar
+    - terminar
+    - cerrar chat
+    - terminar conversación
+    - finalizar sesión
+    - listo gracias
+    - eso es todo gracias
+    - hasta aquí
+    - ya terminé
+    - cerrar
+    - salir
+    - fin
+    - acabar
+
+# CONTINUAR DESPUÉS DE TIMEOUT
+- intent: continuar_sesion
+  examples: |
+    - continuar
+    - seguir
+    - estoy aquí
+    - no cerrar
+    - quiero continuar
+    - sigo aquí
+    - no terminar
+    - espera
+    - presente
+    - aquí estoy
