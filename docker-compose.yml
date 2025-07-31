@@ -16,7 +16,7 @@ services:
     working_dir: /app
     networks:
       - rasa-network
-    command: rasa run actions
+    command: run actions
 
   rasa-core:
     image: rasa/rasa:3.6.21
@@ -31,4 +31,4 @@ services:
       - rasa-actions
     networks:
       - rasa-network
-    command: rasa run --enable-api --cors "*" --endpoints endpoints.yml
+    command: run --enable-api --cors "*" --endpoints endpoints.yml
