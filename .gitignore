@@ -1,0 +1,17 @@
+# Modelos entrenados (son grandes)
+models/*.tar.gz
+!models/.gitkeep
+
+# Credenciales
+.env
+credentials.yml
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
