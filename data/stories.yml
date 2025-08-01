@@ -202,6 +202,16 @@ stories:
     - placa: "XYZ789"
   - action: action_consultar_papeletas
 
+# Confirmación positiva genérica
+- story: confirmacion positiva
+  steps:
+  - intent: consultar_deuda
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: confirm_yes
+  - action: action_consultar_papeletas
+
 # Corrección de código de falta
 - story: correccion codigo falta
   steps:

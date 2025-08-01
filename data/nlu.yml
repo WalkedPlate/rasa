@@ -27,10 +27,10 @@ nlu:
     - chau
     - hasta la vista
     - me voy
-    - eso es todo
-    - ya terminé
-    - gracias por la ayuda
     - perfecto gracias
+    - muchas gracias
+    - está bien gracias
+    - ok gracias
 
 - intent: finalizar_chat
   examples: |
@@ -42,11 +42,13 @@ nlu:
     - listo gracias
     - eso es todo gracias
     - hasta aquí
-    - ya terminé
     - cerrar
     - salir
     - fin
     - acabar
+    - ya terminé
+    - quiero finalizar
+    - cerrar la conversación
 
 - intent: confirm_yes
   examples: |
