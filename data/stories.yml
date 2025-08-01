@@ -260,9 +260,7 @@ stories:
   - intent: consultar_deuda
     entities:
     - placa: "ABC123"
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_papeletas_api
+  - action: action_consultar_papeletas
   - intent: goodbye
   - action: utter_goodbye
 
@@ -276,9 +274,7 @@ stories:
   - intent: codigo_infraccion
     entities:
     - codigo_falta: "C15"
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_codigo_falta_api
+  - action: action_consultar_codigo_falta
   - intent: finalizar_chat
   - action: action_finalizar_chat
 

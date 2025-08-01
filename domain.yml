@@ -245,38 +245,12 @@ responses:
       📌https://www.sat.gob.pe/websitev9/TributosMultas/Papeletas/InformacionCodigodeTransito, numeral 6.
 
   # ========== RESPUESTAS DE CONFIRMACIÓN ==========
-  utter_confirmar_placa:
-  - text: "Detecté la placa {placa}. ¿Es correcta?"
-
-  utter_confirmar_dni:
-  - text: "Detecté el DNI {dni}. ¿Es correcto?"
-
-  utter_confirmar_ruc:
-  - text: "Detecté el RUC {ruc}. ¿Es correcto?"
-
-  utter_confirmar_codigo_falta:
-  - text: "Detecté el código de falta {codigo_falta}. ¿Es correcto?"
+  # Estas respuestas se manejan dentro de los actions inteligentes
+  # utter_confirmar_placa, utter_confirmar_dni, etc. no son necesarias
 
   # ========== RESPUESTAS DE SOLICITUD DE DATOS ==========
-  utter_ask_placa:
-  - text: "Para consultar papeletas necesito la placa del vehículo. ¿Cuál es tu placa?"
-
-  utter_ask_dni:
-  - text: "Para consultar por DNI, ¿cuál es tu número de documento?"
-
-  utter_ask_ruc:
-  - text: "Para consultar por RUC, ¿cuál es el número de RUC?"
-
-  utter_ask_codigo_falta:
-  - text: "Estimado ciudadano, indique el *CÓDIGO DE FALTA*:"
-
-  utter_ask_tipo_consulta:
-  - text: |
-      ¿Cómo quieres consultar tus papeletas?
-
-      🚗 **Por placa** - Dime el número de placa
-      🆔 **Por DNI** - Dime tu DNI
-      🏢 **Por RUC** - Dime el RUC de tu empresa
+  # Estas también se manejan dentro de los actions inteligentes
+  # utter_ask_placa, utter_ask_dni, etc. no son necesarias
 
   # ========== RESPUESTAS DE ERROR ==========
   utter_default:
@@ -291,15 +265,11 @@ responses:
       • 'Consultar papeletas de mi placa ABC123'
       • 'Información de pagos'
 
-  utter_dato_invalido:
-  - text: "El dato proporcionado no tiene el formato correcto. ¿Podrías verificarlo y proporcionarlo nuevamente?"
-
 actions:
   # ========== ACTIONS BÁSICAS ==========
   - utter_greet
   - utter_goodbye
   - utter_default
-  - utter_dato_invalido
 
   # ========== ACTIONS OPCIONES PRINCIPALES ==========
   - utter_casilla_mtc
@@ -318,27 +288,10 @@ actions:
   - utter_imagen_papeleta
   - utter_consecuencias_no_pago
 
-  # ========== ACTIONS DE CONFIRMACIÓN ==========
-  - utter_confirmar_placa
-  - utter_confirmar_dni
-  - utter_confirmar_ruc
-  - utter_confirmar_codigo_falta
-
-  # ========== ACTIONS DE SOLICITUD ==========
-  - utter_ask_placa
-  - utter_ask_dni
-  - utter_ask_ruc
-  - utter_ask_codigo_falta
-  - utter_ask_tipo_consulta
-
   # ========== CUSTOM ACTIONS (APIs) ==========
   - action_consultar_papeletas
   - action_consultar_codigo_falta
   - action_finalizar_chat
-
-  # ========== ACTIONS FUTURAS (preparadas) ==========
-  # - action_consultar_impuestos
-  # - action_consultar_retencion
 
 session_config:
   session_expiration_time: 60
