@@ -36,7 +36,6 @@ intents:
   # ========== INTENTS DE DATOS ==========
   - provide_placa
   - provide_dni
-  - provide_ruc
   - provide_codigo_falta
 
   # ========== INTENTS FUTUROS (preparados) ==========
@@ -52,7 +51,6 @@ entities:
   # Datos de identificación
   - placa
   - dni
-  - ruc
   - codigo_falta
 
   # Tipos de consulta para papeletas
@@ -60,6 +58,7 @@ entities:
   - frecuentes_type
 
   # Entidades futuras (preparadas)
+  # - ruc
   # - impuesto_type
   # - tramite_type
   # - servicio_type
@@ -79,13 +78,6 @@ slots:
     mappings:
     - type: from_entity
       entity: dni
-
-  ruc:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: ruc
 
   codigo_falta:
     type: text
@@ -115,6 +107,12 @@ slots:
     - type: custom
 
   # ========== SLOTS FUTUROS (preparados) ==========
+  # ruc:
+  #   type: text
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: from_entity
+  #     entity: ruc
   # codigo_contribuyente:
   #   type: text
   #   influence_conversation: true

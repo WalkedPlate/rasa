@@ -61,15 +61,15 @@ stories:
     - dni: "12345678"
   - action: action_consultar_papeletas
 
-# Flujo directo con RUC
-- story: consulta papeletas con ruc directo
-  steps:
-  - intent: consultar_deuda
-    entities:
-    - ruc: "20123456789"
-  - slot_was_set:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
+# Flujo directo con RUC (comentado hasta que se reactive)
+# - story: consulta papeletas con ruc directo
+#   steps:
+#   - intent: consultar_deuda
+#     entities:
+#     - ruc: "20123456789"
+#   - slot_was_set:
+#     - ruc: "20123456789"
+#   - action: action_consultar_papeletas
 
 # Flujo paso a paso - consulta y pago
 - story: consulta pago paso a paso
@@ -79,7 +79,7 @@ stories:
   - intent: consultar_deuda
   - action: action_consultar_papeletas
 
-# Consulta sin datos - el action maneja todo
+# Consulta sin datos - el action maneja todo internamente
 - story: consulta sin datos iniciales
   steps:
   - intent: consultar_deuda
@@ -172,13 +172,13 @@ stories:
     - codigo_falta: "C15"
   - action: action_consultar_codigo_falta
 
-# Código de infracción sin código
+# Código de infracción sin código - el action maneja todo
 - story: codigo infraccion sin codigo
   steps:
   - intent: codigo_infraccion
   - action: action_consultar_codigo_falta
 
-# Desde menú frecuentes a código
+# Desde menú frecuentes a código - el action maneja todo
 - story: menu frecuentes a codigo
   steps:
   - intent: consultas_frecuentes
@@ -292,9 +292,7 @@ stories:
   - intent: consultar_deuda
     entities:
     - placa: "XYZ789"
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_papeletas_api
+  - action: action_consultar_papeletas
 
 # ========== HISTORIAS DE DATOS SIN CONTEXTO ==========
 
@@ -304,11 +302,7 @@ stories:
   - intent: provide_placa
     entities:
     - placa: "ABC123"
-  - action: utter_ask_tipo_consulta
-  - intent: consultar_deuda
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_papeletas_api
+  - action: action_consultar_papeletas
 
 # DNI sin contexto
 - story: dni sin contexto
@@ -316,11 +310,7 @@ stories:
   - intent: provide_dni
     entities:
     - dni: "12345678"
-  - action: utter_ask_tipo_consulta
-  - intent: consultar_deuda
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_papeletas_api
+  - action: action_consultar_papeletas
 
 # Código de falta sin contexto
 - story: codigo falta sin contexto
@@ -328,8 +318,4 @@ stories:
   - intent: provide_codigo_falta
     entities:
     - codigo_falta: "C15"
-  - action: utter_ask_codigo_falta
-  - intent: codigo_infraccion
-  - action: action_confirmar_dato
-  - intent: confirm_yes
-  - action: action_consultar_codigo_falta_api
+  - action: action_consultar_codigo_falta
