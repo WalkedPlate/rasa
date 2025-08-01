@@ -1,116 +1,345 @@
 version: "3.1"
 
 intents:
+  # ========== INTENTS BÁSICOS ==========
   - greet
   - goodbye
-  - consultar_papeletas
-  - consultar_pagos
-  - consultar_impuestos
-  - provide_placa
-  - provide_dni
-  - provide_codigo_contribuyente
+  - finalizar_chat
   - confirm_yes
   - confirm_no
-  - provide_correction
-  - cambiar_consulta
-  - finalizar_chat
-  - continuar_sesion
+
+  # ========== OPCIONES PRINCIPALES SAT ==========
+  # Opción 1: CASILLA MTC
+  - casilla_mtc
+
+  # Opción 2: PAGOS EN LÍNEA
+  - pagos_linea
+
+  # Opción 3: PAPELETAS
+  - papeletas                    # Entrada general a papeletas
+  - consulta_pago               # A. Consulta y Paga
+  - registrar_papeleta          # B. Registrar Papeleta
+  - consultas_frecuentes        # C. Consultas Frecuentes
+
+  # ========== SUB-OPCIONES PAPELETAS ==========
+  # Para Consulta y Pago
+  - consultar_deuda             # Consultar por DNI/Placa/RUC + API
+  - facilidad_pago              # Información sobre facilidades
+
+  # Para Consultas Frecuentes
+  - plazos_descuentos           # Enlaces informativos
+  - responsable_multa           # Enlaces informativos
+  - imagen_papeleta             # Enlaces informativos
+  - codigo_infraccion           # Requiere código + API
+  - consecuencias_no_pago       # Información sobre no pagar
+
+  # ========== INTENTS DE DATOS ==========
+  - provide_placa
+  - provide_dni
+  - provide_ruc
+  - provide_codigo_falta
+
+  # ========== INTENTS FUTUROS (preparados) ==========
+  # Nota: Estos se habilitarán cuando implementemos las opciones 4-9
+  # - impuestos                 # Opción 4
+  # - retencion_captura         # Opción 5
+  # - actualizar_datos          # Opción 6
+  # - lugares_pagos             # Opción 7
+  # - servicios_virtuales       # Opción 8
+  # - otros_tramites            # Opción 9
 
 entities:
+  # Datos de identificación
   - placa
   - dni
-  - codigo_contribuyente
+  - ruc
+  - codigo_falta
+
+  # Tipos de consulta para papeletas
+  - consulta_type
+  - frecuentes_type
+
+  # Entidades futuras (preparadas)
+  # - impuesto_type
+  # - tramite_type
+  # - servicio_type
 
 slots:
+  # ========== SLOTS PARA DATOS DE USUARIO ==========
   placa:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: placa
-  
+
   dni:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: dni
-      
-  codigo_contribuyente:
+
+  ruc:
     type: text
     influence_conversation: true
     mappings:
     - type: from_entity
-      entity: codigo_contribuyente
+      entity: ruc
 
-  placa_detectada:
+  codigo_falta:
     type: text
     influence_conversation: true
     mappings:
-    - type: custom
+    - type: from_entity
+      entity: codigo_falta
 
-  placa_confirmada:
-    type: bool
-    influence_conversation: true
-    mappings:
-    - type: custom
-
-  consulta_anterior:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: custom
-
+  # ========== SLOTS PARA CONTEXTO ==========
   esperando_confirmacion:
     type: bool
+    initial_value: false
     influence_conversation: true
     mappings:
     - type: custom
 
+  tipo_consulta_actual:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  dato_detectado:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  # ========== SLOTS FUTUROS (preparados) ==========
+  # codigo_contribuyente:
+  #   type: text
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: from_entity
+  #     entity: codigo_contribuyente
+
 responses:
+  # ========== RESPUESTAS BÁSICAS ==========
   utter_greet:
   - text: |
-      ¡Bienvenido al SAT de Lima! 👋
-      
-      Soy tu asistente virtual inteligente. Puedo ayudarte con:
-      
-      🚗 **Consultar papeletas** (necesito tu placa)
-      💳 **Pagos en línea** (papeletas e impuestos)
-      🏠 **Consultar impuestos** (predial/vehicular)
-      
-      Solo dime qué necesitas en lenguaje natural. ¿En qué puedo ayudarte?
+      ¡Hola! Bienvenido al SAT de Lima 👋
 
-  utter_ask_placa:
-  - text: "Para consultar papeletas necesito el número de placa de tu vehículo. 🚗\n\n📝 **Formato:** ABC123, AB1234, U1A710, etc.\n\n¿Cuál es tu placa?"
+      Puedo ayudarte con:
 
-  utter_ask_dni:
-  - text: "Para consultar impuestos necesito tu número de DNI. 🆔\n\n📝 **Formato:** 8 dígitos\n\n¿Cuál es tu DNI?"
-  
-  utter_ask_codigo_contribuyente:
-  - text: "Por favor, proporciona tu código de contribuyente 📄"
+      🚗 **Consultar papeletas** - Dime tu placa, DNI o RUC
+      💳 **Pagos en línea** - Información para pagar por internet  
+      📋 **Casilla MTC** - Registro obligatorio para trámites
+      ❓ **Consultas frecuentes** - Plazos, códigos, descuentos
+
+      Solo dime qué necesitas en tus propias palabras. Por ejemplo:
+      • 'Quiero ver las multas de mi carro ABC123'
+      • 'Cómo puedo pagar en línea'
+      • 'Qué significa el código C15'
+
+      ¿En qué te puedo ayudar?
 
   utter_goodbye:
-  - text: "¡Gracias por usar el SAT de Lima! 👋\n\nTu conversación ha sido guardada. Puedes regresar cuando necesites ayuda escribiendo 'hola'.\n\n¡Que tengas un buen día! 😊"
+  - text: |
+      ¡Gracias por usar el SAT de Lima! 👋
+      
+      Espero haber sido de ayuda. Puedes regresar cuando necesites consultando nuevamente.
+      
+      ¡Que tengas un buen día! 😊
 
-  utter_timeout_warning:
-  - text: "⏰ Tu sesión expirará en 1 minuto por inactividad.\n\nEscribe cualquier cosa para continuar o 'finalizar' para cerrar la conversación."
+  # ========== RESPUESTAS OPCIONES PRINCIPALES ==========
+  utter_casilla_mtc:
+  - text: |
+      Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
+      📌https://casilla.mtc.gob.pe/#/registro
+      Base Legal: R. Directoral N°023-2024-MTC/18
 
-  utter_timeout_final:
-  - text: "⏰ Cerrando conversación por inactividad.\n\n¡Gracias por usar el SAT de Lima! Escribe 'hola' cuando necesites ayuda nuevamente. 😊"
+  utter_pagos_linea:
+  - text: |
+      Para pagos ingrese aquí: 
+      📌https://www.sat.gob.pe/pagosenlinea/
+
+      Espero que la información brindada le haya sido útil 🤗
+
+  # ========== RESPUESTAS PAPELETAS ==========
+  utter_papeletas_menu:
+  - text: |
+      Te ayudo con papeletas. ¿Qué necesitas hacer?
+
+      🔍 **Consultar deuda** - Con placa, DNI o RUC
+      📝 **Registrar papeleta** - Si no aparece en el sistema
+      ❓ **Consultas frecuentes** - Plazos, códigos, descuentos
+
+      Puedes decirme algo como:
+      • 'Ver multas de mi placa ABC123'
+      • 'Registrar una papeleta'
+      • 'Información sobre plazos'
+
+  utter_consulta_pago_menu:
+  - text: |
+      Para consultar tu deuda de papeletas puedo buscar por:
+
+      🚗 **Placa del vehículo**
+      🆔 **Tu DNI** 
+      🏢 **RUC de empresa**
+
+      También puedo informarte sobre **facilidades de pago**.
+
+      ¿Qué opción prefieres?
+
+  utter_registrar_papeleta:
+  - text: |
+      Si no figura su papeleta ingrese a Registra y paga tu papeleta aquí: 
+      📌https://www.sat.gob.pe/websitev8/Popupv2.aspx?t=9&v=%20
+
+  utter_facilidad_pago:
+  - text: |
+      Puede realizarlo por nuestra Agencia Virtual SAT, para registrarse ir al siguiente link:
+      📌https://www.SAT.gob.pe/websitev9/Servicios/AgenciaVirtual
+
+      Luego de registrarse ingrese en la opción Facilidades de pago.
+
+      Le sugerimos ingresar al siguiente enlace para que pueda guiarse del procedimiento de agencia virtual: 
+      📌https://www.SAT.gob.pe/AgenciaVirtual/guiainteractiva/
+
+      Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
+      📌https://casilla.mtc.gob.pe/#/registro
+      Base Legal: R. Directoral N°023-2024-MTC/18
+
+  # ========== RESPUESTAS CONSULTAS FRECUENTES ==========
+  utter_consultas_frecuentes_menu:
+  - text: |
+      ¿Qué información necesitas sobre papeletas?
+
+      📅 **Plazos y descuentos** - Información sobre fechas de pago
+      👤 **Responsable de multa** - Quién debe pagar
+      📷 **Imagen de papeleta** - Ver foto de la infracción
+      🔢 **Código de infracción** - Consultar qué significa un código
+      ⚠️ **Consecuencias de no pagar** - Qué pasa si no pagas
+
+      ¿Sobre qué quieres información?
+
+  utter_plazos_descuentos:
+  - text: |
+      Estimado ciudadano, puede verificar la información en el siguiente enlace:
+      📌https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
+
+  utter_responsable_multa:
+  - text: |
+      Estimado ciudadano, puede verificar la información en el siguiente enlace:
+      📌https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
+
+  utter_imagen_papeleta:
+  - text: |
+      Estimado ciudadano, para consultar su papeleta ingrese aquí:
+      📌https://www.sat.gob.pe/WebSitev8/IncioOV2.aspx
+
+  utter_consecuencias_no_pago:
+  - text: |
+      Estimado ciudadano, si no paga su papeleta dentro de los plazos establecidos, perderá el beneficio. 
+
+      Puede verificar los descuentos en el siguiente link: 
+      📌https://www.sat.gob.pe/websitev9/TributosMultas/Papeletas/InformacionCodigodeTransito, numeral 6.
+
+  # ========== RESPUESTAS DE CONFIRMACIÓN ==========
+  utter_confirmar_placa:
+  - text: "Detecté la placa {placa}. ¿Es correcta?"
+
+  utter_confirmar_dni:
+  - text: "Detecté el DNI {dni}. ¿Es correcto?"
+
+  utter_confirmar_ruc:
+  - text: "Detecté el RUC {ruc}. ¿Es correcto?"
+
+  utter_confirmar_codigo_falta:
+  - text: "Detecté el código de falta {codigo_falta}. ¿Es correcto?"
+
+  # ========== RESPUESTAS DE SOLICITUD DE DATOS ==========
+  utter_ask_placa:
+  - text: "Para consultar papeletas necesito la placa del vehículo. ¿Cuál es tu placa?"
+
+  utter_ask_dni:
+  - text: "Para consultar por DNI, ¿cuál es tu número de documento?"
+
+  utter_ask_ruc:
+  - text: "Para consultar por RUC, ¿cuál es el número de RUC?"
+
+  utter_ask_codigo_falta:
+  - text: "Estimado ciudadano, indique el *CÓDIGO DE FALTA*:"
+
+  utter_ask_tipo_consulta:
+  - text: |
+      ¿Cómo quieres consultar tus papeletas?
+
+      🚗 **Por placa** - Dime el número de placa
+      🆔 **Por DNI** - Dime tu DNI
+      🏢 **Por RUC** - Dime el RUC de tu empresa
+
+  # ========== RESPUESTAS DE ERROR ==========
+  utter_default:
+  - text: |
+      No entendí completamente tu solicitud. Puedo ayudarte con:
+
+      🚗 **Papeletas** - Consultas, registro, información
+      💳 **Pagos en línea** - Enlaces para pagar
+      📋 **Casilla MTC** - Información de registro
+
+      ¿Podrías ser más específico? Por ejemplo:
+      • 'Consultar papeletas de mi placa ABC123'
+      • 'Información de pagos'
+
+  utter_dato_invalido:
+  - text: "El dato proporcionado no tiene el formato correcto. ¿Podrías verificarlo y proporcionarlo nuevamente?"
 
 actions:
+  # ========== ACTIONS BÁSICAS ==========
+  - utter_greet
+  - utter_goodbye
+  - utter_default
+  - utter_dato_invalido
+
+  # ========== ACTIONS OPCIONES PRINCIPALES ==========
+  - utter_casilla_mtc
+  - utter_pagos_linea
+
+  # ========== ACTIONS PAPELETAS ==========
+  - utter_papeletas_menu
+  - utter_consulta_pago_menu
+  - utter_registrar_papeleta
+  - utter_facilidad_pago
+  - utter_consultas_frecuentes_menu
+
+  # ========== ACTIONS CONSULTAS FRECUENTES ==========
+  - utter_plazos_descuentos
+  - utter_responsable_multa
+  - utter_imagen_papeleta
+  - utter_consecuencias_no_pago
+
+  # ========== ACTIONS DE CONFIRMACIÓN ==========
+  - utter_confirmar_placa
+  - utter_confirmar_dni
+  - utter_confirmar_ruc
+  - utter_confirmar_codigo_falta
+
+  # ========== ACTIONS DE SOLICITUD ==========
+  - utter_ask_placa
+  - utter_ask_dni
+  - utter_ask_ruc
+  - utter_ask_codigo_falta
+  - utter_ask_tipo_consulta
+
+  # ========== CUSTOM ACTIONS (APIs) ==========
   - action_consultar_papeletas
-  - action_consultar_pagos
-  - action_consultar_impuestos
-  - action_confirmar_placa
-  - action_procesar_confirmacion
-  - action_procesar_correccion
-  - action_cambiar_consulta
+  - action_consultar_codigo_falta
   - action_finalizar_chat
-  - action_check_timeout
-  - action_manejar_timeout_warning
-  - action_manejar_timeout_final
+
+  # ========== ACTIONS FUTURAS (preparadas) ==========
+  # - action_consultar_impuestos
+  # - action_consultar_retencion
 
 session_config:
-  session_expiration_time: 5  # 5 minutos
+  session_expiration_time: 60
   carry_over_slots_to_new_session: false

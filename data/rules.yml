@@ -4,78 +4,176 @@ rules:
 
 # ========== REGLAS BÁSICAS ==========
 
-- rule: Saludar siempre
+- rule: Activar saludo siempre
   steps:
   - intent: greet
   - action: utter_greet
 
-- rule: Manejar finalización directa
+- rule: Activar despedida siempre
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Finalizar chat siempre
   steps:
   - intent: finalizar_chat
   - action: action_finalizar_chat
 
-- rule: Manejar goodbye como finalización
+# ========== REGLAS OPCIONES PRINCIPALES ==========
+
+- rule: Casilla MTC respuesta directa
   steps:
-  - intent: goodbye
-  - action: action_finalizar_chat
+  - intent: casilla_mtc
+  - action: utter_casilla_mtc
 
-# ========== REGLAS SIMPLES PARA PAPELETAS ==========
+- rule: Pagos en línea respuesta directa
+  steps:
+  - intent: pagos_linea
+  - action: utter_pagos_linea
 
-- rule: Pedir placa si no se proporciona
+- rule: Papeletas menú principal
+  steps:
+  - intent: papeletas
+  - action: utter_papeletas_menu
+
+# ========== REGLAS PAPELETAS - SUBMENÚS ==========
+
+- rule: Consulta y pago menú
+  steps:
+  - intent: consulta_pago
+  - action: utter_consulta_pago_menu
+
+- rule: Registrar papeleta directo
+  steps:
+  - intent: registrar_papeleta
+  - action: utter_registrar_papeleta
+
+- rule: Consultas frecuentes menú
+  steps:
+  - intent: consultas_frecuentes
+  - action: utter_consultas_frecuentes_menu
+
+- rule: Facilidad de pago directo
+  steps:
+  - intent: facilidad_pago
+  - action: utter_facilidad_pago
+
+# ========== REGLAS CONSULTAS FRECUENTES ==========
+
+- rule: Plazos y descuentos directo
+  steps:
+  - intent: plazos_descuentos
+  - action: utter_plazos_descuentos
+
+- rule: Responsable multa directo
+  steps:
+  - intent: responsable_multa
+  - action: utter_responsable_multa
+
+- rule: Imagen papeleta directo
+  steps:
+  - intent: imagen_papeleta
+  - action: utter_imagen_papeleta
+
+- rule: Consecuencias no pago directo
+  steps:
+  - intent: consecuencias_no_pago
+  - action: utter_consecuencias_no_pago
+
+# ========== REGLAS PARA DATOS CON ACTIONS INTELIGENTES ==========
+
+- rule: Consultar papeletas cuando se proporciona placa
   condition:
   - active_loop: null
-  - slot_was_set:
-    - esperando_confirmacion: false
   steps:
-  - intent: consultar_papeletas
+  - intent: consultar_deuda
+    entities:
+    - placa
+  - action: action_consultar_papeletas
+
+- rule: Consultar papeletas cuando se proporciona DNI
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_deuda
+    entities:
+    - dni
+  - action: action_consultar_papeletas
+
+- rule: Consultar papeletas cuando se proporciona RUC
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_deuda
+    entities:
+    - ruc
+  - action: action_consultar_papeletas
+
+- rule: Consultar papeletas sin datos
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_deuda
   - slot_was_set:
     - placa: null
-  - action: utter_ask_placa
-
-- rule: Confirmar placa cuando se proporciona después de pedirla
-  condition:
-  - active_loop: null
-  - slot_was_set:
-    - esperando_confirmacion: false
-  steps:
-  - intent: provide_placa
-  - action: action_confirmar_placa
-
-# ========== REGLAS PARA IMPUESTOS ==========
-
-- rule: Pedir DNI si no se proporciona para impuestos
-  condition:
-  - active_loop: null
-  steps:
-  - intent: consultar_impuestos
-  - slot_was_set:
     - dni: null
-  - action: utter_ask_dni
+    - ruc: null
+  - action: action_consultar_papeletas
 
-- rule: Consultar impuestos después de proporcionar DNI
+- rule: Consultar código cuando se proporciona
   condition:
   - active_loop: null
   steps:
-  - intent: provide_dni
-  - action: action_consultar_impuestos
+  - intent: codigo_infraccion
+    entities:
+    - codigo_falta
+  - action: action_consultar_codigo_falta
 
-# ========== REGLAS PARA CAMBIOS DE CONSULTA ==========
-
-- rule: Manejar cambio de consulta genérico
-  steps:
-  - intent: cambiar_consulta
-  - action: action_cambiar_consulta
-
-- rule: Cambio directo a pagos
+- rule: Consultar código sin proporcionar
   condition:
   - active_loop: null
   steps:
-  - intent: consultar_pagos
-  - action: action_consultar_pagos
+  - intent: codigo_infraccion
+  - slot_was_set:
+    - codigo_falta: null
+  - action: action_consultar_codigo_falta
 
-# ========== REGLAS PARA TIMEOUT ==========
+# ========== REGLAS DE FALLBACK ==========
 
-- rule: Continuar sesión después de warning
+- rule: Respuesta por defecto cuando no se entiende
   steps:
-  - intent: continuar_sesion
-  - action: utter_greet
+  - intent: nlu_fallback
+  - action: utter_default
+
+# ========== REGLAS FUTURAS (PREPARADAS) ==========
+# Estas reglas se activarán cuando implementemos las opciones 4-9
+
+# - rule: Impuestos respuesta directa
+#   steps:
+#   - intent: impuestos
+#   - action: utter_impuestos_menu
+
+# - rule: Retención y captura respuesta directa
+#   steps:
+#   - intent: retencion_captura
+#   - action: utter_retencion_captura_menu
+
+# - rule: Actualizar datos respuesta directa
+#   steps:
+#   - intent: actualizar_datos
+#   - action: utter_actualizar_datos
+
+# - rule: Lugares y pagos respuesta directa
+#   steps:
+#   - intent: lugares_pagos
+#   - action: utter_lugares_pagos_menu
+
+# - rule: Servicios virtuales respuesta directa
+#   steps:
+#   - intent: servicios_virtuales
+#   - action: utter_servicios_virtuales_menu
+
+# - rule: Otros trámites respuesta directa
+#   steps:
+#   - intent: otros_tramites
+#   - action: utter_otros_tramites_menu
