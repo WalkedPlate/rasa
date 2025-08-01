@@ -197,12 +197,10 @@ nlu:
     - consultar mi deuda con [ABC123](placa)
     - ver papeletas de [XYZ789](placa)
     - mi DNI es [12345678](dni) quiero consultar
-    - consultar con mi RUC [20123456789](ruc)
     - papeletas de la placa [DEF456](placa)
     - ver multas del DNI [87654321](dni)
     - consultar deuda por [DNI](consulta_type)
     - ver papeletas por [placa](consulta_type)
-    - consultar con [RUC](consulta_type)
     - quiero consultar mi [deuda](consulta_type)
 
 - intent: facilidad_pago
@@ -301,18 +299,6 @@ nlu:
     - es [11223344](dni)
     - [55667788](dni) es mi DNI
     - tengo DNI [99887766](dni)
-
-- intent: provide_ruc
-  examples: |
-    - [20123456789](ruc)
-    - [10987654321](ruc)
-    - [15555666677](ruc)
-    - [12888999000](ruc)
-    - mi RUC es [20123456789](ruc)
-    - el RUC es [10987654321](ruc)
-    - es [15555666677](ruc)
-    - [12888999000](ruc) es mi RUC
-    - tengo RUC [20555444333](ruc)
 
 - intent: provide_codigo_falta
   examples: |
