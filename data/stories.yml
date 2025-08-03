@@ -36,7 +36,103 @@ stories:
   - intent: papeletas
   - action: utter_papeletas_menu
 
-# ========== FLUJOS BÁSICOS DE PAPELETAS ==========
+# ========== HISTORIAS DE CONFIRMACIÓN ESPECÍFICAS ==========
+
+- story: confirmacion si papeletas
+  steps:
+  - intent: provide_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_yes
+  - action: action_consultar_papeletas
+
+- story: confirmacion no papeletas
+  steps:
+  - intent: provide_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_no
+  - action: action_consultar_papeletas
+
+- story: confirmacion si codigo
+  steps:
+  - intent: provide_codigo_falta
+    entities:
+    - codigo_falta: "C15"
+  - action: action_consultar_codigo_falta
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "codigo_falta"
+  - intent: confirm_yes
+  - action: action_consultar_codigo_falta
+
+- story: confirmacion no codigo
+  steps:
+  - intent: provide_codigo_falta
+    entities:
+    - codigo_falta: "C15"
+  - action: action_consultar_codigo_falta
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "codigo_falta"
+  - intent: confirm_no
+  - action: action_consultar_codigo_falta
+
+- story: confirmacion si dni
+  steps:
+  - intent: provide_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_yes
+  - action: action_consultar_papeletas
+
+- story: confirmacion no dni
+  steps:
+  - intent: provide_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_no
+  - action: action_consultar_papeletas
+
+- story: confirmacion si ruc
+  steps:
+  - intent: provide_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_yes
+  - action: action_consultar_papeletas
+
+- story: confirmacion no ruc
+  steps:
+  - intent: provide_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "papeletas"
+  - intent: confirm_no
+  - action: action_consultar_papeletas
 
 - story: consulta papeletas con placa confirmada
   steps:

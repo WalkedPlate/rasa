@@ -47,9 +47,12 @@ class ActionConsultarCodigoFalta(Action):
 
         logger.info("Iniciando consulta de código de falta")
 
+        # Verificar si hay confirmación pendiente específicamente para códigos
         confirmacion_pendiente = tracker.get_slot("confirmacion_pendiente")
+        opcion_actual = tracker.get_slot("opcion_actual")
 
-        if confirmacion_pendiente:
+        # Solo procesar confirmación si es para códigos
+        if confirmacion_pendiente and opcion_actual == "codigo_falta":
             return self._process_confirmation(dispatcher, tracker)
         else:
             return self._validate_and_confirm_codigo(dispatcher, tracker)

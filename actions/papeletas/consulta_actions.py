@@ -54,9 +54,12 @@ class ActionConsultarPapeletas(Action):
 
         logger.info("Iniciando consulta de papeletas")
 
+        # Verificar si hay confirmación pendiente
         confirmacion_pendiente = tracker.get_slot("confirmacion_pendiente")
+        opcion_actual = tracker.get_slot("opcion_actual")
 
-        if confirmacion_pendiente:
+        # Solo procesar confirmación si es para papeletas
+        if confirmacion_pendiente and opcion_actual == "papeletas":
             return self._process_confirmation(dispatcher, tracker)
         else:
             return self._validate_and_confirm(dispatcher, tracker)
