@@ -61,15 +61,15 @@ stories:
     - dni: "12345678"
   - action: action_consultar_papeletas
 
-# Flujo directo con RUC (comentado hasta que se reactive)
-# - story: consulta papeletas con ruc directo
-#   steps:
-#   - intent: consultar_deuda
-#     entities:
-#     - ruc: "20123456789"
-#   - slot_was_set:
-#     - ruc: "20123456789"
-#   - action: action_consultar_papeletas
+# Flujo directo con RUC
+- story: consulta papeletas con ruc directo
+  steps:
+  - intent: consultar_deuda
+    entities:
+    - ruc: "20123456789"
+  - slot_was_set:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
 
 # Flujo paso a paso - consulta y pago
 - story: consulta pago paso a paso

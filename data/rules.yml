@@ -100,6 +100,15 @@ rules:
     - dni
   - action: action_consultar_papeletas
 
+- rule: Consultar papeletas cuando se proporciona RUC
+  condition:
+  - active_loop: null
+  steps:
+  - intent: consultar_deuda
+    entities:
+    - ruc
+  - action: action_consultar_papeletas
+
 - rule: Consultar papeletas sin datos
   condition:
   - active_loop: null
@@ -108,6 +117,7 @@ rules:
   - slot_was_set:
     - placa: null
     - dni: null
+    - ruc: null
   - action: action_consultar_papeletas
 
 - rule: Consultar código cuando se proporciona

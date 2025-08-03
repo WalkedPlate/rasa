@@ -1,6 +1,27 @@
 version: "3.1"
 
 nlu:
+# ========== REGEX PATTERNS PARA MEJOR DETECCIÓN ==========
+- regex: dni_pattern
+  examples: |
+    - \b\d{8}\b
+
+- regex: ruc_pattern
+  examples: |
+    - \b[12]\d{10}\b
+
+- regex: placa_pattern
+  examples: |
+    - \b[A-Z]{3}\d{3}\b
+    - \b[A-Z]{2}\d{4}\b
+    - \b[A-Z]\d[A-Z]\d{3}\b
+    - \b[TSD][A-Z]{2}\d{3}\b
+    - \bU\d[A-Z]\d{3}\b
+
+- regex: codigo_falta_pattern
+  examples: |
+    - \b[A-Z]\d{1,2}\b
+
 # ========== INTENTS BÁSICOS ==========
 - intent: greet
   examples: |
@@ -199,11 +220,15 @@ nlu:
     - consultar mi deuda con [ABC123](placa)
     - ver papeletas de [XYZ789](placa)
     - mi DNI es [12345678](dni) quiero consultar
+    - consultar con mi RUC [20123456789](ruc)
     - papeletas de la placa [DEF456](placa)
     - ver multas del DNI [87654321](dni)
     - consultar deuda por [DNI](consulta_type)
     - ver papeletas por [placa](consulta_type)
+    - consultar con [RUC](consulta_type)
     - quiero consultar mi [deuda](consulta_type)
+    - papeletas del RUC [10987654321](ruc)
+    - multas de mi empresa RUC [20555444333](ruc)
 
 - intent: facilidad_pago
   examples: |
@@ -301,6 +326,18 @@ nlu:
     - es [11223344](dni)
     - [55667788](dni) es mi DNI
     - tengo DNI [99887766](dni)
+
+- intent: provide_ruc
+  examples: |
+    - [20123456789](ruc)
+    - [10987654321](ruc)
+    - [15555666677](ruc)
+    - [12888999000](ruc)
+    - mi RUC es [20123456789](ruc)
+    - el RUC es [10987654321](ruc)
+    - es [15555666677](ruc)
+    - [12888999000](ruc) es mi RUC
+    - tengo RUC [20555444333](ruc)
 
 - intent: provide_codigo_falta
   examples: |

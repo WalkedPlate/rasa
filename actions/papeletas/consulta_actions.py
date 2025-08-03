@@ -12,7 +12,6 @@ from ..core.sat_api_client import sat_client
 
 logger = logging.getLogger(__name__)
 
-
 class ActionConsultarPapeletas(Action):
     """Action inteligente que maneja todo el flujo de consulta de papeletas"""
 
@@ -34,38 +33,67 @@ class ActionConsultarPapeletas(Action):
             return self._iniciar_consulta(dispatcher, tracker)
 
     def _iniciar_consulta(self, dispatcher: CollectingDispatcher,
-                          tracker: Tracker) -> List[Dict[Text, Any]]:
-        """Inicia el proceso de consulta detectando datos disponibles"""
+                         tracker: Tracker) -> List[Dict[Text, Any]]:
+        """Inicia el proceso de consulta detectando datos disponibles y limpiando context"""
 
-        # Obtener datos de slots y entities
-        placa = tracker.get_slot("placa")
-        dni = tracker.get_slot("dni")
-        ruc = tracker.get_slot("ruc")
-
-        # También revisar entities del último mensaje
+        # Primero revisar entities del último mensaje (tiene prioridad)
         entities = tracker.latest_message.get('entities', [])
+        placa_msg = None
+        dni_msg = None
+        ruc_msg = None
+
         for entity in entities:
-            if entity['entity'] == 'placa' and not placa:
-                placa = entity['value']
-            elif entity['entity'] == 'dni' and not dni:
-                dni = entity['value']
-            elif entity['entity'] == 'ruc' and not ruc:
-                ruc = entity['value']
+            if entity['entity'] == 'placa':
+                placa_msg = entity['value']
+            elif entity['entity'] == 'dni':
+                dni_msg = entity['value']
+            elif entity['entity'] == 'ruc':
+                ruc_msg = entity['value']
 
-        logger.info(f"📊 Datos detectados - Placa: {placa}, DNI: {dni}, RUC: {ruc}")
+        # Obtener datos de slots actuales
+        placa_slot = tracker.get_slot("placa")
+        dni_slot = tracker.get_slot("dni")
+        ruc_slot = tracker.get_slot("ruc")
 
-        # Determinar qué dato usar (prioridad: placa > dni > ruc)
-        if placa:
-            return self._procesar_placa(dispatcher, placa)
-        elif dni:
-            return self._procesar_dni(dispatcher, dni)
-        elif ruc:
-            return self._procesar_ruc(dispatcher, ruc)
+        logger.info(f"📊 Entities del mensaje: placa={placa_msg}, dni={dni_msg}, ruc={ruc_msg}")
+        logger.info(f"📊 Slots actuales: placa={placa_slot}, dni={dni_slot}, ruc={ruc_slot}")
+
+        # Determinar qué tipo de consulta es ESTA vez (prioridad a entities del mensaje)
+        if placa_msg:
+            tipo_actual = "placa"
+            valor_actual = placa_msg
+        elif dni_msg:
+            tipo_actual = "dni"
+            valor_actual = dni_msg
+        elif ruc_msg:
+            tipo_actual = "ruc"
+            valor_actual = ruc_msg
+        elif placa_slot and not dni_msg and not ruc_msg:
+            tipo_actual = "placa"
+            valor_actual = placa_slot
+        elif dni_slot and not placa_msg and not ruc_msg:
+            tipo_actual = "dni"
+            valor_actual = dni_slot
+        elif ruc_slot and not placa_msg and not dni_msg:
+            tipo_actual = "ruc"
+            valor_actual = ruc_slot
+        else:
+            return self._solicitar_datos(dispatcher)
+
+        logger.info(f"🎯 Tipo de consulta detectado: {tipo_actual} = {valor_actual}")
+
+        # Procesar según el tipo detectado
+        if tipo_actual == "placa":
+            return self._procesar_placa(dispatcher, valor_actual)
+        elif tipo_actual == "dni":
+            return self._procesar_dni(dispatcher, valor_actual)
+        elif tipo_actual == "ruc":
+            return self._procesar_ruc(dispatcher, valor_actual)
         else:
             return self._solicitar_datos(dispatcher)
 
     def _procesar_placa(self, dispatcher: CollectingDispatcher,
-                        placa: str) -> List[Dict[Text, Any]]:
+                       placa: str) -> List[Dict[Text, Any]]:
         """Procesa consulta por placa"""
 
         # Validar formato
@@ -74,20 +102,24 @@ class ActionConsultarPapeletas(Action):
         if not es_valida:
             mensaje = validator.get_validation_message('placa', False, placa)
             dispatcher.utter_message(text=mensaje)
-            return [SlotSet("placa", None)]
+            return self._reset_all_slots()
 
         # Pedir confirmación
         mensaje = f"Detecté la placa **{placa_limpia}**. ¿Es correcta?"
         dispatcher.utter_message(text=mensaje)
 
         return [
+            # Limpiar otros tipos
+            SlotSet("dni", None),
+            SlotSet("ruc", None),
+            # Configurar para placa
             SlotSet("placa", placa_limpia),
             SlotSet("dato_detectado", "placa"),
             SlotSet("esperando_confirmacion", True)
         ]
 
     def _procesar_dni(self, dispatcher: CollectingDispatcher,
-                      dni: str) -> List[Dict[Text, Any]]:
+                     dni: str) -> List[Dict[Text, Any]]:
         """Procesa consulta por DNI"""
 
         # Validar formato
@@ -96,20 +128,24 @@ class ActionConsultarPapeletas(Action):
         if not es_valido:
             mensaje = validator.get_validation_message('dni', False, dni)
             dispatcher.utter_message(text=mensaje)
-            return [SlotSet("dni", None)]
+            return self._reset_all_slots()
 
         # Pedir confirmación
         mensaje = f"Detecté el DNI **{dni_limpio}**. ¿Es correcto?"
         dispatcher.utter_message(text=mensaje)
 
         return [
+            # Limpiar otros tipos
+            SlotSet("placa", None),
+            SlotSet("ruc", None),
+            # Configurar para DNI
             SlotSet("dni", dni_limpio),
             SlotSet("dato_detectado", "dni"),
             SlotSet("esperando_confirmacion", True)
         ]
 
     def _procesar_ruc(self, dispatcher: CollectingDispatcher,
-                      ruc: str) -> List[Dict[Text, Any]]:
+                     ruc: str) -> List[Dict[Text, Any]]:
         """Procesa consulta por RUC"""
 
         # Validar formato
@@ -118,13 +154,17 @@ class ActionConsultarPapeletas(Action):
         if not es_valido:
             mensaje = validator.get_validation_message('ruc', False, ruc)
             dispatcher.utter_message(text=mensaje)
-            return [SlotSet("ruc", None)]
+            return self._reset_all_slots()
 
         # Pedir confirmación
         mensaje = f"Detecté el RUC **{ruc_limpio}**. ¿Es correcto?"
         dispatcher.utter_message(text=mensaje)
 
         return [
+            # Limpiar otros tipos
+            SlotSet("placa", None),
+            SlotSet("dni", None),
+            # Configurar para RUC
             SlotSet("ruc", ruc_limpio),
             SlotSet("dato_detectado", "ruc"),
             SlotSet("esperando_confirmacion", True)
@@ -142,10 +182,21 @@ class ActionConsultarPapeletas(Action):
 ¿Cuál prefieres proporcionar?"""
 
         dispatcher.utter_message(text=mensaje)
-        return []
+        return self._reset_all_slots()
+
+    def _reset_all_slots(self) -> List[Dict[Text, Any]]:
+        """Resetea todos los slots de datos"""
+        return [
+            SlotSet("placa", None),
+            SlotSet("dni", None),
+            SlotSet("ruc", None),
+            SlotSet("esperando_confirmacion", False),
+            SlotSet("dato_detectado", None),
+            SlotSet("tipo_consulta_actual", None)
+        ]
 
     def _procesar_confirmacion(self, dispatcher: CollectingDispatcher,
-                               tracker: Tracker) -> List[Dict[Text, Any]]:
+                             tracker: Tracker) -> List[Dict[Text, Any]]:
         """Procesa la confirmación del usuario"""
 
         intent = tracker.latest_message['intent']['name']
@@ -166,7 +217,7 @@ class ActionConsultarPapeletas(Action):
             return []
 
     def _ejecutar_consulta_api(self, dispatcher: CollectingDispatcher,
-                               tracker: Tracker, dato_tipo: str) -> List[Dict[Text, Any]]:
+                             tracker: Tracker, dato_tipo: str) -> List[Dict[Text, Any]]:
         """Ejecuta la consulta a la API correspondiente"""
 
         if dato_tipo == "placa":
@@ -198,7 +249,7 @@ class ActionConsultarPapeletas(Action):
         return self._reset_slots()
 
     def _formatear_respuesta_papeletas(self, data: Dict[str, Any],
-                                       tipo_consulta: str, tracker: Tracker) -> str:
+                                     tipo_consulta: str, tracker: Tracker) -> str:
         """Formatea la respuesta de la API de papeletas"""
 
         body_count = data.get("bodyCount", 0)
@@ -260,7 +311,7 @@ class ActionConsultarPapeletas(Action):
         return mensaje
 
     def _manejar_error_api(self, dispatcher: CollectingDispatcher,
-                           tipo_consulta: str, tracker: Tracker):
+                          tipo_consulta: str, tracker: Tracker):
         """Maneja errores de la API de forma amigable"""
 
         valor_consultado = ""
@@ -288,7 +339,7 @@ class ActionConsultarPapeletas(Action):
         dispatcher.utter_message(text=mensaje)
 
     def _manejar_correccion(self, dispatcher: CollectingDispatcher,
-                            dato_tipo: str) -> List[Dict[Text, Any]]:
+                           dato_tipo: str) -> List[Dict[Text, Any]]:
         """Maneja cuando el usuario indica que el dato es incorrecto"""
 
         mensajes = {
@@ -300,17 +351,14 @@ class ActionConsultarPapeletas(Action):
         mensaje = mensajes.get(dato_tipo, "¿Cuál es el dato correcto?")
         dispatcher.utter_message(text=mensaje)
 
-        # Reset solo el dato específico
-        slots_reset = [SlotSet("esperando_confirmacion", False), SlotSet("dato_detectado", None)]
-
-        if dato_tipo == "placa":
-            slots_reset.append(SlotSet("placa", None))
-        elif dato_tipo == "dni":
-            slots_reset.append(SlotSet("dni", None))
-        elif dato_tipo == "ruc":
-            slots_reset.append(SlotSet("ruc", None))
-
-        return slots_reset
+        # Reset solo el dato específico pero mantener esperando_confirmacion en false
+        return [
+            SlotSet("esperando_confirmacion", False),
+            SlotSet("dato_detectado", None),
+            SlotSet("placa", None),
+            SlotSet("dni", None),
+            SlotSet("ruc", None)
+        ]
 
     def _reset_slots(self) -> List[Dict[Text, Any]]:
         """Resetea slots después de completar consulta"""
