@@ -184,6 +184,15 @@ nlu:
     - verificar papeletas
     - consulta de papeletas
     - ver deuda de papeletas
+    - por placa
+    - usar placa
+    - con mi placa
+    - por DNI
+    - usar DNI
+    - con mi DNI
+    - por RUC
+    - usar RUC
+    - con mi RUC
 
 # B. REGISTRAR PAPELETA
 - intent: registrar_papeleta
@@ -338,6 +347,31 @@ nlu:
     - es [15555666677](ruc)
     - [12888999000](ruc) es mi RUC
     - tengo RUC [20555444333](ruc)
+
+- intent: cambiar_tipo_consulta
+  examples: |
+    - quiero hacer la consulta por DNI
+    - ahora quiero consultar por placa
+    - mejor usar mi RUC
+    - cambio de consulta
+    - quiero usar DNI
+    - prefiero consultar por placa
+    - ahora por DNI
+    - mejor por RUC
+    - cambiar a DNI
+    - usar otro documento
+    - otra forma de consultar
+
+- intent: nueva_consulta
+  examples: |
+    - otra consulta
+    - quiero hacer otra pregunta
+    - algo más
+    - otra cosa
+    - necesito consultar algo más
+    - tengo otra duda
+    - quiero preguntar otra cosa
+    - otra consulta por favor
 
 - intent: provide_codigo_falta
   examples: |

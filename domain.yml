@@ -38,6 +38,8 @@ intents:
   - provide_dni
   - provide_ruc
   - provide_codigo_falta
+  - cambiar_tipo_consulta
+  - nueva_consulta
 
   # ========== INTENTS FUTUROS (preparados) ==========
   # Nota: Estos se habilitarán cuando implementemos las opciones 4-9

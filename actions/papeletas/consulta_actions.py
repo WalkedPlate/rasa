@@ -4,7 +4,7 @@ Actions para consulta de papeletas con APIs del SAT
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, FollowupAction
 import logging
 
 from ..core.validators import validator
@@ -170,10 +170,32 @@ class ActionConsultarPapeletas(Action):
             SlotSet("esperando_confirmacion", True)
         ]
 
-    def _solicitar_datos(self, dispatcher: CollectingDispatcher) -> List[Dict[Text, Any]]:
+    def _solicitar_datos(self, dispatcher: CollectingDispatcher, tracker: Tracker) -> List[Dict[Text, Any]]:
         """Solicita datos cuando no se proporcionaron"""
 
-        mensaje = """Para consultar tus papeletas necesito uno de estos datos:
+        # Verificar si el usuario indicó un tipo específico
+        mensaje_usuario = tracker.latest_message.get('text', '').lower()
+
+        if 'placa' in mensaje_usuario:
+            mensaje = """Perfecto, vamos a consultar por placa vehicular 🚗
+
+Por favor, dime el número de tu placa:
+📝 **Ejemplos:** ABC123, U1A710, DEF456"""
+
+        elif 'dni' in mensaje_usuario:
+            mensaje = """Perfecto, vamos a consultar por DNI 🆔
+
+Por favor, dime tu número de DNI:
+📝 **Formato:** 8 dígitos (ejemplo: 12345678)"""
+
+        elif 'ruc' in mensaje_usuario:
+            mensaje = """Perfecto, vamos a consultar por RUC 🏢
+
+Por favor, dime el número de RUC:
+📝 **Formato:** 11 dígitos (ejemplo: 20123456789)"""
+
+        else:
+            mensaje = """Para consultar tus papeletas necesito uno de estos datos:
 
 🚗 **Placa del vehículo** - Ej: ABC123, U1A710
 🆔 **Tu DNI** - 8 dígitos
@@ -243,6 +265,10 @@ class ActionConsultarPapeletas(Action):
         if resultado is not None:
             mensaje = self._formatear_respuesta_papeletas(resultado, dato_tipo, tracker)
             dispatcher.utter_message(text=mensaje)
+
+            # Ofrecer nuevas consultas
+            mensaje_adicional = "\n\n💬 **¿Necesitas algo más?**\n• 'Consultar con otro documento' para nueva consulta\n• 'Pagos en línea' para información de pagos\n• 'Finalizar' para cerrar la conversación"
+            dispatcher.utter_message(text=mensaje_adicional)
         else:
             self._manejar_error_api(dispatcher, dato_tipo, tracker)
 
