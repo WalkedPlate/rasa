@@ -40,15 +40,7 @@ intents:
   - provide_codigo_falta
   - cambiar_tipo_consulta
   - nueva_consulta
-
-  # ========== INTENTS FUTUROS (preparados) ==========
-  # Nota: Estos se habilitarán cuando implementemos las opciones 4-9
-  # - impuestos                 # Opción 4
-  # - retencion_captura         # Opción 5
-  # - actualizar_datos          # Opción 6
-  # - lugares_pagos             # Opción 7
-  # - servicios_virtuales       # Opción 8
-  # - otros_tramites            # Opción 9
+  - limpiar_contexto           # NUEVO: Para resetear cuando usuario cambia
 
 entities:
   # Datos de identificación
@@ -61,68 +53,48 @@ entities:
   - consulta_type
   - frecuentes_type
 
-  # Entidades futuras (preparadas)
-  # - impuesto_type
-  # - tramite_type
-  # - servicio_type
-
 slots:
-  # ========== SLOTS PARA DATOS DE USUARIO ==========
-  placa:
+  # ========== SLOTS SIMPLIFICADOS - SOLO DATOS ==========
+  documento_consulta:
     type: text
-    influence_conversation: true
+    influence_conversation: false    # ✅ NO influye - solo almacena
     mappings:
-    - type: from_entity
-      entity: placa
+    - type: custom
 
-  dni:
-    type: text
-    influence_conversation: true
+  tipo_documento:
+    type: text                       # "placa", "dni", "ruc"
+    influence_conversation: true     # ✅ SÍ influye - determina flujo API
     mappings:
-    - type: from_entity
-      entity: dni
-
-  ruc:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: from_entity
-      entity: ruc
+    - type: custom
 
   codigo_falta:
     type: text
-    influence_conversation: true
+    influence_conversation: false    # ✅ NO influye - solo almacena
     mappings:
     - type: from_entity
       entity: codigo_falta
 
-  # ========== SLOTS PARA CONTEXTO ==========
-  esperando_confirmacion:
+  # ========== SLOTS DE CONTEXTO ESPECÍFICOS ==========
+  confirmacion_pendiente:
     type: bool
     initial_value: false
-    influence_conversation: true
+    influence_conversation: true     # ✅ SÍ influye - estado de confirmación
     mappings:
     - type: custom
 
-  tipo_consulta_actual:
-    type: text
-    influence_conversation: true
+  opcion_actual:
+    type: text                       # "papeletas", "pagos", "casilla", etc.
+    influence_conversation: true     # ✅ SÍ influye - contexto general
     mappings:
     - type: custom
 
-  dato_detectado:
-    type: text
-    influence_conversation: true
-    mappings:
-    - type: custom
-
-  # ========== SLOTS FUTUROS (preparados) ==========
-  # codigo_contribuyente:
-  #   type: text
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: from_entity
-  #     entity: codigo_contribuyente
+  # ========== ELIMINAR ESTOS SLOTS COMPLEJOS ==========
+  # placa: ELIMINADO - ahora es documento_consulta
+  # dni: ELIMINADO - ahora es documento_consulta
+  # ruc: ELIMINADO - ahora es documento_consulta
+  # esperando_confirmacion: ELIMINADO - ahora es confirmacion_pendiente
+  # dato_detectado: ELIMINADO - ahora es tipo_documento
+  # tipo_consulta_actual: ELIMINADO - ahora es opcion_actual
 
 responses:
   # ========== RESPUESTAS BÁSICAS ==========
@@ -246,13 +218,30 @@ responses:
       Puede verificar los descuentos en el siguiente link: 
       📌https://www.sat.gob.pe/websitev9/TributosMultas/Papeletas/InformacionCodigodeTransito, numeral 6.
 
-  # ========== RESPUESTAS DE CONFIRMACIÓN ==========
-  # Estas respuestas se manejan dentro de los actions inteligentes
-  # utter_confirmar_placa, utter_confirmar_dni, etc. no son necesarias
+  # ========== NUEVAS RESPUESTAS PARA CONFIRMACIÓN ==========
+  utter_pedir_confirmacion_placa:
+  - text: "Detecté la placa **{documento_consulta}**. ¿Es correcta?"
 
-  # ========== RESPUESTAS DE SOLICITUD DE DATOS ==========
-  # Estas también se manejan dentro de los actions inteligentes
-  # utter_ask_placa, utter_ask_dni, etc. no son necesarias
+  utter_pedir_confirmacion_dni:
+  - text: "Detecté el DNI **{documento_consulta}**. ¿Es correcto?"
+
+  utter_pedir_confirmacion_ruc:
+  - text: "Detecté el RUC **{documento_consulta}**. ¿Es correcto?"
+
+  utter_pedir_confirmacion_codigo:
+  - text: "Detecté el código de falta **{codigo_falta}**. ¿Es correcto?"
+
+  utter_dato_invalido:
+  - text: |
+      ❌ El dato proporcionado no tiene un formato válido.
+      
+      Por favor verifica e intenta nuevamente.
+
+  utter_limpiar_contexto:
+  - text: |
+      ✨ Listo, empezamos de nuevo.
+      
+      ¿En qué puedo ayudarte?
 
   # ========== RESPUESTAS DE ERROR ==========
   utter_default:
@@ -290,10 +279,21 @@ actions:
   - utter_imagen_papeleta
   - utter_consecuencias_no_pago
 
-  # ========== CUSTOM ACTIONS (APIs) ==========
-  - action_consultar_papeletas
-  - action_consultar_codigo_falta
+  # ========== NUEVOS ACTIONS SIMPLIFICADOS ==========
+  - action_validar_documento      # Solo valida y pide confirmación
+  - action_consultar_api         # Solo consulta API
+  - action_validar_codigo        # Solo valida código
+  - action_consultar_codigo_api  # Solo consulta código API
+  - action_limpiar_contexto      # Solo limpia slots
   - action_finalizar_chat
+
+  # ========== ACTIONS DE CONFIRMACIÓN ==========
+  - utter_pedir_confirmacion_placa
+  - utter_pedir_confirmacion_dni
+  - utter_pedir_confirmacion_ruc
+  - utter_pedir_confirmacion_codigo
+  - utter_dato_invalido
+  - utter_limpiar_contexto
 
 session_config:
   session_expiration_time: 60

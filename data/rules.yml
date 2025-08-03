@@ -80,9 +80,36 @@ rules:
   - intent: consecuencias_no_pago
   - action: utter_consecuencias_no_pago
 
-# ========== REGLAS PARA DATOS CON ACTIONS INTELIGENTES ==========
+# ========== REGLAS PARA DATOS CON ACTIONS ==========
 
-- rule: Consultar papeletas cuando se proporciona placa
+- rule: Consultar papeletas con placa
+  condition:
+  - active_loop: null
+  steps:
+  - intent: provide_placa
+    entities:
+    - placa
+  - action: action_consultar_papeletas
+
+- rule: Consultar papeletas con DNI
+  condition:
+  - active_loop: null
+  steps:
+  - intent: provide_dni
+    entities:
+    - dni
+  - action: action_consultar_papeletas
+
+- rule: Consultar papeletas con RUC
+  condition:
+  - active_loop: null
+  steps:
+  - intent: provide_ruc
+    entities:
+    - ruc
+  - action: action_consultar_papeletas
+
+- rule: Consultar deuda genérico con placa
   condition:
   - active_loop: null
   steps:
@@ -91,7 +118,7 @@ rules:
     - placa
   - action: action_consultar_papeletas
 
-- rule: Consultar papeletas cuando se proporciona DNI
+- rule: Consultar deuda genérico con DNI
   condition:
   - active_loop: null
   steps:
@@ -100,7 +127,7 @@ rules:
     - dni
   - action: action_consultar_papeletas
 
-- rule: Consultar papeletas cuando se proporciona RUC
+- rule: Consultar deuda genérico con RUC
   condition:
   - active_loop: null
   steps:
@@ -109,18 +136,23 @@ rules:
     - ruc
   - action: action_consultar_papeletas
 
-- rule: Consultar papeletas sin datos
+- rule: Consultar deuda sin datos
   condition:
   - active_loop: null
   steps:
   - intent: consultar_deuda
-  - slot_was_set:
-    - placa: null
-    - dni: null
-    - ruc: null
   - action: action_consultar_papeletas
 
-- rule: Consultar código cuando se proporciona
+- rule: Consultar código con entity
+  condition:
+  - active_loop: null
+  steps:
+  - intent: provide_codigo_falta
+    entities:
+    - codigo_falta
+  - action: action_consultar_codigo_falta
+
+- rule: Consultar código de infracción con entity
   condition:
   - active_loop: null
   steps:
@@ -129,13 +161,47 @@ rules:
     - codigo_falta
   - action: action_consultar_codigo_falta
 
-- rule: Consultar código sin proporcionar
+- rule: Consultar código de infracción sin entity
   condition:
   - active_loop: null
   steps:
   - intent: codigo_infraccion
+  - action: action_consultar_codigo_falta
+
+# ========== REGLAS DE CONFIRMACIÓN ==========
+
+- rule: Confirmar sí cuando hay confirmación pendiente
+  condition:
   - slot_was_set:
-    - codigo_falta: null
+    - confirmacion_pendiente: true
+  steps:
+  - intent: confirm_yes
+  - action: action_consultar_papeletas
+
+- rule: Confirmar no cuando hay confirmación pendiente
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+  steps:
+  - intent: confirm_no
+  - action: action_consultar_papeletas
+
+- rule: Confirmar sí para código cuando hay confirmación pendiente
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "codigo_falta"
+  steps:
+  - intent: confirm_yes
+  - action: action_consultar_codigo_falta
+
+- rule: Confirmar no para código cuando hay confirmación pendiente
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+    - opcion_actual: "codigo_falta"
+  steps:
+  - intent: confirm_no
   - action: action_consultar_codigo_falta
 
 # ========== REGLAS DE FALLBACK ==========
@@ -145,7 +211,34 @@ rules:
   - intent: nlu_fallback
   - action: utter_default
 
-# ========== REGLAS FUTURAS (PREPARADAS) ==========
+# ========== REGLAS DE CONTEXT SWITCHING ==========
+
+# Cuando hay confirmación pendiente pero usuario cambia de opción
+- rule: Cambio a pagos durante confirmación
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+  steps:
+  - intent: pagos_linea
+  - action: utter_pagos_linea
+
+- rule: Cambio a casilla durante confirmación
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+  steps:
+  - intent: casilla_mtc
+  - action: utter_casilla_mtc
+
+- rule: Cambio a papeletas durante confirmación
+  condition:
+  - slot_was_set:
+    - confirmacion_pendiente: true
+  steps:
+  - intent: papeletas
+  - action: utter_papeletas_menu
+
+# ========== REGLAS FUTURAS (PREPARADAS PERO COMENTADAS) ==========
 # Estas reglas se activarán cuando implementemos las opciones 4-9
 
 # - rule: Impuestos respuesta directa
