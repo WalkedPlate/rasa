@@ -168,39 +168,43 @@ rules:
   - intent: codigo_infraccion
   - action: action_consultar_codigo_falta
 
-# ========== REGLAS DE CONFIRMACIÓN ==========
+# ========== REGLAS DE CONFIRMACIÓN CON CONDICIONES EXCLUSIVAS ==========
 
-- rule: Confirmar sí cuando hay confirmación pendiente para papeletas
+- rule: Confirmar sí para papeletas
   condition:
   - slot_was_set:
     - confirmacion_pendiente: true
+  - slot_was_set:
     - opcion_actual: "papeletas"
   steps:
   - intent: confirm_yes
   - action: action_consultar_papeletas
 
-- rule: Confirmar no cuando hay confirmación pendiente para papeletas
+- rule: Confirmar no para papeletas
   condition:
   - slot_was_set:
     - confirmacion_pendiente: true
+  - slot_was_set:
     - opcion_actual: "papeletas"
   steps:
   - intent: confirm_no
   - action: action_consultar_papeletas
 
-- rule: Confirmar sí para código cuando hay confirmación pendiente
+- rule: Confirmar sí para código
   condition:
   - slot_was_set:
     - confirmacion_pendiente: true
+  - slot_was_set:
     - opcion_actual: "codigo_falta"
   steps:
   - intent: confirm_yes
   - action: action_consultar_codigo_falta
 
-- rule: Confirmar no para código cuando hay confirmación pendiente
+- rule: Confirmar no para código
   condition:
   - slot_was_set:
     - confirmacion_pendiente: true
+  - slot_was_set:
     - opcion_actual: "codigo_falta"
   steps:
   - intent: confirm_no
