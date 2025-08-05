@@ -3,234 +3,107 @@ version: "3.1"
 rules:
 
 # ========== REGLAS BÁSICAS ==========
-
-- rule: Activar saludo siempre
+- rule: Saludo inicial
   steps:
   - intent: greet
   - action: utter_greet
 
-- rule: Activar despedida siempre
+- rule: Despedida
   steps:
   - intent: goodbye
   - action: utter_goodbye
 
-- rule: Finalizar chat siempre
+- rule: Mostrar menú principal
   steps:
-  - intent: finalizar_chat
-  - action: action_finalizar_chat
+  - intent: menu_principal
+  - action: utter_menu_principal
 
-# ========== REGLAS OPCIONES PRINCIPALES ==========
-
-- rule: Casilla MTC respuesta directa
+# ========== CONSULTAS RÁPIDAS ESPECÍFICAS (GLOBAL) ==========
+- rule: Consulta rápida papeletas con placa
   steps:
-  - intent: casilla_mtc
+  - intent: consulta_rapida_papeletas_placa
+  - action: action_consultar_papeletas
+
+- rule: Consulta rápida papeletas con DNI
+  steps:
+  - intent: consulta_rapida_papeletas_dni
+  - action: action_consultar_papeletas
+
+- rule: Consulta rápida papeletas con RUC
+  steps:
+  - intent: consulta_rapida_papeletas_ruc
+  - action: action_consultar_papeletas
+
+- rule: Consulta rápida código de falta
+  steps:
+  - intent: consulta_rapida_codigo_falta
+  - action: action_consultar_codigo_falta
+
+# ========== NAVEGACIÓN A CONTEXTOS ==========
+- rule: Ir a Casilla MTC
+  steps:
+  - intent: ir_a_casilla_mtc
   - action: utter_casilla_mtc
 
-- rule: Pagos en línea respuesta directa
+- rule: Ir a Pagos en línea
   steps:
-  - intent: pagos_linea
+  - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-- rule: Papeletas menú principal
+- rule: Ir a Papeletas
   steps:
-  - intent: papeletas
+  - intent: ir_a_papeletas
   - action: utter_papeletas_menu
 
-# ========== REGLAS PAPELETAS - SUBMENÚS ==========
-
-- rule: Consulta y pago menú
+# ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
+- rule: Papeletas - Consultar con placa
   steps:
-  - intent: consulta_pago
-  - action: utter_consulta_pago_menu
-
-- rule: Registrar papeleta directo
-  steps:
-  - intent: registrar_papeleta
-  - action: utter_registrar_papeleta
-
-- rule: Consultas frecuentes menú
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-
-- rule: Facilidad de pago directo
-  steps:
-  - intent: facilidad_pago
-  - action: utter_facilidad_pago
-
-# ========== REGLAS CONSULTAS FRECUENTES ==========
-
-- rule: Plazos y descuentos directo
-  steps:
-  - intent: plazos_descuentos
-  - action: utter_plazos_descuentos
-
-- rule: Responsable multa directo
-  steps:
-  - intent: responsable_multa
-  - action: utter_responsable_multa
-
-- rule: Imagen papeleta directo
-  steps:
-  - intent: imagen_papeleta
-  - action: utter_imagen_papeleta
-
-- rule: Consecuencias no pago directo
-  steps:
-  - intent: consecuencias_no_pago
-  - action: utter_consecuencias_no_pago
-
-# ========== REGLAS PARA DATOS CON ACTIONS ==========
-
-- rule: Consultar papeletas con placa
-  condition:
-  - active_loop: null
-  steps:
-  - intent: provide_placa
-    entities:
-    - placa
+  - intent: papeletas_consultar_placa
   - action: action_consultar_papeletas
 
-- rule: Consultar papeletas con DNI
-  condition:
-  - active_loop: null
+- rule: Papeletas - Consultar con DNI
   steps:
-  - intent: provide_dni
-    entities:
-    - dni
+  - intent: papeletas_consultar_dni
   - action: action_consultar_papeletas
 
-- rule: Consultar papeletas con RUC
-  condition:
-  - active_loop: null
+- rule: Papeletas - Consultar con RUC
   steps:
-  - intent: provide_ruc
-    entities:
-    - ruc
+  - intent: papeletas_consultar_ruc
   - action: action_consultar_papeletas
 
-- rule: Consultar deuda genérico con placa
-  condition:
-  - active_loop: null
+- rule: Papeletas - Consultar código de falta
   steps:
-  - intent: consultar_deuda
-    entities:
-    - placa
-  - action: action_consultar_papeletas
-
-- rule: Consultar deuda genérico con DNI
-  condition:
-  - active_loop: null
-  steps:
-  - intent: consultar_deuda
-    entities:
-    - dni
-  - action: action_consultar_papeletas
-
-- rule: Consultar deuda genérico con RUC
-  condition:
-  - active_loop: null
-  steps:
-  - intent: consultar_deuda
-    entities:
-    - ruc
-  - action: action_consultar_papeletas
-
-- rule: Consultar deuda sin datos
-  condition:
-  - active_loop: null
-  steps:
-  - intent: consultar_deuda
-  - action: action_consultar_papeletas
-
-- rule: Consultar código con entity
-  condition:
-  - active_loop: null
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta
+  - intent: papeletas_consultar_codigo_falta
   - action: action_consultar_codigo_falta
 
-- rule: Consultar código de infracción con entity
-  condition:
-  - active_loop: null
+- rule: Papeletas - Consultar genérico
   steps:
-  - intent: codigo_infraccion
-    entities:
-    - codigo_falta
-  - action: action_consultar_codigo_falta
+  - intent: papeletas_consultar_generico
+  - action: action_consultar_papeletas
 
-- rule: Consultar código de infracción sin entity
-  condition:
-  - active_loop: null
+- rule: Papeletas - Registrar
   steps:
-  - intent: codigo_infraccion
-  - action: action_consultar_codigo_falta
+  - intent: papeletas_registrar
+  - action: utter_papeletas_registrar
 
-# ========== REGLAS DE FALLBACK ==========
+- rule: Papeletas - Facilidades
+  steps:
+  - intent: papeletas_facilidades
+  - action: utter_papeletas_facilidades
 
-- rule: Respuesta por defecto cuando no se entiende
+- rule: Papeletas - Frecuentes
+  steps:
+  - intent: papeletas_frecuentes
+  - action: utter_papeletas_frecuentes
+
+# ========== NAVEGACIÓN GLOBAL ==========
+- rule: Otra consulta
+  steps:
+  - intent: otra_consulta
+  - action: utter_otra_consulta
+
+# ========== FALLBACK GLOBAL ==========
+- rule: Fallback
   steps:
   - intent: nlu_fallback
   - action: utter_default
-
-# ========== REGLAS DE CONTEXT SWITCHING ==========
-
-# Cuando hay confirmación pendiente pero usuario cambia de opción
-- rule: Cambio a pagos durante confirmación
-  condition:
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  steps:
-  - intent: pagos_linea
-  - action: utter_pagos_linea
-
-- rule: Cambio a casilla durante confirmación
-  condition:
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  steps:
-  - intent: casilla_mtc
-  - action: utter_casilla_mtc
-
-- rule: Cambio a papeletas durante confirmación
-  condition:
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-
-# ========== REGLAS FUTURAS (PREPARADAS PERO COMENTADAS) ==========
-# Estas reglas se activarán cuando implementemos las opciones 4-9
-
-# - rule: Impuestos respuesta directa
-#   steps:
-#   - intent: impuestos
-#   - action: utter_impuestos_menu
-
-# - rule: Retención y captura respuesta directa
-#   steps:
-#   - intent: retencion_captura
-#   - action: utter_retencion_captura_menu
-
-# - rule: Actualizar datos respuesta directa
-#   steps:
-#   - intent: actualizar_datos
-#   - action: utter_actualizar_datos
-
-# - rule: Lugares y pagos respuesta directa
-#   steps:
-#   - intent: lugares_pagos
-#   - action: utter_lugares_pagos_menu
-
-# - rule: Servicios virtuales respuesta directa
-#   steps:
-#   - intent: servicios_virtuales
-#   - action: utter_servicios_virtuales_menu
-
-# - rule: Otros trámites respuesta directa
-#   steps:
-#   - intent: otros_tramites
-#   - action: utter_otros_tramites_menu

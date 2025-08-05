@@ -1,7 +1,15 @@
 version: "3.1"
 
 nlu:
-# ========== REGEX PATTERNS PARA MEJOR DETECCIÓN ==========
+# ========== REGEX PATTERNS ==========
+- regex: placa_pattern
+  examples: |
+    - \b[A-Z]{3}\d{3}\b
+    - \b[A-Z]{2}\d{4}\b
+    - \b[A-Z]\d[A-Z]\d{3}\b
+    - \bU\d[A-Z]\d{3}\b
+    - \b[TSD][A-Z]{2}\d{3}\b
+
 - regex: dni_pattern
   examples: |
     - \b\d{8}\b
@@ -10,15 +18,7 @@ nlu:
   examples: |
     - \b[12]\d{10}\b
 
-- regex: placa_pattern
-  examples: |
-    - \b[A-Z]{3}\d{3}\b
-    - \b[A-Z]{2}\d{4}\b
-    - \b[A-Z]\d[A-Z]\d{3}\b
-    - \b[TSD][A-Z]{2}\d{3}\b
-    - \bU\d[A-Z]\d{3}\b
-
-- regex: codigo_falta_pattern
+- regex: codigo_pattern
   examples: |
     - \b[A-Z]\d{1,2}\b
 
@@ -52,165 +52,287 @@ nlu:
     - muchas gracias
     - está bien gracias
     - ok gracias
-
-- intent: finalizar_chat
-  examples: |
-    - finalizar
-    - terminar
-    - cerrar chat
-    - terminar conversación
-    - finalizar sesión
     - listo gracias
-    - eso es todo gracias
-    - hasta aquí
-    - cerrar
-    - salir
-    - fin
-    - acabar
-    - ya terminé
-    - quiero finalizar
-    - cerrar la conversación
+    - eso es todo
 
-- intent: confirm_yes
+- intent: menu_principal
   examples: |
-    - sí
-    - si
-    - correcto
-    - exacto
-    - perfecto
-    - está bien
-    - ok
-    - vale
-    - confirmo
-    - así es
-    - efectivamente
-    - claro
-    - por supuesto
-    - afirmativo
-    - es correcto
-    - sí es correcto
-    - confirmo que sí
+    - menú
+    - menu
+    - menú principal
+    - inicio
+    - volver al menú
+    - volver al inicio
+    - qué opciones tienes
+    - qué puedes hacer
+    - todas las opciones
+    - mostrar opciones
+    - opciones principales
+    - qué más puedes hacer
 
-- intent: confirm_no
+# ========== CONSULTAS RÁPIDAS ESPECÍFICAS (GLOBAL) ==========
+- intent: consulta_rapida_papeletas_placa
   examples: |
-    - no
-    - incorrecto
-    - está mal
-    - no es correcto
-    - error
-    - equivocado
-    - mal
-    - negativo
-    - no está bien
-    - falso
-    - no es así
-    - no es esa
+    - ver papeletas de mi placa [ABC123](placa)
+    - consultar multas de la placa [U1A710](placa)
+    - papeletas de mi vehículo [XYZ789](placa)
+    - quiero saber las papeletas de [DEF456](placa)
+    - multas de mi placa [GHI789](placa)
+    - revisar papeletas de [MNO123](placa)
+    - consultar infracciones de mi placa [PQR456](placa)
+    - ver si tengo multas en la placa [STU789](placa)
+    - papeletas pendientes de [ABC123](placa)
+    - multas del vehículo [U1A710](placa)
+    - infracciones de la placa [XYZ789](placa)
+    - consultar papeletas de [DEF456](placa)
 
-# ========== OPCIONES PRINCIPALES SAT ==========
+- intent: consulta_rapida_papeletas_dni
+  examples: |
+    - consultar multas de mi DNI [12345678](dni)
+    - ver papeletas de mi DNI [87654321](dni)
+    - papeletas con mi DNI [11223344](dni)
+    - quiero saber las multas de [55667788](dni)
+    - revisar papeletas del DNI [99887766](dni)
+    - consultar infracciones con DNI [44556677](dni)
+    - multas de mi documento [12345678](dni)
+    - ver si tengo papeletas con [87654321](dni)
+    - papeletas pendientes de [11223344](dni)
+    - infracciones de mi DNI [55667788](dni)
+    - multas con el DNI [99887766](dni)
+    - consultar papeletas del [44556677](dni)
 
-# OPCIÓN 1: CASILLA MTC
-- intent: casilla_mtc
+- intent: consulta_rapida_papeletas_ruc
+  examples: |
+    - consultar multas del RUC [20123456789](ruc)
+    - ver papeletas de mi empresa [10987654321](ruc)
+    - papeletas del RUC [15555666677](ruc)
+    - quiero saber las multas de [12888999000](ruc)
+    - revisar papeletas de la empresa [20555444333](ruc)
+    - consultar infracciones del RUC [11999888777](ruc)
+    - multas de mi negocio [20123456789](ruc)
+    - papeletas de mi compañía [10987654321](ruc)
+    - infracciones empresariales [15555666677](ruc)
+    - ver multas del RUC [12888999000](ruc)
+    - consultar papeletas de [20555444333](ruc)
+
+- intent: consulta_rapida_codigo_falta
+  examples: |
+    - qué significa el código [C15](codigo_falta)
+    - código [M08](codigo_falta) qué es
+    - [A05](codigo_falta) significado
+    - consultar código [T12](codigo_falta)
+    - información del código [B20](codigo_falta)
+    - [F03](codigo_falta) qué significa
+    - en mi papeleta aparece [G40](codigo_falta)
+    - código de falta [L18](codigo_falta)
+    - qué tipo de infracción es [C15](codigo_falta)
+    - explicación del código [M08](codigo_falta)
+    - significado de [A05](codigo_falta)
+    - qué es el código [T12](codigo_falta)
+
+# ========== NAVEGACIÓN A CONTEXTOS ==========
+- intent: ir_a_casilla_mtc
   examples: |
     - casilla mtc
     - casilla electrónica
-    - casilla electrónica del mtc
-    - inscripción casilla mtc
-    - registro casilla
-    - notificaciones mtc
-    - inscribirse casilla electrónica
-    - cómo me inscribo en la casilla
-    - necesito inscribirme en casilla mtc
-    - me dijeron que necesito casilla del mtc
-    - registro obligatorio mtc
-    - casilla para trámites
-    - inscripción obligatoria casilla
-    - quiero inscribirme en casilla electrónica
+    - necesito inscribirme
+    - me dijeron que debo registrarme
+    - qué es la casilla electrónica
+    - dónde me registro para trámites
+    - registro obligatorio
+    - inscripción casilla MTC
+    - casilla electrónica del MTC
+    - me dijeron que necesito una casilla
+    - cómo me inscribo
+    - dónde me registro
+    - 1
+    - opción 1
+    - uno
 
-# OPCIÓN 2: PAGOS EN LÍNEA
-- intent: pagos_linea
+- intent: ir_a_pagos_linea
   examples: |
-    - pagos en línea
-    - pagar online
+    - pagos
+    - cómo pago
     - pagar por internet
-    - cómo pago en línea
-    - pagos por internet
-    - pagar mis multas online
-    - pagar papeletas por internet
-    - pago en línea
-    - cómo puedo pagar por internet
+    - pagar en línea
+    - información de pagos
+    - dónde puedo pagar
+    - cómo pagar mis papeletas
+    - necesito información para pagar
     - quiero pagar online
-    - información de pagos en línea
-    - pagar mis impuestos online
-    - página para pagar
-    - link para pagos
-    - dónde puedo pagar en línea
+    - formas de pago
+    - métodos de pago
+    - páginas para pagar
+    - pago online
+    - opciones de pago
+    - 2
+    - opción 2
+    - dos
 
-# OPCIÓN 3: PAPELETAS - Entrada General
-- intent: papeletas
+- intent: ir_a_papeletas
   examples: |
     - papeletas
-    - consultar papeletas
-    - multas
-    - infracciones
+    - quiero consultar papeletas
+    - consultar mis papeletas
+    - tengo una carta del SAT
+    - necesito ver si tengo papeletas
+    - quiero revisar mis infracciones
+    - me llegó una notificación
+    - consultar papeletas pendientes
+    - ver mis papeletas
+    - revisar papeletas
+    - tengo papeletas pendientes
+    - quiero saber si tengo papeletas
+    - me dijeron que tengo papeletas
+    - necesito consultar infracciones
+    - quiero ver infracciones
+    - me llegó una carta sobre papeletas
     - multas de tránsito
     - infracciones vehiculares
-    - papeletas de tránsito
-    - necesito ayuda con papeletas
-    - tengo problemas con multas
-    - quisiera consultar sobre infracciones
-    - me llegó una carta sobre multas
-    - información sobre papeletas
-    - consulta de multas
-    - papeletas vehiculares
-    - infracciones de mi auto
-    - multas pendientes
+    - 3
+    - opción 3
+    - tres
 
-# ========== SUBMENÚ PAPELETAS ==========
-
-# A. CONSULTA Y PAGO
-- intent: consulta_pago
+# ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
+- intent: papeletas_consultar_placa
   examples: |
-    - consulta y pago
-    - consultar deuda
-    - ver mi deuda
-    - consultar multas
-    - quiero consultar papeletas
-    - ver papeletas pendientes
-    - consultar infracciones
-    - revisar mis multas
-    - ver si tengo papeletas
-    - consultar papeletas pendientes
-    - quiero ver mis multas
-    - verificar papeletas
-    - consulta de papeletas
-    - ver deuda de papeletas
-    - por placa
-    - usar placa
-    - con mi placa
-    - por DNI
-    - usar DNI
-    - con mi DNI
-    - por RUC
-    - usar RUC
-    - con mi RUC
+    - [ABC123](placa)
+    - [U1A710](placa)
+    - [XYZ789](placa)
+    - [DEF456](placa)
+    - [GHI789](placa)
+    - [MNO123](placa)
+    - [PQR456](placa)
+    - [STU789](placa)
+    - [APS583](placa)
+    - [BCD890](placa)
+    - [EFG123](placa)
+    - [HIJ456](placa)
+    - [KLM789](placa)
+    - [NOP012](placa)
+    - [QRS345](placa)
+    - [TUV678](placa)
+    - [WXY901](placa)
+    - [ZAB234](placa)
+    - [CDE567](placa)
+    - [FGH890](placa)
+    - mi placa es [ABC123](placa)
+    - la placa es [U1A710](placa)
+    - tengo la placa [XYZ789](placa)
+    - consultar placa [DEF456](placa)
+    - papeletas de [GHI789](placa)
+    - ver papeletas de [MNO123](placa)
+    - quiero consultar la placa [PQR456](placa)
+    - revisar [STU789](placa)
+    - la placa [APS583](placa)
+    - consultar [BCD890](placa)
 
-# B. REGISTRAR PAPELETA
-- intent: registrar_papeleta
+- intent: papeletas_consultar_dni
+  examples: |
+    - [12345678](dni)
+    - [87654321](dni)
+    - [11223344](dni)
+    - [55667788](dni)
+    - [99887766](dni)
+    - [44556677](dni)
+    - [33445566](dni)
+    - [22334455](dni)
+    - [66778899](dni)
+    - [88990011](dni)
+    - [77665544](dni)
+    - [00998877](dni)
+    - [13579246](dni)
+    - [24681357](dni)
+    - [97531864](dni)
+    - mi DNI es [12345678](dni)
+    - el DNI es [87654321](dni)
+    - tengo DNI [11223344](dni)
+    - consultar DNI [55667788](dni)
+    - papeletas de [99887766](dni)
+    - con mi DNI [44556677](dni)
+    - revisar [12345678](dni)
+    - mi documento [87654321](dni)
+    - el documento [33445566](dni)
+    - consultar [22334455](dni)
+
+- intent: papeletas_consultar_ruc
+  examples: |
+    - [20123456789](ruc)
+    - [10987654321](ruc)
+    - [15555666677](ruc)
+    - [12888999000](ruc)
+    - [20555444333](ruc)
+    - [11999888777](ruc)
+    - mi RUC es [20123456789](ruc)
+    - el RUC es [10987654321](ruc)
+    - RUC de mi empresa [15555666677](ruc)
+    - consultar RUC [12888999000](ruc)
+    - papeletas del RUC [20555444333](ruc)
+    - con mi RUC [11999888777](ruc)
+
+- intent: papeletas_consultar_codigo_falta
+  examples: |
+    - qué significa [C15](codigo_falta)
+    - código [M08](codigo_falta)
+    - [A05](codigo_falta) qué es
+    - código de falta [T12](codigo_falta)
+    - consultar código [B20](codigo_falta)
+    - [F03](codigo_falta) significado
+    - qué es el código [G40](codigo_falta)
+    - significado del [L18](codigo_falta)
+    - información del código [C15](codigo_falta)
+    - [M08](codigo_falta) qué significa
+    - explicación de [A05](codigo_falta)
+
+- intent: papeletas_consultar_generico
+  examples: |
+    - consultar mis multas
+    - ver mis papeletas
+    - revisar infracciones
+    - consultar deuda
+    - quiero consultar mis papeletas
+    - necesito ver cuánto debo
+    - consultar papeletas pendientes
+    - ver si tengo papeletas
+    - revisar mis multas
+    - consultar infracciones pendientes
+    - tengo multas pendientes
+    - quiero saber si tengo multas
+    - revisar mi situación
+    - consultar mi estado
+
+- intent: papeletas_registrar
   examples: |
     - registrar papeleta
     - no encuentro mi papeleta
     - mi papeleta no aparece
-    - registrar multa
     - papeleta no figura
-    - no aparece mi multa
+    - no está mi papeleta
+    - registrar multa
+    - mi papeleta no está en el sistema
+    - no aparece mi infracción
     - quiero registrar una papeleta
-    - mi multa no está en el sistema
-    - registrar una multa que no aparece
-    - papeleta no está registrada
-    - falta mi papeleta en el sistema
+    - registrar una papeleta que no aparece
+    - mi multa no está registrada
+    - falta mi papeleta
 
-# C. CONSULTAS FRECUENTES
-- intent: consultas_frecuentes
+- intent: papeletas_facilidades
+  examples: |
+    - facilidades de pago
+    - pagar en cuotas
+    - fraccionamiento
+    - compromiso de pago
+    - facilidades
+    - pago fraccionado
+    - quiero pagar en partes
+    - dividir el pago
+    - pagar poco a poco
+    - opciones de fraccionamiento
+    - puedo pagar en cuotas
+    - pago en cuotas
+    - financiamiento
+
+- intent: papeletas_frecuentes
   examples: |
     - consultas frecuentes
     - preguntas frecuentes
@@ -221,144 +343,21 @@ nlu:
     - ayuda general
     - información adicional
     - dudas frecuentes
+    - más información
+    - help
 
-# ========== SUB-OPCIONES CONSULTA Y PAGO ==========
-
-- intent: consultar_deuda
+# ========== NAVEGACIÓN ==========
+- intent: otra_consulta
   examples: |
-    - consultar mi deuda con [ABC123](placa)
-    - ver papeletas de [XYZ789](placa)
-    - mi DNI es [12345678](dni) quiero consultar
-    - consultar con mi RUC [20123456789](ruc)
-    - papeletas de la placa [DEF456](placa)
-    - ver multas del DNI [87654321](dni)
-    - consultar deuda por [DNI](consulta_type)
-    - ver papeletas por [placa](consulta_type)
-    - consultar con [RUC](consulta_type)
-    - quiero consultar mi [deuda](consulta_type)
-    - papeletas del RUC [10987654321](ruc)
-    - multas de mi empresa RUC [20555444333](ruc)
-
-- intent: facilidad_pago
-  examples: |
-    - facilidad de pago
-    - facilidades de pago
-    - pagar en cuotas
-    - fraccionamiento
-    - compromiso de pago
-    - pago fraccionado
-    - información sobre facilidades
-    - cómo pagar en cuotas
-    - opciones de pago
-    - formas de pago
-
-# ========== SUB-OPCIONES CONSULTAS FRECUENTES ==========
-
-- intent: plazos_descuentos
-  examples: |
-    - plazos y descuentos
-    - información sobre [plazos](frecuentes_type)
-    - [descuentos](frecuentes_type) para pagar
-    - cuánto tiempo tengo para pagar
-    - hasta cuándo hay descuento
-    - [plazos](frecuentes_type) de pago
-    - descuentos por pronto pago
-    - fechas de vencimiento
-
-- intent: responsable_multa
-  examples: |
-    - responsable de la multa
-    - quién debe pagar
-    - [responsable](frecuentes_type) de papeleta
-    - quién es responsable
-    - responsabilidad de multa
-    - [multa](frecuentes_type) de quién es
-
-- intent: imagen_papeleta
-  examples: |
-    - imagen de papeleta
-    - [imagen](frecuentes_type) de la multa
-    - foto de la infracción
-    - ver foto de papeleta
-    - imagen de la infracción
-    - fotografía de multa
-
-- intent: codigo_infraccion
-  examples: |
-    - código de infracción
-    - [código](frecuentes_type) de falta
-    - qué significa código [C15](codigo_falta)
-    - consultar código [M08](codigo_falta)
-    - código [A05](codigo_falta) qué es
-    - significado del código [T12](codigo_falta)
-    - información del código [B20](codigo_falta)
-    - código de multa [F03](codigo_falta)
-    - [código](frecuentes_type) qué significa
-
-- intent: consecuencias_no_pago
-  examples: |
-    - qué pasa si no pago
-    - consecuencias de [no pagar](frecuentes_type)
-    - si no pago qué pasa
-    - qué sucede si no pago
-    - [no pago](frecuentes_type) mi multa
-    - efectos de no pagar
-    - penalidades por no pagar
-
-# ========== INTENTS DE DATOS ==========
-
-- intent: provide_placa
-  examples: |
-    - [ABC123](placa)
-    - [XYZ789](placa)
-    - [DEF456](placa)
-    - [GHI789](placa)
-    - [U1A710](placa)
-    - [A1B234](placa)
-    - [T1C567](placa)
-    - [S2D890](placa)
-    - mi placa es [APS583](placa)
-    - la placa es [BCD890](placa)
-    - es la [EFG123](placa)
-    - [MNO456](placa) es mi placa
-    - tengo la placa [PQR789](placa)
-
-- intent: provide_dni
-  examples: |
-    - [12345678](dni)
-    - [87654321](dni)
-    - [11223344](dni)
-    - [55667788](dni)
-    - [99887766](dni)
-    - mi DNI es [12345678](dni)
-    - el DNI es [87654321](dni)
-    - es [11223344](dni)
-    - [55667788](dni) es mi DNI
-    - tengo DNI [99887766](dni)
-
-- intent: provide_ruc
-  examples: |
-    - [20123456789](ruc)
-    - [10987654321](ruc)
-    - [15555666677](ruc)
-    - [12888999000](ruc)
-    - mi RUC es [20123456789](ruc)
-    - el RUC es [10987654321](ruc)
-    - es [15555666677](ruc)
-    - [12888999000](ruc) es mi RUC
-    - tengo RUC [20555444333](ruc)
-
-- intent: provide_codigo_falta
-  examples: |
-    - [C15](codigo_falta)
-    - [M08](codigo_falta)
-    - [A05](codigo_falta)
-    - [T12](codigo_falta)
-    - [B20](codigo_falta)
-    - [F03](codigo_falta)
-    - [G25](codigo_falta)
-    - [L18](codigo_falta)
-    - el código es [C15](codigo_falta)
-    - es [M08](codigo_falta)
-    - [A05](codigo_falta) es el código
-    - tengo el código [T12](codigo_falta)
+    - otra consulta
+    - consultar otro
+    - nueva consulta
+    - otro documento
+    - consultar más
+    - revisar otro
+    - quiero consultar otro
+    - necesito otra consulta
+    - consultar algo más
+    - ver otro documento
+    - más consultas
+    - siguiente consulta

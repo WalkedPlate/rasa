@@ -1,255 +1,270 @@
 version: "3.1"
 
 intents:
-  # ========== INTENTS BÁSICOS ==========
+  # ========== GLOBAL (funcionan siempre) ==========
   - greet
   - goodbye
-  - finalizar_chat
-  - confirm_yes
-  - confirm_no
+  - menu_principal
 
-  # ========== OPCIONES PRINCIPALES SAT ==========
-  # Opción 1: CASILLA MTC
-  - casilla_mtc
+  # ========== GLOBAL - CONSULTAS RÁPIDAS ESPECÍFICAS ==========
+  - consulta_rapida_papeletas_placa
+  - consulta_rapida_papeletas_dni
+  - consulta_rapida_papeletas_ruc
+  - consulta_rapida_codigo_falta
 
-  # Opción 2: PAGOS EN LÍNEA
-  - pagos_linea
+  # ========== NAVEGACIÓN A CONTEXTOS ==========
+  - ir_a_casilla_mtc        # Opción 1
+  - ir_a_pagos_linea        # Opción 2
+  - ir_a_papeletas          # Opción 3
 
-  # Opción 3: PAPELETAS
-  - papeletas                    # Entrada general a papeletas
-  - consulta_pago               # A. Consulta y Paga
-  - registrar_papeleta          # B. Registrar Papeleta
-  - consultas_frecuentes        # C. Consultas Frecuentes
+  # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
+  - papeletas_consultar_placa
+  - papeletas_consultar_dni
+  - papeletas_consultar_ruc
+  - papeletas_consultar_codigo_falta
+  - papeletas_consultar_generico
+  - papeletas_registrar
+  - papeletas_facilidades
+  - papeletas_frecuentes
 
-  # ========== SUB-OPCIONES PAPELETAS ==========
-  # Para Consulta y Pago
-  - consultar_deuda             # Consultar por DNI/Placa/RUC + API
-  - facilidad_pago              # Información sobre facilidades
-
-  # Para Consultas Frecuentes
-  - plazos_descuentos           # Enlaces informativos
-  - responsable_multa           # Enlaces informativos
-  - imagen_papeleta             # Enlaces informativos
-  - codigo_infraccion           # Requiere código + API
-  - consecuencias_no_pago       # Información sobre no pagar
-
-  # ========== INTENTS DE DATOS ==========
-  - provide_placa
-  - provide_dni
-  - provide_ruc
-  - provide_codigo_falta
+  # ========== NAVEGACIÓN ==========
+  - otra_consulta
 
 entities:
-  # Datos de identificación
   - placa
   - dni
   - ruc
   - codigo_falta
 
-  # Tipos de consulta para papeletas
-  - consulta_type
-  - frecuentes_type
-
 slots:
-  # ========== SLOTS SIMPLIFICADOS - SOLO DATOS ==========
-  documento_consulta:
+  # ========== SOLO PARA LOGGING ==========
+  ultimo_documento:
     type: text
-    influence_conversation: false    # ✅ NO influye - solo almacena
+    influence_conversation: false
     mappings:
     - type: custom
-
-  tipo_documento:
-    type: text                       # "placa", "dni", "ruc"
-    influence_conversation: true     # ✅ SÍ influye - determina flujo API
-    mappings:
-    - type: custom
-
-  codigo_falta:
-    type: text
-    influence_conversation: false    # ✅ NO influye - solo almacena
-    mappings:
-    - type: from_entity
-      entity: codigo_falta
-
-  # ========== SLOTS DE CONTEXTO ESPECÍFICOS ==========
-  confirmacion_pendiente:
-    type: bool
-    initial_value: false
-    influence_conversation: true     # ✅ SÍ influye - estado de confirmación
-    mappings:
-    - type: custom
-
-  opcion_actual:
-    type: text                       # "papeletas", "pagos", "casilla", etc.
-    influence_conversation: true     # ✅ SÍ influye - contexto general
-    mappings:
-    - type: custom
-
-  # ========== ELIMINAR ESTOS SLOTS COMPLEJOS ==========
-  # placa: ELIMINADO - ahora es documento_consulta
-  # dni: ELIMINADO - ahora es documento_consulta
-  # ruc: ELIMINADO - ahora es documento_consulta
-  # esperando_confirmacion: ELIMINADO - ahora es confirmacion_pendiente
-  # dato_detectado: ELIMINADO - ahora es tipo_documento
-  # tipo_consulta_actual: ELIMINADO - ahora es opcion_actual
 
 responses:
-  # ========== RESPUESTAS BÁSICAS ==========
+  # ========== BÁSICOS ==========
   utter_greet:
   - text: |
-      ¡Hola! Bienvenido al SAT de Lima 👋
-
-      Puedo ayudarte con:
-
-      🚗 **Consultar papeletas** - Dime tu placa, DNI o RUC
-      💳 **Pagos en línea** - Información para pagar por internet  
-      📋 **Casilla MTC** - Registro obligatorio para trámites
-      ❓ **Consultas frecuentes** - Plazos, códigos, descuentos
-
-      Solo dime qué necesitas en tus propias palabras. Por ejemplo:
-      • 'Quiero ver las multas de mi carro ABC123'
-      • 'Cómo puedo pagar en línea'
-      • 'Qué significa el código C15'
-
-      ¿En qué te puedo ayudar?
+      ¡Hola! Soy el asistente virtual del SAT de Lima 👋
+      
+      Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
+      
+      ⚡ **PAPELETAS:**
+      • "Ver papeletas de mi placa ABC123" - para consultar las papeletas de una placa
+      • "Consultar papeletas de mi DNI 12345678" - para consultar papeletas por DNI
+      • "Papeletas del RUC 20123456789" - para consultar papeletas de una empresa
+      • "¿Qué significa el código C15?" - para conocer el significado de códigos de infracción
+      
+      O si prefieres explorar las opciones completas:
+      
+      📋 **OPCIONES PRINCIPALES:**
+      Escribe el número o el nombre de la opción que necesitas:
+      1️⃣ **Papeletas** - Multas y consultas de tránsito
+      2️⃣ **Pagos** - Pagar por internet  
+      3️⃣ **Casilla MTC** - Registro obligatorio
+      
+      ¿Qué necesitas?
 
   utter_goodbye:
   - text: |
       ¡Gracias por usar el SAT de Lima! 👋
       
-      Espero haber sido de ayuda. Puedes regresar cuando necesites consultando nuevamente.
+      Recuerda que puedes:
+      • Consultar papeletas: "Ver papeletas de mi placa ABC123"
+      • Información de pagos: "Cómo pago por internet"
+      • Registro MTC: "Necesito inscribirme"
       
-      ¡Que tengas un buen día! 😊
+      ¡Que tengas buen día! 😊
 
-  # ========== RESPUESTAS OPCIONES PRINCIPALES ==========
+  utter_menu_principal:
+  - text: |
+      📋 **MENÚ PRINCIPAL SAT LIMA**
+
+      ⚡ **CONSULTAS RÁPIDAS DE PAPELETAS:**
+      • "Ver papeletas de mi placa ABC123"
+      • "Consultar multas de mi DNI 12345678"
+      • "¿Qué significa el código C15?"
+
+      📋 **OPCIONES PRINCIPALES:**
+      1️⃣ **Papeletas** - Multas y consultas de tránsito
+      2️⃣ **Pagos** - Pagar por internet
+      3️⃣ **Casilla MTC** - Registro obligatorio
+
+      ¿Qué necesitas?
+
+  # ========== OPCIÓN 1: CASILLA MTC ==========
   utter_casilla_mtc:
   - text: |
-      Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
-      📌https://casilla.mtc.gob.pe/#/registro
-      Base Legal: R. Directoral N°023-2024-MTC/18
+      📋 **CASILLA ELECTRÓNICA MTC**
 
+      Es **obligatorio** inscribirse para cualquier trámite de tránsito o transporte.
+
+      🔗 **Regístrate aquí:** https://casilla.mtc.gob.pe/#/registro
+
+      **¿Por qué es obligatorio?**
+      • Para recibir notificaciones oficiales
+      • Requisito para todos los trámites vehiculares
+      • Base Legal: R. Directoral N°023-2024-MTC/18
+
+      📝 **Ejemplos de lo que puedes decir después:**
+      • "Ya me registré, ahora quiero ver mis papeletas"
+      • "¿Cómo pago mis multas?"
+      • "¿Qué otros trámites puedo hacer?"
+
+      **¿Qué más necesitas?**
+      • 'Papeletas' - Consultar multas
+      • 'Pagos' - Información de pagos
+      • 'Menú principal' - Ver otras opciones
+
+  # ========== OPCIÓN 2: PAGOS ==========
   utter_pagos_linea:
   - text: |
-      Para pagos ingrese aquí: 
-      📌https://www.sat.gob.pe/pagosenlinea/
+      💳 **PAGAR POR INTERNET**
 
-      Espero que la información brindada le haya sido útil 🤗
+      🔗 **Página de pagos:** https://www.sat.gob.pe/pagosenlinea/
 
-  # ========== RESPUESTAS PAPELETAS ==========
+      💡 **Puedes pagar con:**
+      • Tarjetas: Visa, Mastercard, American Express
+      • Yape
+      • Bancos: BCP, Interbank, BBVA, Scotiabank
+
+      📝 **Ejemplos de lo que puedes decir:**
+      • "¿Puedo pagar en cuotas?"
+      • "Quiero ver mis papeletas primero"
+      • "¿Dónde están las oficinas?"
+      • "Información sobre descuentos"
+
+      **¿Qué más necesitas?**
+      • 'Papeletas' - Consultar cuánto debes
+      • 'Facilidades' - Pagar en cuotas
+      • 'Menú principal' - Otras opciones
+
+  # ========== OPCIÓN 3: PAPELETAS MENÚ ==========
   utter_papeletas_menu:
   - text: |
-      Te ayudo con papeletas. ¿Qué necesitas hacer?
+      🚗 **PAPELETAS - ¿Qué necesitas?**
 
-      🔍 **Consultar deuda** - Con placa, DNI o RUC
-      📝 **Registrar papeleta** - Si no aparece en el sistema
-      ❓ **Consultas frecuentes** - Plazos, códigos, descuentos
+      ⚡ **CONSULTA RÁPIDA AQUÍ:**
+      Escribe directamente:
+      • **Placa:** "Mi placa es ABC123" - para ver papeletas del vehículo
+      • **DNI:** "Mi DNI es 12345678" o solo "87654321" - para consultar tus papeletas personales
+      • **RUC:** "RUC 20123456789" - para papeletas de tu empresa
+      • **Código:** "¿Qué significa G40?" o "Código G41" - para entender qué infracción cometiste
 
-      Puedes decirme algo como:
-      • 'Ver multas de mi placa ABC123'
-      • 'Registrar una papeleta'
-      • 'Información sobre plazos'
+      📝 **OTRAS OPCIONES:**
+      • **"Registrar papeleta"** - Si no aparece tu multa
+      • **"Facilidades de pago"** - Pagar en cuotas
+      • **"Consultas frecuentes"** - Plazos, descuentos, etc.
 
-  utter_consulta_pago_menu:
+      💡 **También puedes preguntar:**
+      • "¿Tengo multas pendientes?"
+      • "No encuentro mi papeleta"
+      • "Quiero pagar en cuotas"
+      • "Información sobre descuentos"
+
+      ¿Qué necesitas?
+
+  # ========== PAPELETAS SUB-OPCIONES ==========
+  utter_papeletas_registrar:
   - text: |
-      Para consultar tu deuda de papeletas puedo buscar por:
+      📝 **REGISTRAR PAPELETA NO ENCONTRADA**
 
-      🚗 **Placa del vehículo**
-      🆔 **Tu DNI** 
-      🏢 **RUC de empresa**
+      Si tu papeleta no aparece en el sistema:
 
-      También puedo informarte sobre **facilidades de pago**.
+      🔗 **Regístrala aquí:** https://www.sat.gob.pe/websitev8/Popupv2.aspx?t=9&v=%20
 
-      ¿Qué opción prefieres?
+      **¿Algo más?**
+      • Dame tu placa/DNI/RUC para consultar otras papeletas
+      • 'Menú principal' - Otras opciones
+      • 'Papeletas' - Volver al menú de papeletas
 
-  utter_registrar_papeleta:
+  utter_papeletas_facilidades:
   - text: |
-      Si no figura su papeleta ingrese a Registra y paga tu papeleta aquí: 
-      📌https://www.sat.gob.pe/websitev8/Popupv2.aspx?t=9&v=%20
+      💰 **FACILIDADES DE PAGO**
 
-  utter_facilidad_pago:
+      **Para pagar en cuotas:**
+      🔗 **Agencia Virtual SAT:** https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
+
+      **Pasos:**
+      1. Regístrate en Agencia Virtual
+      2. Ve a 'Facilidades de pago'
+      3. Selecciona tus papeletas para fraccionar
+
+      ⚠️ **Importante:** Primero inscríbete en Casilla MTC
+
+      **¿Algo más?**
+      • Dame tu placa/DNI/RUC para consultar papeletas
+      • 'Casilla MTC' - Información de registro
+      • 'Menú principal' - Otras opciones
+
+  utter_papeletas_frecuentes:
   - text: |
-      Puede realizarlo por nuestra Agencia Virtual SAT, para registrarse ir al siguiente link:
-      📌https://www.SAT.gob.pe/websitev9/Servicios/AgenciaVirtual
+      ❓ **CONSULTAS FRECUENTES PAPELETAS**
 
-      Luego de registrarse ingrese en la opción Facilidades de pago.
+      📋 **Enlaces informativos:**
 
-      Le sugerimos ingresar al siguiente enlace para que pueda guiarse del procedimiento de agencia virtual: 
-      📌https://www.SAT.gob.pe/AgenciaVirtual/guiainteractiva/
+      🕒 **Plazos y descuentos:**
+      https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
 
-      Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
-      📌https://casilla.mtc.gob.pe/#/registro
-      Base Legal: R. Directoral N°023-2024-MTC/18
+      📷 **Ver imagen de papeleta:**
+      https://www.sat.gob.pe/WebSitev8/IncioOV2.aspx
 
-  # ========== RESPUESTAS CONSULTAS FRECUENTES ==========
-  utter_consultas_frecuentes_menu:
+      💡 **Para consultar códigos de infracción:**
+      Escribe: "¿Qué significa C15?" o "Código M08"
+
+      **¿Algo más?**
+      • Dame tu placa/DNI/RUC para consultar papeletas
+      • 'Menú principal' - Otras opciones
+
+  # ========== NAVEGACIÓN GLOBAL ==========
+  utter_otra_consulta:
   - text: |
-      ¿Qué información necesitas sobre papeletas?
+      🔄 **NUEVA CONSULTA**
 
-      📅 **Plazos y descuentos** - Información sobre fechas de pago
-      👤 **Responsable de multa** - Quién debe pagar
-      📷 **Imagen de papeleta** - Ver foto de la infracción
-      🔢 **Código de infracción** - Consultar qué significa un código
-      ⚠️ **Consecuencias de no pagar** - Qué pasa si no pagas
+      **¿Qué quieres consultar?**
 
-      ¿Sobre qué quieres información?
+      🚗 **Papeletas:** "Ver papeletas de mi placa ABC123"
+      💳 **Pagos:** "Información de pagos"
+      📋 **Casilla MTC:** "Necesito inscribirme"
 
-  utter_plazos_descuentos:
-  - text: |
-      Estimado ciudadano, puede verificar la información en el siguiente enlace:
-      📌https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
+      **O puedes decir:**
+      • 'Menú principal' - Ver todas las opciones
+      • "¿Qué significa C15?" - Consultar códigos
 
-  utter_responsable_multa:
-  - text: |
-      Estimado ciudadano, puede verificar la información en el siguiente enlace:
-      📌https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
+      ¿Qué necesitas?
 
-  utter_imagen_papeleta:
-  - text: |
-      Estimado ciudadano, para consultar su papeleta ingrese aquí:
-      📌https://www.sat.gob.pe/WebSitev8/IncioOV2.aspx
-
-  utter_consecuencias_no_pago:
-  - text: |
-      Estimado ciudadano, si no paga su papeleta dentro de los plazos establecidos, perderá el beneficio. 
-
-      Puede verificar los descuentos en el siguiente link: 
-      📌https://www.sat.gob.pe/websitev9/TributosMultas/Papeletas/InformacionCodigodeTransito, numeral 6.
-
-  # ========== RESPUESTAS DE ERROR ==========
+  # ========== FALLBACK GLOBAL ==========
   utter_default:
   - text: |
-      No entendí completamente tu solicitud. Puedo ayudarte con:
+      No entendí completamente tu mensaje.
 
-      🚗 **Papeletas** - Consultas, registro, información
-      💳 **Pagos en línea** - Enlaces para pagar
-      📋 **Casilla MTC** - Información de registro
+      **Puedes decir:**
+      🚗 **Papeletas:** "Ver papeletas de mi placa ABC123"
+      💳 **Pagos:** "Cómo pago por internet"
+      📋 **Casilla MTC:** "Necesito inscribirme"
+      📋 **Menú:** "Menú principal"
 
-      ¿Podrías ser más específico? Por ejemplo:
-      • 'Consultar papeletas de mi placa ABC123'
-      • 'Información de pagos'
+      **O consultar códigos:**
+      • "¿Qué significa C15?"
+
+      ¿Qué necesitas?
 
 actions:
-  # ========== ACTIONS BÁSICAS ==========
+  # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet
   - utter_goodbye
-  - utter_default
-
-  # ========== ACTIONS OPCIONES PRINCIPALES ==========
+  - utter_menu_principal
   - utter_casilla_mtc
   - utter_pagos_linea
-
-  # ========== ACTIONS PAPELETAS ==========
   - utter_papeletas_menu
-  - utter_consulta_pago_menu
-  - utter_registrar_papeleta
-  - utter_facilidad_pago
-  - utter_consultas_frecuentes_menu
-
-  # ========== ACTIONS CONSULTAS FRECUENTES ==========
-  - utter_plazos_descuentos
-  - utter_responsable_multa
-  - utter_imagen_papeleta
-  - utter_consecuencias_no_pago
+  - utter_papeletas_registrar
+  - utter_papeletas_facilidades
+  - utter_papeletas_frecuentes
+  - utter_otra_consulta
+  - utter_default
 
   # ========== CUSTOM ACTIONS ==========
   - action_consultar_papeletas

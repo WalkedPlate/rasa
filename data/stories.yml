@@ -2,600 +2,352 @@ version: "3.1"
 
 stories:
 
-# ========== HISTORIAS BÁSICAS ORIGINALES ==========
-
-- story: saludo inicial
+# ========== FLUJOS BÁSICOS ==========
+- story: Saludo y despedida simple
   steps:
   - intent: greet
   - action: utter_greet
-
-- story: despedida
-  steps:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: finalizar chat directo
+- story: Saludo y menú principal
   steps:
-  - intent: finalizar_chat
-  - action: action_finalizar_chat
+  - intent: greet
+  - action: utter_greet
+  - intent: menu_principal
+  - action: utter_menu_principal
 
-# ========== OPCIONES PRINCIPALES ==========
-
-- story: consultar casilla mtc
+# ========== CONSULTAS RÁPIDAS ESPECÍFICAS ==========
+- story: Consulta rápida papeletas con RUC directo
   steps:
-  - intent: casilla_mtc
+  - intent: consulta_rapida_papeletas_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
+
+- story: Consulta rápida código de falta directo
+  steps:
+  - intent: consulta_rapida_codigo_falta
+    entities:
+    - codigo_falta: "C15"
+  - action: action_consultar_codigo_falta
+
+- story: Multiple consultas rápidas
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: consulta_rapida_papeletas_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_papeletas
+
+# ========== NAVEGACIÓN ENTRE OPCIONES ==========
+- story: De saludo a casilla MTC
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_casilla_mtc
   - action: utter_casilla_mtc
 
-- story: consultar pagos en linea
+- story: De casilla MTC a pagos
   steps:
-  - intent: pagos_linea
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+  - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-- story: entrada papeletas general
+- story: De pagos a papeletas
   steps:
-  - intent: papeletas
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+  - intent: ir_a_papeletas
   - action: utter_papeletas_menu
 
-# ========== HISTORIAS DE CONFIRMACIÓN ESPECÍFICAS ==========
-
-- story: confirmacion si papeletas
+- story: Navegación con menú principal
   steps:
-  - intent: provide_placa
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+# ========== FLUJO PAPELETAS COMPLETO ==========
+- story: Entrada a papeletas y consulta genérica
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_generico
+  - action: action_consultar_papeletas
+
+- story: Papeletas con placa específica en contexto
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_yes
+
+- story: Papeletas con DNI en contexto
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_dni
+    entities:
+    - dni: "12345678"
   - action: action_consultar_papeletas
 
-- story: confirmacion no papeletas
+- story: Papeletas - registrar
   steps:
-  - intent: provide_placa
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_registrar
+  - action: utter_papeletas_registrar
+
+- story: Papeletas - facilidades
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_facilidades
+  - action: utter_papeletas_facilidades
+
+- story: Papeletas - consultas frecuentes
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_frecuentes
+  - action: utter_papeletas_frecuentes
+
+- story: Papeletas - código en contexto
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_codigo_falta
+    entities:
+    - codigo_falta: "G40"
+  - action: action_consultar_codigo_falta
+
+# ========== CAMBIOS DE CONTEXTO ==========
+- story: De papeletas a pagos
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+- story: De papeletas consulta a casilla MTC
+  steps:
+  - intent: consulta_rapida_papeletas_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_no
-  - action: action_consultar_papeletas
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
 
-- story: confirmacion si codigo
+- story: De código a consulta papeletas
   steps:
-  - intent: provide_codigo_falta
+  - intent: consulta_rapida_codigo_falta
     entities:
     - codigo_falta: "C15"
   - action: action_consultar_codigo_falta
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "codigo_falta"
-  - intent: confirm_yes
-  - action: action_consultar_codigo_falta
-
-- story: confirmacion no codigo
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "codigo_falta"
-  - intent: confirm_no
-  - action: action_consultar_codigo_falta
-
-- story: confirmacion si dni
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: confirmacion no dni
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-
-- story: confirmacion si ruc
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: confirmacion no ruc
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-    - opcion_actual: "papeletas"
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-
-- story: consulta papeletas con placa confirmada
-  steps:
-  - intent: provide_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: consulta papeletas con dni confirmado
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: consulta papeletas con ruc confirmado
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-# ========== FLUJOS CRÍTICOS - CAMBIOS DE CONTEXTO ==========
-
-- story: cambio de placa a dni durante confirmacion
-  steps:
-  - intent: provide_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: cambio de dni a placa durante confirmacion
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  - intent: provide_placa
-    entities:
-    - placa: "XYZ789"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: cambio de ruc a dni
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - intent: provide_dni
+  - intent: consulta_rapida_papeletas_dni
     entities:
     - dni: "87654321"
   - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
 
-# ========== CORRECCIONES MÚLTIPLES ==========
-
-- story: correccion simple placa
+# ========== USO DE NAVEGACIÓN GLOBAL ==========
+- story: Usar otra consulta después de resultado
   steps:
-  - intent: provide_placa
+  - intent: consulta_rapida_papeletas_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-  - intent: provide_placa
-    entities:
-    - placa: "XYZ789"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
+  - intent: otra_consulta
+  - action: utter_otra_consulta
 
-- story: correccion multiple placa
+- story: Otra consulta desde papeletas a pagos
   steps:
-  - intent: provide_placa
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: otra_consulta
+  - action: utter_otra_consulta
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+# ========== FLUJOS LARGOS REALISTAS ==========
+- story: Usuario explorador completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - intent: confirm_no
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+  - intent: otra_consulta
+  - action: utter_otra_consulta
+  - intent: consulta_rapida_papeletas_dni
+    entities:
+    - dni: "12345678"
   - action: action_consultar_papeletas
-  - intent: provide_placa
+
+- story: Usuario con múltiples consultas específicas
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: consulta_rapida_codigo_falta
+    entities:
+    - codigo_falta: "C15"
+  - action: action_consultar_codigo_falta
+  - intent: consulta_rapida_papeletas_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+- story: Usuario empresa completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: consulta_rapida_papeletas_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_papeletas
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
     entities:
     - placa: "DEF456"
   - action: action_consultar_papeletas
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-  - intent: provide_placa
-    entities:
-    - placa: "GHI789"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
+  - intent: papeletas_facilidades
+  - action: utter_papeletas_facilidades
 
-- story: correccion simple dni
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-  - intent: provide_dni
-    entities:
-    - dni: "87654321"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-- story: correccion simple ruc
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-  - intent: provide_ruc
-    entities:
-    - ruc: "10987654321"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-
-# ========== FLUJOS DE CÓDIGOS DE FALTA ==========
-
-- story: consulta codigo confirmado
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - intent: confirm_yes
-  - action: action_consultar_codigo_falta
-
-- story: correccion codigo falta
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - intent: confirm_no
-  - action: action_consultar_codigo_falta
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "M08"
-  - action: action_consultar_codigo_falta
-  - intent: confirm_yes
-  - action: action_consultar_codigo_falta
-
-# ========== NAVEGACIÓN ENTRE OPCIONES ==========
-
-- story: de papeletas a pagos en linea
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: pagos_linea
-  - action: utter_pagos_linea
-
-- story: de pagos a papeletas
-  steps:
-  - intent: pagos_linea
-  - action: utter_pagos_linea
-  - intent: papeletas
-  - action: utter_papeletas_menu
-
-- story: de casilla mtc a papeletas
-  steps:
-  - intent: casilla_mtc
-  - action: utter_casilla_mtc
-  - intent: papeletas
-  - action: utter_papeletas_menu
-
-- story: de papeletas a casilla mtc
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: casilla_mtc
-  - action: utter_casilla_mtc
-
-# ========== SUBMENÚS DE PAPELETAS ==========
-
-- story: consulta y pago menu
-  steps:
-  - intent: consulta_pago
-  - action: utter_consulta_pago_menu
-
-- story: registrar papeleta directo
-  steps:
-  - intent: registrar_papeleta
-  - action: utter_registrar_papeleta
-
-- story: consultas frecuentes menu
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-
-- story: facilidad de pago directo
-  steps:
-  - intent: facilidad_pago
-  - action: utter_facilidad_pago
-
-# ========== DESDE MENÚS A ACCIONES ==========
-
-- story: desde menu papeletas a consulta
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: consulta_pago
-  - action: utter_consulta_pago_menu
-
-- story: desde menu papeletas a registrar
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: registrar_papeleta
-  - action: utter_registrar_papeleta
-
-- story: desde menu papeletas a frecuentes
-  steps:
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-
-- story: desde consulta menu a facilidades
-  steps:
-  - intent: consulta_pago
-  - action: utter_consulta_pago_menu
-  - intent: facilidad_pago
-  - action: utter_facilidad_pago
-
-# ========== CONSULTAS FRECUENTES ESPECÍFICAS ==========
-
-- story: plazos y descuentos directo
-  steps:
-  - intent: plazos_descuentos
-  - action: utter_plazos_descuentos
-
-- story: responsable multa directo
-  steps:
-  - intent: responsable_multa
-  - action: utter_responsable_multa
-
-- story: imagen papeleta directo
-  steps:
-  - intent: imagen_papeleta
-  - action: utter_imagen_papeleta
-
-- story: consecuencias no pago directo
-  steps:
-  - intent: consecuencias_no_pago
-  - action: utter_consecuencias_no_pago
-
-- story: codigo infraccion directo
-  steps:
-  - intent: codigo_infraccion
-  - action: action_consultar_codigo_falta
-
-# ========== DESDE MENU FRECUENTES A OPCIONES ==========
-
-- story: desde frecuentes a plazos
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-  - intent: plazos_descuentos
-  - action: utter_plazos_descuentos
-
-- story: desde frecuentes a responsable
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-  - intent: responsable_multa
-  - action: utter_responsable_multa
-
-- story: desde frecuentes a imagen
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-  - intent: imagen_papeleta
-  - action: utter_imagen_papeleta
-
-- story: desde frecuentes a codigo
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-  - intent: codigo_infraccion
-  - action: action_consultar_codigo_falta
-
-- story: desde frecuentes a consecuencias
-  steps:
-  - intent: consultas_frecuentes
-  - action: utter_consultas_frecuentes_menu
-  - intent: consecuencias_no_pago
-  - action: utter_consecuencias_no_pago
-
-# ========== FLUJOS INTERRUMPIDOS POR CAMBIO DE OPCIÓN ==========
-
-- story: consulta interrumpida por pagos
-  steps:
-  - intent: provide_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  - intent: pagos_linea
-  - action: utter_pagos_linea
-
-- story: consulta interrumpida por casilla
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  - intent: casilla_mtc
-  - action: utter_casilla_mtc
-
-- story: codigo interrumpido por consulta
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - slot_was_set:
-    - confirmacion_pendiente: true
-  - intent: provide_placa
-    entities:
-    - placa: "XYZ789"
-  - action: action_consultar_papeletas
-
-# ========== DATOS SIN CONTEXTO PREVIO ==========
-
-- story: placa sin contexto
-  steps:
-  - intent: provide_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-
-- story: dni sin contexto
-  steps:
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-
-- story: ruc sin contexto
-  steps:
-  - intent: provide_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-
-- story: codigo sin contexto
-  steps:
-  - intent: provide_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-
-# ========== FLUJOS COMPLEJOS COMBINADOS ==========
-
-- story: flujo completo saludo papeletas consulta
+# ========== FLUJOS CON FALLBACK Y RECUPERACIÓN ==========
+- story: Usuario perdido que se recupera
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: papeletas
+  - intent: nlu_fallback
+  - action: utter_default
+  - intent: ir_a_papeletas
   - action: utter_papeletas_menu
-  - intent: consulta_pago
-  - action: utter_consulta_pago_menu
-  - intent: provide_placa
+  - intent: papeletas_consultar_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_papeletas
+
+- story: Navegación después de fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+  - intent: menu_principal
+  - action: utter_menu_principal
+  - intent: consulta_rapida_codigo_falta
+    entities:
+    - codigo_falta: "M08"
+  - action: action_consultar_codigo_falta
+
+# ========== FLUJOS DE NAVEGACIÓN ENTRE SECCIONES ==========
+- story: De facilidades a consulta
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_facilidades
+  - action: utter_papeletas_facilidades
+  - intent: papeletas_consultar_dni
+    entities:
+    - dni: "87654321"
+  - action: action_consultar_papeletas
+
+- story: De frecuentes a código
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_frecuentes
+  - action: utter_papeletas_frecuentes
+  - intent: papeletas_consultar_codigo_falta
+    entities:
+    - codigo_falta: "A05"
+  - action: action_consultar_codigo_falta
+
+# ========== CASOS ESPECÍFICOS DE DEBUGGING ==========
+- story: Placa directa en contexto papeletas - caso APS583
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
+    entities:
+    - placa: "APS583"
+  - action: action_consultar_papeletas
+
+- story: Multiple placas directas en contexto
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - intent: confirm_yes
+  - intent: papeletas_consultar_placa
+    entities:
+    - placa: "APS583"
+  - action: action_consultar_papeletas
+
+- story: DNI directo en contexto papeletas
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_dni
+    entities:
+    - dni: "87654321"
+  - action: action_consultar_papeletas
+
+# ========== FLUJOS DE FINALIZACIÓN ==========
+- story: Consulta y despedida
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
   - action: action_consultar_papeletas
   - intent: goodbye
   - action: utter_goodbye
 
-- story: flujo con correccion y cambio de tipo
+- story: Navegación completa y finalización
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: provide_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: confirm_no
-  - action: action_consultar_papeletas
-  - intent: provide_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
-  - intent: finalizar_chat
-  - action: action_finalizar_chat
-
-- story: usuario indeciso multiples opciones
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: papeletas
-  - action: utter_papeletas_menu
-  - intent: pagos_linea
-  - action: utter_pagos_linea
-  - intent: casilla_mtc
+  - intent: ir_a_casilla_mtc
   - action: utter_casilla_mtc
-  - intent: provide_placa
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
     entities:
     - placa: "XYZ789"
   - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
+  - intent: goodbye
+  - action: utter_goodbye
 
-# ========== MANEJO DE ERRORES Y FALLBACKS ==========
-
-- story: datos invalidos seguidos de validos
+- story: Consulta rápida papeletas con placa desde inicio
   steps:
-  - intent: provide_placa
-    entities:
-    - placa: "INVALID"
-  - action: action_consultar_papeletas
-  - intent: provide_placa
+  - intent: greet
+  - action: utter_greet
+  - intent: consulta_rapida_papeletas_placa
     entities:
     - placa: "ABC123"
   - action: action_consultar_papeletas
-  - intent: confirm_yes
-  - action: action_consultar_papeletas
 
-- story: multiple datos invalidos
+- story: Consulta rápida papeletas con DNI directo
   steps:
-  - intent: provide_dni
-    entities:
-    - dni: "123"
-  - action: action_consultar_papeletas
-  - intent: provide_dni
-    entities:
-    - dni: "1234567"
-  - action: action_consultar_papeletas
-  - intent: provide_dni
+  - intent: consulta_rapida_papeletas_dni
     entities:
     - dni: "12345678"
-  - action: action_consultar_papeletas
-  - intent: confirm_yes
   - action: action_consultar_papeletas
