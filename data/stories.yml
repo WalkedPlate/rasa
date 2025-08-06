@@ -351,3 +351,253 @@ stories:
     entities:
     - dni: "12345678"
   - action: action_consultar_papeletas
+
+# ========== FLUJOS BÁSICOS IMPUESTOS ==========
+- story: Saludo y navegación a impuestos
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+- story: De papeletas a impuestos
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+# ========== CONSULTAS RÁPIDAS ESPECÍFICAS IMPUESTOS ==========
+- story: Consulta rápida impuestos con RUC directo
+  steps:
+  - intent: consulta_rapida_impuestos_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_impuestos
+
+- story: Consulta rápida impuestos con código contribuyente directo
+  steps:
+  - intent: consulta_rapida_impuestos_codigo
+    entities:
+    - codigo_contribuyente: "94539"
+  - action: action_consultar_impuestos
+
+- story: Consulta rápida impuestos con placa directo
+  steps:
+  - intent: consulta_rapida_impuestos_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_impuestos
+
+- story: Consulta rápida impuestos con DNI directo
+  steps:
+  - intent: consulta_rapida_impuestos_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_impuestos
+
+# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: De impuestos a papeletas
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De impuestos a pagos
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+# ========== FLUJO IMPUESTOS COMPLETO ==========
+- story: Entrada a impuestos y consulta genérica
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_consultar_generico
+  - action: action_consultar_impuestos
+
+- story: Impuestos con placa específica en contexto
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_consultar_placa
+    entities:
+    - placa: "ZZZ111"
+  - action: action_consultar_impuestos
+
+- story: Impuestos con DNI en contexto
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_consultar_dni
+    entities:
+    - dni: "99999999"
+  - action: action_consultar_impuestos
+
+- story: Impuestos con código contribuyente en contexto
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_consultar_codigo
+    entities:
+    - codigo_contribuyente: "11111"
+  - action: action_consultar_impuestos
+
+# ========== FLUJOS DE CUADERNILLO TRIBUTARIO ==========
+- story: Impuestos cuadernillo agencia virtual
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_cuadernillo_agencia_virtual
+  - action: action_cuadernillo_agencia_virtual
+
+- story: Impuestos cuadernillo predial
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_cuadernillo_predial
+  - action: action_cuadernillo_predial
+
+- story: Impuestos cuadernillo vehicular
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_cuadernillo_vehicular
+  - action: action_cuadernillo_vehicular
+
+# ========== FLUJOS DE DECLARACIONES ==========
+- story: Impuestos declaración vehicular
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_declarar_vehicular
+  - action: action_declaracion_impuesto_vehicular
+
+- story: Impuestos declaración predial
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_declarar_predial
+  - action: action_declaracion_impuesto_predial
+
+- story: Impuestos liquidación alcabala
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_liquidar_alcabala
+  - action: action_liquidacion_alcabala
+
+- story: Impuestos fraccionar deuda
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_fraccionar_deuda
+  - action: action_fraccionar_deuda
+
+# ========== FLUJOS DE BENEFICIOS ==========
+- story: Impuestos beneficios pensionista
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_beneficios_pensionista
+  - action: action_beneficios_pensionista
+
+- story: Impuestos beneficios adulto mayor
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_beneficios_adulto_mayor
+  - action: action_beneficios_adulto_mayor
+
+# ========== FLUJOS DE ROUTER ==========
+- story: Router detecta contexto papeletas
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: consulta_ambigua_documento
+    entities:
+    - dni: "13579135"
+  - action: action_route_document_consultation
+  - action: action_consultar_papeletas
+
+- story: Router detecta contexto impuestos
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: consulta_ambigua_documento
+    entities:
+    - codigo_contribuyente: "98765"
+  - action: action_route_document_consultation
+  - action: action_consultar_impuestos
+
+- story: Router con clarificación papeletas
+  steps:
+  - intent: consulta_ambigua_documento
+    entities:
+    - dni: "24681246"
+  - action: action_route_document_consultation
+  - intent: clarify_papeletas
+  - action: action_route_document_consultation
+  - action: action_consultar_papeletas
+
+- story: Router con clarificación impuestos
+  steps:
+  - intent: consulta_ambigua_documento
+    entities:
+    - placa: "ZAB789"
+  - action: action_route_document_consultation
+  - intent: clarify_impuestos
+  - action: action_route_document_consultation
+  - action: action_consultar_impuestos
+
+# ========== FLUJOS LARGOS REALISTAS ==========
+- story: Usuario explorador completo impuestos
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_consultar_placa
+    entities:
+    - placa: "ZZZ111"
+  - action: action_consultar_impuestos
+  - intent: impuestos_cuadernillo_vehicular
+  - action: action_cuadernillo_vehicular
+
+- story: Usuario empresa completo impuestos
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: consulta_rapida_impuestos_ruc
+    entities:
+    - ruc: "10111111111"
+  - action: action_consultar_impuestos
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: impuestos_fraccionar_deuda
+  - action: action_fraccionar_deuda
+
+- story: Navegación mixta papeletas impuestos
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: consulta_rapida_impuestos_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_impuestos
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+- story: Consulta impuestos y despedida
+  steps:
+  - intent: consulta_rapida_impuestos_codigo
+    entities:
+    - codigo_contribuyente: "11111"
+  - action: action_consultar_impuestos
+  - intent: goodbye
+  - action: utter_goodbye

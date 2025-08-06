@@ -1,40 +1,42 @@
-"""
-Archivo principal de actions del chatbot SAT de Lima
-"""
-
-import logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
-# Imports de actions simplificados
+# Imports de actions
 from .shared.session_actions import ActionFinalizarChat
 from .papeletas.consulta_actions import ActionConsultarPapeletas
 from .papeletas.codigo_actions import ActionConsultarCodigoFalta
+from .impuestos.consulta_actions import ActionConsultarImpuestos
+from .impuestos.cuadernillo_actions import (
+    ActionCuadernilloAgenciaVirtual,
+    ActionCuadernilloPredial,
+    ActionCuadernilloVehicular
+)
+from .impuestos.declaracion_actions import (
+    ActionDeclaracionImpuestoVehicular,
+    ActionLiquidacionAlcabala,
+    ActionDeclaracionImpuestoPredial,
+    ActionFraccionarDeuda
+)
+from .impuestos.beneficios_actions import (
+    ActionBeneficiosPensionista,
+    ActionBeneficiosAdultoMayor
+)
+from .shared.router_actions import ActionRouteDocumentConsultation
 
 # Lista de todos los actions disponibles
 __all__ = [
+    # Actions existentes
     'ActionFinalizarChat',
     'ActionConsultarPapeletas',
-    'ActionConsultarCodigoFalta'
+    'ActionConsultarCodigoFalta',
+    
+    # Actions de impuestos
+    'ActionConsultarImpuestos',
+    'ActionCuadernilloAgenciaVirtual',
+    'ActionCuadernilloPredial', 
+    'ActionCuadernilloVehicular',
+    'ActionDeclaracionImpuestoVehicular',
+    'ActionLiquidacionAlcabala',
+    'ActionDeclaracionImpuestoPredial',
+    'ActionFraccionarDeuda',
+    'ActionBeneficiosPensionista',
+    'ActionBeneficiosAdultoMayor',
+    'ActionRouteDocumentConsultation'
 ]
-
-# Log de inicialización
-logger = logging.getLogger(__name__)
-logger.info("Actions del SAT Lima cargados - Versión simplificada")
-logger.info(f"Actions disponibles: {len(__all__)}")
-for action in __all__:
-    logger.info(f"  • {action}")
-
-print("=" * 60)
-print("CHATBOT SAT DE LIMA - ACTIONS SIMPLIFICADOS")
-print("=" * 60)
-print(f"Total de custom actions: {len(__all__)}")
-print("Características:")
-print("  • Sin confirmaciones complejas")
-print("  • Consultas API directas")
-print("  • Navegación fluida")
-print("  • Respuestas contextuales")
-print("Sistema listo para recibir consultas")
-print("=" * 60)

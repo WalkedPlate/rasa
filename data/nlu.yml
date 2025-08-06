@@ -287,19 +287,19 @@ nlu:
 - intent: papeletas_consultar_generico
   examples: |
     - consultar mis multas
-    - ver mis papeletas
+    - ver mis papeletas específicas
     - revisar infracciones
-    - consultar deuda
+    - consultar deuda papeletas
     - quiero consultar mis papeletas
-    - necesito ver cuánto debo
-    - consultar papeletas pendientes
+    - necesito ver cuánto debo multas
+    - consultar papeletas pendientes específicas
     - ver si tengo papeletas
     - revisar mis multas
     - consultar infracciones pendientes
     - tengo multas pendientes
     - quiero saber si tengo multas
-    - revisar mi situación
-    - consultar mi estado
+    - revisar mi situación multas
+    - consultar mi estado papeletas
 
 - intent: papeletas_registrar
   examples: |
@@ -318,19 +318,19 @@ nlu:
 
 - intent: papeletas_facilidades
   examples: |
-    - facilidades de pago
-    - pagar en cuotas
-    - fraccionamiento
+    - facilidades de pago papeletas
+    - pagar en cuotas papeletas
+    - fraccionamiento papeletas
     - compromiso de pago
-    - facilidades
-    - pago fraccionado
-    - quiero pagar en partes
-    - dividir el pago
-    - pagar poco a poco
-    - opciones de fraccionamiento
-    - puedo pagar en cuotas
-    - pago en cuotas
-    - financiamiento
+    - facilidades papeletas
+    - pago fraccionado papeletas
+    - quiero pagar en partes papeletas
+    - dividir el pago papeletas
+    - pagar poco a poco papeletas
+    - opciones de fraccionamiento papeletas
+    - puedo pagar en cuotas papeletas
+    - pago en cuotas papeletas
+    - financiamiento papeletas
 
 - intent: papeletas_frecuentes
   examples: |
@@ -361,3 +361,311 @@ nlu:
     - ver otro documento
     - más consultas
     - siguiente consulta
+
+# ========== NAVEGACIÓN A IMPUESTOS ==========
+- intent: ir_a_impuestos
+  examples: |
+    - impuestos
+    - quiero consultar impuestos
+    - consultar mis impuestos
+    - deuda tributaria
+    - tributos
+    - necesito ver mis impuestos
+    - quiero revisar mis impuestos
+    - tengo deuda tributaria
+    - consultar impuestos pendientes
+    - ver mis impuestos
+    - revisar impuestos
+    - tengo impuestos pendientes
+    - quiero saber si tengo impuestos
+    - me dijeron que tengo deuda tributaria
+    - necesito consultar tributos
+    - quiero ver tributos
+    - me llegó una carta sobre impuestos
+    - impuesto predial
+    - impuesto vehicular
+    - arbitrios
+    - 4
+    - opción 4
+    - cuatro
+
+# ========== CONSULTAS RÁPIDAS ESPECÍFICAS IMPUESTOS (GLOBAL) ==========
+- intent: consulta_rapida_impuestos_placa
+  examples: |
+    - impuestos de mi placa [ABC123](placa)
+    - deuda tributaria de la placa [U1A710](placa)
+    - impuesto vehicular de mi placa [XYZ789](placa)
+    - quiero saber los impuestos de [DEF456](placa)
+    - tributos de mi placa [GHI789](placa)
+    - revisar impuestos de [MNO123](placa)
+    - consultar deuda tributaria de mi placa [PQR456](placa)
+    - ver si tengo impuestos en la placa [STU789](placa)
+    - impuestos pendientes de [ABC123](placa)
+    - deuda del vehículo [U1A710](placa)
+    - tributos de la placa [XYZ789](placa)
+    - consultar impuestos de [DEF456](placa)
+
+- intent: consulta_rapida_impuestos_dni
+  examples: |
+    - impuestos de mi DNI [12345678](dni)
+    - deuda tributaria de mi DNI [87654321](dni)
+    - tributos con mi DNI [11223344](dni)
+    - quiero saber los impuestos de [55667788](dni)
+    - revisar impuestos del DNI [99887766](dni)
+    - consultar deuda tributaria con DNI [44556677](dni)
+    - impuestos de mi documento [12345678](dni)
+    - ver si tengo impuestos con [87654321](dni)
+    - impuestos pendientes de [11223344](dni)
+    - tributos de mi DNI [55667788](dni)
+    - deuda con el DNI [99887766](dni)
+    - consultar impuestos del [44556677](dni)
+
+- intent: consulta_rapida_impuestos_ruc
+  examples: |
+    - impuestos del RUC [20123456789](ruc)
+    - deuda tributaria de mi empresa [10987654321](ruc)
+    - tributos del RUC [15555666677](ruc)
+    - quiero saber los impuestos de [12888999000](ruc)
+    - revisar impuestos de la empresa [20555444333](ruc)
+    - consultar deuda tributaria del RUC [11999888777](ruc)
+    - impuestos de mi negocio [20123456789](ruc)
+    - tributos de mi compañía [10987654321](ruc)
+    - deuda empresarial [15555666677](ruc)
+    - ver impuestos del RUC [12888999000](ruc)
+    - consultar tributos de [20555444333](ruc)
+
+- intent: consulta_rapida_impuestos_codigo
+  examples: |
+    - impuestos del código contribuyente [94539](codigo_contribuyente)
+    - deuda tributaria código [12345](codigo_contribuyente)
+    - tributos del código [67890](codigo_contribuyente)
+    - consultar código contribuyente [11111](codigo_contribuyente)
+    - impuesto predial código [22222](codigo_contribuyente)
+    - código de contribuyente [94539](codigo_contribuyente)
+    - mi código es [12345](codigo_contribuyente)
+    - código [67890](codigo_contribuyente) impuestos
+    - consultar [11111](codigo_contribuyente) tributos
+    - deuda del código [22222](codigo_contribuyente)
+
+# ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
+- intent: impuestos_consultar_placa
+  examples: |
+    - [ZZZ111](placa)
+    - [YYY222](placa)
+    - [XXX333](placa)
+    - [WWW444](placa)
+    - [VVV555](placa)
+    - [UUU666](placa)
+    - [TTT777](placa)
+    - [SSS888](placa)
+    - [RRR999](placa)
+    - [QQQ000](placa)
+
+- intent: impuestos_consultar_dni
+  examples: |
+    - [99999999](dni)
+    - [88888889](dni)
+    - [77777779](dni)
+    - [66666669](dni)
+    - [55555559](dni)
+    - [44444449](dni)
+    - [33333339](dni)
+    - [22222229](dni)
+
+- intent: impuestos_consultar_ruc
+  examples: |
+    - [10111111111](ruc)
+    - [20222222222](ruc)
+    - [15555666682](ruc)
+    - [12888999002](ruc)
+    - [20555444335](ruc)
+    - [11999888779](ruc)
+
+- intent: impuestos_consultar_codigo
+  examples: |
+    - [11111](codigo_contribuyente)
+    - [22222](codigo_contribuyente)
+    - [33333](codigo_contribuyente)
+    - [44444](codigo_contribuyente)
+    - [55555](codigo_contribuyente)
+    - [66666](codigo_contribuyente)
+
+- intent: impuestos_consultar_generico
+  examples: |
+    - consultar mis impuestos específicos
+    - ver mis tributos
+    - revisar deuda tributaria
+    - consultar deuda impuestos
+    - quiero consultar mis impuestos específicos
+    - necesito ver cuánto debo de impuestos
+    - consultar impuestos pendientes específicos
+    - ver si tengo impuestos
+    - revisar mis tributos
+    - consultar deuda tributaria pendiente
+    - tengo deuda pendiente
+    - quiero saber si tengo deuda
+    - revisar mi situación tributaria
+    - consultar mi estado tributario
+
+# ========== CONTEXTO IMPUESTOS - SUB-OPCIONES ==========
+- intent: impuestos_cuadernillo
+  examples: |
+    - cuadernillo tributario
+    - ver mi cuadernillo
+    - cuadernillo
+    - necesito mi cuadernillo
+    - consultar cuadernillo
+    - descargar cuadernillo
+    - acceder al cuadernillo
+    - quiero ver cuadernillo
+    - información del cuadernillo
+
+- intent: impuestos_cuadernillo_agencia_virtual
+  examples: |
+    - agencia virtual
+    - cuadernillo agencia virtual
+    - acceso online
+    - cuadernillo online
+    - agencia virtual SAT
+    - registro agencia virtual
+    - cuadernillo por internet
+
+- intent: impuestos_cuadernillo_predial
+  examples: |
+    - cuadernillo predial
+    - predial
+    - impuesto predial cuadernillo
+    - cuadernillo de predio
+    - cuadernillo casa
+    - cuadernillo inmueble
+
+- intent: impuestos_cuadernillo_vehicular
+  examples: |
+    - cuadernillo vehicular
+    - vehicular
+    - impuesto vehicular cuadernillo
+    - cuadernillo de vehículo
+    - cuadernillo carro
+    - cuadernillo auto
+
+- intent: impuestos_declarar_liquide
+  examples: |
+    - declare y liquide
+    - declarar impuestos
+    - liquidar impuestos
+    - declaración general
+    - liquidación general
+    - inscribir predio general
+    - inscribir vehículo general
+    - declarar nuevo
+    - nuevas declaraciones
+
+- intent: impuestos_declarar_vehicular
+  examples: |
+    - declaración vehicular específica
+    - declarar vehículo específico
+    - inscripción vehicular
+    - registrar vehículo específico
+    - declarar carro
+    - inscribir auto
+    - impuesto vehicular declaración
+
+- intent: impuestos_declarar_predial
+  examples: |
+    - declaración predial específica
+    - declarar predio específico
+    - inscripción predial
+    - registrar predio específico
+    - declarar casa
+    - inscribir inmueble
+    - impuesto predial declaración
+
+- intent: impuestos_liquidar_alcabala
+  examples: |
+    - liquidación alcabala específica
+    - alcabala liquidación
+    - liquidar alcabala específica
+    - impuesto alcabala
+    - transferencia propiedad
+    - venta casa
+    - compra inmueble
+
+- intent: impuestos_fraccionar_deuda
+  examples: |
+    - fraccionar deuda tributaria
+    - pagar en cuotas impuestos
+    - facilidades pago impuestos
+    - fraccionamiento impuestos
+    - pago fraccionado impuestos
+    - cuotas impuestos
+    - dividir pago impuestos
+    - facilidades tributarias
+
+- intent: impuestos_beneficios
+  examples: |
+    - beneficios generales
+    - beneficios tributarios
+    - descuentos impuestos
+    - exoneraciones
+    - descuentos especiales
+
+- intent: impuestos_beneficios_pensionista
+  examples: |
+    - beneficios pensionista específicos
+    - pensionista específico
+    - descuento pensionista
+    - soy pensionista
+    - jubilado
+    - beneficios jubilado
+
+- intent: impuestos_beneficios_adulto_mayor
+  examples: |
+    - beneficios adulto mayor específicos
+    - adulto mayor específico
+    - tercera edad
+    - descuento tercera edad
+    - no pensionista
+    - adulto mayor no pensionista
+
+# ========== INTENTS DE CLARIFICACIÓN ==========
+- intent: clarify_papeletas
+  examples: |
+    - papeletas tránsito
+    - infracciones tránsito
+    - multas tránsito  
+    - papeletas de tránsito
+    - infracciones vehiculares tránsito
+    - sanciones tránsito
+    - quiero papeletas
+    - necesito papeletas
+    - busco papeletas
+
+- intent: clarify_impuestos
+  examples: |
+    - impuestos tributarios
+    - deuda tributaria específica
+    - tributos específicos
+    - impuesto predial específico
+    - impuesto vehicular específico
+    - arbitrios específicos
+    - alcabala específica
+    - deuda fiscal
+    - quiero impuestos
+    - necesito impuestos
+    - busco impuestos
+
+# ========== CONSULTA AMBIGUA VERDADERA ==========
+- intent: consulta_ambigua_documento
+  examples: |
+    - [13579135](dni)
+    - [ZAB789](placa)
+    - [19876543210](ruc)
+    - [98765](codigo_contribuyente)
+    - consultar [24681246](dni)
+    - ver [CDE012](placa)
+    - revisar [18765432109](ruc)
+    - información de [87654](codigo_contribuyente)
+    - mi documento [35792468](dni)
+    - la placa [FGH345](placa)
+    - empresa [17654321098](ruc)
+    - código [76543](codigo_contribuyente)

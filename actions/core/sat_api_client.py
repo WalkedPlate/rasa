@@ -162,5 +162,18 @@ class SATAPIClient:
         except Exception:
             return False
 
+    def consultar_por_codigo_contribuyente(self, codigo: str) -> Optional[Dict[str, Any]]:
+        """
+        Consulta deuda por código de contribuyente
+
+        Args:
+            codigo: Código de contribuyente (ej: 94539)
+
+        Returns:
+            Dict con resultado de la consulta
+        """
+        endpoint = f"/saldomatico/saldomatico/chatboot/5/{codigo}/0/10/10"
+        return self._make_request("GET", endpoint)
+
 # Instancia global del cliente API
 sat_client = SATAPIClient()

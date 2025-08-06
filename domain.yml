@@ -11,11 +11,16 @@ intents:
   - consulta_rapida_papeletas_dni
   - consulta_rapida_papeletas_ruc
   - consulta_rapida_codigo_falta
+  - consulta_rapida_impuestos_placa
+  - consulta_rapida_impuestos_dni
+  - consulta_rapida_impuestos_ruc
+  - consulta_rapida_impuestos_codigo
 
   # ========== NAVEGACIÓN A CONTEXTOS ==========
   - ir_a_casilla_mtc        # Opción 1
   - ir_a_pagos_linea        # Opción 2
   - ir_a_papeletas          # Opción 3
+  - ir_a_impuestos          # Opción 4
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -27,6 +32,30 @@ intents:
   - papeletas_facilidades
   - papeletas_frecuentes
 
+  # ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
+  - impuestos_consultar_placa
+  - impuestos_consultar_dni
+  - impuestos_consultar_ruc
+  - impuestos_consultar_codigo
+  - impuestos_consultar_generico
+  - impuestos_cuadernillo
+  - impuestos_cuadernillo_agencia_virtual
+  - impuestos_cuadernillo_predial
+  - impuestos_cuadernillo_vehicular
+  - impuestos_declarar_liquide
+  - impuestos_declarar_vehicular
+  - impuestos_declarar_predial
+  - impuestos_liquidar_alcabala
+  - impuestos_fraccionar_deuda
+  - impuestos_beneficios
+  - impuestos_beneficios_pensionista
+  - impuestos_beneficios_adulto_mayor
+
+  # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
+  - clarify_papeletas
+  - clarify_impuestos
+  - consulta_ambigua_documento
+
   # ========== NAVEGACIÓN ==========
   - otra_consulta
 
@@ -35,8 +64,50 @@ entities:
   - dni
   - ruc
   - codigo_falta
+  - codigo_contribuyente
 
 slots:
+  # ========== SLOTS DE CONTEXTO ==========
+  contexto_actual:
+    type: categorical
+    values:
+      - papeletas
+      - impuestos
+      - general
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  esperando_clarificacion:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+
+  documento_pendiente:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+
+  tipo_documento_pendiente:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+
+  documento_consulta:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+
+  tipo_documento:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+
   # ========== SOLO PARA LOGGING ==========
   ultimo_documento:
     type: text
@@ -58,13 +129,19 @@ responses:
       • "Papeletas del RUC 20123456789" - para consultar papeletas de una empresa
       • "¿Qué significa el código C15?" - para conocer el significado de códigos de infracción
       
+      ⚡ **IMPUESTOS:**
+      • "Impuestos de mi placa ABC123" - para consultar deuda tributaria de un vehículo
+      • "Deuda tributaria DNI 12345678" - para consultar impuestos por DNI
+      • "Código contribuyente 94539" - para consultar por código de contribuyente
+      
       O si prefieres explorar las opciones completas:
       
       📋 **OPCIONES PRINCIPALES:**
       Escribe el número o el nombre de la opción que necesitas:
-      1️⃣ **Papeletas** - Multas y consultas de tránsito
+      1️⃣ **Casilla MTC** - Registro obligatorio
       2️⃣ **Pagos** - Pagar por internet  
-      3️⃣ **Casilla MTC** - Registro obligatorio
+      3️⃣ **Papeletas** - Multas y consultas de tránsito
+      4️⃣ **Impuestos** - Deuda tributaria y declaraciones
       
       ¿Qué necesitas?
 
@@ -74,6 +151,7 @@ responses:
       
       Recuerda que puedes:
       • Consultar papeletas: "Ver papeletas de mi placa ABC123"
+      • Consultar impuestos: "Impuestos de mi DNI 12345678"
       • Información de pagos: "Cómo pago por internet"
       • Registro MTC: "Necesito inscribirme"
       
@@ -83,15 +161,22 @@ responses:
   - text: |
       📋 **MENÚ PRINCIPAL SAT LIMA**
 
-      ⚡ **CONSULTAS RÁPIDAS DE PAPELETAS:**
+      ⚡ **CONSULTAS RÁPIDAS:**
+      **PAPELETAS:**
       • "Ver papeletas de mi placa ABC123"
       • "Consultar multas de mi DNI 12345678"
       • "¿Qué significa el código C15?"
 
+      **IMPUESTOS:**
+      • "Impuestos de mi placa ABC123"
+      • "Deuda tributaria DNI 12345678"
+      • "Código contribuyente 94539"
+
       📋 **OPCIONES PRINCIPALES:**
-      1️⃣ **Papeletas** - Multas y consultas de tránsito
+      1️⃣ **Casilla MTC** - Registro obligatorio
       2️⃣ **Pagos** - Pagar por internet
-      3️⃣ **Casilla MTC** - Registro obligatorio
+      3️⃣ **Papeletas** - Multas y consultas de tránsito
+      4️⃣ **Impuestos** - Deuda tributaria y declaraciones
 
       ¿Qué necesitas?
 
@@ -116,6 +201,7 @@ responses:
 
       **¿Qué más necesitas?**
       • 'Papeletas' - Consultar multas
+      • 'Impuestos' - Consultar deuda tributaria
       • 'Pagos' - Información de pagos
       • 'Menú principal' - Ver otras opciones
 
@@ -134,11 +220,13 @@ responses:
       📝 **Ejemplos de lo que puedes decir:**
       • "¿Puedo pagar en cuotas?"
       • "Quiero ver mis papeletas primero"
+      • "Necesito consultar mis impuestos"
       • "¿Dónde están las oficinas?"
       • "Información sobre descuentos"
 
       **¿Qué más necesitas?**
-      • 'Papeletas' - Consultar cuánto debes
+      • 'Papeletas' - Consultar cuánto debes en multas
+      • 'Impuestos' - Consultar deuda tributaria
       • 'Facilidades' - Pagar en cuotas
       • 'Menú principal' - Otras opciones
 
@@ -164,6 +252,32 @@ responses:
       • "No encuentro mi papeleta"
       • "Quiero pagar en cuotas"
       • "Información sobre descuentos"
+
+      ¿Qué necesitas?
+
+  # ========== OPCIÓN 4: IMPUESTOS MENÚ ==========
+  utter_impuestos_menu:
+  - text: |
+      💰 **IMPUESTOS - ¿Qué necesitas?**
+
+      ⚡ **CONSULTA RÁPIDA AQUÍ:**
+      Escribe directamente:
+      • **Placa:** "Impuestos de mi placa ABC123" - para ver deuda tributarias de la placa
+      • **DNI:** "Deuda tributaria DNI 12345678" - para consultar deudas tributarias con tu DNI
+      • **RUC:** "Impuestos RUC 20123456789" - para deudas tributarias relacionadas a tu RUC 
+      • **Código contribuyente:** "Código 94539" - para consultar con tu código
+
+      📝 **OTRAS OPCIONES:**
+      • **"Cuadernillo tributario"** - Ver tu cuadernillo
+      • **"Declare y liquide"** - Declarar nuevos predios/vehículos
+      • **"Fraccionar deuda"** - Pagar en cuotas
+      • **"Beneficios"** - Descuentos especiales
+
+      💡 **También puedes preguntar:**
+      • "¿Tengo deuda tributaria pendiente?"
+      • "Quiero declarar mi casa nueva"
+      • "Soy pensionista, ¿tengo descuentos?"
+      • "Necesito mi cuadernillo predial"
 
       ¿Qué necesitas?
 
@@ -227,6 +341,7 @@ responses:
       **¿Qué quieres consultar?**
 
       🚗 **Papeletas:** "Ver papeletas de mi placa ABC123"
+      💰 **Impuestos:** "Impuestos de mi DNI 12345678"
       💳 **Pagos:** "Información de pagos"
       📋 **Casilla MTC:** "Necesito inscribirme"
 
@@ -243,6 +358,7 @@ responses:
 
       **Puedes decir:**
       🚗 **Papeletas:** "Ver papeletas de mi placa ABC123"
+      💰 **Impuestos:** "Impuestos de mi DNI 12345678"
       💳 **Pagos:** "Cómo pago por internet"
       📋 **Casilla MTC:** "Necesito inscribirme"
       📋 **Menú:** "Menú principal"
@@ -260,6 +376,7 @@ actions:
   - utter_casilla_mtc
   - utter_pagos_linea
   - utter_papeletas_menu
+  - utter_impuestos_menu
   - utter_papeletas_registrar
   - utter_papeletas_facilidades
   - utter_papeletas_frecuentes
@@ -269,6 +386,17 @@ actions:
   # ========== CUSTOM ACTIONS ==========
   - action_consultar_papeletas
   - action_consultar_codigo_falta
+  - action_consultar_impuestos
+  - action_cuadernillo_agencia_virtual
+  - action_cuadernillo_predial
+  - action_cuadernillo_vehicular
+  - action_declaracion_impuesto_vehicular
+  - action_liquidacion_alcabala
+  - action_declaracion_impuesto_predial
+  - action_fraccionar_deuda
+  - action_beneficios_pensionista
+  - action_beneficios_adulto_mayor
+  - action_route_document_consultation
   - action_finalizar_chat
 
 session_config:

@@ -39,6 +39,26 @@ rules:
   - intent: consulta_rapida_codigo_falta
   - action: action_consultar_codigo_falta
 
+- rule: Consulta rápida impuestos con placa
+  steps:
+  - intent: consulta_rapida_impuestos_placa
+  - action: action_consultar_impuestos
+
+- rule: Consulta rápida impuestos con DNI
+  steps:
+  - intent: consulta_rapida_impuestos_dni
+  - action: action_consultar_impuestos
+
+- rule: Consulta rápida impuestos con RUC
+  steps:
+  - intent: consulta_rapida_impuestos_ruc
+  - action: action_consultar_impuestos
+
+- rule: Consulta rápida impuestos con código contribuyente
+  steps:
+  - intent: consulta_rapida_impuestos_codigo
+  - action: action_consultar_impuestos
+
 # ========== NAVEGACIÓN A CONTEXTOS ==========
 - rule: Ir a Casilla MTC
   steps:
@@ -54,6 +74,11 @@ rules:
   steps:
   - intent: ir_a_papeletas
   - action: utter_papeletas_menu
+
+- rule: Ir a Impuestos
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
 
 # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
 - rule: Papeletas - Consultar con placa
@@ -95,6 +120,95 @@ rules:
   steps:
   - intent: papeletas_frecuentes
   - action: utter_papeletas_frecuentes
+
+# ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
+- rule: Impuestos - Consultar con placa
+  steps:
+  - intent: impuestos_consultar_placa
+  - action: action_consultar_impuestos
+
+- rule: Impuestos - Consultar con DNI
+  steps:
+  - intent: impuestos_consultar_dni
+  - action: action_consultar_impuestos
+
+- rule: Impuestos - Consultar con RUC
+  steps:
+  - intent: impuestos_consultar_ruc
+  - action: action_consultar_impuestos
+
+- rule: Impuestos - Consultar con código contribuyente
+  steps:
+  - intent: impuestos_consultar_codigo
+  - action: action_consultar_impuestos
+
+- rule: Impuestos - Consultar genérico
+  steps:
+  - intent: impuestos_consultar_generico
+  - action: action_consultar_impuestos
+
+# ========== CONTEXTO IMPUESTOS - CUADERNILLO TRIBUTARIO ==========
+- rule: Impuestos - Cuadernillo genérico
+  steps:
+  - intent: impuestos_cuadernillo
+  - action: action_cuadernillo_agencia_virtual
+
+- rule: Impuestos - Cuadernillo agencia virtual
+  steps:
+  - intent: impuestos_cuadernillo_agencia_virtual
+  - action: action_cuadernillo_agencia_virtual
+
+- rule: Impuestos - Cuadernillo predial
+  steps:
+  - intent: impuestos_cuadernillo_predial
+  - action: action_cuadernillo_predial
+
+- rule: Impuestos - Cuadernillo vehicular
+  steps:
+  - intent: impuestos_cuadernillo_vehicular
+  - action: action_cuadernillo_vehicular
+
+# ========== CONTEXTO IMPUESTOS - DECLARE Y LIQUIDE ==========
+- rule: Impuestos - Declare y liquide genérico
+  steps:
+  - intent: impuestos_declarar_liquide
+  - action: action_declaracion_impuesto_vehicular
+
+- rule: Impuestos - Declaración vehicular
+  steps:
+  - intent: impuestos_declarar_vehicular
+  - action: action_declaracion_impuesto_vehicular
+
+- rule: Impuestos - Declaración predial
+  steps:
+  - intent: impuestos_declarar_predial
+  - action: action_declaracion_impuesto_predial
+
+- rule: Impuestos - Liquidación alcabala
+  steps:
+  - intent: impuestos_liquidar_alcabala
+  - action: action_liquidacion_alcabala
+
+- rule: Impuestos - Fraccionar deuda
+  steps:
+  - intent: impuestos_fraccionar_deuda
+  - action: action_fraccionar_deuda
+
+# ========== CONTEXTO IMPUESTOS - BENEFICIOS ==========
+- rule: Impuestos - Beneficios genérico
+  steps:
+  - intent: impuestos_beneficios
+  - action: action_beneficios_pensionista
+
+- rule: Impuestos - Beneficios pensionista
+  steps:
+  - intent: impuestos_beneficios_pensionista
+  - action: action_beneficios_pensionista
+
+- rule: Impuestos - Beneficios adulto mayor
+  steps:
+  - intent: impuestos_beneficios_adulto_mayor
+  - action: action_beneficios_adulto_mayor
 
 # ========== NAVEGACIÓN GLOBAL ==========
 - rule: Otra consulta

@@ -181,6 +181,97 @@ class DataValidator:
 
         return error_messages.get(data_type, f" Dato '{value}' no es válido.")
 
+    @staticmethod
+    def validate_codigo_contribuyente(codigo: str) -> Tuple[bool, str]:
+        """
+        Valida formato de código de contribuyente
+
+        Args:
+            codigo: Código de contribuyente a validar
+
+        Returns:
+            Tuple[bool, str]: (es_válido, codigo_limpio)
+        """
+        if not codigo:
+            return False, ""
+
+        # Limpiar código (solo números)
+        codigo_limpio = re.sub(r'[^0-9]', '', codigo.strip())
+
+        # Código de contribuyente debe ser numérico y tener entre 1 y 10 dígitos
+        if not codigo_limpio.isdigit():
+            return False, codigo_limpio
+
+        # Validar longitud (típicamente entre 1 y 10 dígitos)
+        if len(codigo_limpio) < 1 or len(codigo_limpio) > 10:
+            return False, codigo_limpio
+
+        return True, codigo_limpio
+
+    @staticmethod
+    def detect_data_type(text: str) -> Optional[str]:
+        """
+        Detecta automáticamente el tipo de dato basado en el formato
+
+        Args:
+            text: Texto a analizar
+
+        Returns:
+            str: 'placa', 'dni', 'ruc', 'codigo_falta', 'codigo_contribuyente' o None
+        """
+        if not text:
+            return None
+
+        text_limpio = text.strip().upper()
+
+        # Verificar cada tipo en orden de especificidad
+        es_placa, _ = DataValidator.validate_placa(text_limpio)
+        if es_placa:
+            return 'placa'
+
+        es_dni, _ = DataValidator.validate_dni(text_limpio)
+        if es_dni:
+            return 'dni'
+
+        es_ruc, _ = DataValidator.validate_ruc(text_limpio)
+        if es_ruc:
+            return 'ruc'
+
+        es_codigo_falta, _ = DataValidator.validate_codigo_falta(text_limpio)
+        if es_codigo_falta:
+            return 'codigo_falta'
+
+        es_codigo_contribuyente, _ = DataValidator.validate_codigo_contribuyente(text_limpio)
+        if es_codigo_contribuyente:
+            return 'codigo_contribuyente'
+
+        return None
+
+    @staticmethod
+    def get_validation_message(data_type: str, is_valid: bool, value: str) -> str:
+        """
+        Genera mensaje de validación específico para cada tipo de dato
+
+        Args:
+            data_type: Tipo de dato ('placa', 'dni', etc.)
+            is_valid: Si el dato es válido
+            value: Valor proporcionado
+
+        Returns:
+            str: Mensaje de validación
+        """
+        if is_valid:
+            return f"Dato {data_type.upper().replace('_', ' ')} válido: {value}"
+
+        error_messages = {
+            'placa': f"La placa '{value}' no tiene un formato válido.\n\n**Formatos correctos:**\n• ABC123 (clásico)\n• AB1234 (clásico)\n• U1A710 (nuevo formato)\n• A1B234 (nuevo formato)",
+            'dni': f"El DNI '{value}' no es válido. Debe tener exactamente 8 dígitos.",
+            'ruc': f"El RUC '{value}' no es válido. Debe tener 11 dígitos y empezar con 1 o 2.",
+            'codigo_falta': f"El código '{value}' no es válido. Formato esperado: C15, M08, A05, etc.",
+            'codigo_contribuyente': f"El código de contribuyente '{value}' no es válido. Debe ser numérico de 1 a 10 dígitos."
+        }
+
+        return error_messages.get(data_type, f"Dato '{value}' no es válido.")
 
 # Instancia global del validador
 validator = DataValidator()
