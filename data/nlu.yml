@@ -669,3 +669,134 @@ nlu:
     - la placa [FGH345](placa)
     - empresa [17654321098](ruc)
     - código [76543](codigo_contribuyente)
+    
+
+# ========== NAVEGACIÓN A RETENCIÓN ==========
+- intent: ir_a_retencion_captura
+  examples: |
+    - retención y captura
+    - opción de retención
+    - necesito ayuda con retención
+    - quiero consultar medidas cautelares
+    - opciones de captura
+    - menú de retención
+    - ir a retención
+    - retención del SAT
+    - medidas cautelares SAT
+    - cobranza del SAT
+    - procedimientos de retención
+    - 5
+    - opción 5
+    - cinco
+
+# ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ESPECÍFICAS ==========
+- intent: retencion_embargo_cuentas
+  examples: |
+    - retención bancaria específica
+    - embargo de cuentas bancarias
+    - retención de mis cuentas
+    - embargaron mis fondos
+    - bloqueo de cuenta bancaria
+    - retención de dinero en cuenta
+    - embargo bancario específico
+    - mi cuenta está bloqueada
+    - liberación de cuenta embargada
+    - desbloquear cuenta bancaria
+
+- intent: retencion_orden_captura
+  examples: |
+    - orden de captura vehicular
+    - consultar órdenes de captura
+    - mi vehículo tiene orden de captura específica
+    - verificar captura del vehículo
+    - órdenes de captura activas
+    - captura de mi vehículo
+    - mi carro tiene órdenes de captura
+    - consulta específica de captura
+    - verificar órdenes vehiculares
+
+- intent: retencion_vehiculo_internado
+  examples: |
+    - vehículo internado en depósito
+    - mi vehículo está en internamiento
+    - consultar internamiento vehicular
+    - vehículo en depósito SAT
+    - internamiento de mi vehículo
+    - mi carro está en el depósito
+    - consultar si mi vehículo está internado
+    - estado de internamiento vehicular
+
+- intent: retencion_suspender_cobranza
+  examples: |
+    - suspender cobranza coactiva específica
+    - suspensión de cobranza SAT
+    - parar procedimiento coactivo
+    - detener cobranza específica
+    - solicitar suspensión de cobranza
+    - suspensión del proceso coactivo
+    - parar proceso de cobranza
+    - detener procedimiento de cobranza
+
+- intent: retencion_terceria_propiedad
+  examples: |
+    - tercería de propiedad específica
+    - trámite de tercería vehicular
+    - no es mi vehículo embargado
+    - no es de mi propiedad el vehículo
+    - tercero propietario del vehículo
+    - trámite específico de tercería
+    - tercería para vehículo
+    - acreditar propiedad de tercero
+
+- intent: retencion_levantamiento
+  examples: |
+    - levantamiento de medida cautelar específica
+    - levantar medida de retención
+    - solicitar levantamiento específico
+    - levantamiento de embargo específico
+    - levantamiento de retención específica
+    - quitar medida cautelar específica
+    - liberación de medida específica
+    - anular medida cautelar
+
+- intent: retencion_remate_vehicular
+  examples: |
+    - remate vehicular del SAT
+    - remate de vehículos específico
+    - próximo remate de vehículos
+    - subasta vehicular SAT
+    - remate público de vehículos
+    - información específica de remates
+    - cuándo es el próximo remate
+    - vehículos en remate del SAT
+
+- intent: retencion_consultar_placa
+  examples: |
+    - [CAP001](placa)
+    - [EMB002](placa)
+    - [RET003](placa)
+    - [INT004](placa)
+    - [COA005](placa)
+    - [LEV006](placa)
+    - [REM007](placa)
+    - [CAU008](placa)
+    - [TER009](placa)
+    - [SUS010](placa)
+    
+
+# ========== NAVEGACIÓN A ACTUALIZAR DATOS ==========
+- intent: ir_a_actualizar_datos
+  examples: |
+    - actualizar datos
+    - actualizar mis datos
+    - quiero actualizar mis datos
+    - cambiar mis datos
+    - modificar datos
+    - actualizar información
+    - cambiar información personal
+    - modificar mi información
+    - actualizar teléfono dni y correo
+    - cambiar datos personales
+    - 6
+    - opción 6
+    - seis

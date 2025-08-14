@@ -210,6 +210,60 @@ rules:
   - intent: impuestos_beneficios_adulto_mayor
   - action: action_beneficios_adulto_mayor
 
+
+# ========== NAVEGACIÓN A RETENCIÓN ==========
+- rule: Ir a Retención y Captura
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+
+# ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ==========
+- rule: Retención - Embargo de cuentas
+  steps:
+  - intent: retencion_embargo_cuentas
+  - action: action_retencion_embargo
+
+- rule: Retención - Orden de captura
+  steps:
+  - intent: retencion_orden_captura
+  - action: action_consultar_orden_captura
+
+- rule: Retención - Vehículo internado
+  steps:
+  - intent: retencion_vehiculo_internado
+  - action: action_retencion_vehiculo_internado
+
+- rule: Retención - Suspender cobranza
+  steps:
+  - intent: retencion_suspender_cobranza
+  - action: action_retencion_suspender_cobranza
+
+- rule: Retención - Tercería de propiedad
+  steps:
+  - intent: retencion_terceria_propiedad
+  - action: action_retencion_terceria_propiedad
+
+- rule: Retención - Levantamiento
+  steps:
+  - intent: retencion_levantamiento
+  - action: action_retencion_levantamiento
+
+- rule: Retención - Remate vehicular
+  steps:
+  - intent: retencion_remate_vehicular
+  - action: action_retencion_remate_vehicular
+
+- rule: Retención - Consultar con placa
+  steps:
+  - intent: retencion_consultar_placa
+  - action: action_consultar_orden_captura
+
+# ========== NAVEGACIÓN A ACTUALIZAR DATPS ==========
+- rule: Ir a Actualizar Datos
+  steps:
+  - intent: ir_a_actualizar_datos
+  - action: action_actualizar_datos
+
 # ========== NAVEGACIÓN GLOBAL ==========
 - rule: Otra consulta
   steps:

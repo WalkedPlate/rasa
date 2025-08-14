@@ -21,6 +21,8 @@ intents:
   - ir_a_pagos_linea        # Opción 2
   - ir_a_papeletas          # Opción 3
   - ir_a_impuestos          # Opción 4
+  - ir_a_retencion_captura  # Opción 5
+  - ir_a_actualizar_datos   # Opción 6
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -51,6 +53,17 @@ intents:
   - impuestos_beneficios_pensionista
   - impuestos_beneficios_adulto_mayor
 
+  # ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ==========
+  - retencion_embargo_cuentas
+  - retencion_orden_captura
+  - retencion_vehiculo_internado
+  - retencion_suspender_cobranza
+  - retencion_terceria_propiedad
+  - retencion_levantamiento
+  - retencion_remate_vehicular
+  - retencion_consultar_placa
+
+
   # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
   - clarify_papeletas
   - clarify_impuestos
@@ -73,10 +86,18 @@ slots:
     values:
       - papeletas
       - impuestos
+      - retencion
+      - actualizar
       - general
     influence_conversation: true
     mappings:
-    - type: custom
+      - type: custom
+
+  ultimo_proceso:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
 
   esperando_clarificacion:
     type: bool
@@ -142,6 +163,8 @@ responses:
       2️⃣ **Pagos** - Pagar por internet  
       3️⃣ **Papeletas** - Multas y consultas de tránsito
       4️⃣ **Impuestos** - Deuda tributaria y declaraciones
+      5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
+      6️⃣ **Actualizar Datos** - Actualizar mi información
       
       ¿Qué necesitas?
 
@@ -177,6 +200,9 @@ responses:
       2️⃣ **Pagos** - Pagar por internet
       3️⃣ **Papeletas** - Multas y consultas de tránsito
       4️⃣ **Impuestos** - Deuda tributaria y declaraciones
+      5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
+      6️⃣ **Actualizar Datos** - Actualizar mi información
+      
 
       ¿Qué necesitas?
 
@@ -280,6 +306,24 @@ responses:
       • "Necesito mi cuadernillo predial"
 
       ¿Qué necesitas?
+
+  utter_retencion_menu:
+  - text: |
+      🚨 **RETENCIÓN Y CAPTURA - ¿Qué necesitas?**
+
+      📋 **OPCIONES DISPONIBLES:**
+      • **"Retención bancaria"** - Información sobre embargo de cuentas
+      • **"Orden de captura"** - Consultar si tu vehículo tiene orden de captura
+      • **"Vehículo internado"** - Consultar si tu vehículo está internado
+      • **"Suspender cobranza"** - Información para solicitar suspensión de cobranza coactiva
+      • **"Tercería de propiedad"** - Información del rrámite de tercería
+      • **"Levantamiento"** - Información para solicitar levantamiento de medida cautelar
+      • **"Remate vehicular"** - Información sobre remates
+
+      💡 **Para consultar orden de captura:** Escribe "orden de captura" y luego proporciona tu placa, por ejemplo:
+      • "Consultar orden de captura de la placa ABC123"
+
+      ¿Qué opción necesitas?
 
   # ========== PAPELETAS SUB-OPCIONES ==========
   utter_papeletas_registrar:
@@ -386,6 +430,7 @@ actions:
   # ========== CUSTOM ACTIONS ==========
   - action_consultar_papeletas
   - action_consultar_codigo_falta
+  # ========== IMPUESTOS ACTIONS ==========
   - action_consultar_impuestos
   - action_cuadernillo_agencia_virtual
   - action_cuadernillo_predial
@@ -397,6 +442,17 @@ actions:
   - action_beneficios_pensionista
   - action_beneficios_adulto_mayor
   - action_route_document_consultation
+  # ========== RETENCIÓN ACTIONS ==========
+  - action_consultar_orden_captura
+  - action_retencion_embargo
+  - action_retencion_vehiculo_internado
+  - action_retencion_suspender_cobranza
+  - action_retencion_terceria_propiedad
+  - action_retencion_levantamiento
+  - action_retencion_remate_vehicular
+  # ========== ACTUALIZAR DATOS ACTIONS ==========
+  - action_actualizar_datos
+
   - action_finalizar_chat
 
 session_config:

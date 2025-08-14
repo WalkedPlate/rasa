@@ -69,12 +69,18 @@ class ActionRouteDocumentConsultation(Action):
         """Determina contexto usando múltiples heurísticas"""
 
         # 1. Verificar contexto actual explícito
+        current_context = tracker.get_slot("contexto_actual")
+        if current_context in ["papeletas", "impuestos", "retencion"]:
+            logger.debug(f"Contexto explícito encontrado: {current_context}")
+            return current_context
+
+        # 2. FORZAR ambigüedad para documentos sin contexto explícito
         current_intent = tracker.latest_message.get('intent', {}).get('name', '')
         if current_intent == 'consulta_ambigua_documento':
             logger.debug("Documento ambiguo detectado - forzando clarificación")
             return "ambiguous"
 
-        # 2. Analizar palabras clave en el mensaje actual
+        # 3. Analizar palabras clave en el mensaje actual
         text = tracker.latest_message.get('text', '').lower()
 
         # Palabras clave para papeletas
@@ -99,13 +105,13 @@ class ActionRouteDocumentConsultation(Action):
             logger.debug(f"Contexto por palabras clave: impuestos (score: {impuestos_score})")
             return "impuestos"
 
-        # 3. Analizar historial reciente de conversación
+        # 4. Analizar historial reciente de conversación
         recent_context = self._analyze_conversation_history(tracker)
         if recent_context:
             logger.debug(f"Contexto por historial: {recent_context}")
             return recent_context
 
-        # 4. Verificar intent específico
+        # 5. Verificar intent específico
         intent = tracker.latest_message.get('intent', {}).get('name', '')
 
         if any(keyword in intent for keyword in ['papeletas', 'codigo_falta']):
@@ -113,8 +119,8 @@ class ActionRouteDocumentConsultation(Action):
         elif any(keyword in intent for keyword in ['impuestos', 'tributario', 'contribuyente']):
             return "impuestos"
 
-        # 5. Si no hay contexto claro, es ambiguo
-        logger.debug("No se pudo determinar contexto - marcando como ambiguo")
+        # 6. Si no hay contexto claro, SIEMPRE es ambiguo
+        logger.debug("No se pudo determinar contexto - forzando clarificación")
         return "ambiguous"
 
     def _analyze_conversation_history(self, tracker: Tracker) -> Optional[str]:

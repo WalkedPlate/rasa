@@ -18,6 +18,20 @@ from .impuestos.beneficios_actions import (
     ActionBeneficiosPensionista,
     ActionBeneficiosAdultoMayor
 )
+
+# Imports de actions de retención
+from .retencion.consulta_actions import ActionConsultarOrdenCaptura
+from .retencion.tramites_actions import (
+    ActionRetencionEmbargo,
+    ActionRetencionVehiculoInternado,
+    ActionRetencionSuspenderCobranza,
+    ActionRetencionTerceriaPropiedad,
+    ActionRetencionLevantamiento,
+    ActionRetencionRemateVehicular
+)
+# Imports de actions de actualizar datos
+from .actualizar.datos_actions import ActionActualizarDatos
+
 from .shared.router_actions import ActionRouteDocumentConsultation
 
 # Lista de todos los actions disponibles
@@ -39,4 +53,18 @@ __all__ = [
     'ActionBeneficiosPensionista',
     'ActionBeneficiosAdultoMayor',
     'ActionRouteDocumentConsultation'
+    
+
+    # Actions de retención
+    'ActionConsultarOrdenCaptura',
+    'ActionRetencionEmbargo',
+    'ActionRetencionVehiculoInternado',
+    'ActionRetencionSuspenderCobranza',
+    'ActionRetencionTerceriaPropiedad',
+    'ActionRetencionLevantamiento',
+    'ActionRetencionRemateVehicular',
+
+    # Actions de actualizar datos
+    'ActionActualizarDatos',
+
 ]

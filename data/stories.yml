@@ -601,3 +601,140 @@ stories:
   - action: action_consultar_impuestos
   - intent: goodbye
   - action: utter_goodbye
+
+# ========== FLUJOS BÁSICOS RETENCIÓN ==========
+- story: Saludo y navegación a retención
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+
+- story: De papeletas a retención
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+
+- story: De impuestos a retención
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+
+# ========== FLUJO RETENCIÓN COMPLETO ==========
+- story: Entrada a retención y embargo
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_embargo_cuentas
+  - action: action_retencion_embargo
+
+- story: Retención con orden de captura
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_orden_captura
+  - action: action_consultar_orden_captura
+
+- story: Retención con vehículo internado
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_vehiculo_internado
+  - action: action_retencion_vehiculo_internado
+
+- story: Retención suspender cobranza
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_suspender_cobranza
+  - action: action_retencion_suspender_cobranza
+
+- story: Retención tercería
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_terceria_propiedad
+  - action: action_retencion_terceria_propiedad
+
+- story: Retención levantamiento
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_levantamiento
+  - action: action_retencion_levantamiento
+
+- story: Retención remate
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_remate_vehicular
+  - action: action_retencion_remate_vehicular
+
+# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: De retención a papeletas
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De retención a impuestos
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+- story: De retención a pagos
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+# ========== FLUJOS ESPECÍFICOS CON PLACAS ==========
+- story: Orden de captura con placa en contexto
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_orden_captura
+  - action: action_consultar_orden_captura
+  - intent: retencion_consultar_placa
+    entities:
+    - placa: "CAP001"
+  - action: action_consultar_orden_captura
+
+# ========== NAVEGACIÓN COMPLETA ==========
+- story: Usuario explorador retención completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_orden_captura
+  - action: action_consultar_orden_captura
+  - intent: retencion_embargo_cuentas
+  - action: action_retencion_embargo
+
+- story: Retención con menú principal
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+- story: Consulta retención y despedida
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_remate_vehicular
+  - action: action_retencion_remate_vehicular
+  - intent: goodbye
+  - action: utter_goodbye
+

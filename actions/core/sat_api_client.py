@@ -175,5 +175,18 @@ class SATAPIClient:
         endpoint = f"/saldomatico/saldomatico/chatboot/5/{codigo}/0/10/10"
         return self._make_request("GET", endpoint)
 
+    def consultar_orden_captura_por_placa(self, placa: str) -> Optional[Dict[str, Any]]:
+        """
+        Consulta órdenes de captura por placa vehicular
+
+        Args:
+            placa: Número de placa vehicular
+
+        Returns:
+            Dict con resultado de la consulta de órdenes de captura
+        """
+        endpoint = f"/saldomatico/papeleta/chatboot/{placa}"
+        return self._make_request("GET", endpoint)
+
 # Instancia global del cliente API
 sat_client = SATAPIClient()
