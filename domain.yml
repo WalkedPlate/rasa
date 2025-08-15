@@ -23,6 +23,7 @@ intents:
   - ir_a_impuestos          # Opción 4
   - ir_a_retencion_captura  # Opción 5
   - ir_a_actualizar_datos   # Opción 6
+  - ir_a_lugares_pagos      # Opción 7
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -63,6 +64,10 @@ intents:
   - retencion_remate_vehicular
   - retencion_consultar_placa
 
+  # ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
+  - lugares_pagos_agencias_horarios
+  - lugares_pagos_lugares_pago
+  - lugares_pagos_formas_pago
 
   # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
   - clarify_papeletas
@@ -88,6 +93,7 @@ slots:
       - impuestos
       - retencion
       - actualizar
+      - lugares_pagos
       - general
     influence_conversation: true
     mappings:
@@ -165,6 +171,7 @@ responses:
       4️⃣ **Impuestos** - Deuda tributaria y declaraciones
       5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
       6️⃣ **Actualizar Datos** - Actualizar mi información
+      7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
       
       ¿Qué necesitas?
 
@@ -202,6 +209,7 @@ responses:
       4️⃣ **Impuestos** - Deuda tributaria y declaraciones
       5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
       6️⃣ **Actualizar Datos** - Actualizar mi información
+      7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
       
 
       ¿Qué necesitas?
@@ -377,6 +385,23 @@ responses:
       • Dame tu placa/DNI/RUC para consultar papeletas
       • 'Menú principal' - Otras opciones
 
+
+  utter_lugares_pagos_menu:
+  - text: |
+      🏢 **LUGARES Y PAGOS**
+
+      📋 **¿Qué información necesitas?**
+      • **"Agencias y horarios"** - Ubicaciones y horarios de oficinas SAT
+      • **"Lugares de pago"** - Dónde puedes pagar (bancos, online, oficinas)
+      • **"Formas de pago"** - Opciones para pagar (online, facilidades, cuotas)
+
+      💡 **También puedes decir:**
+      • "Dónde están las oficinas del SAT"
+      • "Horarios de atención"
+      • "Cómo pago mis multas"
+
+      ¿Qué opción necesitas?
+
   # ========== NAVEGACIÓN GLOBAL ==========
   utter_otra_consulta:
   - text: |
@@ -452,6 +477,10 @@ actions:
   - action_retencion_remate_vehicular
   # ========== ACTUALIZAR DATOS ACTIONS ==========
   - action_actualizar_datos
+  # ========== LUGARES Y PAGOS ACTIONS ==========
+  - action_lugares_agencias_horarios
+  - action_lugares_pago
+  - action_lugares_formas_pago
 
   - action_finalizar_chat
 

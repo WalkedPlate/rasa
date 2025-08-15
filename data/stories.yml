@@ -738,3 +738,82 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+# ========== FLUJOS BÁSICOS LUGARES Y PAGOS ==========
+- story: Saludo y navegación a lugares y pagos
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+
+- story: De otras opciones a lugares y pagos
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+
+# ========== FLUJO LUGARES Y PAGOS COMPLETO ==========
+- story: Lugares - agencias y horarios
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_agencias_horarios
+  - action: action_lugares_agencias_horarios
+
+- story: Lugares - lugares de pago
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_lugares_pago
+  - action: action_lugares_pago
+
+- story: Lugares - formas de pago
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_formas_pago
+  - action: action_lugares_formas_pago
+
+# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: De lugares a papeletas
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De lugares a pagos
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+# ========== FLUJOS COMPLETOS ==========
+- story: Usuario explorador lugares completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_agencias_horarios
+  - action: action_lugares_agencias_horarios
+  - intent: lugares_pagos_formas_pago
+  - action: action_lugares_formas_pago
+
+- story: Lugares con menú principal
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+
+- story: Consulta lugares y despedida
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_lugares_pago
+  - action: action_lugares_pago
+  - intent: goodbye
+  - action: utter_goodbye

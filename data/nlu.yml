@@ -800,3 +800,61 @@ nlu:
     - 6
     - opción 6
     - seis
+    
+
+# ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
+- intent: ir_a_lugares_pagos
+  examples: |
+    - lugares y pagos
+    - oficinas del SAT
+    - horarios de atención
+    - ubicaciones SAT
+    - centros de atención
+    - agencias del SAT
+    - horarios oficinas
+    - oficinas y horarios
+    - menú de lugares
+    - opciones de ubicaciones
+    - información sobre oficinas
+    - centros SAT
+    - 7
+    - opción 7
+    - siete
+
+# ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
+- intent: lugares_pagos_agencias_horarios
+  examples: |
+    - agencias y horarios específicos
+    - horarios de las oficinas SAT
+    - ubicaciones de oficinas específicas
+    - direcciones del SAT completas
+    - dónde están las oficinas exactamente
+    - horarios de atención específicos
+    - centros de atención ubicaciones exactas
+    - agencias SAT direcciones completas
+    - oficinas principales ubicaciones
+    - horarios detallados oficinas
+    - direcciones completas SAT
+
+- intent: lugares_pagos_lugares_pago
+  examples: |
+    - lugares específicos de pago
+    - dónde puedo pagar exactamente
+    - bancos para pagar SAT específicos
+    - lugares donde pagar multas específicos
+    - entidades para pago autorizadas
+    - opciones específicas de lugares pago
+    - bancos autorizados SAT específicos
+    - sitios específicos de pago
+    - puntos de pago autorizados
+
+- intent: lugares_pagos_formas_pago
+  examples: |
+    - formas de pago opciones específicas
+    - cómo puedo pagar métodos
+    - métodos de pago SAT específicos
+    - opciones para pagar detalladas
+    - maneras específicas de pagar
+    - modalidades de pago disponibles
+    - tipos de pago disponibles SAT
+    - alternativas específicas de pago

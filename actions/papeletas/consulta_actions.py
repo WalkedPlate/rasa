@@ -5,6 +5,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
+from ..core.response_filters import response_filter
 import logging
 import re
 
@@ -131,7 +132,7 @@ class ActionConsultarPapeletas(Action):
         return self._execute_api_query(dispatcher, documento_limpio, tipo)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
-                          documento: str, tipo: str) -> List[Dict[Text, Any]]:
+                           documento: str, tipo: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API del SAT"""
 
         dispatcher.utter_message(text=f"🔍 Consultando papeletas para {tipo.upper()} **{documento}**...")
@@ -149,7 +150,11 @@ class ActionConsultarPapeletas(Action):
 
             # Procesar resultado
             if resultado is not None:
-                message = self._format_papeletas_response(resultado, tipo, documento)
+                # Filtrar solo papeletas (Concepto)
+                data_completa = resultado.get('data', [])
+                papeletas = response_filter.filter_papeletas(data_completa)
+
+                message = self._format_papeletas_response(papeletas, tipo, documento)
                 dispatcher.utter_message(text=message)
             else:
                 self._handle_api_error(dispatcher, tipo, documento)
@@ -160,24 +165,21 @@ class ActionConsultarPapeletas(Action):
 
         return [SlotSet("ultimo_documento", documento)]
 
-    def _format_papeletas_response(self, data: Dict[str, Any],
-                                  tipo: str, documento: str) -> str:
+    def _format_papeletas_response(self, papeletas: List[Dict[str, Any]],
+                                   tipo: str, documento: str) -> str:
         """Formatea la respuesta de la API de papeletas"""
 
-        body_count = data.get("bodyCount", 0)
-        papeletas = data.get("data", [])
-
-        if body_count == 0 or not papeletas:
+        if not papeletas:
             return f"""✅ **¡Excelente noticia!** No encontré papeletas pendientes para {tipo.upper()} **{documento}**.
 
-🎉 Estás al día con las infracciones de tránsito.
+    🎉 Estás al día con las infracciones de tránsito.
 
-**¿Qué más necesitas?**
-• Dame otra placa/DNI/RUC para consultar
-• 'Cómo pago' - Información de pagos
-• 'Menú principal' - Otras opciones
+    **¿Qué más necesitas?**
+    • Dame otra placa/DNI/RUC para consultar
+    • 'Cómo pago' - Información de pagos
+    • 'Menú principal' - Otras opciones
 
-💡 **Tip:** Si crees que deberías tener una papeleta, puedes registrarla manualmente."""
+    💡 **Tip:** Si crees que deberías tener una papeleta, puedes registrarla manualmente."""
 
         cantidad = len(papeletas)
         total = sum(float(p.get('monto', 0)) for p in papeletas)
@@ -204,12 +206,12 @@ class ActionConsultarPapeletas(Action):
 
         # Agregar recomendaciones según monto
         if total > 1000:
-            message += "💡 **Recomendación:** El monto es elevado. Te sugiero solicitar facilidades de pago.\n\n"
+            message += "💡 **Recomendación:** El monto es elevado. Te sugiero ver las facilidades de pago.\n\n"
 
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"
         message += "• 'Cómo pago' - Información para pagar\n"
-        message += "• 'Facilidades' - Pagar en cuotas\n"
+        message += "• 'Facilidades' - Información de las facildiades de pago\n"
         message += "• Dame otra placa/DNI/RUC para nueva consulta\n"
         message += "• 'Menú principal' - Otras opciones\n\n"
 

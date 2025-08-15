@@ -32,6 +32,23 @@ from .retencion.tramites_actions import (
 # Imports de actions de actualizar datos
 from .actualizar.datos_actions import ActionActualizarDatos
 
+# Imports de actions de lugares y pagos
+from .lugares_pagos.informacion_actions import (
+    ActionLugaresAgenciasHorarios,
+    ActionLugaresPago,
+    ActionLugaresFormasPago
+)
+
+# Imports de actions de servicios virtuales
+from .servicios_virtuales.servicios_actions import (
+    ActionServiciosMesaPartes,
+    ActionServiciosAgenciaVirtual,
+    ActionServiciosPitazo,
+    ActionServiciosCorreo,
+    ActionServiciosLibroReclamaciones,
+    ActionServiciosCursos
+)
+
 from .shared.router_actions import ActionRouteDocumentConsultation
 
 # Lista de todos los actions disponibles
@@ -66,5 +83,18 @@ __all__ = [
 
     # Actions de actualizar datos
     'ActionActualizarDatos',
+
+    # Actions de lugares y pagos (los no repetidos)
+    'ActionLugaresAgenciasHorarios',
+    'ActionLugaresPago',
+    'ActionLugaresFormasPago',
+
+    # Actions de servicios virtuales
+    'ActionServiciosMesaPartes',
+    'ActionServiciosAgenciaVirtual',
+    'ActionServiciosPitazo',
+    'ActionServiciosCorreo',
+    'ActionServiciosLibroReclamaciones',
+    'ActionServiciosCursos',
 
 ]

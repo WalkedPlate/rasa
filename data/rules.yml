@@ -275,3 +275,25 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_default
+
+# ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
+- rule: Ir a Lugares y Pagos
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+
+# ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
+- rule: Lugares - Agencias y horarios
+  steps:
+  - intent: lugares_pagos_agencias_horarios
+  - action: action_lugares_agencias_horarios
+
+- rule: Lugares - Lugares de pago
+  steps:
+  - intent: lugares_pagos_lugares_pago
+  - action: action_lugares_pago
+
+- rule: Lugares - Formas de pago
+  steps:
+  - intent: lugares_pagos_formas_pago
+  - action: action_lugares_formas_pago
