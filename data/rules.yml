@@ -297,3 +297,40 @@ rules:
   steps:
   - intent: lugares_pagos_formas_pago
   - action: action_lugares_formas_pago
+
+# ========== NAVEGACIÓN A SERVICIOS VIRTUALES ==========
+- rule: Ir a Servicios Virtuales
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+
+# ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ==========
+- rule: Servicios - Mesa de partes
+  steps:
+  - intent: servicios_virtuales_mesa_partes
+  - action: action_servicios_mesa_partes
+
+- rule: Servicios - Agencia virtual
+  steps:
+  - intent: servicios_virtuales_agencia_virtual
+  - action: action_servicios_agencia_virtual
+
+- rule: Servicios - Pitazo
+  steps:
+  - intent: servicios_virtuales_pitazo
+  - action: action_servicios_pitazo
+
+- rule: Servicios - Correo
+  steps:
+  - intent: servicios_virtuales_correo
+  - action: action_servicios_correo
+
+- rule: Servicios - Libro de reclamaciones
+  steps:
+  - intent: servicios_virtuales_libro_reclamaciones
+  - action: action_servicios_libro_reclamaciones
+
+- rule: Servicios - Cursos
+  steps:
+  - intent: servicios_virtuales_cursos
+  - action: action_servicios_cursos

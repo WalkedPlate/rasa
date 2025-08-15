@@ -858,3 +858,95 @@ nlu:
     - modalidades de pago disponibles
     - tipos de pago disponibles SAT
     - alternativas específicas de pago
+    
+
+# ========== NAVEGACIÓN A SERVICIOS VIRTUALES ==========
+- intent: ir_a_servicios_virtuales
+  examples: |
+    - servicios virtuales
+    - servicios online
+    - trámites virtuales
+    - servicios digitales
+    - plataformas virtuales SAT
+    - servicios por internet
+    - trámites online
+    - servicios web SAT
+    - plataforma digital
+    - servicios electrónicos
+    - herramientas virtuales
+    - 8
+    - opción 8
+    - ocho
+
+# ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ESPECÍFICAS ==========
+- intent: servicios_virtuales_mesa_partes
+  examples: |
+    - mesa de partes digital
+    - presentar trámites online
+    - mesa de partes virtual
+    - trámites administrativos online
+    - presentación de documentos virtual
+    - mesa digital de trámites
+    - envío de expedientes online
+    - trámites por internet SAT
+    - presentar solicitudes digitales
+    - mesa de partes electrónica
+
+- intent: servicios_virtuales_agencia_virtual
+  examples: |
+    - agencia virtual SAT registro
+    - acceso agencia virtual específica
+    - registrarse en agencia virtual
+    - plataforma agencia virtual SAT
+    - ingresar a agencia virtual SAT
+    - registro específico agencia virtual
+    - acceder servicios virtuales SAT
+    - portal agencia virtual SAT
+    - cuenta agencia virtual
+
+- intent: servicios_virtuales_pitazo
+  examples: |
+    - suscribirse a pitazo
+    - alertas de papeletas automáticas
+    - notificaciones papeletas pitazo
+    - registro pitazo informativo
+    - alertas automáticas SAT
+    - suscripción pitazo SAT
+    - notificaciones automáticas multas
+    - servicio pitazo alertas
+    - avisos automáticos papeletas
+
+- intent: servicios_virtuales_correo
+  examples: |
+    - enviar correo al SAT
+    - consulta por correo electrónico
+    - contactar por email SAT
+    - escribir correo al SAT
+    - envío de consultas por correo
+    - comunicación por email SAT
+    - contacto correo electrónico
+    - consultas vía correo SAT
+
+- intent: servicios_virtuales_libro_reclamaciones
+  examples: |
+    - libro de reclamaciones digital
+    - presentar reclamo online
+    - quejas SAT online
+    - reclamo virtual SAT
+    - libro reclamaciones virtual
+    - presentar queja digital
+    - reclamos por internet SAT
+    - quejas digitales SAT
+    - reclamo electrónico
+
+- intent: servicios_virtuales_cursos
+  examples: |
+    - cursos del SAT disponibles
+    - escuela SAT capacitaciones
+    - capacitaciones SAT online
+    - cursos SAT lima
+    - formación académica SAT
+    - educación SAT cursos
+    - capacitación tributaria SAT
+    - cursos especializados SAT
+    - escuela virtual SAT

@@ -17,13 +17,14 @@ intents:
   - consulta_rapida_impuestos_codigo
 
   # ========== NAVEGACIÓN A CONTEXTOS ==========
-  - ir_a_casilla_mtc        # Opción 1
-  - ir_a_pagos_linea        # Opción 2
-  - ir_a_papeletas          # Opción 3
-  - ir_a_impuestos          # Opción 4
-  - ir_a_retencion_captura  # Opción 5
-  - ir_a_actualizar_datos   # Opción 6
-  - ir_a_lugares_pagos      # Opción 7
+  - ir_a_casilla_mtc          # Opción 1
+  - ir_a_pagos_linea          # Opción 2
+  - ir_a_papeletas            # Opción 3
+  - ir_a_impuestos            # Opción 4
+  - ir_a_retencion_captura    # Opción 5
+  - ir_a_actualizar_datos     # Opción 6
+  - ir_a_lugares_pagos        # Opción 7
+  - ir_a_servicios_virtuales  # Opción 8
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -69,6 +70,14 @@ intents:
   - lugares_pagos_lugares_pago
   - lugares_pagos_formas_pago
 
+  # ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ==========
+  - servicios_virtuales_mesa_partes
+  - servicios_virtuales_agencia_virtual
+  - servicios_virtuales_pitazo
+  - servicios_virtuales_correo
+  - servicios_virtuales_libro_reclamaciones
+  - servicios_virtuales_cursos
+
   # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
   - clarify_papeletas
   - clarify_impuestos
@@ -94,6 +103,7 @@ slots:
       - retencion
       - actualizar
       - lugares_pagos
+      - servicios_virtuales
       - general
     influence_conversation: true
     mappings:
@@ -172,6 +182,7 @@ responses:
       5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
       6️⃣ **Actualizar Datos** - Actualizar mi información
       7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
+      8️⃣ **Servicios Virtuales** - Trámites y servicios online
       
       ¿Qué necesitas?
 
@@ -210,7 +221,7 @@ responses:
       5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
       6️⃣ **Actualizar Datos** - Actualizar mi información
       7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
-      
+      8️⃣ **Servicios Virtuales** - Trámites y servicios online
 
       ¿Qué necesitas?
 
@@ -385,7 +396,7 @@ responses:
       • Dame tu placa/DNI/RUC para consultar papeletas
       • 'Menú principal' - Otras opciones
 
-
+  # ========== OPCIÓN 7: LUGARES Y PAGOS MENÚ ==========
   utter_lugares_pagos_menu:
   - text: |
       🏢 **LUGARES Y PAGOS**
@@ -401,6 +412,27 @@ responses:
       • "Cómo pago mis multas"
 
       ¿Qué opción necesitas?
+
+  # ========== OPCIÓN 8: SERVICIOS VIRTUALES ==========
+  utter_servicios_virtuales_menu:
+  - text: |
+      💻 **SERVICIOS VIRTUALES**
+
+      📋 **¿Qué servicio virtual necesitas?**
+      • **"Mesa de partes"** - Presentar trámites administrativos online
+      • **"Agencia Virtual"** - Acceso a servicios digitales SAT
+      • **"Suscríbete a Pitazo"** - Recibir alertas de papeletas
+      • **"Envíanos un correo"** - Contacto por email
+      • **"Libro de reclamaciones"** - Presentar reclamos oficiales
+      • **"Cursos SAT"** - Capacitaciones y certificaciones
+
+      💡 **También puedes decir:**
+      • "Mesa de partes digital"
+      • "Registro agencia virtual"
+      • "Alertas de papeletas"
+      • "Contactar por correo"
+
+      ¿Qué servicio necesitas, dime?
 
   # ========== NAVEGACIÓN GLOBAL ==========
   utter_otra_consulta:
@@ -481,6 +513,13 @@ actions:
   - action_lugares_agencias_horarios
   - action_lugares_pago
   - action_lugares_formas_pago
+  # ========== SERVICIOS VIRTUALES ACTIONS ==========
+  - action_servicios_mesa_partes
+  - action_servicios_agencia_virtual
+  - action_servicios_pitazo
+  - action_servicios_correo
+  - action_servicios_libro_reclamaciones
+  - action_servicios_cursos
 
   - action_finalizar_chat
 

@@ -817,3 +817,149 @@ stories:
   - action: action_lugares_pago
   - intent: goodbye
   - action: utter_goodbye
+
+# ========== FLUJOS BÁSICOS SERVICIOS VIRTUALES ==========
+- story: Saludo y navegación a servicios virtuales
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+
+- story: De otras opciones a servicios virtuales
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+
+# ========== FLUJO SERVICIOS VIRTUALES COMPLETO ==========
+- story: Servicios - mesa de partes
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_mesa_partes
+  - action: action_servicios_mesa_partes
+
+- story: Servicios - agencia virtual
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_agencia_virtual
+  - action: action_servicios_agencia_virtual
+
+- story: Servicios - pitazo
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_pitazo
+  - action: action_servicios_pitazo
+
+- story: Servicios - correo
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_correo
+  - action: action_servicios_correo
+
+- story: Servicios - libro de reclamaciones
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_libro_reclamaciones
+  - action: action_servicios_libro_reclamaciones
+
+- story: Servicios - cursos
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_cursos
+  - action: action_servicios_cursos
+
+# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: De servicios a papeletas
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De servicios a impuestos
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+- story: De servicios a lugares
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+
+# ========== FLUJOS ESPECÍFICOS MÚLTIPLES ==========
+- story: Servicios múltiples en una sesión
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_mesa_partes
+  - action: action_servicios_mesa_partes
+  - intent: servicios_virtuales_agencia_virtual
+  - action: action_servicios_agencia_virtual
+
+- story: Servicios y navegación a otros contextos
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_pitazo
+  - action: action_servicios_pitazo
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+# ========== FLUJOS COMPLETOS ==========
+- story: Usuario explorador servicios completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_libro_reclamaciones
+  - action: action_servicios_libro_reclamaciones
+  - intent: servicios_virtuales_cursos
+  - action: action_servicios_cursos
+
+- story: Servicios con menú principal
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+
+- story: Consulta servicios y despedida
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_correo
+  - action: action_servicios_correo
+  - intent: goodbye
+  - action: utter_goodbye
+
+# ========== FLUJOS DE INTEGRACIÓN CON OTRAS OPCIONES ==========
+- story: De servicios a casilla MTC
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_mesa_partes
+  - action: action_servicios_mesa_partes
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+
+- story: De servicios a pagos
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_agencia_virtual
+  - action: action_servicios_agencia_virtual
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
