@@ -145,9 +145,6 @@ nlu:
     - me dijeron que necesito una casilla
     - cómo me inscribo
     - dónde me registro
-    - 1
-    - opción 1
-    - uno
 
 - intent: ir_a_pagos_linea
   examples: |
@@ -165,9 +162,6 @@ nlu:
     - páginas para pagar
     - pago online
     - opciones de pago
-    - 2
-    - opción 2
-    - dos
 
 - intent: ir_a_papeletas
   examples: |
@@ -189,9 +183,6 @@ nlu:
     - me llegó una carta sobre papeletas
     - multas de tránsito
     - infracciones vehiculares
-    - 3
-    - opción 3
-    - tres
 
 # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
 - intent: papeletas_consultar_placa
@@ -385,9 +376,6 @@ nlu:
     - impuesto predial
     - impuesto vehicular
     - arbitrios
-    - 4
-    - opción 4
-    - cuatro
 
 # ========== CONSULTAS RÁPIDAS ESPECÍFICAS IMPUESTOS (GLOBAL) ==========
 - intent: consulta_rapida_impuestos_placa
@@ -685,9 +673,7 @@ nlu:
     - medidas cautelares SAT
     - cobranza del SAT
     - procedimientos de retención
-    - 5
-    - opción 5
-    - cinco
+
 
 # ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ESPECÍFICAS ==========
 - intent: retencion_embargo_cuentas
@@ -797,9 +783,6 @@ nlu:
     - modificar mi información
     - actualizar teléfono dni y correo
     - cambiar datos personales
-    - 6
-    - opción 6
-    - seis
     
 
 # ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
@@ -817,9 +800,6 @@ nlu:
     - opciones de ubicaciones
     - información sobre oficinas
     - centros SAT
-    - 7
-    - opción 7
-    - siete
 
 # ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
 - intent: lugares_pagos_agencias_horarios
@@ -874,9 +854,6 @@ nlu:
     - plataforma digital
     - servicios electrónicos
     - herramientas virtuales
-    - 8
-    - opción 8
-    - ocho
 
 # ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ESPECÍFICAS ==========
 - intent: servicios_virtuales_mesa_partes
@@ -960,9 +937,6 @@ nlu:
     - procedimientos administrativos
     - trámites del SAT
     - consultar requisitos
-    - 9
-    - opción 9
-    - nueve
 
 # ========== CONSULTA DE TRÁMITES ==========
 - intent: tramites_consultar_numero

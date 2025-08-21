@@ -182,7 +182,6 @@ slots:
     - type: custom
 
 responses:
-  # ========== BÁSICOS ==========
   utter_greet:
   - text: |
       ¡Hola! Soy el asistente virtual del SAT de Lima 👋
@@ -203,16 +202,15 @@ responses:
       O si prefieres explorar las opciones completas:
       
       📋 **OPCIONES PRINCIPALES:**
-      Escribe el número o el nombre de la opción que necesitas:
-      1️⃣ **Casilla MTC** - Registro obligatorio
-      2️⃣ **Pagos** - Pagar por internet  
-      3️⃣ **Papeletas** - Multas y consultas de tránsito
-      4️⃣ **Impuestos** - Deuda tributaria y declaraciones
-      5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
-      6️⃣ **Actualizar Datos** - Actualizar mi información
-      7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
-      8️⃣ **Servicios Virtuales** - Trámites y servicios online
-      9️⃣ **Otros Trámites** - Trámites administrativos y requisitos
+      🔹 **Casilla MTC** - Registro obligatorio
+      🔹 **Pagos** - Pagar por internet  
+      🔹 **Papeletas** - Multas y consultas de tránsito
+      🔹 **Impuestos** - Deuda tributaria y declaraciones
+      🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
+      🔹 **Actualizar Datos** - Actualizar mi información
+      🔹 **Lugares y Pagos** - Oficinas, horarios y formas de pago
+      🔹 **Servicios Virtuales** - Trámites y servicios online
+      🔹 **Otros Trámites** - Trámites administrativos y requisitos
       
       ¿Qué necesitas?
 
@@ -244,15 +242,15 @@ responses:
       • "Código contribuyente 94539"
 
       📋 **OPCIONES PRINCIPALES:**
-      1️⃣ **Casilla MTC** - Registro obligatorio
-      2️⃣ **Pagos** - Pagar por internet
-      3️⃣ **Papeletas** - Multas y consultas de tránsito
-      4️⃣ **Impuestos** - Deuda tributaria y declaraciones
-      5️⃣ **Retención y Captura** - Órdenes de captura y medidas cautelares
-      6️⃣ **Actualizar Datos** - Actualizar mi información
-      7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
-      8️⃣ **Servicios Virtuales** - Trámites y servicios online
-      9️⃣ **Otros Trámites** - Trámites administrativos y requisitos
+      🔹 **Casilla MTC** - Registro obligatorio
+      🔹 **Pagos** - Pagar por internet
+      🔹 **Papeletas** - Multas y consultas de tránsito
+      🔹 **Impuestos** - Deuda tributaria y declaraciones
+      🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
+      🔹 **Actualizar Datos** - Actualizar mi información
+      🔹 **Lugares y Pagos** - Oficinas, horarios y formas de pago
+      🔹 **Servicios Virtuales** - Trámites y servicios online
+      🔹 **Otros Trámites** - Trámites administrativos y requisitos
 
       ¿Qué necesitas?
 
@@ -555,20 +553,20 @@ responses:
       No entendí completamente tu mensaje.
 
       📋 **OPCIONES PRINCIPALES:**
-      Escribe el número o nombre:
-      1️⃣ **Casilla MTC** - "1" o "Casilla MTC"
-      2️⃣ **Pagos** - "2" o "Cómo pago"  
-      3️⃣ **Papeletas** - "3" o "Papeletas"
-      4️⃣ **Impuestos** - "4" o "Impuestos"
-      5️⃣ **Retención** - "5" o "Retención"
-      6️⃣ **Actualizar datos** - "6" o "Actualizar datos"
-      7️⃣ **Lugares y pagos** - "7" o "Oficinas"
-      8️⃣ **Servicios virtuales** - "8" o "Servicios"
-      9️⃣ **Otros trámites** - "9" o "Otros trámites"
+      Escribe el nombre de la opción que necesitas:
+      🔹 **Casilla MTC** - "Casilla MTC" o "Registro"
+      🔹 **Pagos** - "Pagos" o "Cómo pago"  
+      🔹 **Papeletas** - "Papeletas" o "Multas"
+      🔹 **Impuestos** - "Impuestos" o "Deuda tributaria"
+      🔹 **Retención** - "Retención" o "Orden de captura"
+      🔹 **Actualizar datos** - "Actualizar datos"
+      🔹 **Lugares y pagos** - "Oficinas" o "Lugares de pago"
+      🔹 **Servicios virtuales** - "Servicios virtuales"
+      🔹 **Otros trámites** - "Otros trámites"
 
       💡 **También puedes decir:** "Menú principal"
 
-      ¿Qué necesitas?
+        ¿Qué necesitas?
 actions:
   # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet

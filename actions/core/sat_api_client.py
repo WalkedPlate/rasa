@@ -175,6 +175,29 @@ class SATAPIClient:
         endpoint = f"/saldomatico/papeleta/chatboot/{placa}"
         return self._make_request("GET", endpoint)
 
+    def consultar_tramite(self, numero_tramite: str) -> Optional[Dict[str, Any]]:
+        """
+        Consulta estado de trámite por número
+
+        Args:
+            numero_tramite: Número de trámite (14 dígitos)
+
+        Returns:
+            Dict con resultado de la consulta de trámite
+            Formato esperado: {
+                "tramiteNro": "",
+                "estadoDesc": "",
+                "resolucionNro": "",
+                "fechaResolucion": "",
+                "resultadoDes": "",
+                "estadoNotificaRes": "",
+                "fechaNotificaRes": "",
+                "fechaPresentacion": ""
+            }
+        """
+        endpoint = f"/saldomatico/tramite/1/{numero_tramite}"
+        return self._make_request("GET", endpoint)
+
     @staticmethod
     def validate_numero_tramite(numero: str) -> Tuple[bool, str]:
         """
