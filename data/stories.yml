@@ -963,3 +963,148 @@ stories:
   - action: action_servicios_agencia_virtual
   - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
+
+# ========== FLUJOS BÁSICOS OTROS TRÁMITES ==========
+- story: Saludo y navegación a otros trámites
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+
+- story: De otras opciones a otros trámites
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+
+# ========== FLUJO OTROS TRÁMITES COMPLETO ==========
+- story: Otros trámites - consultar número
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "12345678901234"
+  - action: action_consultar_tramite
+
+- story: Otros trámites - impugnación papeletas
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_impugnacion_papeletas
+  - action: action_tramites_impugnacion_papeletas
+
+- story: Otros trámites - reclamo tributario
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_reclamo_tributario
+  - action: action_tramites_reclamo_tributario
+
+- story: Otros trámites - constancias no adeudo
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_constancias_no_adeudo
+  - action: action_tramites_constancias_no_adeudo
+
+# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: De otros trámites a papeletas
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De otros trámites a impuestos
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+# ========== CONSULTA RÁPIDA DE TRÁMITES ==========
+- story: Consulta rápida trámite directo
+  steps:
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "98765432109876"
+  - action: action_consultar_tramite
+
+- story: Usuario explorador trámites completo
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "11111111111111"
+  - action: action_consultar_tramite
+  - intent: tramites_impugnacion_papeletas
+  - action: action_tramites_impugnacion_papeletas
+
+# ========== FLUJOS CON MENÚ PRINCIPAL ==========
+- story: Otros trámites con menú principal
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+
+- story: Consulta trámite y despedida
+  steps:
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "12345678901234"
+  - action: action_consultar_tramite
+  - intent: goodbye
+  - action: utter_goodbye
+
+# ========== FLUJOS COMPLETOS OTROS TRÁMITES ==========
+- story: Otros trámites - Flujo completo papeletas
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_requisitos_papeletas
+  - action: utter_tramites_requisitos_papeletas
+  - intent: tramites_apelacion_papeletas
+  - action: action_tramites_apelacion_papeletas
+
+- story: Otros trámites - Flujo completo tributarios
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_requisitos_tributarios
+  - action: utter_tramites_requisitos_tributarios
+  - intent: tramites_predial_requisitos
+  - action: action_tramites_predial_requisitos
+
+- story: Consulta trámite directo
+  steps:
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "12345678901234"
+  - action: action_consultar_tramite
+
+- story: Flujo mixto trámites
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_impugnacion_papeletas
+  - action: action_tramites_impugnacion_papeletas
+  - intent: tramites_constancias_no_adeudo
+  - action: action_tramites_constancias_no_adeudo
+
+- story: Navegación desde otros contextos a trámites
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: tramites_requisitos_tributarios
+  - action: utter_tramites_requisitos_tributarios

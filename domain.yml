@@ -78,6 +78,33 @@ intents:
   - servicios_virtuales_libro_reclamaciones
   - servicios_virtuales_cursos
 
+  # ========== CONTEXTO OTROS TRÁMITES ==========
+  - ir_a_otros_tramites
+  - tramites_consultar_numero
+  - tramites_requisitos_papeletas
+  - tramites_requisitos_tributarios
+  - tramites_impugnacion_papeletas
+  - tramites_reclamo_tributario
+  - tramites_constancias_no_adeudo
+  # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+  - tramites_recurso_reconsideracion
+  - tramites_descarga_infracciones
+  - tramites_apelacion_papeletas
+  - tramites_prescripcion_papeletas
+  - tramites_devolucion_papeletas
+  - tramites_terceria_requisitos
+  - tramites_suspension_requisitos
+  # ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+  - tramites_predial_requisitos
+  - tramites_vehicular_requisitos
+  - tramites_alcabala_requisitos
+  - tramites_reclamacion_tributaria
+  - tramites_prescripcion_tributaria
+  - tramites_devolucion_tributaria
+  - tramites_apelacion_tributaria
+  - tramites_terceria_tributaria
+  - tramites_suspension_tributaria
+
   # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
   - clarify_papeletas
   - clarify_impuestos
@@ -92,6 +119,7 @@ entities:
   - ruc
   - codigo_falta
   - codigo_contribuyente
+  - numero_tramite
 
 slots:
   # ========== SLOTS DE CONTEXTO ==========
@@ -103,6 +131,7 @@ slots:
       - retencion
       - actualizar
       - lugares_pagos
+      - otros_tramites
       - servicios_virtuales
       - general
     influence_conversation: true
@@ -183,6 +212,7 @@ responses:
       6️⃣ **Actualizar Datos** - Actualizar mi información
       7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
       8️⃣ **Servicios Virtuales** - Trámites y servicios online
+      9️⃣ **Otros Trámites** - Trámites administrativos y requisitos
       
       ¿Qué necesitas?
 
@@ -222,6 +252,7 @@ responses:
       6️⃣ **Actualizar Datos** - Actualizar mi información
       7️⃣ **Lugares y Pagos** - Oficinas, horarios y formas de pago
       8️⃣ **Servicios Virtuales** - Trámites y servicios online
+      9️⃣ **Otros Trámites** - Trámites administrativos y requisitos
 
       ¿Qué necesitas?
 
@@ -434,6 +465,72 @@ responses:
 
       ¿Qué servicio necesitas, dime?
 
+  # ========== OPCIÓN 9: OTROS TRÁMITES MENÚ ==========
+  utter_otros_tramites_menu:
+  - text: |
+      📋 **OTROS TRÁMITES ADMINISTRATIVOS**
+
+      ⚡ **CONSULTA RÁPIDA DE TRÁMITE:**
+      • **"Consultar trámite 12345678901234"** - Estado de tu trámite (14 dígitos)
+
+      📝 **OPCIONES DISPONIBLES:**
+      • **"Consultar trámite"** - Estado de tu trámite por número
+      • **"Requisitos papeletas"** - Trámites administrativos de papeletas
+      • **"Requisitos tributarios"** - Trámites administrativos de impuestos
+      • **"Impugnación papeletas"** - Impugnar una papeleta
+      • **"Reclamo tributario"** - Reclamaciones tributarias
+      • **"Constancias no adeudo"** - Obtener constancias
+
+      💡 **También puedes decir:**
+      • "Mi número de trámite es 12345678901234"
+      • "Necesito requisitos para apelar"
+      • "Quiero impugnar una papeleta"
+
+      ¿Qué opción necesitas?
+      
+  # ========== SUB-MENÚS OTROS TRÁMITES ==========
+  utter_tramites_requisitos_papeletas:
+  - text: |
+      📋 **REQUISITOS DE TRÁMITES - PAPELETAS**
+
+      📝 **OPCIONES DISPONIBLES:**
+      • **"Recurso reconsideración"** - Requisitos para recurso de reconsideración
+      • **"Descarga infracciones"** - Procedimiento para descarga de infracciones
+      • **"Devolución papeletas"** - Requisitos para devolución y/o compensación
+      • **"Prescripción papeletas"** - Requisitos para solicitud de prescripción
+      • **"Apelación papeletas"** - Requisitos para recurso de apelación
+      • **"Tercería requisitos"** - Requisitos para tercería de propiedad
+      • **"Suspensión requisitos"** - Requisitos para suspensión de cobranza
+
+      💡 **También puedes decir:**
+      • "Necesito requisitos para apelar"
+      • "Quiero información de prescripción"
+      • "Cómo hago una tercería"
+
+      ¿Qué trámite de papeletas necesitas?
+
+  utter_tramites_requisitos_tributarios:
+  - text: |
+      📋 **REQUISITOS DE TRÁMITES - TRIBUTARIOS**
+
+      📝 **OPCIONES DISPONIBLES:**
+      • **"Predial requisitos"** - Requisitos para declaración de impuesto predial
+      • **"Vehicular requisitos"** - Requisitos para declaración de impuesto vehicular
+      • **"Alcabala requisitos"** - Requisitos para liquidación de alcabala
+      • **"Reclamación tributaria"** - Requisitos para recurso de reclamación
+      • **"Prescripción tributaria"** - Requisitos para solicitud de prescripción
+      • **"Devolución tributaria"** - Requisitos para devolución y/o compensación
+      • **"Apelación tributaria"** - Requisitos para recurso de apelación
+      • **"Tercería tributaria"** - Requisitos para tercería de propiedad
+      • **"Suspensión tributaria"** - Requisitos para suspensión de cobranza
+
+      💡 **También puedes decir:**
+      • "Necesito declarar mi casa"
+      • "Quiero reclamar un impuesto"
+      • "Cómo solicito prescripción"
+
+      ¿Qué trámite tributario necesitas?
+
   # ========== NAVEGACIÓN GLOBAL ==========
   utter_otra_consulta:
   - text: |
@@ -457,18 +554,21 @@ responses:
   - text: |
       No entendí completamente tu mensaje.
 
-      **Puedes decir:**
-      🚗 **Papeletas:** "Ver papeletas de mi placa ABC123"
-      💰 **Impuestos:** "Impuestos de mi DNI 12345678"
-      💳 **Pagos:** "Cómo pago por internet"
-      📋 **Casilla MTC:** "Necesito inscribirme"
-      📋 **Menú:** "Menú principal"
+      📋 **OPCIONES PRINCIPALES:**
+      Escribe el número o nombre:
+      1️⃣ **Casilla MTC** - "1" o "Casilla MTC"
+      2️⃣ **Pagos** - "2" o "Cómo pago"  
+      3️⃣ **Papeletas** - "3" o "Papeletas"
+      4️⃣ **Impuestos** - "4" o "Impuestos"
+      5️⃣ **Retención** - "5" o "Retención"
+      6️⃣ **Actualizar datos** - "6" o "Actualizar datos"
+      7️⃣ **Lugares y pagos** - "7" o "Oficinas"
+      8️⃣ **Servicios virtuales** - "8" o "Servicios"
+      9️⃣ **Otros trámites** - "9" o "Otros trámites"
 
-      **O consultar códigos:**
-      • "¿Qué significa C15?"
+      💡 **También puedes decir:** "Menú principal"
 
       ¿Qué necesitas?
-
 actions:
   # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet
@@ -520,6 +620,32 @@ actions:
   - action_servicios_correo
   - action_servicios_libro_reclamaciones
   - action_servicios_cursos
+  # ========== OTROS TRÁMITES ACTIONS ==========
+  - utter_otros_tramites_menu
+  - utter_tramites_requisitos_papeletas
+  - utter_tramites_requisitos_tributarios
+  - action_consultar_tramite
+  - action_tramites_impugnacion_papeletas
+  - action_tramites_reclamo_tributario
+  - action_tramites_constancias_no_adeudo
+# ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+  - action_tramites_recurso_reconsideracion
+  - action_tramites_descarga_infracciones
+  - action_tramites_apelacion_papeletas
+  - action_tramites_prescripcion_papeletas
+  - action_tramites_devolucion_papeletas
+  - action_tramites_terceria_requisitos
+  - action_tramites_suspension_requisitos
+  # ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+  - action_tramites_predial_requisitos
+  - action_tramites_vehicular_requisitos
+  - action_tramites_alcabala_requisitos
+  - action_tramites_reclamacion_tributaria
+  - action_tramites_prescripcion_tributaria
+  - action_tramites_devolucion_tributaria
+  - action_tramites_apelacion_tributaria
+  - action_tramites_terceria_tributaria
+  - action_tramites_suspension_tributaria
 
   - action_finalizar_chat
 

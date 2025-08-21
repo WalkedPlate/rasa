@@ -1,5 +1,5 @@
 """
-Validadores para datos de entrada (DNI, placa, RUC, códigos)
+Validadores para datos de entrada (DNI, placa, RUC, códigos, trámites)
 """
 import re
 from typing import Tuple, Optional
@@ -120,6 +120,28 @@ class DataValidator:
 
         es_valido = any(re.match(patron, codigo_limpio) for patron in patrones_validos)
         return es_valido, codigo_limpio
+
+    @staticmethod
+    def validate_numero_tramite(numero: str) -> Tuple[bool, str]:
+        """
+        Valida formato de número de trámite (14 dígitos)
+
+        Args:
+            numero: Número de trámite a validar
+
+        Returns:
+            Tuple[bool, str]: (es_válido, numero_limpio)
+        """
+        if not numero:
+            return False, ""
+
+        # Limpiar número (solo números)
+        numero_limpio = re.sub(r'[^0-9]', '', numero.strip())
+
+        # Número de trámite debe tener exactamente 14 dígitos
+        es_valido = len(numero_limpio) == 14 and numero_limpio.isdigit()
+
+        return es_valido, numero_limpio
 
     @staticmethod
     def detect_data_type(text: str) -> Optional[str]:

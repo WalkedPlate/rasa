@@ -950,3 +950,303 @@ nlu:
     - capacitación tributaria SAT
     - cursos especializados SAT
     - escuela virtual SAT
+
+# ========== NAVEGACIÓN A OTROS TRÁMITES ==========
+- intent: ir_a_otros_tramites
+  examples: |
+    - otros trámites
+    - trámites administrativos
+    - requisitos administrativos
+    - procedimientos administrativos
+    - trámites del SAT
+    - consultar requisitos
+    - 9
+    - opción 9
+    - nueve
+
+# ========== CONSULTA DE TRÁMITES ==========
+- intent: tramites_consultar_numero
+  examples: |
+    - consultar trámite [12345678901234](numero_tramite)
+    - estado trámite [98765432109876](numero_tramite)
+    - seguimiento de mi trámite [11111111111111](numero_tramite)
+    - número de trámite [12345678901234](numero_tramite)
+    - mi trámite es [98765432109876](numero_tramite)
+    - ver estado del trámite [11111111111111](numero_tramite)
+    - consultar estado [12345678901234](numero_tramite)
+    - seguimiento [98765432109876](numero_tramite)
+    - [11111111111111](numero_tramite) estado
+    - trámite [12345678901234](numero_tramite) estado
+
+# ========== SUB-MENÚS TRÁMITES ==========
+- intent: tramites_requisitos_papeletas
+  examples: |
+    - requisitos papeletas administrativos
+    - trámites administrativos papeletas
+    - procedimientos papeletas requisitos
+    - documentos papeletas trámites
+    - requisitos para papeletas
+    - trámites de papeletas
+    - requisitos multas administrativos
+    - procedimientos multas
+    - documentación papeletas
+    - requisitos infracciones
+
+- intent: tramites_requisitos_tributarios
+  examples: |
+    - requisitos tributarios administrativos
+    - trámites administrativos impuestos
+    - procedimientos tributarios requisitos
+    - documentos tributarios trámites
+    - requisitos para impuestos
+    - trámites de impuestos
+    - requisitos tributos administrativos
+    - procedimientos tributarios
+    - documentación tributaria
+    - requisitos deuda tributaria
+
+# ========== TRÁMITES ESPECÍFICOS ==========
+- intent: tramites_impugnacion_papeletas
+  examples: |
+    - impugnación papeletas requisitos
+    - impugnar papeleta procedimiento
+    - requisitos impugnación administrativa
+    - impugnación de papeletas
+    - impugnar multa requisitos
+    - procedimiento impugnación
+    - requisitos para impugnar
+    - impugnación administrativa
+    - impugnar infracción
+    - requisitos impugnar papeleta
+
+- intent: tramites_reclamo_tributario
+  examples: |
+    - reclamo tributario procedimiento
+    - reclamación tributaria requisitos
+    - requisitos reclamo impuestos
+    - reclamo tributario
+    - reclamación de impuestos
+    - procedimiento reclamo
+    - requisitos para reclamar
+    - reclamo administrativo tributario
+    - reclamación administrativa
+    - requisitos reclamar tributos
+
+- intent: tramites_constancias_no_adeudo
+  examples: |
+    - constancias no adeudo
+    - constancia tributaria
+    - certificado no adeudo
+    - constancia de no adeudo
+    - certificado tributario
+    - constancia libre deuda
+    - certificado libre deuda
+    - constancia sin deuda
+    - documento no adeudo
+    - certificación tributaria
+
+# ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+- intent: tramites_recurso_reconsideracion
+  examples: |
+    - recurso reconsideración requisitos
+    - reconsideración papeleta documentos
+    - requisitos reconsideración administrativa
+    - recurso de reconsideración
+    - reconsideración de papeletas
+    - reconsideración multa
+    - recurso reconsideración papeleta
+    - necesito reconsideración
+    - quiero reconsideración
+    - reconsideración administrativa
+
+- intent: tramites_descarga_infracciones
+  examples: |
+    - descarga infracciones requisitos
+    - descargar papeletas procedimiento
+    - requisitos descarga multas
+    - descarga de infracciones
+    - descargar infracciones
+    - descarga multas
+    - procedimiento descarga
+    - cómo descargar infracciones
+    - descarga papeletas agencia virtual
+
+- intent: tramites_apelacion_papeletas
+  examples: |
+    - apelación papeletas requisitos
+    - apelar papeleta procedimiento
+    - requisitos apelación administrativa
+    - recurso de apelación papeletas
+    - apelación de papeletas
+    - apelar multa
+    - recurso apelación papeleta
+    - necesito apelar papeleta
+    - quiero apelar
+    - apelación administrativa papeletas
+    - información para la apelación de papeletas
+    - necesito información para la apelación
+    - cómo apelar una papeleta
+    - requisitos para apelar
+
+- intent: tramites_prescripcion_papeletas
+  examples: |
+    - prescripción papeletas requisitos
+    - prescripción de papeletas
+    - prescripción multa
+    - solicitud prescripción papeleta
+    - prescripción administrativa
+    - requisitos prescripción multas
+    - prescripción de multas
+    - solicitud de prescripción
+    - necesito prescripción
+    - quiero prescripción papeleta
+    - información de prescripción
+
+- intent: tramites_devolucion_papeletas
+  examples: |
+    - devolución papeletas requisitos
+    - devolución de papeletas
+    - compensación papeletas
+    - devolución y compensación
+    - requisitos devolución multas
+    - solicitud devolución papeleta
+    - devolución administrativa
+    - compensación multas
+    - necesito devolución papeleta
+
+- intent: tramites_terceria_requisitos
+  examples: |
+    - tercería requisitos papeletas
+    - tercería de propiedad requisitos
+    - requisitos tercería administrativa
+    - tercería requisitos administrativos
+    - tercería propiedad papeletas
+    - requisitos para tercería
+    - tercería administrativos
+    - necesito tercería requisitos
+
+- intent: tramites_suspension_requisitos
+  examples: |
+    - suspensión requisitos papeletas
+    - suspensión cobranza requisitos
+    - requisitos suspensión administrativa
+    - suspensión cobranza coactiva requisitos
+    - requisitos suspender cobranza
+    - suspensión procedimiento requisitos
+    - necesito suspensión requisitos
+
+# ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+- intent: tramites_predial_requisitos
+  examples: |
+    - predial requisitos administrativos
+    - requisitos predial trámite
+    - declaración predial requisitos
+    - requisitos declarar predial
+    - documentos predial administrativos
+    - requisitos impuesto predial
+    - predial requisitos
+    - declarar predial requisitos
+    - necesito requisitos predial
+    - documentos para predial
+
+- intent: tramites_vehicular_requisitos
+  examples: |
+    - vehicular requisitos administrativos
+    - requisitos vehicular trámite
+    - declaración vehicular requisitos
+    - requisitos declarar vehicular
+    - documentos vehicular administrativos
+    - requisitos impuesto vehicular
+    - vehicular requisitos
+    - declarar vehicular requisitos
+    - necesito requisitos vehicular
+    - documentos para vehicular
+
+- intent: tramites_alcabala_requisitos
+  examples: |
+    - alcabala requisitos administrativos
+    - requisitos alcabala trámite
+    - liquidación alcabala requisitos
+    - requisitos liquidar alcabala
+    - documentos alcabala administrativos
+    - requisitos impuesto alcabala
+    - alcabala requisitos
+    - liquidar alcabala requisitos
+    - necesito requisitos alcabala
+    - documentos para alcabala
+
+- intent: tramites_reclamacion_tributaria
+  examples: |
+    - reclamación tributaria requisitos
+    - recurso reclamación tributaria
+    - reclamación impuestos requisitos
+    - requisitos reclamación tributaria
+    - reclamar impuesto requisitos
+    - reclamación administrativa tributaria
+    - recurso de reclamación tributaria
+    - necesito reclamar impuesto
+    - quiero reclamación tributaria
+    - reclamación de tributos
+
+- intent: tramites_prescripcion_tributaria
+  examples: |
+    - prescripción tributaria requisitos
+    - prescripción impuestos requisitos
+    - requisitos prescripción tributaria
+    - prescripción de impuestos
+    - solicitud prescripción tributaria
+    - prescripción administrativa tributaria
+    - prescripción de tributos
+    - necesito prescripción tributaria
+    - quiero prescripción impuesto
+    - prescripción fiscal
+
+- intent: tramites_devolucion_tributaria
+  examples: |
+    - devolución tributaria requisitos
+    - devolución impuestos requisitos
+    - compensación tributaria requisitos
+    - requisitos devolución tributaria
+    - devolver impuesto requisitos
+    - devolución administrativa tributaria
+    - compensación de impuestos
+    - necesito devolución tributaria
+    - quiero devolución impuesto
+    - devolución fiscal
+
+- intent: tramites_apelacion_tributaria
+  examples: |
+    - apelación tributaria requisitos
+    - recurso apelación tributaria
+    - apelación impuestos requisitos
+    - requisitos apelación tributaria
+    - apelar impuesto requisitos
+    - apelación administrativa tributaria
+    - recurso de apelación tributaria
+    - necesito apelar impuesto
+    - quiero apelación tributaria
+    - apelación de tributos
+
+- intent: tramites_terceria_tributaria
+  examples: |
+    - tercería tributaria requisitos
+    - tercería propiedad tributaria
+    - requisitos tercería tributaria
+    - tercería impuestos requisitos
+    - tercería administrativa tributaria
+    - tercería de propiedad tributaria
+    - necesito tercería tributaria
+    - quiero tercería impuesto
+    - tercería fiscal
+
+- intent: tramites_suspension_tributaria
+  examples: |
+    - suspensión tributaria requisitos
+    - suspensión cobranza tributaria
+    - requisitos suspensión tributaria
+    - suspender cobranza tributaria
+    - suspensión administrativa tributaria
+    - suspensión cobranza coactiva tributaria
+    - necesito suspensión tributaria
+    - quiero suspender cobranza
+    - suspensión fiscal

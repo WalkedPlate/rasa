@@ -3,7 +3,7 @@ Cliente base para APIs del SAT con manejo automático de autenticación
 """
 import requests
 import logging
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 from .auth_manager import auth_manager
 
 logger = logging.getLogger(__name__)
@@ -149,19 +149,6 @@ class SATAPIClient:
         endpoint = f"/saldomatico/falta/{codigo}"
         return self._make_request("GET", endpoint)
 
-    def health_check(self) -> bool:
-        """
-        Verifica que la API esté disponible
-
-        Returns:
-            bool: True si la API responde correctamente
-        """
-        try:
-            # Intentar renovar token como health check
-            return auth_manager.refresh_token()
-        except Exception:
-            return False
-
     def consultar_por_codigo_contribuyente(self, codigo: str) -> Optional[Dict[str, Any]]:
         """
         Consulta deuda por código de contribuyente
@@ -187,6 +174,77 @@ class SATAPIClient:
         """
         endpoint = f"/saldomatico/papeleta/chatboot/{placa}"
         return self._make_request("GET", endpoint)
+
+    @staticmethod
+    def validate_numero_tramite(numero: str) -> Tuple[bool, str]:
+        """
+        Valida formato de número de trámite (14 dígitos)
+
+        Args:
+            numero: Número de trámite a validar
+
+        Returns:
+            Tuple[bool, str]: (es_válido, numero_limpio)
+        """
+        if not numero:
+            return False, ""
+
+        # Limpiar número (solo números)
+        numero_limpio = re.sub(r'[^0-9]', '', numero.strip())
+
+        # Número de trámite debe tener exactamente 14 dígitos
+        es_valido = len(numero_limpio) == 14 and numero_limpio.isdigit()
+
+        return es_valido, numero_limpio
+
+    @staticmethod
+    def format_date(date_str: str) -> str:
+        """
+        Formatea fecha al formato dd-MM-yyyy
+
+        Args:
+            date_str: Fecha en formato original
+
+        Returns:
+            str: Fecha formateada en dd-MM-yyyy o original si no se puede formatear
+        """
+        if not date_str or date_str.strip() == "":
+            return "No disponible"
+
+        try:
+            # Intentar varios formatos de entrada comunes
+            possible_formats = [
+                "%Y-%m-%d",  # 2024-01-15
+                "%Y-%m-%dT%H:%M:%S",  # 2024-01-15T10:30:00
+                "%d/%m/%Y",  # 15/01/2024
+                "%d-%m-%Y",  # 15-01-2024
+            ]
+
+            for fmt in possible_formats:
+                try:
+                    date_obj = datetime.strptime(date_str.strip(), fmt)
+                    return date_obj.strftime("%d-%m-%Y")
+                except ValueError:
+                    continue
+
+            # Si no se puede parsear, devolver original
+            return date_str.strip()
+
+        except Exception:
+            return date_str.strip() if date_str else "No disponible"
+
+    def health_check(self) -> bool:
+        """
+        Verifica que la API esté disponible
+
+        Returns:
+            bool: True si la API responde correctamente
+        """
+        try:
+            # Intentar renovar token como health check
+            return auth_manager.refresh_token()
+        except Exception:
+            return False
 
 # Instancia global del cliente API
 sat_client = SATAPIClient()

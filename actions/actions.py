@@ -49,6 +49,34 @@ from .servicios_virtuales.servicios_actions import (
     ActionServiciosCursos
 )
 
+# Imports de actions de trámites
+from .tramites.consulta_actions import ActionConsultarTramite
+from .tramites.generales_actions import (
+    ActionTramitesImpugnacionPapeletas,
+    ActionTramitesReclamoTributario,
+    ActionTramitesConstanciasNoAdeudo
+)
+from .tramites.papeletas_tramites_actions import (
+    ActionTramitesRecursoReconsideracion,
+    ActionTramitesDescargaInfracciones,
+    ActionTramitesApelacionPapeletas,
+    ActionTramitesPrescripcionPapeletas,
+    ActionTramitesDevolucionPapeletas,
+    ActionTramitesTerceriaRequisitos,
+    ActionTramitesSuspensionRequisitos
+)
+
+from .tramites.tributarios_tramites_actions import (
+    ActionTramitesPredialRequisitos,
+    ActionTramitesVehicularRequisitos,
+    ActionTramitesAlcabalaRequisitos,
+    ActionTramitesReclamacionTributaria,
+    ActionTramitesPrescripcionTributaria,
+    ActionTramitesDevolucionTributaria,
+    ActionTramitesApelacionTributaria,
+    ActionTramitesTerceriaTributaria,
+    ActionTramitesSuspensionTributaria
+)
 from .shared.router_actions import ActionRouteDocumentConsultation
 
 # Lista de todos los actions disponibles
@@ -84,7 +112,7 @@ __all__ = [
     # Actions de actualizar datos
     'ActionActualizarDatos',
 
-    # Actions de lugares y pagos (los no repetidos)
+    # Actions de lugares y pagos
     'ActionLugaresAgenciasHorarios',
     'ActionLugaresPago',
     'ActionLugaresFormasPago',
@@ -96,5 +124,28 @@ __all__ = [
     'ActionServiciosCorreo',
     'ActionServiciosLibroReclamaciones',
     'ActionServiciosCursos',
+
+    # Actions de trámites
+    'ActionConsultarTramite',
+    'ActionTramitesImpugnacionPapeletas',
+    'ActionTramitesReclamoTributario',
+    'ActionTramitesConstanciasNoAdeudo',
+    'ActionTramitesRecursoReconsideracion',
+    'ActionTramitesDescargaInfracciones',
+    'ActionTramitesApelacionPapeletas',
+    'ActionTramitesPrescripcionPapeletas',
+    'ActionTramitesDevolucionPapeletas',
+    'ActionTramitesTerceriaRequisitos',
+    'ActionTramitesSuspensionRequisitos',
+    'ActionTramitesPredialRequisitos',
+    'ActionTramitesVehicularRequisitos',
+    'ActionTramitesAlcabalaRequisitos',
+    'ActionTramitesReclamacionTributaria',
+    'ActionTramitesPrescripcionTributaria',
+    'ActionTramitesDevolucionTributaria',
+    'ActionTramitesApelacionTributaria',
+    'ActionTramitesTerceriaTributaria',
+    'ActionTramitesSuspensionTributaria',
+
 
 ]
