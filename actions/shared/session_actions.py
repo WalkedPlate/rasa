@@ -1,3 +1,4 @@
+# actions/shared/session_actions.py
 """
 Actions relacionados con el manejo de sesión
 """
@@ -20,12 +21,11 @@ class ActionFinalizarChat(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
         sender_id = tracker.sender_id
 
-        # Mensaje personalizado de despedida
-        mensaje = """¡Gracias por usar el SAT de Lima! 👋
-
-Tu conversación ha sido guardada exitosamente.
+        # Mensaje de despedida consistente con el estilo del proyecto
+        mensaje = """¡Gracias por usar el chatbot del SAT de Lima! 👋
 
 📞 **¿Necesitas más ayuda?** Escribe 'hola' cuando regreses
 🌐 **Web del SAT:** www.sat.gob.pe
@@ -36,6 +36,10 @@ Tu conversación ha sido guardada exitosamente.
         dispatcher.utter_message(text=mensaje)
 
         # Log para el sistema
-        logger.info(f" Conversación finalizada para usuario: {sender_id} - {datetime.now()}")
+        logger.info(f"Conversación finalizada para usuario: {sender_id} - {datetime.now()}")
+
+        # TODO: Implementar funcionalidad de terminar una conversación
+        # self._call_future_endpoint(sender_id)
 
         return [Restarted()]
+

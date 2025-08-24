@@ -8,7 +8,7 @@ stories:
   - intent: greet
   - action: utter_greet
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 - story: Saludo y menú principal
   steps:
@@ -319,7 +319,7 @@ stories:
     - placa: "ABC123"
   - action: action_consultar_papeletas
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 - story: Navegación completa y finalización
   steps:
@@ -334,7 +334,7 @@ stories:
     - placa: "XYZ789"
   - action: action_consultar_papeletas
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 - story: Consulta rápida papeletas con placa desde inicio
   steps:
@@ -600,7 +600,7 @@ stories:
     - codigo_contribuyente: "11111"
   - action: action_consultar_impuestos
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 # ========== FLUJOS BÁSICOS RETENCIÓN ==========
 - story: Saludo y navegación a retención
@@ -736,7 +736,7 @@ stories:
   - intent: retencion_remate_vehicular
   - action: action_retencion_remate_vehicular
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 # ========== FLUJOS BÁSICOS LUGARES Y PAGOS ==========
 - story: Saludo y navegación a lugares y pagos
@@ -816,7 +816,7 @@ stories:
   - intent: lugares_pagos_lugares_pago
   - action: action_lugares_pago
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 # ========== FLUJOS BÁSICOS SERVICIOS VIRTUALES ==========
 - story: Saludo y navegación a servicios virtuales
@@ -943,7 +943,7 @@ stories:
   - intent: servicios_virtuales_correo
   - action: action_servicios_correo
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 # ========== FLUJOS DE INTEGRACIÓN CON OTRAS OPCIONES ==========
 - story: De servicios a casilla MTC
@@ -1061,7 +1061,7 @@ stories:
     - numero_tramite: "12345678901234"
   - action: action_consultar_tramite
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 # ========== FLUJOS COMPLETOS OTROS TRÁMITES ==========
 - story: Otros trámites - Flujo completo papeletas

@@ -214,18 +214,6 @@ responses:
       
       ¿Qué necesitas?
 
-  utter_goodbye:
-  - text: |
-      ¡Gracias por usar el SAT de Lima! 👋
-      
-      Recuerda que puedes:
-      • Consultar papeletas: "Ver papeletas de mi placa ABC123"
-      • Consultar impuestos: "Impuestos de mi DNI 12345678"
-      • Información de pagos: "Cómo pago por internet"
-      • Registro MTC: "Necesito inscribirme"
-      
-      ¡Que tengas buen día! 😊
-
   utter_menu_principal:
   - text: |
       📋 **MENÚ PRINCIPAL SAT LIMA**
@@ -570,7 +558,6 @@ responses:
 actions:
   # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet
-  - utter_goodbye
   - utter_menu_principal
   - utter_casilla_mtc
   - utter_pagos_linea
@@ -626,7 +613,7 @@ actions:
   - action_tramites_impugnacion_papeletas
   - action_tramites_reclamo_tributario
   - action_tramites_constancias_no_adeudo
-# ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+  # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
   - action_tramites_recurso_reconsideracion
   - action_tramites_descarga_infracciones
   - action_tramites_apelacion_papeletas
@@ -644,7 +631,7 @@ actions:
   - action_tramites_apelacion_tributaria
   - action_tramites_terceria_tributaria
   - action_tramites_suspension_tributaria
-
+  # ========== FINALIZAR CHAT ==========
   - action_finalizar_chat
 
 session_config:

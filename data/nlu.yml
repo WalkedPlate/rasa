@@ -54,6 +54,18 @@ nlu:
     - ok gracias
     - listo gracias
     - eso es todo
+    - finalizar chat
+    - terminar
+    - finalizar
+    - salir
+    - cerrar
+    - exit
+    - quit
+    - ya terminé
+    - eso era todo lo que necesitaba
+    - cerrar chat
+    - terminar chat
+    - finalizar conversación
 
 - intent: menu_principal
   examples: |

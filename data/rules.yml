@@ -8,10 +8,10 @@ rules:
   - intent: greet
   - action: utter_greet
 
-- rule: Despedida
+- rule: Despedida y finalización
   steps:
   - intent: goodbye
-  - action: utter_goodbye
+  - action: action_finalizar_chat
 
 - rule: Mostrar menú principal
   steps:
