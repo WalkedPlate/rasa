@@ -996,7 +996,6 @@ nlu:
 - intent: tramites_reclamo_tributario
   examples: |
     - reclamo tributario procedimiento
-    - reclamación tributaria requisitos
     - requisitos reclamo impuestos
     - reclamo tributario
     - reclamación de impuestos
