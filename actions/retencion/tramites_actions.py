@@ -239,24 +239,6 @@ Para enterarse sobre próximos remates vehiculares:
 🌐 **Página web oficial:**
 Le recomendamos ingresar periódicamente a nuestra página web **www.sat.gob.pe** donde se publica la información sobre remates que realiza la entidad.
 
-🔗 **Información específica de remates:**
-https://www.sat.gob.pe/websitev9/RematesVehicularSAT
-
-🔗 **Lista de vehículos en remate:**
-https://www.sat.gob.pe/websitev8/modulos/remates/vehiculos.aspx
-
-**¿Qué información encontrarás?**
-• Fechas programadas de remates
-• Lista de vehículos a rematar
-• Precios base y condiciones
-• Requisitos para participar
-• Procedimientos de inscripción
-
-**Tipos de remate:**
-• Remate público presencial
-• Remate electrónico online
-• Adjudicación directa
-
 **¿Qué más necesitas?**
 • 'Orden de captura' - Consultar si tu vehículo tiene orden de captura
 • 'Levantamiento' - Solicitar levantamiento de medida cautelar

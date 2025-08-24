@@ -190,11 +190,6 @@ Primero inscríbete en la Casilla Electrónica del MTC:
 📖 **Guía interactiva:**
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
-**Beneficios del fraccionamiento:**
-• Pagar en cuotas mensuales cómodas
-• Evitar intereses adicionales si cumples el cronograma
-• Mantener tu historial crediticio al día
-
 **¿Qué más necesitas?**
 • 'Consultar deuda' - Ver cuánto debes exactamente
 • 'Casilla MTC' - Información del registro obligatorio

@@ -50,8 +50,7 @@ https://www.sat.gob.pe/WebSiteV8/Modulos/documentos/TUPA/Directiva_001-006-00000
 • 'Oficinas SAT' - Ubicaciones y horarios detallados
 • 'Consultar deuda' - Ver tu situación tributaria actual
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** Lleva toda la documentación que acredite tu condición de pensionista."""
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -103,8 +102,7 @@ https://www.sat.gob.pe/WebSiteV8/Modulos/documentos/TUPA/Directiva_001-006-00000
 • 'Oficinas SAT' - Ubicaciones y horarios detallados
 • 'Consultar deuda' - Ver tu situación tributaria actual
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** La evaluación socioeconómica se realiza en la oficina según tu situación particular."""
+"""
 
         dispatcher.utter_message(text=message)
         return []

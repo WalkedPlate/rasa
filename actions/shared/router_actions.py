@@ -119,7 +119,7 @@ class ActionRouteDocumentConsultation(Action):
         elif any(keyword in intent for keyword in ['impuestos', 'tributario', 'contribuyente']):
             return "impuestos"
 
-        # 6. Si no hay contexto claro, SIEMPRE es ambiguo
+        # 6. Si no hay contexto claro, es ambiguo
         logger.debug("No se pudo determinar contexto - forzando clarificación")
         return "ambiguous"
 

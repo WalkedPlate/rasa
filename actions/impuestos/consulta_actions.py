@@ -233,9 +233,14 @@ class ActionConsultarImpuestos(Action):
 
         message += f"💰 **Total adeudado:** S/ {total:.2f}\n\n"
 
+        # Mayor detalle cuando hay múltiples deudas
+        if cantidad > 5:
+            message += "📋 **MAYOR DETALLE EN EL SIGUIENTE LINK:**\n"
+            message += "📌 https://www.sat.gob.pe/pagosenlinea/\n\n"
+
         # Recomendaciones según monto
         if total > 2000:
-            message += "💡 **Recomendación:** El monto es considerable. Te sugiero solicitar facilidades de pago.\n\n"
+            message += "💡 **Recomendación:** El monto es considerable. Te sugiero ver la información sobre facilidades de pago.\n\n"
 
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"

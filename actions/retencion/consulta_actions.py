@@ -125,7 +125,7 @@ class ActionConsultarOrdenCaptura(Action):
 🚗 Su vehículo no presenta restricciones por órdenes de captura.
 
 **¿Qué más necesitas?**
-• 'Vehículo internado' - Consultar si está internado
+• 'Vehículo internado' - Información sore internamiento de vehículos
 • 'Retención bancaria' - Información sobre embargos
 • 'Menú principal' - Otras opciones
 

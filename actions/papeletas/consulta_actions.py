@@ -196,7 +196,7 @@ class ActionConsultarPapeletas(Action):
             message += f"**🚨 Papeleta #{i}:**\n"
             message += f"• **Tipo de falta:** {falta}\n"
             message += f"• **N° papeleta:** {doc_papeleta}\n"
-            message += f"• **Fecha:** {fecha}\n"
+            message += f"• **Fecha de Infracción:** {fecha}\n"
             message += f"• **Monto:** S/ {monto:.2f}\n\n"
 
         if cantidad > 3:
@@ -204,9 +204,14 @@ class ActionConsultarPapeletas(Action):
 
         message += f"💰 **Total a pagar:** S/ {total:.2f}\n\n"
 
+        # Mayor detalle cuando hay múltiples papeletas
+        if cantidad > 3:
+            message += "📋 **MAYOR DETALLE EN EL SIGUIENTE LINK:**\n"
+            message += "📌 https://www.sat.gob.pe/pagosenlinea/\n\n"
+
         # Agregar recomendaciones según monto
         if total > 1000:
-            message += "💡 **Recomendación:** El monto es elevado. Te sugiero ver las facilidades de pago.\n\n"
+            message += "💡 **Recomendación:** El monto es elevado. Te sugiero ver información sobre las facilidades de pago.\n\n"
 
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"

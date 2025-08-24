@@ -36,12 +36,6 @@ https://casilla.mtc.gob.pe/#/registro
 
 📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
 
-**¿Qué puedes hacer en Mesa de Partes Digital?**
-• Presentar trámites administrativos
-• Hacer seguimiento a tus solicitudes
-• Recibir notificaciones oficiales
-• Descargar resoluciones y documentos
-
 **¿Qué más necesitas?**
 • 'Agencia Virtual' - Acceso a servicios online
 • 'Casilla MTC' - Información del registro obligatorio
@@ -74,20 +68,6 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 Para que pueda guiarse del procedimiento de agencia virtual:
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
-**¿Qué puedes hacer en Agencia Virtual?**
-• Consultar deuda tributaria
-• Solicitar facilidades de pago
-• Fraccionar deudas en cuotas
-• Generar cuadernillos tributarios
-• Declarar nuevos predios y vehículos
-• Descargar documentos oficiales
-
-**Ventajas:**
-• Disponible 24/7
-• Sin colas ni esperas
-• Trámites desde casa
-• Respuesta inmediata
-
 **¿Qué más necesitas?**
 • 'Mesa de partes' - Presentar trámites administrativos
 • 'Facilidades de pago' - Información sobre cuotas
@@ -117,22 +97,6 @@ Recibe alertas automáticas sobre papeletas y notificaciones importantes del SAT
 https://www.sat.gob.pe/VirtualSAT/modulos/pitazo/Default.aspx
 
 **¿Qué incluye el servicio Pitazo?**
-• Alertas sobre nuevas papeletas
-• Notificaciones de vencimientos
-• Avisos de cobranza coactiva
-• Información sobre descuentos y beneficios
-• Recordatorios de fechas importantes
-
-**Beneficios:**
-• Mantente informado automáticamente
-• Evita multas por falta de pago
-• Recibe descuentos por pronto pago
-• Notificaciones por email y SMS
-
-**Requisitos:**
-• Proporcionar email válido
-• Número de teléfono activo
-• Datos de identificación actualizados
 
 **¿Qué más necesitas?**
 • 'Actualizar datos' - Cambiar tu información de contacto
@@ -164,24 +128,6 @@ Puede dejarnos su consulta al correo oficial del SAT:
 🔗 **Formulario web:**
 https://www.sat.gob.pe/websitev9/CanalesAtencion/Correo-SAT
 
-**¿Qué consultas puedes enviar?**
-• Dudas sobre trámites administrativos
-• Consultas sobre deuda tributaria
-• Problemas con pagos realizados
-• Solicitud de información general
-• Sugerencias y comentarios
-
-**Datos a incluir en tu correo:**
-• Nombres y apellidos completos
-• Número de DNI o RUC
-• Descripción detallada de tu consulta
-• Número de teléfono de contacto
-
-**Tiempo de respuesta:**
-• Consultas generales: 2-3 días hábiles
-• Casos complejos: 5-7 días hábiles
-• Urgencias: Contactar por teléfono (01) 315-1515
-
 **¿Qué más necesitas?**
 • 'Oficinas SAT' - Atención presencial
 • 'Teléfonos de contacto' - Atención inmediata
@@ -209,33 +155,6 @@ Puede ingresar su reclamo de manera oficial y formal:
 
 🔗 **Libro de Reclamaciones Online:**
 https://www.sat.gob.pe/websitev9/Servicios/Defensoria/LibroReclamaciones
-
-**¿Cuándo usar el libro de reclamaciones?**
-• Disconformidad con la atención recibida
-• Problemas con servicios del SAT
-• Errores en procedimientos administrativos
-• Demoras injustificadas en trámites
-• Cobros indebidos o incorrectos
-
-**¿Qué incluir en tu reclamo?**
-• Descripción detallada del problema
-• Fecha y lugar donde ocurrió
-• Nombre del funcionario (si aplica)
-• Documentos de respaldo
-• Solución que esperas recibir
-
-**Proceso del reclamo:**
-1. Registro en línea de tu reclamo
-2. Asignación de número de expediente
-3. Investigación del caso (15 días hábiles)
-4. Respuesta oficial por escrito
-5. Seguimiento hasta la resolución
-
-**Tus derechos:**
-• Recibir atención oportuna y de calidad
-• Obtener respuesta en los plazos establecidos
-• Ser tratado con respeto y cortesía
-• Recibir información clara y precisa
 
 **¿Qué más necesitas?**
 • 'Enviar correo' - Consultas menos formales

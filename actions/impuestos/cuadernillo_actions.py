@@ -38,7 +38,6 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
 **¿Qué más necesitas?**
-• 'Cuadernillo por código' - Acceso con código de contribuyente
 • 'Consultar deuda' - Ver cuánto debes
 • 'Menú principal' - Otras opciones
 
@@ -82,8 +81,7 @@ https://www.sat.gob.pe/websitev9/TributosMultas/PredialyArbitrios/CuadernilloTri
 • 'Cuadernillo vehicular' - Para impuesto vehicular
 • 'Agencia Virtual' - Acceso completo online
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** Si no recuerdas tu código de contribuyente, búscalo en cualquier recibo de impuesto predial anterior."""
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -123,8 +121,7 @@ https://www.sat.gob.pe/websitev9/TributosMultas/ImpuestoVehicular/CuadernilloTri
 • 'Cuadernillo predial' - Para impuesto predial
 • 'Agencia Virtual' - Acceso completo online
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** El código de contribuyente también aparece en tu SOAT o en recibos anteriores del impuesto vehicular."""
+"""
 
         dispatcher.utter_message(text=message)
         return []

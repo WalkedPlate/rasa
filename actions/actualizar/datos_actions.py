@@ -83,29 +83,10 @@ class ActionActualizarDatos(Action):
 🆔 **DNI:** {datos_actuales['dni']}
 📧 **Correo:** {datos_actuales['email']}
 
-🔧 **Esta funcionalidad está en desarrollo**
 
-**Funcionalidad futura:**
-1. Confirmar si los datos están correctos
-2. Si no están correctos, permitir actualizarlos
-3. Validar nuevos datos ingresados
-4. Confirmar cambios realizados
-5. Sincronizar con sistema del SAT
-
-**Características planificadas:**
-• Validación de formato de teléfono
-• Verificación de DNI válido
-• Validación de email activo
-• Confirmación por SMS/email
-• Historial de cambios
-
-**Para cambios urgentes actualmente:**
-📞 **Teléfono SAT:** (01) 315-1515
-📧 **Email SAT:** asuservicio@sat.gob.pe
-🏢 **Oficinas:** Jr. Camaná 370, Cercado de Lima
 
 **¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
+• 'Menú principal' - Principales opciones
 • 'Oficinas SAT' - Ubicaciones para trámites presenciales"""
 
         dispatcher.utter_message(text=message)
