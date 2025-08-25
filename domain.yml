@@ -184,8 +184,6 @@ slots:
 responses:
   utter_greet:
   - text: |
-      ¡Hola! Soy el asistente virtual del SAT de Lima 👋
-      
       Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
       
       ⚡ **PAPELETAS:**
