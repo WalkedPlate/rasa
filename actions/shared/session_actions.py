@@ -29,7 +29,6 @@ class ActionFinalizarChat(Action):
 
 📞 **¿Necesitas más ayuda?** Escribe 'hola' cuando regreses
 🌐 **Web del SAT:** www.sat.gob.pe
-📱 **Mesa de partes digital:** Para trámites online
 
 ¡Que tengas un excelente día! 😊"""
 
