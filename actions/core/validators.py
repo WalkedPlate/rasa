@@ -231,6 +231,28 @@ class DataValidator:
         return True, codigo_limpio
 
     @staticmethod
+    def validate_phone_number(phone: str) -> Tuple[bool, str]:
+        """
+        Valida formato de número de teléfono
+
+        Args:
+            phone: Número de teléfono a validar
+
+        Returns:
+            Tuple[bool, str]: (es_válido, phone_limpio)
+        """
+        if not phone:
+            return False, ""
+
+        # Limpiar teléfono (solo números)
+        phone_limpio = re.sub(r'[^0-9]', '', phone.strip())
+
+        if not phone_limpio.isdigit():
+            return False, phone_limpio
+
+        return True, phone_limpio
+
+    @staticmethod
     def detect_data_type(text: str) -> Optional[str]:
         """
         Detecta automáticamente el tipo de dato basado en el formato
@@ -290,7 +312,8 @@ class DataValidator:
             'dni': f"El DNI '{value}' no es válido. Debe tener exactamente 8 dígitos.",
             'ruc': f"El RUC '{value}' no es válido. Debe tener 11 dígitos y empezar con 1 o 2.",
             'codigo_falta': f"El código '{value}' no es válido. Formato esperado: C15, M08, A05, etc.",
-            'codigo_contribuyente': f"El código de contribuyente '{value}' no es válido. Debe ser numérico de 1 a 10 dígitos."
+            'codigo_contribuyente': f"El código de contribuyente '{value}' no es válido. Debe ser numérico de 1 a 10 dígitos.",
+            'phone_number': f"El número de teléfono '{value}' no es válido. Debe tener solo dígitos."
         }
 
         return error_messages.get(data_type, f"Dato '{value}' no es válido.")

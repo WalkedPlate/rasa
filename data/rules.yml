@@ -456,3 +456,44 @@ rules:
   steps:
   - intent: tramites_suspension_tributaria
   - action: action_tramites_suspension_tributaria
+
+
+# ========== REGLAS PARA ACTUALIZAR DATOS ==========
+- rule: Actualizar nombre
+  steps:
+  - intent: actualizar_nombre
+  - action: action_actualizar_nombre
+
+- rule: Actualizar documento
+  steps:
+  - intent: actualizar_documento
+  - action: action_actualizar_documento
+
+- rule: Datos correctos
+  steps:
+  - intent: datos_correctos
+  - action: utter_menu_principal
+
+- rule: Procesar nuevo nombre
+  condition:
+  - slot_was_set:
+    - esperando_nuevo_nombre: true
+  steps:
+  - intent: proporcionar_nombre
+  - action: action_procesar_nuevo_nombre
+
+- rule: Procesar tipo documento
+  condition:
+  - slot_was_set:
+    - esperando_tipo_documento: true
+  steps:
+  - intent: proporcionar_tipo_documento
+  - action: action_procesar_tipo_documento
+
+- rule: Procesar número documento
+  condition:
+  - slot_was_set:
+    - esperando_numero_documento: true
+  steps:
+  - intent: proporcionar_numero_documento
+  - action: action_procesar_numero_documento

@@ -65,6 +65,14 @@ intents:
   - retencion_remate_vehicular
   - retencion_consultar_placa
 
+  # ========== INTENTS PARA ACTUALIZAR DATOS ==========
+  - actualizar_nombre
+  - actualizar_documento
+  - datos_correctos
+  - proporcionar_nombre
+  - proporcionar_tipo_documento
+  - proporcionar_numero_documento
+
   # ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
   - lugares_pagos_agencias_horarios
   - lugares_pagos_lugares_pago
@@ -180,6 +188,37 @@ slots:
     influence_conversation: false
     mappings:
     - type: custom
+
+  # ========== SLOTS PARA ACTUALIZAR DATOS ==========
+  esperando_nuevo_nombre:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  datos_actuales:
+    type: any
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  esperando_tipo_documento:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  esperando_numero_documento:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  nuevo_tipo_documento:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
 
 responses:
   utter_greet:
@@ -592,6 +631,11 @@ actions:
   - action_retencion_remate_vehicular
   # ========== ACTUALIZAR DATOS ACTIONS ==========
   - action_actualizar_datos
+  - action_actualizar_nombre
+  - action_procesar_nuevo_nombre
+  - action_actualizar_documento
+  - action_procesar_tipo_documento
+  - action_procesar_numero_documento
   # ========== LUGARES Y PAGOS ACTIONS ==========
   - action_lugares_agencias_horarios
   - action_lugares_pago
@@ -633,5 +677,5 @@ actions:
   - action_finalizar_chat
 
 session_config:
-  session_expiration_time: 60
+  session_expiration_time: 600
   carry_over_slots_to_new_session: false
