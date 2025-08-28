@@ -1,3 +1,10 @@
+cd ~/rasa
+
+# Parar los servicios
+docker-compose down
+
+# Actualizar el docker-compose.yml
+cat > docker-compose.yml << 'EOF'
 version: '3.8'
 
 networks:
@@ -16,7 +23,8 @@ services:
     working_dir: /app
     networks:
       - rasa-network
-    command: run actions
+    # Instalar dependencias al iniciar y luego ejecutar actions
+    command: bash -c "pip install --user python-dotenv==1.0.0 && rasa run actions"
 
   rasa-core:
     image: rasa/rasa:3.6.21
@@ -32,3 +40,7 @@ services:
     networks:
       - rasa-network
     command: run --enable-api --cors "*" --endpoints endpoints.yml
+EOF
+
+# Iniciar servicios
+docker-compose up -d
