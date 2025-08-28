@@ -1,10 +1,3 @@
-cd ~/rasa
-
-# Parar los servicios
-docker-compose down
-
-# Actualizar el docker-compose.yml
-cat > docker-compose.yml << 'EOF'
 version: '3.8'
 
 networks:
