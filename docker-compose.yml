@@ -33,7 +33,3 @@ services:
     networks:
       - rasa-network
     command: run --enable-api --cors "*" --endpoints endpoints.yml
-EOF
-
-# Iniciar servicios
-docker-compose up -d
