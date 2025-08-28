@@ -16,8 +16,7 @@ services:
     working_dir: /app
     networks:
       - rasa-network
-    # Instalar dependencias al iniciar y luego ejecutar actions
-    command: bash -c "pip install --user python-dotenv==1.0.0 && rasa run actions"
+    command: run actions
 
   rasa-core:
     image: rasa/rasa:3.6.21
