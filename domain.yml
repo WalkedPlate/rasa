@@ -293,11 +293,6 @@ responses:
       • Requisito para todos los trámites vehiculares
       • Base Legal: R. Directoral N°023-2024-MTC/18
 
-      📝 **Ejemplos de lo que puedes decir después:**
-      • "Ya me registré, ahora quiero ver mis papeletas"
-      • "¿Cómo pago mis multas?"
-      • "¿Qué otros trámites puedo hacer?"
-
       **¿Qué más necesitas?**
       • 'Papeletas' - Consultar multas
       • 'Impuestos' - Consultar deuda tributaria
@@ -316,17 +311,10 @@ responses:
       • Yape
       • Bancos: BCP, Interbank, BBVA, Scotiabank
 
-      📝 **Ejemplos de lo que puedes decir:**
-      • "¿Puedo pagar en cuotas?"
-      • "Quiero ver mis papeletas primero"
-      • "Necesito consultar mis impuestos"
-      • "¿Dónde están las oficinas?"
-      • "Información sobre descuentos"
-
       **¿Qué más necesitas?**
       • 'Papeletas' - Consultar cuánto debes en multas
       • 'Impuestos' - Consultar deuda tributaria
-      • 'Facilidades' - Pagar en cuotas
+      • 'Facilidades' - Información sobre facilidades de pago
       • 'Menú principal' - Otras opciones
 
   # ========== OPCIÓN 3: PAPELETAS MENÚ ==========
@@ -568,7 +556,6 @@ responses:
 
       **O puedes decir:**
       • 'Menú principal' - Ver todas las opciones
-      • "¿Qué significa C15?" - Consultar códigos
 
       ¿Qué necesitas?
 
