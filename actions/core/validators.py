@@ -18,7 +18,7 @@ class DataValidator:
     @staticmethod
     def validate_placa(placa: str) -> Tuple[bool, str]:
         """
-        Valida formato de placa vehicular peruana
+        Valida formato de placa vehicular peruana (6 caracteres alfanuméricos)
 
         Args:
             placa: Número de placa a validar
@@ -32,16 +32,9 @@ class DataValidator:
         # Limpiar placa
         placa_limpia = re.sub(r'[^A-Z0-9]', '', placa.strip().upper())
 
-        # Patrones de placas peruanas
-        patrones_validos = [
-            r'^[A-Z]{3}[0-9]{3}$',  # ABC123 (clásico)
-            r'^[A-Z]{2}[0-9]{4}$',  # AB1234 (clásico)
-            r'^[A-Z][0-9][A-Z][0-9]{3}$',  # A1B234 (nuevo formato)
-            r'^[A-Z]{2}[0-9][A-Z][0-9]{2}$',  # AB1C23 (variante)
-            r'^[A-Z0-9]{6}$' # GENERAL
-        ]
+        # Validar que tenga exactamente 6 caracteres alfanuméricos
+        es_valida = len(placa_limpia) == 6 and placa_limpia.isalnum()
 
-        es_valida = any(re.match(patron, placa_limpia) for patron in patrones_validos)
         return es_valida, placa_limpia
 
     @staticmethod
@@ -195,7 +188,7 @@ class DataValidator:
             return f"✅ {data_type.upper()} válido: {value}"
 
         error_messages = {
-            'placa': f" La placa '{value}' no tiene un formato válido.\n\n **Formatos correctos:**\n• ABC123 (clásico)\n• AB1234 (clásico)\n• U1A710 (nuevo formato)\n• A1B234 (nuevo formato)",
+            'placa': f"La placa '{value}' no tiene un formato válido. Debe tener exactamente 6 caracteres alfanuméricos (letras y números).",
             'dni': f" El DNI '{value}' no es válido. Debe tener exactamente 8 dígitos.",
             'ruc': f" El RUC '{value}' no es válido. Debe tener 11 dígitos y empezar con 1 o 2.",
             'codigo_falta': f" El código '{value}' no es válido. Formato esperado: C15, M08, A05, etc."
