@@ -77,24 +77,24 @@ class SATAPIClient:
                 )
 
                 if response.status_code == 200:
-                    logger.info("✅ Reintento exitoso después de renovar token")
+                    logger.info("Reintento exitoso después de renovar token")
                     return response.json()
                 else:
-                    logger.error(f"❌ Error en reintento: {response.status_code}")
+                    logger.error(f"Error en reintento: {response.status_code}")
                     return None
 
             else:
-                logger.error(f"❌ Error API SAT: {response.status_code} - {response.text}")
+                logger.error(f"Error API SAT: {response.status_code} - {response.text}")
                 return None
 
         except requests.exceptions.Timeout:
-            logger.error("⏰ Timeout en petición a API SAT")
+            logger.error("Timeout en petición a API SAT")
             return None
         except requests.exceptions.ConnectionError:
-            logger.error("🌐 Error de conexión con API SAT")
+            logger.error("Error de conexión con API SAT")
             return None
         except Exception as e:
-            logger.error(f"❌ Error inesperado en API SAT: {e}")
+            logger.error(f"Error inesperado en API SAT: {e}")
             return None
 
     def consultar_papeletas_por_ruc(self, ruc: str) -> Optional[Dict[str, Any]]:

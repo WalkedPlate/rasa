@@ -7,7 +7,7 @@ class BackendConfig:
     """Configuración centralizada para el backend"""
 
     # URL base del backend - hardcodeada temporalmente
-    BASE_URL = "http://localhost:3000"  # En lugar de os.getenv
+    BASE_URL = "http://localhost:3000"
 
     # Endpoints de ciudadanos
     CITIZEN_GET_INFO = "/v1/channel-room/citizen/{phone}/basic-information"
