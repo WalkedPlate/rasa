@@ -4,15 +4,20 @@ nlu:
 # ========== REGEX PATTERNS ==========
 - regex: placa_pattern
   examples: |
+    - \b[A-Z]{3}\s?\d{3}\b              # ABC123 o ABC 123 (UN espacio)
+    - \b[A-Z]{2}\s?\d{4}\b              # AB1234 o AB 1234 (UN espacio)  
+    - \b[A-Z]{3}\-\d{3}\b               # ABC-123 (con guión)
+    - \b[A-Z]{2}\-\d{4}\b               # AB-1234 (con guión)
+    - \b[A-Z]\d[A-Z]\s?\d{3}\b          # A1B234 o A1B 234
+    - \bU\d[A-Z]\s?\d{3}\b              # U1A710 o U1A 710
     - \b[A-Z]{3}\d{3}\b
     - \b[A-Z]{2}\d{4}\b
     - \b[A-Z]\d[A-Z]\d{3}\b
     - \bU\d[A-Z]\d{3}\b
-    - \b[TSD][A-Z]{2}\d{3}\b
 
 - regex: dni_pattern
   examples: |
-    - \b\d{8}\b
+    - (?<![A-Z0-9])\d{8}(?![A-Z0-9])    # 8 dígitos sin letras/números alrededor
 
 - regex: ruc_pattern
   examples: |
@@ -97,6 +102,16 @@ nlu:
     - multas del vehículo [U1A710](placa)
     - infracciones de la placa [XYZ789](placa)
     - consultar papeletas de [DEF456](placa)
+    - ver papeletas de mi placa [APS-583](placa)
+    - consultar multas de la placa [ABC-123](placa)
+    - papeletas de mi vehículo [U1A-710](placa)
+    - quiero saber las papeletas de [DEF-456](placa)
+    - multas de mi placa [GHI 789](placa)
+    - revisar papeletas de [MNO 123](placa)
+    - consultar infracciones de mi placa [PQR-456](placa)
+    - ver papeletas de mi placa [APS 583](placa)
+    - consultar multas de la placa [ABC 123](placa)
+    - papeletas de mi vehículo [DEF 456](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -229,6 +244,10 @@ nlu:
     - revisar [STU789](placa)
     - la placa [APS583](placa)
     - consultar [BCD890](placa)
+    - ver papeletas de mi placa [APS 583](placa)
+    - ver papeletas de mi placa [APS583](placa)
+    - consultar multas de la placa [ABC 123](placa)
+    - papeletas de mi vehículo [DEF 456](placa)
 
 - intent: papeletas_consultar_dni
   examples: |

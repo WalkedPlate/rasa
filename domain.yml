@@ -562,7 +562,7 @@ responses:
   # ========== FALLBACK GLOBAL ==========
   utter_default:
   - text: |
-      No entendí completamente tu mensaje.
+      No entendí completamente tu mensaje. Puedo ayudarte con:
 
       📋 **OPCIONES PRINCIPALES:**
       Escribe el nombre de la opción que necesitas:

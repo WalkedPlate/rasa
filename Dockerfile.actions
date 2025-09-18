@@ -1,0 +1,18 @@
+FROM rasa/rasa:3.6.21-full
+
+# Cambiar a root temporalmente para instalar dependencias
+USER root
+
+# Instalar todas las dependencias del requirements.txt
+COPY requirements.txt .
+RUN /opt/venv/bin/pip install -r requirements.txt
+
+# Volver al usuario original de rasa
+USER 1001
+
+# Copiar el código de la aplicación
+WORKDIR /app
+COPY . .
+
+ENTRYPOINT []
+CMD ["python", "-m", "rasa_sdk", "--actions", "actions", "--port", "5055"]

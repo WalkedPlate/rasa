@@ -40,13 +40,16 @@ class DocumentProcessor:
         if intent == 'consulta_rapida_placa':
             # Buscar patrón de placa en el texto
             texto = tracker.latest_message.get('text', '')
-            placa_match = re.search(r'[A-Z]{2,3}\d{3,4}|[A-Z]\d[A-Z]\d{3}|U\d[A-Z]\d{3}', texto.upper())
+            placa_match = re.search(
+                r'[A-Z]{2,3}[\s\-]*\d{3,4}|[A-Z][\s\-]*\d[\s\-]*[A-Z][\s\-]*\d{3}|U[\s\-]*\d[\s\-]*[A-Z][\s\-]*\d{3}',
+                texto.upper())
             if placa_match:
-                return placa_match.group(), 'placa'
+                placa_limpia = re.sub(r'[\s\-]', '', placa_match.group())
+                return placa_limpia, 'placa'
 
         elif intent == 'consulta_rapida_dni':
             texto = tracker.latest_message.get('text', '')
-            dni_match = re.search(r'\b\d{8}\b', texto)
+            dni_match = re.search(r'(?<![A-Z0-9])\d{8}(?![A-Z0-9])', texto)
             if dni_match:
                 return dni_match.group(), 'dni'
 
