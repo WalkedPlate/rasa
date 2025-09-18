@@ -225,23 +225,16 @@ responses:
   - text: |
       Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
       
-      ⚡ **PAPELETAS:**
-      • "Ver papeletas de mi placa ABC123" - para consultar las papeletas de una placa
-      • "Consultar papeletas de mi DNI 12345678" - para consultar papeletas por DNI
-      • "Papeletas del RUC 20123456789" - para consultar papeletas de una empresa
-      • "¿Qué significa el código C15?" - para conocer el significado de códigos de infracción
       
-      ⚡ **IMPUESTOS:**
-      • "Impuestos de mi placa ABC123" - para consultar deuda tributaria de un vehículo
-      • "Deuda tributaria DNI 12345678" - para consultar impuestos por DNI
-      • "Código contribuyente 94539" - para consultar por código de contribuyente
+      • "Ver papeletas de mi placa ABC123" 
+      • "Impuestos de mi placa ABC123" 
       
       O si prefieres explorar las opciones completas:
       
       📋 **OPCIONES PRINCIPALES:**
       🔹 **Casilla MTC** - Registro obligatorio
       🔹 **Pagos** - Pagar por internet  
-      🔹 **Papeletas** - Multas y consultas de tránsito
+      🔹 **Papeletas** - Multas y consultas de papeletas
       🔹 **Impuestos** - Deuda tributaria y declaraciones
       🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
       🔹 **Actualizar Datos** - Actualizar mi información
@@ -255,21 +248,14 @@ responses:
   - text: |
       📋 **MENÚ PRINCIPAL SAT LIMA**
 
-      ⚡ **CONSULTAS RÁPIDAS:**
-      **PAPELETAS:**
       • "Ver papeletas de mi placa ABC123"
-      • "Consultar multas de mi DNI 12345678"
-      • "¿Qué significa el código C15?"
-
-      **IMPUESTOS:**
       • "Impuestos de mi placa ABC123"
-      • "Deuda tributaria DNI 12345678"
-      • "Código contribuyente 94539"
+
 
       📋 **OPCIONES PRINCIPALES:**
       🔹 **Casilla MTC** - Registro obligatorio
       🔹 **Pagos** - Pagar por internet
-      🔹 **Papeletas** - Multas y consultas de tránsito
+      🔹 **Papeletas** - Multas y consultas de papeletas
       🔹 **Impuestos** - Deuda tributaria y declaraciones
       🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
       🔹 **Actualizar Datos** - Actualizar mi información
