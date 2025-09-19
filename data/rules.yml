@@ -158,16 +158,6 @@ rules:
   - intent: impuestos_cuadernillo_agencia_virtual
   - action: action_cuadernillo_agencia_virtual
 
-- rule: Impuestos - Cuadernillo predial
-  steps:
-  - intent: impuestos_cuadernillo_predial
-  - action: action_cuadernillo_predial
-
-- rule: Impuestos - Cuadernillo vehicular
-  steps:
-  - intent: impuestos_cuadernillo_vehicular
-  - action: action_cuadernillo_vehicular
-
 # ========== CONTEXTO IMPUESTOS - DECLARE Y LIQUIDE ==========
 - rule: Impuestos - Declare y liquide genérico
   steps:
@@ -242,11 +232,6 @@ rules:
   steps:
   - intent: retencion_terceria_propiedad
   - action: action_retencion_terceria_propiedad
-
-- rule: Retención - Levantamiento
-  steps:
-  - intent: retencion_levantamiento
-  - action: action_retencion_levantamiento
 
 - rule: Retención - Remate vehicular
   steps:

@@ -454,20 +454,6 @@ stories:
   - intent: impuestos_cuadernillo_agencia_virtual
   - action: action_cuadernillo_agencia_virtual
 
-- story: Impuestos cuadernillo predial
-  steps:
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: impuestos_cuadernillo_predial
-  - action: action_cuadernillo_predial
-
-- story: Impuestos cuadernillo vehicular
-  steps:
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: impuestos_cuadernillo_vehicular
-  - action: action_cuadernillo_vehicular
-
 # ========== FLUJOS DE DECLARACIONES ==========
 - story: Impuestos declaración vehicular
   steps:
@@ -564,8 +550,6 @@ stories:
     entities:
     - placa: "ZZZ111"
   - action: action_consultar_impuestos
-  - intent: impuestos_cuadernillo_vehicular
-  - action: action_cuadernillo_vehicular
 
 - story: Usuario empresa completo impuestos
   steps:
@@ -659,13 +643,6 @@ stories:
   - action: utter_retencion_menu
   - intent: retencion_terceria_propiedad
   - action: action_retencion_terceria_propiedad
-
-- story: Retención levantamiento
-  steps:
-  - intent: ir_a_retencion_captura
-  - action: utter_retencion_menu
-  - intent: retencion_levantamiento
-  - action: action_retencion_levantamiento
 
 - story: Retención remate
   steps:

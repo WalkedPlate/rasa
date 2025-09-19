@@ -195,10 +195,9 @@ nlu:
     - papeletas
     - quiero consultar papeletas
     - consultar mis papeletas
-    - tengo una carta del SAT
     - necesito ver si tengo papeletas
     - quiero revisar mis infracciones
-    - me llegó una notificación
+    - me llegó una notificación de papeleta
     - consultar papeletas pendientes
     - ver mis papeletas
     - revisar papeletas
@@ -244,9 +243,9 @@ nlu:
     - revisar [STU789](placa)
     - la placa [APS583](placa)
     - consultar [BCD890](placa)
-    - ver papeletas de mi placa [APS 583](placa)
-    - ver papeletas de mi placa [APS583](placa)
-    - consultar multas de la placa [ABC 123](placa)
+    - ver papeletas de mi placa [U1A 710](placa)
+    - ver papeletas de mi placa [U1A710](placa)
+    - consultar multas de la placa [APS 583](placa)
     - papeletas de mi vehículo [DEF 456](placa)
 
 - intent: papeletas_consultar_dni
@@ -549,24 +548,6 @@ nlu:
     - registro agencia virtual
     - cuadernillo por internet
 
-- intent: impuestos_cuadernillo_predial
-  examples: |
-    - cuadernillo predial
-    - predial
-    - impuesto predial cuadernillo
-    - cuadernillo de predio
-    - cuadernillo casa
-    - cuadernillo inmueble
-
-- intent: impuestos_cuadernillo_vehicular
-  examples: |
-    - cuadernillo vehicular
-    - vehicular
-    - impuesto vehicular cuadernillo
-    - cuadernillo de vehículo
-    - cuadernillo carro
-    - cuadernillo auto
-
 - intent: impuestos_declarar_liquide
   examples: |
     - declare y liquide
@@ -641,8 +622,6 @@ nlu:
   examples: |
     - beneficios adulto mayor específicos
     - adulto mayor específico
-    - tercera edad
-    - descuento tercera edad
     - no pensionista
     - adulto mayor no pensionista
 
@@ -764,17 +743,6 @@ nlu:
     - trámite específico de tercería
     - tercería para vehículo
     - acreditar propiedad de tercero
-
-- intent: retencion_levantamiento
-  examples: |
-    - levantamiento de medida cautelar específica
-    - levantar medida de retención
-    - solicitar levantamiento específico
-    - levantamiento de embargo específico
-    - levantamiento de retención específica
-    - quitar medida cautelar específica
-    - liberación de medida específica
-    - anular medida cautelar
 
 - intent: retencion_remate_vehicular
   examples: |

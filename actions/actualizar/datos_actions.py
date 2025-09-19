@@ -135,7 +135,9 @@ No pudimos consultar tus datos en este momento.
 **¿Qué más necesitas?**
 • 'Menú principal' - Otras opciones
 • 'Papeletas' - Consultar multas
-• 'Impuestos' - Consultar deuda tributaria"""
+• 'Impuestos' - Consultar deuda tributaria
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -227,7 +229,9 @@ No pudimos actualizar tu nombre en este momento.
 **Intenta nuevamente más tarde.**
 
 **¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
                 dispatcher.utter_message(text=message)
                 logger.error(f"Error actualizando nombre: {phone_number}")
@@ -371,7 +375,9 @@ class ActionProcesarNumeroDocumento(Action):
 **¿Qué más necesitas?**
 • 'Actualizar datos' - Ver datos actualizados
 • 'Cambiar nombre' - Actualizar nombre
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
                 dispatcher.utter_message(text=message)
                 logger.info(f"Documento actualizado exitosamente: {phone_number}")

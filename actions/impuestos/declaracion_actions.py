@@ -47,11 +47,18 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 📖 **Guía interactiva:**
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
+**¿Cuándo declarar?**
+- Cuando adquieres un vehículo y este está dentro de los primeros 3 años de afectación (3 años)
+
+
 **¿Qué más necesitas?**
 • 'Consultar deuda vehicular' - Ver si tienes deuda pendiente
 • 'Declaración predial' - Para inmuebles
 • 'Oficinas SAT' - Ubicaciones para trámite presencial
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
+
 
         dispatcher.utter_message(text=message)
         return []
@@ -91,14 +98,9 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 📖 **Guía interactiva:**
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
-**¿Qué es la alcabala?**
-Es el impuesto que grava las transferencias de propiedad de bienes inmuebles urbanos y rústicos.
-
 **¿Qué más necesitas?**
-• 'Declaración predial' - Para registrar nuevo predio
-• 'Consultar deuda' - Ver si tienes deuda pendiente
-• 'Oficinas SAT' - Ubicaciones para trámite presencial
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -147,10 +149,8 @@ https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 • Cuando cambia el uso del predio
 
 **¿Qué más necesitas?**
-• 'Consultar deuda predial' - Ver si tienes deuda pendiente
-• 'Declaración vehicular' - Para vehículos
-• 'Oficinas SAT' - Ubicaciones para trámite presencial
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -178,23 +178,13 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 **Pasos:**
 1. Registrarse en Agencia Virtual
 2. Ingresar en la opción "Facilidades de pago"
-3. Seleccionar las deudas que deseas fraccionar
-4. Elegir número de cuotas
-5. Confirmar el compromiso de pago
-
-⚠️ **IMPORTANTE - Requisito obligatorio:**
-Primero inscríbete en la Casilla Electrónica del MTC:
-📌 https://casilla.mtc.gob.pe/#/registro
-📋 Base Legal: R. Directoral N°023-2024-MTC/18
 
 📖 **Guía interactiva:**
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
 **¿Qué más necesitas?**
-• 'Consultar deuda' - Ver cuánto debes exactamente
-• 'Casilla MTC' - Información del registro obligatorio
-• 'Cómo pago' - Otras formas de pago
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'"""
 
         dispatcher.utter_message(text=message)
         return []

@@ -78,14 +78,7 @@ class DocumentProcessorImpuestos:
 
         if tipo == 'placa':
             documento_limpio = re.sub(r'[^A-Z0-9]', '', documento_limpio)
-            patrones_validos = [
-                r'^[A-Z]{3}\d{3}$',  # ABC123
-                r'^[A-Z]{2}\d{4}$',  # AB1234
-                r'^[A-Z]\d[A-Z]\d{3}$',  # A1B234
-                r'^U\d[A-Z]\d{3}$',  # U1A710
-                r'^[TSD][A-Z]{2}\d{3}$',  # T1C567
-            ]
-            es_valido = any(re.match(patron, documento_limpio) for patron in patrones_validos)
+            es_valido = len(documento_limpio) == 6 and documento_limpio.isalnum()
             return es_valido, documento_limpio
 
         elif tipo == 'dni':

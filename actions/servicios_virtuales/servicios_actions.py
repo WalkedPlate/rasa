@@ -37,9 +37,9 @@ https://casilla.mtc.gob.pe/#/registro
 📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
 
 **¿Qué más necesitas?**
-• 'Agencia Virtual' - Acceso a servicios online
-• 'Casilla MTC' - Información del registro obligatorio
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -69,9 +69,9 @@ Para que pueda guiarse del procedimiento de agencia virtual:
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
 **¿Qué más necesitas?**
-• 'Mesa de partes' - Presentar trámites administrativos
-• 'Facilidades de pago' - Información sobre cuotas
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -91,17 +91,15 @@ class ActionServiciosPitazo(Action):
 
         message = """📢 **SUSCRÍBETE A PITAZO INFORMATIVO**
 
-Recibe alertas automáticas sobre papeletas y notificaciones importantes del SAT.
+Recibe alertas automáticas sobre papeletas y órdenes de captura.
 
 🔗 **Registro a Pitazo:**
 https://www.sat.gob.pe/VirtualSAT/modulos/pitazo/Default.aspx
 
-**¿Qué incluye el servicio Pitazo?**
-
 **¿Qué más necesitas?**
-• 'Actualizar datos' - Cambiar tu información de contacto
-• 'Consultar papeletas' - Ver tus multas pendientes
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -121,7 +119,7 @@ class ActionServiciosCorreo(Action):
 
         message = """📧 **ENVÍANOS UN CORREO**
 
-Puede dejarnos su consulta al correo oficial del SAT:
+Puede dejarnos su consulta:
 
 📧 **Correo oficial:** asuservicio@sat.gob.pe
 
@@ -129,9 +127,9 @@ Puede dejarnos su consulta al correo oficial del SAT:
 https://www.sat.gob.pe/websitev9/CanalesAtencion/Correo-SAT
 
 **¿Qué más necesitas?**
-• 'Oficinas SAT' - Atención presencial
-• 'Teléfonos de contacto' - Atención inmediata
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -157,9 +155,9 @@ Puede ingresar su reclamo de manera oficial y formal:
 https://www.sat.gob.pe/websitev9/Servicios/Defensoria/LibroReclamaciones
 
 **¿Qué más necesitas?**
-• 'Enviar correo' - Consultas menos formales
-• 'Defensoría del usuario' - Más información sobre tus derechos
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -184,45 +182,10 @@ El SAT de Lima le brinda cursos y capacitaciones especializadas:
 🔗 **Escuela SAT:**
 https://escuelasat.edu.pe/cursos/
 
-**Cursos disponibles:**
-• Tributación municipal
-• Administración tributaria
-• Procedimientos administrativos
-• Cobranza coactiva
-• Fiscalización tributaria
-• Atención al ciudadano
-
-**Modalidades:**
-• Cursos presenciales
-• Capacitación virtual
-• Seminarios especializados
-• Talleres prácticos
-• Diplomados
-
-**Dirigido a:**
-• Funcionarios públicos
-• Profesionales del sector privado
-• Estudiantes universitarios
-• Ciudadanos interesados en tributación
-• Personal administrativo
-
-**Beneficios:**
-• Certificación oficial del SAT
-• Actualización en normativa tributaria
-• Networking profesional
-• Metodología práctica
-• Docentes especializados
-
-**Información adicional:**
-• Costos y becas disponibles
-• Cronograma de cursos
-• Requisitos de inscripción
-• Certificaciones obtenibles
-
 **¿Qué más necesitas?**
-• 'Agencia Virtual' - Servicios online del SAT
-• 'Mesa de partes' - Presentar trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []

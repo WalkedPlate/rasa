@@ -31,97 +31,15 @@ https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 **Pasos:**
 1. Crear tu usuario y contraseña
 2. Ingresar con tus datos
-3. Buscar la opción "Cuadernillo Tributario"
-4. Descargar o consultar online
+3. Buscar Otras consultas / opción "Cuadernillo Tributario"
 
 📖 **Guía paso a paso:**
 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
 
 **¿Qué más necesitas?**
-• 'Consultar deuda' - Ver cuánto debes
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** El cuadernillo contiene todo el historial de tus impuestos prediales y vehiculares."""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionCuadernilloPredial(Action):
-    """Action para cuadernillo predial por código de contribuyente"""
-
-    def name(self) -> Text:
-        return "action_cuadernillo_predial"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        logger.info("Mostrando información de cuadernillo predial")
-
-        message = """🏠 **CUADERNILLO PREDIAL**
-
-Para acceder a tu cuadernillo predial:
-
-🔗 **Acceso directo:**
-https://www.sat.gob.pe/websitev9/TributosMultas/PredialyArbitrios/CuadernilloTributario
-
-**¿Qué necesitas?**
-• Tu **código de contribuyente**
-• La **contraseña** de tu cuadernillo predial (de cualquier año)
-
-**Pasos:**
-1. Hacer clic en "Ver mi cuadernillo"
-2. Ingresar código de contribuyente
-3. Ingresar contraseña del cuadernillo
-4. Consultar información
-
-**¿Qué más necesitas?**
-• 'Consultar deuda predial' - Ver cuánto debes
-• 'Cuadernillo vehicular' - Para impuesto vehicular
-• 'Agencia Virtual' - Acceso completo online
-• 'Menú principal' - Otras opciones
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionCuadernilloVehicular(Action):
-    """Action para cuadernillo vehicular por código de contribuyente"""
-
-    def name(self) -> Text:
-        return "action_cuadernillo_vehicular"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        logger.info("Mostrando información de cuadernillo vehicular")
-
-        message = """🚗 **CUADERNILLO VEHICULAR**
-
-Para acceder a tu cuadernillo vehicular:
-
-🔗 **Acceso directo:**
-https://www.sat.gob.pe/websitev9/TributosMultas/ImpuestoVehicular/CuadernilloTributario
-
-**¿Qué necesitas?**
-• Tu **código de contribuyente**
-• La **contraseña** de tu cuadernillo vehicular (de cualquier año)
-
-**Pasos:**
-1. Hacer clic en "Ver mi cuadernillo"
-2. Ingresar código de contribuyente
-3. Ingresar contraseña del cuadernillo
-4. Consultar información
-
-**¿Qué más necesitas?**  
-• 'Consultar deuda vehicular' - Ver cuánto debes
-• 'Cuadernillo predial' - Para impuesto predial
-• 'Agencia Virtual' - Acceso completo online
-• 'Menú principal' - Otras opciones
-"""
+• 'Finalizar chat'
+   """
 
         dispatcher.utter_message(text=message)
         return []

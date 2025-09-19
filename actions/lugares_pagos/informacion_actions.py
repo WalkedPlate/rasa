@@ -52,7 +52,7 @@ Urb. El Álamo – Comas
 🕐 Lunes a viernes: 8:30am - 6:00pm
 🕐 Sábados: 8:30am - 1:00pm
 
-**Servicios disponibles:**
+**Servicios disponibles CENTRO MAC:**
 • Operaciones, consultas y facilidades de pago
 • Deuda tributaria (Impuesto Vehicular, Alcabala)
 • Deuda no tributaria (Infracciones de tránsito)
@@ -64,7 +64,9 @@ Urb. El Álamo – Comas
 **¿Qué más necesitas?**
 • 'Lugares de pago' - Dónde puedes pagar
 • 'Formas de pago' - Cómo puedes pagar
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -89,9 +91,9 @@ Puede pagar sus tributos y multas en:
 🌐 **Portal Web del SAT:**
 • www.sat.gob.pe
 • Tarjetas: Visa, Mastercard, American Express
-• Yape
+• Yape y Plin
 
-🏦 **Bancos y Entidades Financieras:**
+🏦 **Aplciativos deBancos y Entidades Financieras:**
 • BCP
 • INTERBANK  
 • BBVA
@@ -99,11 +101,6 @@ Puede pagar sus tributos y multas en:
 • BANBIF
 • Caja Metropolitana
 • Western Union
-
-**Modalidades bancarias:**
-• Agentes autorizados
-• Banca móvil
-• Banca por internet
 
 🏢 **Oficinas del SAT:**
 • Tarjetas: Visa, Mastercard, American Express, Diners Club
@@ -113,9 +110,9 @@ Puede pagar sus tributos y multas en:
 🔗 **Guía completa:** https://www.sat.gob.pe/WebSiteV9/Inicio/AyudaPagos/FormasLugaresPago
 
 **¿Qué más necesitas?**
-• 'Agencias y horarios' - Ubicaciones y horarios de oficinas
-• 'Formas de pago' - Opciones específicas de pago
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -137,15 +134,9 @@ class ActionLugaresFormasPago(Action):
 
 ¿Qué tipo de pago necesitas?
 
-📋 **OPCIONES DISPONIBLES:**
 • **"Pagos en línea"** - Pagar inmediatamente por internet
-• **"Compromiso de pago"** - Facilidades de pago y fraccionamiento  
-• **"Fraccionar deuda"** - Dividir tu deuda en cuotas
-
-💡 **También puedes decir:**
-• "Cómo pago por internet"
-• "Quiero facilidades de pago"
-• "Pagar en cuotas"
+• **"Compromiso de pago"** - Facilidades de papeletas
+• **"Fraccionar deuda"** - Dividir tu deuda tributaria en cuotas
 
 ¿Qué opción necesitas?"""
 

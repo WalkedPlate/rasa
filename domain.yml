@@ -44,8 +44,6 @@ intents:
   - impuestos_consultar_generico
   - impuestos_cuadernillo
   - impuestos_cuadernillo_agencia_virtual
-  - impuestos_cuadernillo_predial
-  - impuestos_cuadernillo_vehicular
   - impuestos_declarar_liquide
   - impuestos_declarar_vehicular
   - impuestos_declarar_predial
@@ -61,7 +59,6 @@ intents:
   - retencion_vehiculo_internado
   - retencion_suspender_cobranza
   - retencion_terceria_propiedad
-  - retencion_levantamiento
   - retencion_remate_vehicular
   - retencion_consultar_placa
 
@@ -228,6 +225,7 @@ responses:
       
       • "Ver papeletas de mi placa ABC123" 
       • "Impuestos de mi placa ABC123" 
+      • "Deuda tributaria de mi DNI 12345678" 
       
       O si prefieres explorar las opciones completas:
       
@@ -250,6 +248,7 @@ responses:
 
       • "Ver papeletas de mi placa ABC123"
       • "Impuestos de mi placa ABC123"
+      • "Deuda tributaria de mi DNI 12345678" 
 
 
       📋 **OPCIONES PRINCIPALES:**
@@ -274,16 +273,11 @@ responses:
 
       🔗 **Regístrate aquí:** https://casilla.mtc.gob.pe/#/registro
 
-      **¿Por qué es obligatorio?**
-      • Para recibir notificaciones oficiales
-      • Requisito para todos los trámites vehiculares
       • Base Legal: R. Directoral N°023-2024-MTC/18
 
       **¿Qué más necesitas?**
-      • 'Papeletas' - Consultar multas
-      • 'Impuestos' - Consultar deuda tributaria
-      • 'Pagos' - Información de pagos
       • 'Menú principal' - Ver otras opciones
+      • 'Finalizar chat'
 
   # ========== OPCIÓN 2: PAGOS ==========
   utter_pagos_linea:
@@ -298,10 +292,8 @@ responses:
       • Bancos: BCP, Interbank, BBVA, Scotiabank
 
       **¿Qué más necesitas?**
-      • 'Papeletas' - Consultar cuánto debes en multas
-      • 'Impuestos' - Consultar deuda tributaria
-      • 'Facilidades' - Información sobre facilidades de pago
       • 'Menú principal' - Otras opciones
+      • 'Finalizar chat'
 
   # ========== OPCIÓN 3: PAPELETAS MENÚ ==========
   utter_papeletas_menu:
@@ -312,19 +304,8 @@ responses:
       Escribe directamente:
       • **Placa:** "Mi placa es ABC123" - para ver papeletas del vehículo
       • **DNI:** "Mi DNI es 12345678" o solo "87654321" - para consultar tus papeletas personales
-      • **RUC:** "RUC 20123456789" - para papeletas de tu empresa
-      • **Código:** "¿Qué significa G40?" o "Código G41" - para entender qué infracción cometiste
-
-      📝 **OTRAS OPCIONES:**
       • **"Registrar papeleta"** - Si no aparece tu multa
       • **"Facilidades de pago"** - Pagar en cuotas
-      • **"Consultas frecuentes"** - Plazos, descuentos, etc.
-
-      💡 **También puedes preguntar:**
-      • "¿Tengo multas pendientes?"
-      • "No encuentro mi papeleta"
-      • "Quiero pagar en cuotas"
-      • "Información sobre descuentos"
 
       ¿Qué necesitas?
 
@@ -333,27 +314,18 @@ responses:
   - text: |
       💰 **IMPUESTOS - ¿Qué necesitas?**
 
-      ⚡ **CONSULTA RÁPIDA AQUÍ:**
       Escribe directamente:
       • **Placa:** "Impuestos de mi placa ABC123" - para ver deuda tributarias de la placa
       • **DNI:** "Deuda tributaria DNI 12345678" - para consultar deudas tributarias con tu DNI
-      • **RUC:** "Impuestos RUC 20123456789" - para deudas tributarias relacionadas a tu RUC 
-      • **Código contribuyente:** "Código 94539" - para consultar con tu código
-
-      📝 **OTRAS OPCIONES:**
+      • **RUC:** "Impuestos de RUC 20123456789" - para deudas tributarias relacionadas a tu RUC 
       • **"Cuadernillo tributario"** - Ver tu cuadernillo
       • **"Declare y liquide"** - Declarar nuevos predios/vehículos
       • **"Fraccionar deuda"** - Pagar en cuotas
       • **"Beneficios"** - Descuentos especiales
 
-      💡 **También puedes preguntar:**
-      • "¿Tengo deuda tributaria pendiente?"
-      • "Quiero declarar mi casa nueva"
-      • "Soy pensionista, ¿tengo descuentos?"
-      • "Necesito mi cuadernillo predial"
-
       ¿Qué necesitas?
 
+  # ========== OPCIÓN 5: RETENCIÓN Y CAPTURA MENÚ ==========
   utter_retencion_menu:
   - text: |
       🚨 **RETENCIÓN Y CAPTURA - ¿Qué necesitas?**
@@ -364,11 +336,9 @@ responses:
       • **"Vehículo internado"** - Consultar si tu vehículo está internado
       • **"Suspender cobranza"** - Información para solicitar suspensión de cobranza coactiva
       • **"Tercería de propiedad"** - Información del rrámite de tercería
-      • **"Levantamiento"** - Información para solicitar levantamiento de medida cautelar
       • **"Remate vehicular"** - Información sobre remates
 
-      💡 **Para consultar orden de captura:** Escribe "orden de captura" y luego proporciona tu placa, por ejemplo:
-      • "Consultar orden de captura de la placa ABC123"
+      💡 **Para consultar orden de captura:** Escribe "orden de captura" 
 
       ¿Qué opción necesitas?
 
@@ -382,9 +352,8 @@ responses:
       🔗 **Regístrala aquí:** https://www.sat.gob.pe/websitev8/Popupv2.aspx?t=9&v=%20
 
       **¿Algo más?**
-      • Dame tu placa/DNI/RUC para consultar otras papeletas
       • 'Menú principal' - Otras opciones
-      • 'Papeletas' - Volver al menú de papeletas
+      • 'Finalizar chat'
 
   utter_papeletas_facilidades:
   - text: |
@@ -395,15 +364,14 @@ responses:
 
       **Pasos:**
       1. Regístrate en Agencia Virtual
-      2. Ve a 'Facilidades de pago'
+      2. Ve a Facilidades de pago/ Compromiso de pago
       3. Selecciona tus papeletas para fraccionar
 
       ⚠️ **Importante:** Primero inscríbete en Casilla MTC
 
       **¿Algo más?**
-      • Dame tu placa/DNI/RUC para consultar papeletas
-      • 'Casilla MTC' - Información de registro
       • 'Menú principal' - Otras opciones
+      • 'Finalizar chat'
 
   utter_papeletas_frecuentes:
   - text: |
@@ -421,8 +389,8 @@ responses:
       Escribe: "¿Qué significa C15?" o "Código M08"
 
       **¿Algo más?**
-      • Dame tu placa/DNI/RUC para consultar papeletas
       • 'Menú principal' - Otras opciones
+      • 'Finalizar chat'
 
   # ========== OPCIÓN 7: LUGARES Y PAGOS MENÚ ==========
   utter_lugares_pagos_menu:
@@ -433,11 +401,6 @@ responses:
       • **"Agencias y horarios"** - Ubicaciones y horarios de oficinas SAT
       • **"Lugares de pago"** - Dónde puedes pagar (bancos, online, oficinas)
       • **"Formas de pago"** - Opciones para pagar (online, facilidades, cuotas)
-
-      💡 **También puedes decir:**
-      • "Dónde están las oficinas del SAT"
-      • "Horarios de atención"
-      • "Cómo pago mis multas"
 
       ¿Qué opción necesitas?
 
@@ -454,12 +417,6 @@ responses:
       • **"Libro de reclamaciones"** - Presentar reclamos oficiales
       • **"Cursos SAT"** - Capacitaciones y certificaciones
 
-      💡 **También puedes decir:**
-      • "Mesa de partes digital"
-      • "Registro agencia virtual"
-      • "Alertas de papeletas"
-      • "Contactar por correo"
-
       ¿Qué servicio necesitas, dime?
 
   # ========== OPCIÓN 9: OTROS TRÁMITES MENÚ ==========
@@ -467,21 +424,14 @@ responses:
   - text: |
       📋 **OTROS TRÁMITES ADMINISTRATIVOS**
 
-      ⚡ **CONSULTA RÁPIDA DE TRÁMITE:**
-      • **"Consultar trámite 12345678901234"** - Estado de tu trámite (14 dígitos)
+      ⚡ **CONSULTA DE TRÁMITE:**
+      • **"Consultar trámite 12345678901234"** (14 dígitos)
 
       📝 **OPCIONES DISPONIBLES:**
       • **"Consultar trámite"** - Estado de tu trámite por número
       • **"Requisitos papeletas"** - Trámites administrativos de papeletas
       • **"Requisitos tributarios"** - Trámites administrativos de impuestos
-      • **"Impugnación papeletas"** - Impugnar una papeleta
-      • **"Reclamo tributario"** - Reclamaciones tributarias
       • **"Constancias no adeudo"** - Obtener constancias
-
-      💡 **También puedes decir:**
-      • "Mi número de trámite es 12345678901234"
-      • "Necesito requisitos para apelar"
-      • "Quiero impugnar una papeleta"
 
       ¿Qué opción necesitas?
       
@@ -490,7 +440,6 @@ responses:
   - text: |
       📋 **REQUISITOS DE TRÁMITES - PAPELETAS**
 
-      📝 **OPCIONES DISPONIBLES:**
       • **"Recurso reconsideración"** - Requisitos para recurso de reconsideración
       • **"Descarga infracciones"** - Procedimiento para descarga de infracciones
       • **"Devolución papeletas"** - Requisitos para devolución y/o compensación
@@ -498,11 +447,6 @@ responses:
       • **"Apelación papeletas"** - Requisitos para recurso de apelación
       • **"Tercería requisitos"** - Requisitos para tercería de propiedad
       • **"Suspensión requisitos"** - Requisitos para suspensión de cobranza
-
-      💡 **También puedes decir:**
-      • "Necesito requisitos para apelar"
-      • "Quiero información de prescripción"
-      • "Cómo hago una tercería"
 
       ¿Qué trámite de papeletas necesitas?
 
@@ -542,6 +486,7 @@ responses:
 
       **O puedes decir:**
       • 'Menú principal' - Ver todas las opciones
+      • 'Finalizar chat'
 
       ¿Qué necesitas?
 
@@ -560,7 +505,7 @@ responses:
       🔹 **Actualizar datos** - "Actualizar datos"
       🔹 **Lugares y pagos** - "Oficinas" o "Lugares de pago"
       🔹 **Servicios virtuales** - "Servicios virtuales"
-      🔹 **Otros trámites** - "Otros trámites"
+      🔹 **Trámites** - "Trámites"
 
       💡 **También puedes decir:** "Menú principal"
 
@@ -585,8 +530,6 @@ actions:
   # ========== IMPUESTOS ACTIONS ==========
   - action_consultar_impuestos
   - action_cuadernillo_agencia_virtual
-  - action_cuadernillo_predial
-  - action_cuadernillo_vehicular
   - action_declaracion_impuesto_vehicular
   - action_liquidacion_alcabala
   - action_declaracion_impuesto_predial
@@ -600,7 +543,6 @@ actions:
   - action_retencion_vehiculo_internado
   - action_retencion_suspender_cobranza
   - action_retencion_terceria_propiedad
-  - action_retencion_levantamiento
   - action_retencion_remate_vehicular
   # ========== ACTUALIZAR DATOS ACTIONS ==========
   - action_actualizar_datos
