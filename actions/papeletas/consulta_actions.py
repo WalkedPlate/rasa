@@ -169,11 +169,12 @@ class ActionConsultarPapeletas(Action):
     🎉 Estás al día con las infracciones de tránsito.
 
     **¿Qué más necesitas?**
-    • Dame otra placa/DNI/RUC para consultar
-    • 'Cómo pago' - Información de pagos
     • 'Menú principal' - Otras opciones
+    • 'Finalizar chat'
 
-    💡 **Tip:** Si crees que deberías tener una papeleta, puedes registrarla manualmente."""
+    💡 **Tip:** Si crees tener una papeleta, puedes registrarla aquí:
+    https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT7AtQ4GWcIHx18c26JeR3X8
+"""
 
         cantidad = len(papeletas)
         total = sum(float(p.get('monto', 0)) for p in papeletas)
@@ -211,10 +212,7 @@ class ActionConsultarPapeletas(Action):
         message += "**¿Qué más necesitas?**\n"
         message += "• 'Cómo pago' - Información para pagar\n"
         message += "• 'Facilidades' - Información de las facildiades de pago\n"
-        message += "• Dame otra placa/DNI/RUC para nueva consulta\n"
         message += "• 'Menú principal' - Otras opciones\n\n"
-
-        message += "🏛️ *Consulta oficial del SAT de Lima*"
 
         return message
 
@@ -288,7 +286,8 @@ Por favor, proporciona un RUC válido."""
 • Intentar nuevamente en unos minutos
 
 **¿Qué más necesitas?**
-• Intentar con otro documento
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)

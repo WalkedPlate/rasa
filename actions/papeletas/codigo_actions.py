@@ -147,10 +147,8 @@ class ActionConsultarCodigoFalta(Action):
 **🚫 MEDIDA PREVENTIVA:** {medida_preventiva}
 
 **¿Qué más necesitas?**
-• Dame tu placa/DNI/RUC para consultar si tienes esta multa
-• Otro código: "¿Qué significa M08?"
-• 'Papeletas' - Consultar todas tus multas
 • 'Menú principal' - Otras opciones
+• 'Finalizar chat'
 
 📌 **Más información en:**
 https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx"""
@@ -163,13 +161,11 @@ https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
         message = """Para consultar un código de infracción, necesito el código específico.
 
 📝 **Ejemplos de códigos:**
-• C15, M08, A05, T12
-• G25, F03, B20, L18
+• G40, M08, A05, G25
 
 **Ejemplos de cómo preguntar:**
-• "¿Qué significa C15?"
+• "¿Qué significa G40?"
 • "Código M08"
-• "Información del A05"
 
 ¿Cuál es el código que quieres consultar?"""
 
@@ -184,12 +180,7 @@ https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
 
 📝 **Formato correcto:**
 • Una letra seguida de 1-2 números
-• Ejemplos: C15, M08, A05, T12
-
-**Ejemplos válidos:**
-• C15 (Cinturón de seguridad)
-• M08 (Celular al conducir)
-• A05 (Exceso de velocidad)
+• Ejemplos: G40, M08, A05
 
 Por favor, proporciona un código válido."""
 
@@ -211,9 +202,9 @@ Por favor, proporciona un código válido."""
 • Consulta directamente en: https://www.sat.gob.pe/WebSiteV8/Modulos/contenidos/mult_Papeletas_ti_rntv2.aspx
 
 **¿Qué más necesitas?**
-• Intentar con otro código
-• Dame tu placa/DNI/RUC para consultar tus papeletas
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
 
@@ -232,6 +223,8 @@ Por favor, proporciona un código válido."""
 
 **¿Qué más necesitas?**
 • Intentar con otro código
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)

@@ -125,11 +125,9 @@ class ActionConsultarOrdenCaptura(Action):
 🚗 Su vehículo no presenta restricciones por órdenes de captura.
 
 **¿Qué más necesitas?**
-• 'Vehículo internado' - Información sore internamiento de vehículos
-• 'Retención bancaria' - Información sobre embargos
 • 'Menú principal' - Otras opciones
-
-💡 **Tip:** Manténgase al día con sus pagos para evitar futuras órdenes de captura."""
+• 'Finalizar chat'
+"""
 
         cantidad = len(ordenes)
         total = sum(float(orden.get('monto', 0)) for orden in ordenes)
@@ -171,15 +169,12 @@ class ActionConsultarOrdenCaptura(Action):
 
         # Recomendaciones según cantidad
         if cantidad > 5:
-            message += "⚠️ **Recomendación urgente:** Múltiples órdenes activas. Contacte al SAT inmediatamente.\n\n"
+            message += "Ingrese a la página web:\n"
+            message += "https://www.sat.gob.pe/VirtualSAT/principal.aspx?mysession=pquJ7myzyT7AtQ4GWcIHxzs8BioTAJmrZG%2fJsgO0%2bEs%3d\n\n"
 
         message += "**¿Qué más necesitas?**\n"
-        message += "• 'Retención bancaria' - Información sobre embargos de cuentas\n"
-        message += "• 'Suspender cobranza' - Solicitar suspensión de cobranza coactiva\n"
-        message += "• 'Cómo pago' - Información para realizar pagos\n"
-        message += "• 'Menú principal' - Otras opciones\n\n"
-
-        message += "🏛️ *Consulta oficial del SAT de Lima*"
+        message += "• 'Menú principal' - Otras opciones\n"
+        message += "• 'Finalizar chat'\n\n"
 
         return message
 
@@ -189,13 +184,9 @@ class ActionConsultarOrdenCaptura(Action):
         message = """Para consultar órdenes de captura necesito la placa del vehículo.
 
 🚗 **Formato de placa válido:**
-• ABC123 (clásico)
-• U1A710 (nuevo formato)
+• ABC123 
+• U1A710
 • DEF456, GHI789, etc.
-
-**Ejemplos:**
-• "ABC123"
-• "Mi placa es U1A710"
 
 ¿Cuál es la placa del vehículo a consultar?"""
 

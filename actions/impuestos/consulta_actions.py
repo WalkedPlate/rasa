@@ -191,10 +191,8 @@ class ActionConsultarImpuestos(Action):
 🎉 Estás al día con tus impuestos.
 
 **¿Qué más necesitas?**
-• Dame otro documento para consultar
-• 'Cómo pago' - Información de pagos
-• 'Facilidades' - Pagar en cuotas
 • 'Menú principal' - Otras opciones
+• 'Finalizar chat'
 
 💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
 
@@ -242,11 +240,9 @@ class ActionConsultarImpuestos(Action):
         message += "**¿Qué más necesitas?**\n"
         message += "• 'Cómo pago' - Información para pagar\n"
         message += "• 'Facilidades' - Pagar en cuotas\n"
-        message += "• 'Cuadernillo' - Ver cuadernillo tributario\n"
-        message += "• Dame otro documento para nueva consulta\n"
-        message += "• 'Menú principal' - Otras opciones\n\n"
+        message += "• 'Menú principal' - Otras opciones\n"
+        message += "• 'Finalizar chat'\n"
 
-        message += "🏛️ *Consulta oficial del SAT de Lima*"
 
         return message
 
@@ -263,7 +259,6 @@ class ActionConsultarImpuestos(Action):
 **Ejemplos de cómo escribir:**
 • "Impuestos de mi placa APS583"
 • "Deuda tributaria DNI 87654321"
-• "Código contribuyente 94539"
 
 ¿Cuál puedes proporcionar?"""
 
@@ -278,8 +273,8 @@ class ActionConsultarImpuestos(Action):
             'placa': f"""❌ La placa **{documento}** no tiene un formato válido.
 
 **Formatos correctos:**
-• ABC123 (clásico)
-• U1A710 (nuevo formato)
+• ABC123
+• U1A710
 • DEF456, GHI789, etc.
 
 Por favor, proporciona una placa válida.""",
@@ -304,9 +299,8 @@ Por favor, proporciona un RUC válido.""",
             'codigo_contribuyente': f"""❌ El código de contribuyente **{documento}** no es válido.
 
 **Formato correcto:**
-• Entre 1 y 10 dígitos
 • Solo números
-• Ejemplo: 94539
+
 
 Por favor, proporciona un código válido."""
         }

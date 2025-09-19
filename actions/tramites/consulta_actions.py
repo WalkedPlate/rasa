@@ -149,21 +149,10 @@ class ActionConsultarTramite(Action):
         # Agregar información adicional
         message += f"""
 
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
 **¿Qué más necesitas?**
-• Otro número de trámite para consultar
-• 'Otros trámites' - Ver más opciones administrativas
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         return message
 
@@ -175,23 +164,11 @@ class ActionConsultarTramite(Action):
 🔍 **Posibles causas:**
 • El número de trámite puede estar incorrecto
 • El trámite aún no está registrado en el sistema
-• Puede que el trámite sea muy reciente
-
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
 
 **¿Qué más necesitas?**
-• Intentar con otro número de trámite
-• 'Otros trámites' - Ver opciones administrativas
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         return message
 
@@ -207,7 +184,6 @@ class ActionConsultarTramite(Action):
 **Ejemplos de cómo escribir:**
 • "Mi trámite es 12345678901234"
 • "Consultar trámite 98765432109876"
-• Solo el número: "12345678901234"
 
 ¿Cuál es tu número de trámite?"""
 
