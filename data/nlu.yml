@@ -246,7 +246,7 @@ nlu:
     - ver papeletas de mi placa [U1A 710](placa)
     - ver papeletas de mi placa [U1A710](placa)
     - consultar multas de la placa [APS 583](placa)
-    - papeletas de mi vehículo [DEF 456](placa)
+    - papeletas de mi vehículo [U1A 710](placa)
 
 - intent: papeletas_consultar_dni
   examples: |
