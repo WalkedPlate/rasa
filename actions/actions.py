@@ -3,11 +3,12 @@ from .shared.session_actions import ActionFinalizarChat
 from .papeletas.consulta_actions import ActionConsultarPapeletas
 from .papeletas.codigo_actions import ActionConsultarCodigoFalta
 from .impuestos.consulta_actions import ActionConsultarImpuestos
+
+# Imports de actions de impuestos
 from .impuestos.cuadernillo_actions import (
     ActionCuadernilloAgenciaVirtual,
-    ActionCuadernilloPredial,
-    ActionCuadernilloVehicular
 )
+
 from .impuestos.declaracion_actions import (
     ActionDeclaracionImpuestoVehicular,
     ActionLiquidacionAlcabala,
@@ -26,7 +27,6 @@ from .retencion.tramites_actions import (
     ActionRetencionVehiculoInternado,
     ActionRetencionSuspenderCobranza,
     ActionRetencionTerceriaPropiedad,
-    ActionRetencionLevantamiento,
     ActionRetencionRemateVehicular
 )
 # Imports de actions de actualizar datos
@@ -96,8 +96,6 @@ __all__ = [
     # Actions de impuestos
     'ActionConsultarImpuestos',
     'ActionCuadernilloAgenciaVirtual',
-    'ActionCuadernilloPredial', 
-    'ActionCuadernilloVehicular',
     'ActionDeclaracionImpuestoVehicular',
     'ActionLiquidacionAlcabala',
     'ActionDeclaracionImpuestoPredial',
@@ -113,7 +111,6 @@ __all__ = [
     'ActionRetencionVehiculoInternado',
     'ActionRetencionSuspenderCobranza',
     'ActionRetencionTerceriaPropiedad',
-    'ActionRetencionLevantamiento',
     'ActionRetencionRemateVehicular',
 
     # Actions de actualizar datos
