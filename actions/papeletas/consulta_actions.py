@@ -211,8 +211,9 @@ class ActionConsultarPapeletas(Action):
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"
         message += "• 'Cómo pago' - Información para pagar\n"
-        message += "• 'Facilidades' - Información de las facildiades de pago\n"
-        message += "• 'Menú principal' - Otras opciones\n\n"
+        message += "• 'Facilidades' - Información de las facilidades de pago\n"
+        message += "• 'Menú principal' - Otras opciones\n"
+        message += "• 'Finalizar chat'\n\n"
 
         return message
 
