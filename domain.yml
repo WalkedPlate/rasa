@@ -424,11 +424,8 @@ responses:
   - text: |
       📋 **OTROS TRÁMITES ADMINISTRATIVOS**
 
-      ⚡ **CONSULTA DE TRÁMITE:**
-      • **"Consultar trámite 12345678901234"** (14 dígitos)
-
       📝 **OPCIONES DISPONIBLES:**
-      • **"Consultar trámite"** - Estado de tu trámite por número
+      • **"Consultar trámite 12345678901234"** (14 dígitos)
       • **"Requisitos papeletas"** - Trámites administrativos de papeletas
       • **"Requisitos tributarios"** - Trámites administrativos de impuestos
       • **"Constancias no adeudo"** - Obtener constancias
