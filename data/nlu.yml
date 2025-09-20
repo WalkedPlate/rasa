@@ -882,6 +882,7 @@ nlu:
 
 - intent: lugares_pagos_lugares_pago
   examples: |
+    - lugares de pago
     - lugares específicos de pago
     - dónde puedo pagar exactamente
     - bancos para pagar SAT específicos
