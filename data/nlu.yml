@@ -1016,6 +1016,10 @@ nlu:
     - seguimiento [98765432109876](numero_tramite)
     - [11111111111111](numero_tramite) estado
     - trámite [12345678901234](numero_tramite) estado
+    - consultar trámite
+    - consultar tramite
+    - estado de trámite
+    - ver trámite
 
 # ========== SUB-MENÚS TRÁMITES ==========
 - intent: tramites_requisitos_papeletas
