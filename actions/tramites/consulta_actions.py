@@ -81,7 +81,7 @@ class ActionConsultarTramite(Action):
         return self._execute_tramite_api_query(dispatcher, numero_limpio)
 
     def _execute_tramite_api_query(self, dispatcher: CollectingDispatcher,
-                                  numero_tramite: str) -> List[Dict[Text, Any]]:
+                                   numero_tramite: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API de trámites"""
 
         dispatcher.utter_message(text=f"🔍 Consultando estado del trámite **{numero_tramite}**...")
@@ -89,10 +89,13 @@ class ActionConsultarTramite(Action):
         try:
             resultado = sat_client.consultar_tramite(numero_tramite)
 
-            if resultado and isinstance(resultado, dict):
-                message = self._format_tramite_response(resultado, numero_tramite)
+            if resultado and isinstance(resultado, list) and len(resultado) > 0:
+                # La API devuelve un array, tomamos el primer elemento
+                tramite_data = resultado[0]
+                message = self._format_tramite_response(tramite_data, numero_tramite)
                 dispatcher.utter_message(text=message)
             else:
+                # Lista vacía o None
                 self._handle_tramite_not_found(dispatcher, numero_tramite)
 
         except Exception as e:
@@ -114,6 +117,11 @@ class ActionConsultarTramite(Action):
         fecha_notifica_res = data.get('fechaNotificaRes', '').strip()
         fecha_presentacion = data.get('fechaPresentacion', '').strip()
 
+        # NUEVOS CAMPOS DETECTADOS EN LA RESPUESTA
+        tipo_tramite_des = data.get('tipoTramiteDes', '')
+        codigo_resultado = data.get('codigoResultado', '')
+        obs_ejecucion = data.get('obsEjecucion', '').strip()
+
         # Verificar si el trámite existe (campos principales vacíos)
         if not tramite_nro and not estado_desc:
             return self._format_no_tramite_found(numero_tramite)
@@ -125,11 +133,14 @@ class ActionConsultarTramite(Action):
 
         message = f"""📋 **INFORMACIÓN DEL TRÁMITE {numero_tramite}**
 
-📄 **Número de trámite:** {tramite_nro if tramite_nro else numero_tramite}
-📊 **Estado:** {estado_desc if estado_desc else 'No disponible'}"""
+    📄 **Número de trámite:** {tramite_nro if tramite_nro else numero_tramite}
+    📊 **Estado:** {estado_desc if estado_desc else 'No disponible'}"""
 
         if fecha_presentacion_fmt and fecha_presentacion_fmt != "No disponible":
             message += f"\n📅 **Fecha de presentación:** {fecha_presentacion_fmt}"
+
+        if tipo_tramite_des:
+            message += f"\n📝 **Tipo de trámite:** {tipo_tramite_des}"
 
         if resolucion_nro:
             message += f"\n📋 **N° de resolución:** {resolucion_nro}"
@@ -140,6 +151,9 @@ class ActionConsultarTramite(Action):
         if resultado_des:
             message += f"\n✅ **Resultado:** {resultado_des}"
 
+        if obs_ejecucion:
+            message += f"\n📌 **Observación:** {obs_ejecucion}"
+
         if estado_notifica_res:
             message += f"\n📬 **Estado de notificación:** {estado_notifica_res}"
 
@@ -149,10 +163,10 @@ class ActionConsultarTramite(Action):
         # Agregar información adicional
         message += f"""
 
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
+    **¿Qué más necesitas?**
+    • 'Menú principal' - Otras opciones
+    • 'Finalizar chat'
+    """
 
         return message
 
