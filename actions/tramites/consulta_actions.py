@@ -107,30 +107,40 @@ class ActionConsultarTramite(Action):
     def _format_tramite_response(self, data: Dict[str, Any], numero_tramite: str) -> str:
         """Formatea la respuesta de la API de trámites"""
 
-        # Extraer campos de la respuesta
-        tramite_nro = data.get('tramiteNro', '').strip()
-        estado_desc = data.get('estadoDesc', '').strip()
-        resolucion_nro = data.get('resolucionNro', '').strip()
-        fecha_resolucion = data.get('fechaResolucion', '').strip()
-        resultado_des = data.get('resultadoDes', '').strip()
-        estado_notifica_res = data.get('estadoNotificaRes', '').strip()
-        fecha_notifica_res = data.get('fechaNotificaRes', '').strip()
-        fecha_presentacion = data.get('fechaPresentacion', '').strip()
+        # Función helper para manejar valores que pueden ser None
+        def safe_get_string(value):
+            """Convierte None a string vacío, y aplica strip a strings"""
+            if value is None:
+                return ""
+            return str(value).strip()
 
-        # NUEVOS CAMPOS DETECTADOS EN LA RESPUESTA
+        # Extraer campos de la respuesta - campos que siempre vienen como string
+        tramite_nro = safe_get_string(data.get('tramiteNro'))
+        estado_desc = safe_get_string(data.get('estadoDesc'))
+        resolucion_nro = safe_get_string(data.get('resolucionNro'))
+        fecha_resolucion = safe_get_string(data.get('fechaResolucion'))
+        resultado_des = safe_get_string(data.get('resultadoDes'))
+        fecha_presentacion = safe_get_string(data.get('fechaPresentacion'))
+        obs_ejecucion = safe_get_string(data.get('obsEjecucion'))
+
+        # Campos que pueden ser null - los manejamos especialmente
+        estado_notifica_res = safe_get_string(data.get('estadoNotificaRes'))
+        fecha_notifica_res = safe_get_string(data.get('fechaNotificaRes'))
+
+        # Campos numéricos
         tipo_tramite_des = data.get('tipoTramiteDes', '')
         codigo_resultado = data.get('codigoResultado', '')
-        obs_ejecucion = data.get('obsEjecucion', '').strip()
 
-        # Verificar si el trámite existe (campos principales vacíos)
+        # Verificar si el trámite existe
         if not tramite_nro and not estado_desc:
             return self._format_no_tramite_found(numero_tramite)
 
-        # Formatear fechas usando el método del client
+        # Formatear fechas
         fecha_resolucion_fmt = sat_client.format_date(fecha_resolucion)
         fecha_notifica_res_fmt = sat_client.format_date(fecha_notifica_res)
         fecha_presentacion_fmt = sat_client.format_date(fecha_presentacion)
 
+        # Construir mensaje
         message = f"""📋 **INFORMACIÓN DEL TRÁMITE {numero_tramite}**
 
     📄 **Número de trámite:** {tramite_nro if tramite_nro else numero_tramite}
@@ -154,13 +164,13 @@ class ActionConsultarTramite(Action):
         if obs_ejecucion:
             message += f"\n📌 **Observación:** {obs_ejecucion}"
 
+        # Solo mostrar campos de notificación si no están vacíos
         if estado_notifica_res:
             message += f"\n📬 **Estado de notificación:** {estado_notifica_res}"
 
         if fecha_notifica_res_fmt and fecha_notifica_res_fmt != "No disponible":
             message += f"\n📅 **Fecha de notificación:** {fecha_notifica_res_fmt}"
 
-        # Agregar información adicional
         message += f"""
 
     **¿Qué más necesitas?**
