@@ -451,7 +451,6 @@ responses:
   - text: |
       📋 **REQUISITOS DE TRÁMITES - TRIBUTARIOS**
 
-      📝 **OPCIONES DISPONIBLES:**
       • **"Predial requisitos"** - Requisitos para declaración de impuesto predial
       • **"Vehicular requisitos"** - Requisitos para declaración de impuesto vehicular
       • **"Alcabala requisitos"** - Requisitos para liquidación de alcabala
@@ -461,11 +460,6 @@ responses:
       • **"Apelación tributaria"** - Requisitos para recurso de apelación
       • **"Tercería tributaria"** - Requisitos para tercería de propiedad
       • **"Suspensión tributaria"** - Requisitos para suspensión de cobranza
-
-      💡 **También puedes decir:**
-      • "Necesito declarar mi casa"
-      • "Quiero reclamar un impuesto"
-      • "Cómo solicito prescripción"
 
       ¿Qué trámite tributario necesitas?
 
