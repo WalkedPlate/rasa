@@ -3,7 +3,7 @@ Cliente para el backend del sistema de ciudadanos
 """
 import requests
 import logging
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 from .backend_config import BackendConfig
 
 logger = logging.getLogger(__name__)
