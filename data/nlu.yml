@@ -1102,7 +1102,7 @@ nlu:
     - quiero reconsideración
     - reconsideración administrativa
 
-- intent: tramites_descarga_infracciones
+- intent: tramites_descargo_infracciones
   examples: |
     - descarga infracciones requisitos
     - descargar papeletas procedimiento

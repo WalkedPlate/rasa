@@ -996,19 +996,6 @@ stories:
     - numero_tramite: "98765432109876"
   - action: action_consultar_tramite
 
-- story: Usuario explorador trámites completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: tramites_consultar_numero
-    entities:
-    - numero_tramite: "11111111111111"
-  - action: action_consultar_tramite
-  - intent: tramites_impugnacion_papeletas
-  - action: action_tramites_impugnacion_papeletas
-
 # ========== FLUJOS CON MENÚ PRINCIPAL ==========
 - story: Otros trámites con menú principal
   steps:
@@ -1051,17 +1038,6 @@ stories:
     entities:
     - numero_tramite: "12345678901234"
   - action: action_consultar_tramite
-
-- story: Flujo mixto trámites
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: tramites_impugnacion_papeletas
-  - action: action_tramites_impugnacion_papeletas
-  - intent: tramites_constancias_no_adeudo
-  - action: action_tramites_constancias_no_adeudo
 
 - story: Navegación desde otros contextos a trámites
   steps:
