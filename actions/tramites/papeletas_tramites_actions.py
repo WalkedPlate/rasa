@@ -43,19 +43,19 @@ class ActionTramitesRecursoReconsideracion(Action):
 📌 https://casilla.mtc.gob.pe/#/registro
 
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
 
 
-class ActionTramitesDescargaInfracciones(Action):
+class ActionTramitesDescargoInfracciones(Action):
     """Action para descarga de infracciones"""
 
     def name(self) -> Text:
-        return "action_tramites_descarga_infracciones"
+        return "action_tramites_descargo_infracciones"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -65,29 +65,29 @@ class ActionTramitesDescargaInfracciones(Action):
 
         message = """📋 **DESCARGA DE INFRACCIONES**
 
-Puede realizarlo por nuestra **Agencia Virtual SAT**:
+**REQUISITOS PARA RECURSO DE DESCARGO DE INFRACCIONES:**  
+1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
+   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
+   b) Domicilio del solicitante. 
+   c) Expresión concreta de lo pedido, señalando el número del documento impugnado. 
+   d) Fundamentos de hecho y de derecho. 
+   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso.
 
-🔗 **Para registrarse:**
-📌 https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
+2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
+📋 **Fuente:** Directiva N°  001-006-00000025 Directiva que establece lineamientos para la presentación del trámite de descargo en materia de tránsito y transporte, y de verificación de datos en el Servicio de Administración Tributaria de la Municipalidad Metropolitana de Lima. -  21/12/2017.
 
-**Pasos:**
-1. Registrarse en Agencia Virtual
-2. Ingresar en la opción "Facilidades de pago"
-3. Seguir el procedimiento indicado
+**Ingrese su trámite por Mesa de Partes Digital:**
+📌 https://www.sat.gob.pe/MesaPartesDigital
 
 ⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
 📌 https://casilla.mtc.gob.pe/#/registro
 
 📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
 
-🔗 **Guía interactiva del procedimiento:**
-📌 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
-
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Agencia Virtual' - Información sobre registro
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -107,22 +107,30 @@ class ActionTramitesApelacionPapeletas(Action):
 
         message = """📋 **RECURSO DE APELACIÓN DE PAPELETAS**
 
-Para verificar los requisitos detallados:
+**REQUISITOS PARA RECURSO DE APELACIÓN EN MATERIA NO TRIBUTARIA** 
+1. Presentar escrito conteniendo lo siguiente: 
+   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
+   b) Domicilio del solicitante. 
+   c) Expresión concreta de lo pedido, señalando el número del documento impugnado. 
+   d) Fundamentos de hecho y de derecho. 
+   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso. 
 
-🔗 **Requisitos completos:**
-📌 https://www.sat.gob.pe/WebSiteV9/Tramites/TramitesTUPA/TUPA
-
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
+2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
+ 
+📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
 
 📋 **Puede ingresar su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
+✍️Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
+📌https://casilla.mtc.gob.pe/#/registro
+
+Base Legal: R. Directoral N°023-2024-MTC/18
+
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Recurso reconsideración' - Alternativa antes de apelar
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -152,6 +160,7 @@ class ActionTramitesPrescripcionPapeletas(Action):
    d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso.
 
 2. **En caso el trámite fuera presentado por un representante,** deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito.
+📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
 
 📋 **Ingrese su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
@@ -160,12 +169,11 @@ class ActionTramitesPrescripcionPapeletas(Action):
 📌 https://casilla.mtc.gob.pe/#/registro
 
 📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
 
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -185,17 +193,29 @@ class ActionTramitesDevolucionPapeletas(Action):
 
         message = """📋 **DEVOLUCIÓN Y/O COMPENSACIÓN DE PAPELETAS**
 
+
+**REQUISITOS PARA LA DEVOLUCIÓN Y/O COMPENSACIÓN EN MATERIA DE MULTAS DE TRÁNSITO, MULTAS DE TRANSPORTE Y MULTAS ADMINISTRATIVAS**
+1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
+   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
+   b) Domicilio del solicitante. 
+   c) Indicar la obligación cuya devolución y/o compensación se solicita. 
+   d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso. 
+2. En caso el trámite fuera presentado por un representante, adjuntar documento que acredite la representación. 
+ 
+📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
+
+Ingrese su trámite por Mesa de Partes Digital:
+📌https://www.sat.gob.pe/MesaPartesDigital
+
 ⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
 📌 https://casilla.mtc.gob.pe/#/registro
 
 📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
 
-Espero que la información brindada le haya sido útil.
-
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -215,21 +235,29 @@ class ActionTramitesTerceriaRequisitos(Action):
 
         message = """📋 **TERCERÍA DE PROPIEDAD - REQUISITOS ADMINISTRATIVOS**
 
-Para verificar los requisitos detallados:
-
-🔗 **Requisitos completos:**
-📌 https://www.sat.gob.pe/WebSiteV9/Tramites/TramitesTUPA/TUPA
-
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
+**REQUISITOS PARA LA SOLICITUD DE TERCERÍA DE PROPIEDAD ANTE COBRANZA DE OBLIGACIONES NO TRIBUTARIAS**
+1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
+   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o Número de RUC del solicitante y de su representante, de ser el caso. 
+   b) Domicilio del solicitante. 
+   c) Indicación del bien afectado. 
+   d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o Representante de ser el caso. 
+2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
+3. Presentar copia simple del documento privado con fecha cierta, documento público o de otro documento, que acredite fehacientemente la propiedad de los bienes antes de haberse trabado la medida cautelar, acompañada de la declaración jurada del administrado acerca de su autenticidad. 
+ 
+📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
 
 📋 **Puede ingresar su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
+✍️ Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
+📌 https://casilla.mtc.gob.pe/#/registro
+
+📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
+
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -249,25 +277,26 @@ class ActionTramitesSuspensionRequisitos(Action):
 
         message = """📋 **SOLICITUD DE SUSPENSIÓN DE COBRANZA COACTIVA - REQUISITOS ADMINISTRATIVOS**
 
-📝 **REQUISITOS:**
-1. **Formato de solicitud** debidamente llenado y firmado. En casos de deuda no tributaria un formato por cada deuda.
-2. **Indicar el domicilio** real o procesal dentro del radio urbano de la provincia de Lima.
-3. **En caso de representación,** poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT.
-4. **Marcar la causal** según el formato y adjuntar los sustentos correspondientes.
-
-🔗 **Directiva N° 001-006-00000023:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/documentos/TUPA/Directiva_001-006-000000023_aprobada_por_RJ_001-004-00003951.pdf
-
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
+**REQUISITOS PARA LA SUSPENSIÓN DE LA COBRANZA COACTIVA NO TRIBUTARIA**
+1. Adjuntar formato de la solicitud de suspensión publicado por el SAT debidamente llenado, por cada papeleta, resolución de sanción o multa administrativa, y por cada una de las causales contempladas en la ley. 
+2. Indicar el domicilio real o procesal dentro del radio urbano de la provincia de Lima. 
+3. En el caso de representación, presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT. 
+4. Argumentar y sustentar su solicitud en virtud del Art. 16 de la Ley de Procedimiento de Ejecución Coactiva (Ley 26979). 
+ 
+📋 **Fuente:** Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017).
 
 📋 **Ingrese su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
+✍️ Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
+📌 https://casilla.mtc.gob.pe/#/registro
+
+📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
+
 **¿Qué más necesitas?**
-• 'Requisitos papeletas' - Ver otros trámites de papeletas
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []

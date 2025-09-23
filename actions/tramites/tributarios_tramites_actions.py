@@ -41,18 +41,16 @@ class ActionTramitesPredialRequisitos(Action):
 - En caso de representación, presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT
 - Exhibir original y presentar copia simple de los documentos sustentatorios de la rectificación realizada
 
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
+📋 **Fuente:** Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017) 
+(*) Consultar requisitos establecido en el TUSNE del SAT de Lima
 
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
+**Puede presentar su declaración por Agencia Virtual SAT:**
+📌 https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -72,30 +70,35 @@ class ActionTramitesVehicularRequisitos(Action):
 
         message = """📋 **DECLARACIÓN DE IMPUESTO VEHICULAR - REQUISITOS ADMINISTRATIVOS**
 
-**Requisitos:**
-• **Exhibir el documento de identidad** del propietario o de su representante, de ser el caso
-• **Exhibir el último recibo** de luz, agua o teléfono del domicilio del propietario
-• **En el caso de representación,** presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT
-• **Tarjeta de Identificación vehicular** y copia simple
-• **Exhibir el original y presentar copia simple** de factura, boleta de venta, acta de transferencia o declaración única de aduanas (DUA o póliza de importación)
-
-🔗 **Más información:**
-https://www.sat.gob.pe/websitev9/TributosMultas/ImpuestoVehicular/Informacion
+**REQUISITOS PARA LA DECLARACIÓN DEL IMPUESTO VEHICULAR**
+**Inscripción**
+1. Exhibir el documento de identidad del propietario o de su representante, de ser el caso. 
+2. Exhibir el último recibo de servicios (luz, agua, teléfono, etc.) del domicilio del propietario. 
+3. En el caso de representación, presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT. 
+4. Tarjeta de identificación vehicular. 
+5. Exhibir el original y presentar copia simple del documento que sustente la adquisición: 
+-  Copia de factura, boleta de venta, acta de transferencia o declaración única de aduanas (DUA o póliza de importación). 
+-  Otras transferencias: 
+-  Compra / Venta / Permuta / Adjudicación: Contrato 
+-  Donación / Anticipo de Legítima: Escritura pública. 
+-  Remate: Resolución Judicial o Administrativa mediante la cual se adjudica el bien, debidamente consentida. 
+-  Otros casos: revisar www.sat.gob.pe 
+-  En caso de rectificación exhibir original y presentar copia simple de los documentos sustentatorios de la rectificación realizada. 
+**En caso de robo**
+-  Exhibir el documento de identidad del propietario o de su representante, de ser el caso. 
+-  Presentar original o copia certificada de la denuncia policial del hurto o robo del vehículo. 
+-  Presentar copia de la anotación del hurto o robo en la partida registral del vehículo. 
+ 
+Fuente: Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017).
 
 **Puede presentar su declaración por Agencia Virtual SAT:**
 🔗 **Para registrarse:**
 📌 https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 
-**Luego de registrarse** ingrese en la opción "Inscripción Vehicular".
-
-🔗 **Guía interactiva del procedimiento:**
-📌 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
-
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Agencia Virtual' - Información sobre registro
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -125,30 +128,13 @@ class ActionTramitesAlcabalaRequisitos(Action):
 
 📋 **Fuente:** Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017).
 
-🔗 **Más información:**
-https://www.sat.gob.pe/websitev9/TributosMultas/ImpuestoAlcabala/Informacion
-
 **Puede presentar su declaración por Agencia Virtual SAT:**
-🔗 **Para registrarse:**
 📌 https://www.sat.gob.pe/websitev9/Servicios/AgenciaVirtual
 
-**Luego de registrarse** ingrese en la opción "Liquidación de Alcabala".
-
-🔗 **Guía interactiva del procedimiento:**
-📌 https://www.sat.gob.pe/AgenciaVirtual/guiainteractiva/
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -192,15 +178,10 @@ class ActionTramitesReclamacionTributaria(Action):
 📋 **Ingrese su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -233,15 +214,10 @@ class ActionTramitesPrescripcionTributaria(Action):
 📋 **Ingrese su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -273,15 +249,13 @@ class ActionTramitesDevolucionTributaria(Action):
 
 📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 del 28/08/2018).
 
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
+📋 **Ingrese su trámite por Mesa de Partes Digital:**
+📌 https://www.sat.gob.pe/MesaPartesDigital
 
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -301,21 +275,24 @@ class ActionTramitesApelacionTributaria(Action):
 
         message = """📋 **RECURSO DE APELACIÓN TRIBUTARIA**
 
-Para verificar los requisitos detallados:
-
-🔗 **Requisitos completos:**
-📌 https://www.sat.gob.pe/WebSiteV9/Tramites/TramitesTUPA/TUPA
-
-📋 **Descargue y consulte el llenado del formato:**
-📌 https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
+**REQUISITOS PARA EL RECURSO DE APELACIÓN EN MATERIA TRIBUTARIA**
+1. Presentar escrito conteniendo lo siguiente: 
+   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
+   b) Domicilio del solicitante. 
+   c) Expresión concreta de lo pedido, señalando el número del documento impugnado. 
+   d) Fundamentos de hecho y de derecho 
+   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso. 
+2. En caso el trámite fuera presentado por un representante, deberá presentar Poder especial en documento público o privado con firma legalizada notarialmente o certificada por fedatario del SAT. 
+ 
+📋 **Fuente:** Artículos 143 del TUO del Código Tributario Decreto Supremo N.° 135-99-EF y modificatorias.
 
 📋 **Puede ingresar su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
@@ -369,27 +346,33 @@ class ActionTramitesSuspensionTributaria(Action):
 
         message = """📋 **REQUISITOS PARA SOLICITUD DE SUSPENSIÓN DE COBRANZA COACTIVA DE OBLIGACIONES TRIBUTARIAS**
 
-1. **Formato de solicitud de suspensión** proporcionado por el SAT debidamente llenado y firmado por el solicitante o representante legal
-2. **Indicar el domicilio** real o procesal dentro del radio urbano de la provincia de Lima
-3. **En caso de representación,** presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT
-4. **Argumentar y sustentar** su solicitud en virtud del Art. 16 de la Ley de Procedimiento de Ejecución Coactiva (Ley 26979)
-5. **En caso de cobranza dirigida** contra persona distinta al obligado, acreditar que no es el obligado con documento de fecha cierta
-6. **En caso de recurso administrativo** presentado dentro del plazo de ley: señalar número de expediente y fecha de presentación. En caso de tratarse de recursos presentados ante órganos distintos al SAT, presentar copia simple del cargo de presentación del mismo con sello de recepción
-
-**Y otros requisitos específicos según el caso...**
+REQUISITOS PARA SOLICITUD DE SUSPENSIÓN DE COBRANZA COACTIVA DE OBLIGACIONES TRIBUTARIAS 
+1. Formato de solicitud de suspensión proporcionado por el SAT debidamente llenado y firmado por el solicitante o representante legal. 
+2. Indicar el domicilio real o procesal dentro del radio urbano de la provincia de Lima. 
+3. En caso de representación, presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT. 
+4. Argumentar y sustentar su solicitud en virtud del Art. 16 de la Ley de Procedimiento de Ejecución Coactiva (Ley 26979). 
+5. En caso de cobranza dirigida contra persona distinta al obligado, acreditar que no es el obligado con documento de fecha cierta. 
+6. En caso de recurso administrativo presentado dentro del plazo de ley: señalar número de expediente y fecha de presentación. En caso de tratarse de recursos presentados ante órganos distintos al SAT, presentar copia simple del cargo de presentación del mismo con sello de recepción. 
+7. De encontrase sometido a un procedimiento concursal deberá presentar lo siguiente: 
+   a) Presentar la publicación de la declaración de insolvencia. 
+   b) Presentar copia simple del plan de Reestructuración o del Acuerdo Global de Financiamiento. 
+   c) El administrado o un tercero podrá comunicar el estado de quiebra presentando copia simple de la Resolución de Quiebra Judicial (Puede ser judicial o extrajudicial). 
+8. En caso de Disolución y Liquidación de un administrado bajo supervisión de la SBS, deberá cumplir con lo siguiente: 
+   a) Señalar fecha de publicación de la Resolución de Disolución y Liquidación emitida por la SBS. 
+   b) Adjuntar copia de la publicación en el diario. 
+9. En caso de empresas estatales comprendidas en los supuestos del Decreto Ley N° 25604 debe presentarse la decisión o acuerdo PROINVERSIÓN en que se especifique la modalidad de promoción de inversión privada y la intangibilidad de los bienes de la empresa. 
+10. En caso de demanda de amparo o demanda contenciosa administrativa, adjuntar copia certificada por el auxiliar jurisdiccional de la resolución favorable al administrado. 
+11. En caso de Revisión Judicial, adjuntar copia de la demanda con el sello de recepción del Poder Judicial.  
+ 
+📋 **Fuente:** Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017).
 
 📋 **Ingrese su trámite por Mesa de Partes Digital:**
 📌 https://www.sat.gob.pe/MesaPartesDigital
 
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
 **¿Qué más necesitas?**
-• 'Requisitos tributarios' - Ver otros trámites tributarios
-• 'Otros trámites' - Volver al menú principal de trámites
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []

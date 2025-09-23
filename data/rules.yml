@@ -344,16 +344,6 @@ rules:
   - intent: tramites_requisitos_tributarios
   - action: utter_tramites_requisitos_tributarios
 
-- rule: Trámites - Impugnación papeletas
-  steps:
-  - intent: tramites_impugnacion_papeletas
-  - action: action_tramites_impugnacion_papeletas
-
-- rule: Trámites - Reclamo tributario
-  steps:
-  - intent: tramites_reclamo_tributario
-  - action: action_tramites_reclamo_tributario
-
 - rule: Trámites - Constancias no adeudo
   steps:
   - intent: tramites_constancias_no_adeudo
@@ -368,8 +358,8 @@ rules:
 
 - rule: Trámites - Descarga infracciones
   steps:
-  - intent: tramites_descarga_infracciones
-  - action: action_tramites_descarga_infracciones
+  - intent: tramites_descargo_infracciones
+  - action: action_tramites_descargo_infracciones
 
 - rule: Trámites - Apelación papeletas específica
   steps:

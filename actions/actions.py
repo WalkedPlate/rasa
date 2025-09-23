@@ -59,13 +59,11 @@ from .servicios_virtuales.servicios_actions import (
 # Imports de actions de trámites
 from .tramites.consulta_actions import ActionConsultarTramite
 from .tramites.generales_actions import (
-    ActionTramitesImpugnacionPapeletas,
-    ActionTramitesReclamoTributario,
     ActionTramitesConstanciasNoAdeudo
 )
 from .tramites.papeletas_tramites_actions import (
     ActionTramitesRecursoReconsideracion,
-    ActionTramitesDescargaInfracciones,
+    ActionTramitesDescargoInfracciones,
     ActionTramitesApelacionPapeletas,
     ActionTramitesPrescripcionPapeletas,
     ActionTramitesDevolucionPapeletas,

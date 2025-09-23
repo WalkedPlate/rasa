@@ -88,12 +88,10 @@ intents:
   - tramites_consultar_numero
   - tramites_requisitos_papeletas
   - tramites_requisitos_tributarios
-  - tramites_impugnacion_papeletas
-  - tramites_reclamo_tributario
   - tramites_constancias_no_adeudo
   # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
   - tramites_recurso_reconsideracion
-  - tramites_descarga_infracciones
+  - tramites_descargo_infracciones
   - tramites_apelacion_papeletas
   - tramites_prescripcion_papeletas
   - tramites_devolucion_papeletas
@@ -558,12 +556,10 @@ actions:
   - utter_tramites_requisitos_papeletas
   - utter_tramites_requisitos_tributarios
   - action_consultar_tramite
-  - action_tramites_impugnacion_papeletas
-  - action_tramites_reclamo_tributario
   - action_tramites_constancias_no_adeudo
   # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
   - action_tramites_recurso_reconsideracion
-  - action_tramites_descarga_infracciones
+  - action_tramites_descargo_infracciones
   - action_tramites_apelacion_papeletas
   - action_tramites_prescripcion_papeletas
   - action_tramites_devolucion_papeletas

@@ -1049,31 +1049,6 @@ nlu:
     - requisitos deuda tributaria
 
 # ========== TRÁMITES ESPECÍFICOS ==========
-- intent: tramites_impugnacion_papeletas
-  examples: |
-    - impugnación papeletas requisitos
-    - impugnar papeleta procedimiento
-    - requisitos impugnación administrativa
-    - impugnación de papeletas
-    - impugnar multa requisitos
-    - procedimiento impugnación
-    - requisitos para impugnar
-    - impugnación administrativa
-    - impugnar infracción
-    - requisitos impugnar papeleta
-
-- intent: tramites_reclamo_tributario
-  examples: |
-    - reclamo tributario procedimiento
-    - requisitos reclamo impuestos
-    - reclamo tributario
-    - reclamación de impuestos
-    - procedimiento reclamo
-    - requisitos para reclamar
-    - reclamo administrativo tributario
-    - reclamación administrativa
-    - requisitos reclamar tributos
-
 - intent: tramites_constancias_no_adeudo
   examples: |
     - constancias no adeudo
