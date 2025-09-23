@@ -13,6 +13,11 @@ rules:
   - intent: goodbye
   - action: action_finalizar_chat
 
+- rule: Solicitar asesor humano
+  steps:
+  - intent: solicitar_asesor
+  - action: action_solicitar_asesor
+
 - rule: Mostrar menú principal
   steps:
   - intent: menu_principal

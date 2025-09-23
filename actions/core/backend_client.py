@@ -109,6 +109,104 @@ class BackendAPIClient:
             logger.error(f"Error inesperado actualizando datos del ciudadano: {e}")
             return False
 
+    def close_assistance(self, phone_number: str) -> Tuple[bool, str]:
+        """
+        Cierra la asistencia activa para un ciudadano por número de teléfono
+
+        Args:
+            phone_number: Número de teléfono del ciudadano
+
+        Returns:
+            Tuple[bool, str]: (éxito, mensaje)
+        """
+        url = f"{self.base_url}{BackendConfig.ASSISTANCE_CLOSE}"
+
+        payload = {
+            "phoneNumber": phone_number
+        }
+
+        try:
+            logger.info(f"Cerrando asistencia para: {phone_number}")
+
+            response = requests.put(
+                url=url,
+                json=payload,
+                headers=self.default_headers,
+                timeout=self.timeout
+            )
+
+            if response.status_code in [200, 201]:
+                data = response.json()
+                success = data.get('success', False)
+                message = data.get('message', 'Asistencia cerrada')
+
+                if success:
+                    logger.info(f"Asistencia cerrada exitosamente: {phone_number}")
+                    return True, message
+                else:
+                    logger.warning(f"Backend reportó fallo al cerrar asistencia: {phone_number}")
+                    return False, message
+
+            else:
+                logger.error(f"Error cerrando asistencia {phone_number}: {response.status_code} - {response.text}")
+                return False, f"Error del servidor: {response.status_code}"
+
+        except requests.exceptions.Timeout:
+            logger.error(f"Timeout cerrando asistencia: {phone_number}")
+            return False, "Timeout en la conexión"
+        except requests.exceptions.ConnectionError:
+            logger.error(f"Error de conexión cerrando asistencia: {phone_number}")
+            return False, "Error de conexión"
+        except Exception as e:
+            logger.error(f"Error inesperado cerrando asistencia {phone_number}: {e}")
+            return False, f"Error inesperado: {str(e)}"
+
+    def request_advisor(self, phone_number: str) -> Tuple[bool, str]:
+        """
+        Solicita un asesor humano para el ciudadano
+
+        Args:
+            phone_number: Número de teléfono del ciudadano
+
+        Returns:
+            Tuple[bool, str]: (éxito, mensaje)
+        """
+        endpoint = BackendConfig.CITIZEN_REQUEST_ADVISOR.format(phone=phone_number)
+        url = f"{self.base_url}{endpoint}"
+
+        try:
+            logger.info(f"Solicitando asesor para: {phone_number}")
+
+            response = requests.post(
+                url=url,
+                headers=self.default_headers,
+                timeout=self.timeout
+            )
+
+            if response.status_code in [200, 201]:
+                data = response.json()
+                message = data.get('message', 'Asesor solicitado exitosamente')
+                logger.info(f"Asesor solicitado exitosamente: {phone_number}")
+                return True, message
+
+            elif response.status_code == 404:
+                logger.warning(f"Chat no encontrado para: {phone_number}")
+                return False, "No se encontró una conversación activa"
+
+            else:
+                logger.error(f"Error solicitando asesor {phone_number}: {response.status_code} - {response.text}")
+                return False, f"Error del servidor: {response.status_code}"
+
+        except requests.exceptions.Timeout:
+            logger.error(f"Timeout solicitando asesor: {phone_number}")
+            return False, "Timeout en la conexión"
+        except requests.exceptions.ConnectionError:
+            logger.error(f"Error de conexión solicitando asesor: {phone_number}")
+            return False, "Error de conexión con el servidor"
+        except Exception as e:
+            logger.error(f"Error inesperado solicitando asesor {phone_number}: {e}")
+            return False, f"Error inesperado: {str(e)}"
+
 
 # Instancia global del cliente backend
 backend_client = BackendAPIClient()

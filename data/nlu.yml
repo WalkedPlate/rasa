@@ -72,6 +72,32 @@ nlu:
     - terminar chat
     - finalizar conversación
 
+- intent: solicitar_asesor
+  examples: |
+    - quiero hablar con un asesor
+    - necesito un asesor
+    - solicitar asesor
+    - hablar con una persona
+    - necesito ayuda personalizada
+    - me pueden atender
+    - quiero atención humana
+    - no encuentro lo que busco
+    - el bot no me ayuda
+    - necesito hablar con alguien
+    - asesor
+    - asesor humano
+    - persona real
+    - atención personalizada
+    - hablar con alguien del SAT
+    - no me sirve el bot
+    - quiero que me atienda una persona
+    - conectar con asesor
+    - solicitar ayuda humana
+    - hablar con representante
+    - necesito atención directa
+    - el chatbot no me entiende
+    - requiero asesoría personalizada    
+
 - intent: menu_principal
   examples: |
     - menú
@@ -832,10 +858,11 @@ nlu:
   examples: |
     - DNI
     - CE
-    - PASAPORTE
+    - OTRO
     - Carnet de Extranjería
     - documento nacional de identidad
-    - pasaporte peruano
+    - otro documento
+    - pasaporte
     - carnet extranjería
 
 - intent: proporcionar_numero_documento

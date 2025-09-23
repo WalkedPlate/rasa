@@ -28,3 +28,8 @@ class BackendConfig:
         'CITIZEN_UPDATE_ENDPOINT',
         '/v1/channel-room/citizen/basic-information/update'
     )
+
+    ASSISTANCE_CLOSE = os.getenv(
+        'ASSISTANCE_CLOSE_ENDPOINT',
+        '/v1/channel-room/assistances/close'
+    )

@@ -265,7 +265,7 @@ class ActionActualizarDocumento(Action):
 **Opciones disponibles:**
 • DNI
 • CE (Carnet de Extranjería)
-• PASAPORTE
+• OTRO
 
 **Ejemplo:** DNI"""
 
@@ -288,7 +288,7 @@ class ActionProcesarTipoDocumento(Action):
         tipo_documento = tracker.latest_message.get('text', '').strip().upper()
 
         # Validar tipo de documento
-        tipos_validos = ['DNI', 'CE', 'PASAPORTE']
+        tipos_validos = ['DNI', 'CE', 'OTRO']
 
         if tipo_documento not in tipos_validos:
             message = f"""❌ **Tipo de documento inválido**
@@ -296,7 +296,7 @@ class ActionProcesarTipoDocumento(Action):
 **Tipos válidos:**
 • DNI
 • CE
-• PASAPORTE
+• OTRO
 
 **Intenta nuevamente o escribe 'cancelar' para volver.**"""
 
@@ -310,7 +310,7 @@ class ActionProcesarTipoDocumento(Action):
 **Formato según el tipo:**
 • **DNI:** 8 dígitos (ej: 12345678)
 • **CE:** 9-12 dígitos (ej: 123456789)
-• **PASAPORTE:** 6-12 caracteres alfanuméricos
+• **OTRO:** Hasta 15 caracteres alfanuméricos
 
 **Ejemplo:** 12345678"""
 
@@ -346,7 +346,7 @@ class ActionProcesarNumeroDocumento(Action):
 **Formato correcto:**
 • **DNI:** 8 dígitos exactos
 • **CE:** 9-12 dígitos
-• **PASAPORTE:** 6-12 caracteres alfanuméricos
+• **OTRO:** Hasta 15 caracteres alfanuméricos
 
 **Intenta nuevamente o escribe 'cancelar' para volver.**"""
 
@@ -356,6 +356,13 @@ class ActionProcesarNumeroDocumento(Action):
         # Actualizar en el backend
         phone_number = tracker.sender_id
         datos_actuales = tracker.get_slot("datos_actuales") or {}
+
+        nombre_completo = datos_actuales.get('fullName', '')
+        primer_nombre = nombre_completo.split()[0] if nombre_completo else 'Usuario'
+
+        # Extraer primer nombre
+        nombre_completo = datos_actuales.get('fullName', '')
+        primer_nombre = nombre_completo.split()[0] if nombre_completo else 'Usuario'
 
         citizen_data = {
             "phoneNumber": phone_number,
@@ -420,9 +427,9 @@ No pudimos actualizar tu documento en este momento.
             numero_limpio = re.sub(r'[^0-9]', '', numero)
             return 9 <= len(numero_limpio) <= 12 and numero_limpio.isdigit()
 
-        elif tipo == "PASAPORTE":
-            # PASAPORTE: 6-12 caracteres alfanuméricos
+        elif tipo == "OTRO":
+            # OTRO: hasta 15 caracteres alfanuméricos
             numero_limpio = re.sub(r'[^A-Z0-9]', '', numero.upper())
-            return 6 <= len(numero_limpio) <= 12 and numero_limpio.isalnum()
+            return 1 <= len(numero_limpio) <= 15 and numero_limpio.isalnum()
 
         return False

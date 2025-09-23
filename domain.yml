@@ -113,8 +113,9 @@ intents:
   - clarify_impuestos
   - consulta_ambigua_documento
 
-  # ========== NAVEGACIÓN ==========
+  # ========== NAVEGACIÓN y SOLICITAR ASESOR ==========
   - otra_consulta
+  - solicitar_asesor
 
 entities:
   - placa
@@ -211,6 +212,13 @@ slots:
 
   nuevo_tipo_documento:
     type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  # ========== SLOT PARA SOLICITAR ASESOR ==========
+  asesor_solicitado:
+    type: bool
     influence_conversation: false
     mappings:
       - type: custom
@@ -497,6 +505,8 @@ responses:
       🔹 **Trámites** - "Trámites"
 
       💡 **También puedes decir:** "Menú principal"
+      
+      👨‍💼 **¿Necesitas ayuda?** Escribe "solicitar asesor"
 
         ¿Qué necesitas?
 actions:
@@ -575,8 +585,9 @@ actions:
   - action_tramites_apelacion_tributaria
   - action_tramites_terceria_tributaria
   - action_tramites_suspension_tributaria
-  # ========== FINALIZAR CHAT ==========
+  # ========== FINALIZAR CHAT Y SOLICITAR ASESOR==========
   - action_finalizar_chat
+  - action_solicitar_asesor
 
 session_config:
   session_expiration_time: 600

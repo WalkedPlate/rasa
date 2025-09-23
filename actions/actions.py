@@ -1,5 +1,6 @@
 # Imports de actions
 from .shared.session_actions import ActionFinalizarChat
+from .shared.advisor_actions import ActionSolicitarAsesor
 from .papeletas.consulta_actions import ActionConsultarPapeletas
 from .papeletas.codigo_actions import ActionConsultarCodigoFalta
 from .impuestos.consulta_actions import ActionConsultarImpuestos
@@ -86,8 +87,11 @@ from .shared.router_actions import ActionRouteDocumentConsultation
 
 # Lista de todos los actions disponibles
 __all__ = [
-    # Actions existentes
+    # Actions básicos
     'ActionFinalizarChat',
+    'ActionSolicitarAsesor',
+
+    # Actions de papeletas
     'ActionConsultarPapeletas',
     'ActionConsultarCodigoFalta',
     
