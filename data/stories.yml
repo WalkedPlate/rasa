@@ -966,20 +966,6 @@ stories:
     - numero_tramite: "12345678901234"
   - action: action_consultar_tramite
 
-- story: Otros trámites - impugnación papeletas
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: tramites_impugnacion_papeletas
-  - action: action_tramites_impugnacion_papeletas
-
-- story: Otros trámites - reclamo tributario
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: tramites_reclamo_tributario
-  - action: action_tramites_reclamo_tributario
-
 - story: Otros trámites - constancias no adeudo
   steps:
   - intent: ir_a_otros_tramites
