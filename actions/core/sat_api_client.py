@@ -57,12 +57,12 @@ class SATAPIClient:
             )
 
             if response.status_code == 200:
-                logger.info(f"✅ Respuesta exitosa: {response.status_code}")
+                logger.info(f"Respuesta exitosa: {response.status_code}")
                 return response.json()
 
             elif response.status_code == 401:
                 # Token expirado, renovar y reintentar
-                logger.warning("🔄 Token expirado, renovando...")
+                logger.warning("Token expirado, renovando...")
                 auth_manager.clear_token()
 
                 # Reintentar con nuevo token

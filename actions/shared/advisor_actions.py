@@ -27,7 +27,7 @@ class ActionSolicitarAsesor(Action):
         logger.info(f"Usuario {phone_number} solicita asesor humano")
 
         # Mostrar mensaje de procesamiento
-        dispatcher.utter_message(text="🔄 Conectándote con un asesor...")
+        dispatcher.utter_message(text="Conectándote con un asesor...")
 
         try:
             # Llamar al endpoint para solicitar asesor
