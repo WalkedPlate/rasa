@@ -246,7 +246,7 @@ responses:
       🔹 **Servicios Virtuales** - Trámites y servicios online
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
       
-      ¿Qué necesitas?
+      ¿En qué puedo ayudarte?
 
   utter_menu_principal:
   - text: |
@@ -268,7 +268,7 @@ responses:
       🔹 **Servicios Virtuales** - Trámites y servicios online
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
 
-      ¿Qué necesitas?
+      ¿En qué puedo ayudarte?
 
   # ========== OPCIÓN 1: CASILLA MTC ==========
   utter_casilla_mtc:
