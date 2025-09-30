@@ -508,7 +508,7 @@ responses:
       
       👨‍💼 **¿Necesitas ayuda?** Escribe "solicitar asesor"
 
-        ¿Qué necesitas?
+        ¿En qué puedo ayudarte?
 actions:
   # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet
