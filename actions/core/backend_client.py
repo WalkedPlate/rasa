@@ -51,7 +51,7 @@ class BackendAPIClient:
         headers = self._get_headers()
 
         try:
-            logger.info(f"🌐 {method} {url}")
+            logger.info(f"{method} {url}")
 
             response = requests.request(
                 method=method,

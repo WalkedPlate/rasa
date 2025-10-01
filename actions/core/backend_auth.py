@@ -39,7 +39,7 @@ class BackendAuthManager:
     def refresh_token(self) -> bool:
         """Obtiene un nuevo token de autenticación"""
         try:
-            logger.info("🔐 Renovando token de autenticación del backend...")
+            logger.info("Renovando token de autenticación del backend...")
 
             response = requests.post(
                 self.auth_url,
@@ -64,7 +64,7 @@ class BackendAuthManager:
                 return False
 
         except requests.exceptions.Timeout:
-            logger.error("⏱Timeout en autenticación del backend")
+            logger.error("Timeout en autenticación del backend")
             self.access_token = None
             return False
         except requests.exceptions.ConnectionError:
