@@ -223,6 +223,14 @@ slots:
     mappings:
       - type: custom
 
+  # ========== SLOT PARA CONTAR NÚMERO DE FALLBACKS ==========
+  fallback_count:
+    type: int
+    initial_value: 0
+    influence_conversation: true
+    mappings:
+      - type: custom
+
 responses:
   utter_greet:
   - text: |
@@ -487,28 +495,6 @@ responses:
 
       ¿Qué necesitas?
 
-  # ========== FALLBACK GLOBAL ==========
-  utter_default:
-  - text: |
-      No entendí completamente tu mensaje. Puedo ayudarte con:
-
-      📋 **OPCIONES PRINCIPALES:**
-      Escribe el nombre de la opción que necesitas:
-      🔹 **Casilla MTC** - "Casilla MTC" o "Registro"
-      🔹 **Pagos** - "Pagos" o "Cómo pago"  
-      🔹 **Papeletas** - "Papeletas" o "Multas"
-      🔹 **Impuestos** - "Impuestos" o "Deuda tributaria"
-      🔹 **Retención** - "Retención" o "Orden de captura"
-      🔹 **Actualizar datos** - "Actualizar datos"
-      🔹 **Lugares y pagos** - "Oficinas" o "Lugares de pago"
-      🔹 **Servicios virtuales** - "Servicios virtuales"
-      🔹 **Trámites** - "Trámites"
-
-      💡 **También puedes decir:** "Menú principal"
-      
-      👨‍💼 **¿Necesitas ayuda?** Escribe "solicitar asesor"
-
-        ¿En qué puedo ayudarte?
 actions:
   # ========== RESPONSES ESTÁTICAS ==========
   - utter_greet
@@ -521,7 +507,6 @@ actions:
   - utter_papeletas_facilidades
   - utter_papeletas_frecuentes
   - utter_otra_consulta
-  - utter_default
 
   # ========== CUSTOM ACTIONS ==========
   - action_consultar_papeletas
@@ -588,6 +573,8 @@ actions:
   # ========== FINALIZAR CHAT Y SOLICITAR ASESOR==========
   - action_finalizar_chat
   - action_solicitar_asesor
+  - action_smart_fallback
+  - action_reset_fallback_count
 
 session_config:
   session_expiration_time: 600

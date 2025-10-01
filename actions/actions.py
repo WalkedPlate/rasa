@@ -90,6 +90,8 @@ __all__ = [
     # Actions básicos
     'ActionFinalizarChat',
     'ActionSolicitarAsesor',
+    'ActionSmartFallback',
+    'ActionResetFallbackCount',
 
     # Actions de papeletas
     'ActionConsultarPapeletas',
