@@ -114,68 +114,57 @@ class ActionConsultarTramite(Action):
                 return ""
             return str(value).strip()
 
-        # Extraer campos de la respuesta - campos que siempre vienen como string
+        # Extraer campos de la respuesta
         tramite_nro = safe_get_string(data.get('tramiteNro'))
+        fecha_presentacion = safe_get_string(data.get('fechaPresentacion'))
         estado_desc = safe_get_string(data.get('estadoDesc'))
         resolucion_nro = safe_get_string(data.get('resolucionNro'))
         fecha_resolucion = safe_get_string(data.get('fechaResolucion'))
         resultado_des = safe_get_string(data.get('resultadoDes'))
-        fecha_presentacion = safe_get_string(data.get('fechaPresentacion'))
-        obs_ejecucion = safe_get_string(data.get('obsEjecucion'))
-
-        # Campos que pueden ser null - los manejamos especialmente
         estado_notifica_res = safe_get_string(data.get('estadoNotificaRes'))
         fecha_notifica_res = safe_get_string(data.get('fechaNotificaRes'))
-
-        # Campos numéricos
-        tipo_tramite_des = data.get('tipoTramiteDes', '')
-        codigo_resultado = data.get('codigoResultado', '')
 
         # Verificar si el trámite existe
         if not tramite_nro and not estado_desc:
             return self._format_no_tramite_found(numero_tramite)
 
-        # Formatear fechas
-        fecha_resolucion_fmt = sat_client.format_date(fecha_resolucion)
-        fecha_notifica_res_fmt = sat_client.format_date(fecha_notifica_res)
-        fecha_presentacion_fmt = sat_client.format_date(fecha_presentacion)
+        # Formatear fechas usando la función del cliente SAT
+        fecha_presentacion_fmt = sat_client.format_date(fecha_presentacion) if fecha_presentacion else "No disponible"
+        fecha_resolucion_fmt = sat_client.format_date(fecha_resolucion) if fecha_resolucion else "No disponible"
+        fecha_notifica_res_fmt = sat_client.format_date(fecha_notifica_res) if fecha_notifica_res else "No disponible"
 
         # Construir mensaje
-        message = f"""📋 **INFORMACIÓN DEL TRÁMITE {numero_tramite}**
+        message = f"""📋 **INFORMACIÓN DEL TRÁMITE**
 
     📄 **Número de trámite:** {tramite_nro if tramite_nro else numero_tramite}
-    📊 **Estado:** {estado_desc if estado_desc else 'No disponible'}"""
+    📅 **Fecha de presentación:** {fecha_presentacion_fmt}
+    📊 **Estado:** {estado_desc if estado_desc else 'No disponible'}
+    """
 
-        if fecha_presentacion_fmt and fecha_presentacion_fmt != "No disponible":
-            message += f"\n📅 **Fecha de presentación:** {fecha_presentacion_fmt}"
-
-        if tipo_tramite_des:
-            message += f"\n📝 **Tipo de trámite:** {tipo_tramite_des}"
-
+        # Añadir N° de resolución solo si existe
         if resolucion_nro:
-            message += f"\n📋 **N° de resolución:** {resolucion_nro}"
+            message += f"📋 **N° de resolución:** {resolucion_nro}\n"
 
+        # Añadir fecha de resolución solo si existe
         if fecha_resolucion_fmt and fecha_resolucion_fmt != "No disponible":
-            message += f"\n📅 **Fecha de resolución:** {fecha_resolucion_fmt}"
+            message += f"📅 **Fecha de resolución:** {fecha_resolucion_fmt}\n"
 
+        # Añadir resultado solo si existe
         if resultado_des:
-            message += f"\n✅ **Resultado:** {resultado_des}"
+            message += f"✅ **Resultado:** {resultado_des}\n"
 
-        if obs_ejecucion:
-            message += f"\n📌 **Observación:** {obs_ejecucion}"
-
-        # Solo mostrar campos de notificación si no están vacíos
+        # Añadir estado de notificación solo si existe
         if estado_notifica_res:
-            message += f"\n📬 **Estado de notificación:** {estado_notifica_res}"
+            message += f"📬 **Estado de notificación:** {estado_notifica_res}\n"
 
+        # Añadir fecha de notificación solo si existe
         if fecha_notifica_res_fmt and fecha_notifica_res_fmt != "No disponible":
-            message += f"\n📅 **Fecha de notificación:** {fecha_notifica_res_fmt}"
+            message += f"📅 **Fecha de notificación:** {fecha_notifica_res_fmt}\n"
 
         message += f"""
-
     **¿Qué más necesitas?**
-    • 'Menú principal' - Otras opciones
-    • 'Finalizar chat'
+    - 'Menú principal' - Otras opciones
+    - 'Finalizar chat'
     """
 
         return message

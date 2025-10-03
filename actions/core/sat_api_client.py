@@ -229,18 +229,25 @@ class SATAPIClient:
             date_str: Fecha en formato original
 
         Returns:
-            str: Fecha formateada en dd-MM-yyyy o original si no se puede formatear
+            str: Fecha formateada en dd-MM-yyyy o "No disponible" si no se puede formatear
         """
         if not date_str or date_str.strip() == "":
             return "No disponible"
 
         try:
+            from datetime import datetime
+
             # Intentar varios formatos de entrada comunes
             possible_formats = [
-                "%Y-%m-%d",  # 2024-01-15
-                "%Y-%m-%dT%H:%M:%S",  # 2024-01-15T10:30:00
-                "%d/%m/%Y",  # 15/01/2024
-                "%d-%m-%Y",  # 15-01-2024
+                "%Y-%m-%dT%H:%M:%S.%f%z",  # 2025-09-01T08:43:01.000+00:00
+                "%Y-%m-%dT%H:%M:%S%z",  # 2025-09-01T08:43:01+00:00
+                "%Y-%m-%dT%H:%M:%S.%fZ",  # 2025-09-01T08:43:01.000Z
+                "%Y-%m-%dT%H:%M:%SZ",  # 2025-09-01T08:43:01Z
+                "%Y-%m-%dT%H:%M:%S.%f",  # 2025-09-01T08:43:01.000
+                "%Y-%m-%dT%H:%M:%S",  # 2025-09-01T08:43:01
+                "%Y-%m-%d",  # 2025-01-15
+                "%d/%m/%Y",  # 15/01/2025
+                "%d-%m-%Y",  # 15-01-2025
             ]
 
             for fmt in possible_formats:
@@ -250,11 +257,11 @@ class SATAPIClient:
                 except ValueError:
                     continue
 
-            # Si no se puede parsear, devolver original
-            return date_str.strip()
+            # Si no se puede parsear, devolver "No disponible"
+            return "No disponible"
 
         except Exception:
-            return date_str.strip() if date_str else "No disponible"
+            return "No disponible"
 
     def health_check(self) -> bool:
         """
