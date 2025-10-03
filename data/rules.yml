@@ -266,40 +266,11 @@ rules:
   - intent: nlu_fallback
   - action: action_smart_fallback
 
-# ========== RESET CONTADOR EN ÉXITOS ==========
-- rule: Reset fallback en consultas rápidas papeletas
+# ========== FALLBACK GLOBAL ==========
+- rule: Fallback inteligente progresivo
   steps:
-  - or:
-    - intent: consulta_rapida_papeletas_placa
-    - intent: consulta_rapida_papeletas_dni
-    - intent: consulta_rapida_papeletas_ruc
-  - action: action_reset_fallback_count
-  - action: action_consultar_papeletas
-
-- rule: Reset fallback en consultas rápidas impuestos
-  steps:
-  - or:
-    - intent: consulta_rapida_impuestos_placa
-    - intent: consulta_rapida_impuestos_dni
-    - intent: consulta_rapida_impuestos_ruc
-    - intent: consulta_rapida_impuestos_codigo
-  - action: action_reset_fallback_count
-  - action: action_consultar_impuestos
-
-- rule: Reset fallback en navegación exitosa
-  steps:
-  - or:
-    - intent: menu_principal
-    - intent: ir_a_papeletas
-    - intent: ir_a_impuestos
-    - intent: ir_a_pagos_linea
-    - intent: ir_a_casilla_mtc
-    - intent: ir_a_retencion_captura
-    - intent: ir_a_actualizar_datos
-    - intent: ir_a_lugares_pagos
-    - intent: ir_a_servicios_virtuales
-    - intent: ir_a_otros_tramites
-  - action: action_reset_fallback_count
+  - intent: nlu_fallback
+  - action: action_smart_fallback
 
 # ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
 - rule: Ir a Lugares y Pagos

@@ -157,7 +157,9 @@ class ActionConsultarPapeletas(Action):
             logger.error(f"Error en consulta API: {e}")
             self._handle_api_error(dispatcher, tipo, documento)
 
-        return [SlotSet("ultimo_documento", documento)]
+        return [SlotSet("ultimo_documento", documento),
+                SlotSet("fallback_count", 0)
+                ]
 
     def _format_papeletas_response(self, papeletas: List[Dict[str, Any]],
                                    tipo: str, documento: str) -> str:

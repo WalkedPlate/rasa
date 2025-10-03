@@ -157,6 +157,7 @@ class ActionRouteDocumentConsultation(Action):
             SlotSet("tipo_documento", tipo_doc),
             SlotSet("contexto_actual", "papeletas"),
             SlotSet("esperando_clarificacion", False),
+            SlotSet("fallback_count", 0),
             FollowupAction("action_consultar_papeletas")
         ]
 
@@ -170,6 +171,7 @@ class ActionRouteDocumentConsultation(Action):
             SlotSet("tipo_documento", tipo_doc),
             SlotSet("contexto_actual", "impuestos"),
             SlotSet("esperando_clarificacion", False),
+            SlotSet("fallback_count", 0),
             FollowupAction("action_consultar_impuestos")
         ]
 

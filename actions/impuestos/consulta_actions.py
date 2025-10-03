@@ -172,7 +172,9 @@ class ActionConsultarImpuestos(Action):
             logger.error(f"Error en consulta API de impuestos: {e}")
             self._handle_api_error(dispatcher, tipo, documento)
 
-        return [SlotSet("ultimo_documento", documento)]
+        return [SlotSet("ultimo_documento", documento),
+                SlotSet("fallback_count", 0)
+                ]
 
     def _format_impuestos_response(self, impuestos: List[Dict[str, Any]],
                                    tipo: str, documento: str) -> str:
