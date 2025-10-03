@@ -225,7 +225,7 @@ slots:
 
   # ========== SLOT PARA CONTAR NÚMERO DE FALLBACKS ==========
   fallback_count:
-    type: int
+    type: float
     initial_value: 0
     influence_conversation: true
     mappings:
