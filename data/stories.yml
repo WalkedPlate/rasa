@@ -231,31 +231,6 @@ stories:
   - intent: papeletas_facilidades
   - action: utter_papeletas_facilidades
 
-# ========== FLUJOS CON FALLBACK Y RECUPERACIÓN ==========
-- story: Usuario perdido que se recupera
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: nlu_fallback
-  - action: utter_default
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: papeletas_consultar_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-
-- story: Navegación después de fallback
-  steps:
-  - intent: nlu_fallback
-  - action: utter_default
-  - intent: menu_principal
-  - action: utter_menu_principal
-  - intent: consulta_rapida_codigo_falta
-    entities:
-    - codigo_falta: "M08"
-  - action: action_consultar_codigo_falta
-
 # ========== FLUJOS DE NAVEGACIÓN ENTRE SECCIONES ==========
 - story: De facilidades a consulta
   steps:
