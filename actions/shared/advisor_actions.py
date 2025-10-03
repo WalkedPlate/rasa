@@ -64,12 +64,10 @@ class ActionSolicitarAsesor(Action):
 
 👨‍💼 **Un asesor te atenderá pronto**
 
-⏱️ **Tiempo estimado:** 5-10 minutos
 📱 **Mantén esta conversación abierta**
 
 Un asesor humano se conectará contigo para brindarte atención personalizada.
-
-*El bot se ha pausado automáticamente.*"""
+"""
 
     def _format_error_message(self, error_msg: str) -> str:
         """Mensaje cuando hay error específico"""
