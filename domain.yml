@@ -25,6 +25,7 @@ intents:
   - ir_a_actualizar_datos     # Opción 6
   - ir_a_lugares_pagos        # Opción 7
   - ir_a_servicios_virtuales  # Opción 8
+  - ir_a_otros_tramites       # Opción 9
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -84,7 +85,6 @@ intents:
   - servicios_virtuales_cursos
 
   # ========== CONTEXTO OTROS TRÁMITES ==========
-  - ir_a_otros_tramites
   - tramites_consultar_numero
   - tramites_requisitos_papeletas
   - tramites_requisitos_tributarios

@@ -9,7 +9,7 @@ import logging
 import re
 
 from ..core.sat_api_client import sat_client
-from ..core.response_filters import response_filter
+
 
 logger = logging.getLogger(__name__)
 
@@ -142,7 +142,7 @@ class ActionConsultarImpuestos(Action):
             'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
         }.get(tipo, tipo.upper())
 
-        dispatcher.utter_message(text=f"🔍 Consultando deuda tributaria para {tipo_display} **{documento}**...")
+        dispatcher.utter_message(text=f"🔍 Consultando para {tipo_display} **{documento}**...")
 
         try:
             # Llamar API según tipo
@@ -159,11 +159,12 @@ class ActionConsultarImpuestos(Action):
 
             # Procesar resultado
             if resultado is not None:
-                # Filtrar solo impuestos
                 data_completa = resultado.get('data', [])
-                impuestos = response_filter.filter_impuestos(data_completa)
 
-                message = self._format_impuestos_response(impuestos, tipo, documento)
+                # Ordenar poniendo impuestos primero
+                data_ordenada = self._sort_results_impuestos_first(data_completa)
+
+                message = self._format_impuestos_response(data_ordenada, tipo, documento)
                 dispatcher.utter_message(text=message)
             else:
                 self._handle_api_error(dispatcher, tipo, documento)
@@ -176,10 +177,56 @@ class ActionConsultarImpuestos(Action):
                 SlotSet("fallback_count", 0)
                 ]
 
-    def _format_impuestos_response(self, impuestos: List[Dict[str, Any]],
-                                   tipo: str, documento: str) -> str:
-        """Formatea la respuesta de impuestos"""
+    def _sort_results_impuestos_first(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Ordena resultados poniendo impuestos/tributos primero, luego papeletas y otros
 
+        Args:
+            data: Lista de resultados de la API
+
+        Returns:
+            Lista ordenada
+        """
+        # Conceptos tributarios que van primero ()
+        impuesto_conceptos = [
+            'Imp. Predial',
+            'Impuesto Predial',
+            'Arbitrios',
+            'Arbitrio',
+            'Imp. Vehicular',
+            'Impuesto Vehicular',
+            'Alcabala',
+            'Liquidacion Alcabala',
+            'Mult. Tributaria',
+            'Multas Tributarias'
+        ]
+
+        impuestos = []
+        otros = []
+
+        for item in data:
+            concepto = item.get('concepto', '').strip()
+            if any(imp in concepto for imp in impuesto_conceptos):
+                impuestos.append(item)
+            else:
+                otros.append(item)
+
+        # Impuestos primero, luego otros conceptos (papeletas, etc.)
+        return impuestos + otros
+
+    def _format_impuestos_response(self, data: List[Dict[str, Any]],
+                                   tipo: str, documento: str) -> str:
+        """
+        Formatea la respuesta mostrando TODOS los conceptos con resumen por tipo
+
+        Args:
+            data: Lista COMPLETA de resultados (ya ordenada)
+            tipo: Tipo de documento consultado
+            documento: Número de documento
+
+        Returns:
+            Mensaje formateado
+        """
         tipo_display = {
             'placa': 'PLACA',
             'dni': 'DNI',
@@ -187,55 +234,89 @@ class ActionConsultarImpuestos(Action):
             'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
         }.get(tipo, tipo.upper())
 
-        if not impuestos:
-            return f"""✅ **¡Excelente noticia!** No encontré deuda tributaria pendiente para {tipo_display} **{documento}**.
+        if not data:
+            return f"""✅ **¡Excelente noticia!** No encontré deudas pendientes para {tipo_display} **{documento}**.
 
-🎉 Estás al día con tus impuestos.
+🎉 Estás al día.
 
 **¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
+- 'Menú principal' - Otras opciones
+- 'Finalizar chat'
 
 💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
 
-        cantidad = len(impuestos)
-        total = sum(float(imp.get('monto', 0)) for imp in impuestos)
+        cantidad_total = len(data)
 
-        message = f"💰 **Encontré {cantidad} deuda{'s' if cantidad > 1 else ''} tributaria{'s' if cantidad > 1 else ''}** para {tipo_display} **{documento}**:\n\n"
+        # CALCULAR MONTOS POR CONCEPTO
+        montos_por_concepto = self._calcular_montos_por_concepto(data)
+        total_general = sum(montos_por_concepto.values())
 
-        # Mostrar hasta 5 impuestos para evitar mensajes muy largos
-        for i, impuesto in enumerate(impuestos[:5], 1):
-            concepto = impuesto.get('concepto', 'No especificado').strip()
-            ano = impuesto.get('ano', 'N/A').strip()
-            cuota = impuesto.get('cuota', '0').strip()
-            monto = float(impuesto.get('monto', 0))
-            estado = impuesto.get('estado', '').strip()
-            referencia = impuesto.get('referencia', '').strip()
+        # MOSTRAR HASTA 3 ITEMS DETALLADOS
+        MAX_ITEMS = 3
+        items_mostrar = data[:MAX_ITEMS]
+        items_restantes = cantidad_total - MAX_ITEMS
+
+        message = f"📋 **Encontré {cantidad_total} deuda{'s' if cantidad_total > 1 else ''} pendiente{'s' if cantidad_total > 1 else ''}** para {tipo_display} **{documento}**:\n\n"
+
+        # Mostrar items detallados
+        for i, item in enumerate(items_mostrar, 1):
+            concepto = item.get('concepto', 'No especificado').strip()
+            ano = item.get('ano', 'N/A').strip()
+            cuota = item.get('cuota', '0').strip()
+            monto = float(item.get('monto', 0))
+            referencia = item.get('referencia', '').strip()
+            estado = item.get('estado', '').strip()
+
+            # Datos específicos de papeletas (si vienen mezcladas)
+            falta = item.get('falta', '').strip()
+            fecha_infraccion = item.get('fechainfraccion', '').strip()
 
             message += f"**💰 Deuda #{i}:**\n"
             message += f"• **Concepto:** {concepto}\n"
-            message += f"• **Año:** {ano}\n"
+
+            # Año y Cuota en una sola línea
             if cuota and cuota != '0':
-                message += f"• **Cuota:** {cuota}\n"
+                message += f"• **Año - cuota:** {ano} - {cuota}\n"
+            else:
+                message += f"• **Año:** {ano}\n"
+
             if referencia:
                 message += f"• **Referencia:** {referencia}\n"
-            message += f"• **Monto:** S/ {monto:.2f}\n"
+
+            # Solo mostrar datos de papeletas si es una papeleta
+            if concepto == 'Papeletas':
+                if falta:
+                    message += f"• **Tipo de falta:** {falta}\n"
+                if fecha_infraccion:
+                    message += f"• **Fecha infracción:** {fecha_infraccion}\n"
+
+            message += f"• **Monto:** S/ {monto:,.2f}\n"
+
             if estado:
                 message += f"• **Estado:** {estado}\n"
+
             message += "\n"
 
-        if cantidad > 5:
-            message += f"... y {cantidad - 5} deuda{'s' if cantidad - 5 > 1 else ''} más.\n\n"
+        # Indicar si hay más items
+        if items_restantes > 0:
+            message += f"... y {items_restantes} deuda{'s' if items_restantes > 1 else ''} más.\n\n"
 
-        message += f"💰 **Total adeudado:** S/ {total:.2f}\n\n"
+        # RESUMEN POR CONCEPTO
+        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += "💰 **RESUMEN POR CONCEPTO:**\n"
+        for concepto, monto in sorted(montos_por_concepto.items()):
+            message += f"• {concepto}: S/ {monto:,.2f}\n"
 
-        # Mayor detalle cuando hay múltiples deudas
-        if cantidad > 5:
+        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += f"💵 **TOTAL GENERAL:** S/ {total_general:,.2f}\n\n"
+
+        # Mayor detalle cuando hay muchas deudas
+        if cantidad_total > MAX_ITEMS:
             message += "📋 **MAYOR DETALLE EN EL SIGUIENTE LINK:**\n"
             message += "📌 https://www.sat.gob.pe/pagosenlinea/\n\n"
 
         # Recomendaciones según monto
-        if total > 2000:
+        if total_general > 2000:
             message += "💡 **Recomendación:** El monto es considerable. Te sugiero ver la información sobre facilidades de pago.\n\n"
 
         # Opciones contextuales
@@ -245,8 +326,30 @@ class ActionConsultarImpuestos(Action):
         message += "• 'Menú principal' - Otras opciones\n"
         message += "• 'Finalizar chat'\n"
 
-
         return message
+
+    def _calcular_montos_por_concepto(self, data: List[Dict[str, Any]]) -> Dict[str, float]:
+        """
+        Calcula el total por cada concepto
+
+        Args:
+            data: Lista completa de resultados
+
+        Returns:
+            Diccionario {concepto: monto_total}
+        """
+        montos = {}
+
+        for item in data:
+            concepto = item.get('concepto', 'Otros').strip()
+            monto = float(item.get('monto', 0))
+
+            if concepto in montos:
+                montos[concepto] += monto
+            else:
+                montos[concepto] = monto
+
+        return montos
 
     def _request_document(self, dispatcher: CollectingDispatcher) -> List[Dict[Text, Any]]:
         """Solicita documento cuando no se proporcionó información"""

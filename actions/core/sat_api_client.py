@@ -31,7 +31,7 @@ class SATAPIClient:
 
     def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """
-        Realiza una petición HTTP con manejo de errores y reintentosrequests
+        Realiza una petición HTTP con manejo de errores y reintentos
 
         Args:
             method: Método HTTP (GET, POST, etc.)
@@ -45,7 +45,7 @@ class SATAPIClient:
         headers = self._get_headers()
 
         try:
-            logger.info(f"🌐 {method} {endpoint}")
+            logger.info(f" {method} {endpoint}")
 
             response = requests.request(
                 method=method,
@@ -141,7 +141,7 @@ class SATAPIClient:
         Consulta información de código de falta
 
         Args:
-            codigo: Código de falta (ej: C15, M08, G40)
+            codigo: Código de falta (ej: G40)
 
         Returns:
             Dict con información del código

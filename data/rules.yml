@@ -248,7 +248,7 @@ rules:
   - intent: retencion_consultar_placa
   - action: action_consultar_orden_captura
 
-# ========== NAVEGACIÓN A ACTUALIZAR DATPS ==========
+# ========== NAVEGACIÓN A ACTUALIZAR DATOS ==========
 - rule: Ir a Actualizar Datos
   steps:
   - intent: ir_a_actualizar_datos

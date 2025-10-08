@@ -5,7 +5,6 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
-from ..core.response_filters import response_filter
 import logging
 import re
 
@@ -98,7 +97,7 @@ class DocumentProcessor:
         return False, ""
 
 class ActionConsultarPapeletas(Action):
-    """Action simplificado para consulta directa de papeletas"""
+    """Action para consulta directa de papeletas"""
 
     def name(self) -> Text:
         return "action_consultar_papeletas"
@@ -144,11 +143,12 @@ class ActionConsultarPapeletas(Action):
 
             # Procesar resultado
             if resultado is not None:
-                # Filtrar solo papeletas (Concepto)
                 data_completa = resultado.get('data', [])
-                papeletas = response_filter.filter_papeletas(data_completa)
 
-                message = self._format_papeletas_response(papeletas, tipo, documento)
+                #  Ordenar poniendo papeletas primero
+                data_ordenada = self._sort_results_papeletas_first(data_completa)
+
+                message = self._format_papeletas_response(data_ordenada, tipo, documento)
                 dispatcher.utter_message(text=message)
             else:
                 self._handle_api_error(dispatcher, tipo, documento)
@@ -161,61 +161,159 @@ class ActionConsultarPapeletas(Action):
                 SlotSet("fallback_count", 0)
                 ]
 
-    def _format_papeletas_response(self, papeletas: List[Dict[str, Any]],
+    def _sort_results_papeletas_first(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Ordena resultados poniendo papeletas primero, luego el resto
+
+        Args:
+            data: Lista de resultados de la API
+
+        Returns:
+            Lista ordenada
+        """
+        papeletas = []
+        otros = []
+
+        for item in data:
+            concepto = item.get('concepto', '').strip()
+            if concepto == 'Papeletas':
+                papeletas.append(item)
+            else:
+                otros.append(item)
+
+        # Papeletas primero, luego otros conceptos
+        return papeletas + otros
+
+    def _format_papeletas_response(self, data: List[Dict[str, Any]],
                                    tipo: str, documento: str) -> str:
-        """Formatea la respuesta de la API de papeletas"""
+        """
+        Formatea la respuesta mostrando TODOS los conceptos con resumen por tipo
 
-        if not papeletas:
-            return f"""✅ **¡Excelente noticia!** No encontré papeletas pendientes para {tipo.upper()} **{documento}**.
+        Args:
+            data: Lista COMPLETA de resultados (ya ordenada)
+            tipo: Tipo de documento consultado
+            documento: Número de documento
 
-    🎉 Estás al día con las infracciones de tránsito.
+        Returns:
+            Mensaje formateado
+        """
+        tipo_display = {
+            'placa': 'PLACA',
+            'dni': 'DNI',
+            'ruc': 'RUC'
+        }.get(tipo, tipo.upper())
 
-    **¿Qué más necesitas?**
-    • 'Menú principal' - Otras opciones
-    • 'Finalizar chat'
+        if not data:
+            return f"""✅ **¡Excelente noticia!** No encontré deudas pendientes para {tipo_display} **{documento}**.
 
-    💡 **Tip:** Si crees tener una papeleta, puedes registrarla aquí:
-    https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT7AtQ4GWcIHx18c26JeR3X8
-"""
+🎉 Estás al día.
 
-        cantidad = len(papeletas)
-        total = sum(float(p.get('monto', 0)) for p in papeletas)
+**¿Qué más necesitas?**
+- 'Menú principal' - Otras opciones
+- 'Finalizar chat'
 
-        message = f"📋 **Encontré {cantidad} papeleta{'s' if cantidad > 1 else ''} pendiente{'s' if cantidad > 1 else ''}** para {tipo.upper()} **{documento}**:\n\n"
+💡 **Tip:** Si crees tener una papeleta, puedes registrarla aquí:
+https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT7AtQ4GWcIHx18c26JeR3X8"""
 
-        # Mostrar hasta 3 papeletas para evitar mensajes muy largos
-        for i, papeleta in enumerate(papeletas[:3], 1):
-            falta = papeleta.get('falta', 'N/A').strip()
-            doc_papeleta = papeleta.get('documento', 'N/A').strip()
-            fecha = papeleta.get('fechainfraccion', 'N/A').strip()
-            monto = float(papeleta.get('monto', 0))
+        cantidad_total = len(data)
 
-            message += f"**🚨 Papeleta #{i}:**\n"
-            message += f"• **Tipo de falta:** {falta}\n"
-            message += f"• **N° papeleta:** {doc_papeleta}\n"
-            message += f"• **Fecha de Infracción:** {fecha}\n"
-            message += f"• **Monto:** S/ {monto:.2f}\n\n"
+        # CALCULAR MONTOS POR CONCEPTO
+        montos_por_concepto = self._calcular_montos_por_concepto(data)
+        total_general = sum(montos_por_concepto.values())
 
-        if cantidad > 3:
-            message += f"... y {cantidad - 3} papeleta{'s' if cantidad - 3 > 1 else ''} más.\n\n"
+        # MOSTRAR HASTA 3 ITEMS DETALLADOS (límite)
+        MAX_ITEMS = 3
+        items_mostrar = data[:MAX_ITEMS]
+        items_restantes = cantidad_total - MAX_ITEMS
 
-        message += f"💰 **Total a pagar:** S/ {total:.2f}\n\n"
+        message = f"📋 **Encontré {cantidad_total} deuda{'s' if cantidad_total > 1 else ''} pendiente{'s' if cantidad_total > 1 else ''}** para {tipo_display} **{documento}**:\n\n"
 
-        # Mayor detalle cuando hay múltiples papeletas
-        if cantidad > 3:
+        # Mostrar items detallados
+        for i, item in enumerate(items_mostrar, 1):
+            concepto = item.get('concepto', 'No especificado').strip()
+            ano = item.get('ano', 'N/A').strip()
+            cuota = item.get('cuota', '0').strip()
+            monto = float(item.get('monto', 0))
+            referencia = item.get('referencia', '').strip()
+
+            # Datos específicos según concepto
+            falta = item.get('falta', '').strip()
+            fecha_infraccion = item.get('fechainfraccion', '').strip()
+
+            message += f"**💰 Deuda #{i}:**\n"
+            message += f"• **Concepto:** {concepto}\n"
+
+            # Año y Cuota en una sola línea
+            if cuota and cuota != '0':
+                message += f"• **Año - cuota:** {ano} - {cuota}\n"
+            else:
+                message += f"• **Año:** {ano}\n"
+
+            if referencia:
+                message += f"• **Referencia:** {referencia}\n"
+
+            # Solo mostrar datos de papeletas si aplica
+            if concepto == 'Papeletas':
+                if falta:
+                    message += f"• **Tipo de falta:** {falta}\n"
+                if fecha_infraccion:
+                    message += f"• **Fecha infracción:** {fecha_infraccion}\n"
+
+            message += f"• **Monto:** S/ {monto:,.2f}\n\n"
+
+        # Indicar si hay más items
+        if items_restantes > 0:
+            message += f"... y {items_restantes} deuda{'s' if items_restantes > 1 else ''} más.\n\n"
+
+        # RESUMEN POR CONCEPTO
+        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += "💰 **RESUMEN POR CONCEPTO:**\n"
+        for concepto, monto in sorted(montos_por_concepto.items()):
+            message += f"• {concepto}: S/ {monto:,.2f}\n"
+
+        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += f"💵 **TOTAL GENERAL:** S/ {total_general:,.2f}\n\n"
+
+        # Mayor detalle cuando hay muchas deudas
+        if cantidad_total > MAX_ITEMS:
             message += "📋 **MAYOR DETALLE EN EL SIGUIENTE LINK:**\n"
             message += "📌 https://www.sat.gob.pe/pagosenlinea/\n\n"
 
-        # Agregar recomendaciones según monto
-        if total > 1000:
-            message += "💡 **Recomendación:** El monto es elevado. Te sugiero ver información sobre las facilidades de pago.\n\n"
+        # Recomendaciones según monto
+        if total_general > 2000:
+            message += "💡 **Recomendación:** El monto es considerable. Te sugiero ver información sobre facilidades de pago.\n\n"
 
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"
+        message += "• 'Cómo pago' - Información para pagar\n"
+        message += "• 'Facilidades' - Pagar en cuotas\n"
         message += "• 'Menú principal' - Otras opciones\n"
-        message += "• 'Finalizar chat'\n\n"
+        message += "• 'Finalizar chat'\n"
 
         return message
+
+    def _calcular_montos_por_concepto(self, data: List[Dict[str, Any]]) -> Dict[str, float]:
+        """
+        Calcula el total por cada concepto
+
+        Args:
+            data: Lista completa de resultados
+
+        Returns:
+            Diccionario {concepto: monto_total}
+        """
+        montos = {}
+
+        for item in data:
+            concepto = item.get('concepto', 'Otros').strip()
+            monto = float(item.get('monto', 0))
+
+            if concepto in montos:
+                montos[concepto] += monto
+            else:
+                montos[concepto] = monto
+
+        return montos
 
     def _request_document(self, dispatcher: CollectingDispatcher) -> List[Dict[Text, Any]]:
         """Solicita documento cuando no se proporcionó información"""

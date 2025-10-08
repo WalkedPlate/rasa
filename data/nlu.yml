@@ -141,7 +141,6 @@ nlu:
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
-    - consultar multas de mi DNI [12345678](dni)
     - ver papeletas de mi DNI [87654321](dni)
     - papeletas con mi DNI [11223344](dni)
     - quiero saber las multas de [55667788](dni)
@@ -195,9 +194,7 @@ nlu:
     - registro obligatorio
     - inscripción casilla MTC
     - casilla electrónica del MTC
-    - me dijeron que necesito una casilla
-    - cómo me inscribo
-    - dónde me registro
+
 
 - intent: ir_a_pagos_linea
   examples: |

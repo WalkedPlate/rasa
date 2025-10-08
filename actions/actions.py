@@ -1,4 +1,5 @@
 # Imports de actions
+from .shared.fallback_actions import ActionResetFallbackCount, ActionSmartFallback
 from .shared.session_actions import ActionFinalizarChat
 from .shared.advisor_actions import ActionSolicitarAsesor
 from .papeletas.consulta_actions import ActionConsultarPapeletas
@@ -107,7 +108,6 @@ __all__ = [
     'ActionBeneficiosPensionista',
     'ActionBeneficiosAdultoMayor',
     'ActionRouteDocumentConsultation',
-    
 
     # Actions de retención
     'ActionConsultarOrdenCaptura',
@@ -140,11 +140,8 @@ __all__ = [
 
     # Actions de trámites
     'ActionConsultarTramite',
-    'ActionTramitesImpugnacionPapeletas',
-    'ActionTramitesReclamoTributario',
     'ActionTramitesConstanciasNoAdeudo',
     'ActionTramitesRecursoReconsideracion',
-    'ActionTramitesDescargaInfracciones',
     'ActionTramitesApelacionPapeletas',
     'ActionTramitesPrescripcionPapeletas',
     'ActionTramitesDevolucionPapeletas',
