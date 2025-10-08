@@ -22,10 +22,9 @@ intents:
   - ir_a_papeletas            # Opción 3
   - ir_a_impuestos            # Opción 4
   - ir_a_retencion_captura    # Opción 5
-  - ir_a_actualizar_datos     # Opción 6
-  - ir_a_lugares_pagos        # Opción 7
-  - ir_a_servicios_virtuales  # Opción 8
-  - ir_a_otros_tramites       # Opción 9
+  - ir_a_lugares_pagos        # Opción 6
+  - ir_a_servicios_virtuales  # Opción 7
+  - ir_a_otros_tramites       # Opción 8
 
   # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
   - papeletas_consultar_placa
@@ -62,14 +61,6 @@ intents:
   - retencion_terceria_propiedad
   - retencion_remate_vehicular
   - retencion_consultar_placa
-
-  # ========== INTENTS PARA ACTUALIZAR DATOS ==========
-  - actualizar_nombre
-  - actualizar_documento
-  - datos_correctos
-  - proporcionar_nombre
-  - proporcionar_tipo_documento
-  - proporcionar_numero_documento
 
   # ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
   - lugares_pagos_agencias_horarios
@@ -133,7 +124,6 @@ slots:
       - papeletas
       - impuestos
       - retencion
-      - actualizar
       - lugares_pagos
       - otros_tramites
       - servicios_virtuales
@@ -142,88 +132,60 @@ slots:
     mappings:
       - type: custom
 
-  ultimo_proceso:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
+  # ========== SLOTS DEL SISTEMA DE ROUTING INTELIGENTE ==========
+  # Indica si el bot está esperando que el usuario clarifique entre papeletas o impuestos
   esperando_clarificacion:
     type: bool
     influence_conversation: true
     mappings:
     - type: custom
 
+  # Almacena temporalmente el documento (placa/DNI/RUC) mientras se espera clarificación
   documento_pendiente:
     type: text
     influence_conversation: false
     mappings:
     - type: custom
 
+  # Almacena el tipo de documento pendiente (placa, dni, ruc, codigo_contribuyente)
   tipo_documento_pendiente:
     type: text
     influence_conversation: false
     mappings:
     - type: custom
 
+  # Almacena el documento que se está consultando después del routing
   documento_consulta:
     type: text
     influence_conversation: false
     mappings:
     - type: custom
 
+  # Almacena el tipo del documento que se está consultando
   tipo_documento:
     type: text
     influence_conversation: false
     mappings:
     - type: custom
 
-  # ========== SOLO PARA LOGGING ==========
+  # ========== SLOTS PARA LOGGING/TRACKING ==========
+  # Registra el último documento consultado para fines de logging y métricas
   ultimo_documento:
     type: text
     influence_conversation: false
     mappings:
     - type: custom
 
-  # ========== SLOTS PARA ACTUALIZAR DATOS ==========
-  esperando_nuevo_nombre:
-    type: bool
-    influence_conversation: true
-    mappings:
-      - type: custom
-
-  datos_actuales:
-    type: any
-    influence_conversation: false
-    mappings:
-      - type: custom
-
-  esperando_tipo_documento:
-    type: bool
-    influence_conversation: true
-    mappings:
-      - type: custom
-
-  esperando_numero_documento:
-    type: bool
-    influence_conversation: true
-    mappings:
-      - type: custom
-
-  nuevo_tipo_documento:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: custom
-
   # ========== SLOT PARA SOLICITAR ASESOR ==========
+  # Indica si el usuario solicitó un asesor humano durante la conversación
   asesor_solicitado:
     type: bool
     influence_conversation: false
     mappings:
       - type: custom
 
-  # ========== SLOT PARA CONTAR NÚMERO DE FALLBACKS ==========
+  # ========== SLOT PARA SISTEMA DE FALLBACK INTELIGENTE ==========
+  # Cuenta el número de veces consecutivas que el usuario activó el fallback
   fallback_count:
     type: float
     initial_value: 0
@@ -249,7 +211,6 @@ responses:
       🔹 **Papeletas** - Multas y consultas de papeletas
       🔹 **Impuestos** - Deuda tributaria y declaraciones
       🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
-      🔹 **Actualizar Datos** - Actualizar mi información
       🔹 **Lugares y Pagos** - Oficinas, horarios y formas de pago
       🔹 **Servicios Virtuales** - Trámites y servicios online
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
@@ -271,7 +232,6 @@ responses:
       🔹 **Papeletas** - Multas y consultas de papeletas
       🔹 **Impuestos** - Deuda tributaria y declaraciones
       🔹 **Retención y Captura** - Órdenes de captura y medidas cautelares
-      🔹 **Actualizar Datos** - Actualizar mi información
       🔹 **Lugares y Pagos** - Oficinas, horarios y formas de pago
       🔹 **Servicios Virtuales** - Trámites y servicios online
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
@@ -546,6 +506,7 @@ actions:
   - action_servicios_correo
   - action_servicios_libro_reclamaciones
   - action_servicios_cursos
+
   # ========== OTROS TRÁMITES ACTIONS ==========
   - utter_otros_tramites_menu
   - utter_tramites_requisitos_papeletas

@@ -122,41 +122,6 @@ class BackendAPIClient:
             logger.error(f"Error obteniendo ciudadano {phone_number}: {response.status_code} - {response.text}")
             return None
 
-    def update_citizen_data(self, citizen_data: Dict[str, str]) -> bool:
-        """
-        Actualiza datos básicos de un ciudadano
-
-        Args:
-            citizen_data: Dict con los datos a actualizar
-            Formato esperado:
-            {
-                "phoneNumber": "51962617808",
-                "fullName": "Edward Josue Mamani Mamani",
-                "documentType": "DNI",
-                "documentNumber": "76577686"
-            }
-
-        Returns:
-            bool: True si actualización exitosa, False si hay error
-        """
-        url = f"{self.base_url}{BackendConfig.CITIZEN_UPDATE}"
-
-        response = self._make_authenticated_request(
-            "PUT",
-            url,
-            json=citizen_data
-        )
-
-        if response is None:
-            return False
-
-        if response.status_code in [200, 201]:
-            logger.info(f"Datos actualizados: {citizen_data.get('phoneNumber')}")
-            return True
-        else:
-            logger.error(f"Error actualizando ciudadano: {response.status_code} - {response.text}")
-            return False
-
     def close_assistance(self, phone_number: str) -> Tuple[bool, str]:
         """
         Cierra la asistencia activa para un ciudadano
