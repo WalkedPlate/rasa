@@ -302,12 +302,12 @@ class ActionConsultarImpuestos(Action):
             message += f"... y {items_restantes} deuda{'s' if items_restantes > 1 else ''} más.\n\n"
 
         # RESUMEN POR CONCEPTO
-        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         message += "💰 **RESUMEN POR CONCEPTO:**\n"
         for concepto, monto in sorted(montos_por_concepto.items()):
             message += f"• {concepto}: S/ {monto:,.2f}\n"
 
-        message += "━━━━━━━━━━━━━━━━━━━━━\n"
+        message += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         message += f"💵 **TOTAL GENERAL:** S/ {total_general:,.2f}\n\n"
 
         # Mayor detalle cuando hay muchas deudas
