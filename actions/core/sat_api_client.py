@@ -263,6 +263,79 @@ class SATAPIClient:
         except Exception:
             return "No disponible"
 
+    def consultar_menu_opcion(self, titulo: str) -> Optional[Dict[str, Any]]:
+        """
+        Consulta el menú de opciones para obtener el ivalor de un trámite
+
+        Args:
+            titulo: Título del trámite en mayúsculas (ej: "RECURSO DE RECONSIDERACIÓN")
+
+        Returns:
+            Dict con la respuesta del menú o None si hay error
+            Formato esperado: {
+                "siOpcion": 1,
+                "ivalLog": 21,
+                "vtitulo": "RECURSO DE RECONSIDERACIÓN",
+                "ivalor": 38
+            }
+        """
+        # URL encode del título para manejar espacios y caracteres especiales
+        from urllib.parse import quote
+        titulo_encoded = quote(titulo)
+
+        endpoint = f"/saldomatico/menu/opciones/9/titulo/{titulo_encoded}"
+        return self._make_request("GET", endpoint)
+
+    def consultar_requisitos_tupa(self, ivalor: int) -> Optional[Dict[str, Any]]:
+        """
+        Consulta los requisitos del TUPA usando el ivalor obtenido del menú
+
+        Args:
+            ivalor: Valor obtenido del endpoint de menú de opciones
+
+        Returns:
+            Lista con los requisitos o None si hay error
+            Formato esperado: [{
+                "vtitulo": null,
+                "vdetalle": "REQUISITOS PARA...<br>1. Presentar...",
+                "iorden": null,
+                "bnegrita": null,
+                "vindice": null
+            }]
+        """
+        endpoint = f"/saldomatico/tupa/consultarrequisito/{ivalor}/1"
+        return self._make_request("GET", endpoint)
+
+    @staticmethod
+    def format_html_to_text(html_text: str) -> str:
+        """
+        Convierte HTML a texto plano para WhatsApp
+
+        Args:
+            html_text: Texto con etiquetas HTML
+
+        Returns:
+            str: Texto formateado para WhatsApp
+        """
+        if not html_text:
+            return ""
+
+        # Reemplazar <br> por saltos de línea
+        text = html_text.replace('<br>', '\n')
+        text = text.replace('<BR>', '\n')
+        text = text.replace('<br/>', '\n')
+        text = text.replace('<br />', '\n')
+
+        # Eliminar otras etiquetas HTML comunes (si las hay)
+        import re
+        text = re.sub(r'<[^>]+>', '', text)
+
+        # Limpiar espacios múltiples y saltos de línea excesivos
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        text = text.strip()
+
+        return text
+
     def health_check(self) -> bool:
         """
         Verifica que la API esté disponible

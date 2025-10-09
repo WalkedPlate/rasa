@@ -6,297 +6,187 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import logging
 
+from ..core.sat_api_client import sat_client
+
 logger = logging.getLogger(__name__)
 
 
-class ActionTramitesRecursoReconsideracion(Action):
+class BaseTramiteRequisitos(Action):
+    """Clase base para trámites que consultan requisitos del TUPA"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = ""  # Debe ser sobrescrito por cada clase hija
+        self.tipo_tramite = ""  # "papeletas" o "tributarios"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        logger.info(f"Consultando requisitos para: {self.titulo_tramite}")
+
+        # Paso 1: Consultar menú de opciones para obtener ivalor
+        menu_response = sat_client.consultar_menu_opcion(self.titulo_tramite)
+
+        if not menu_response or 'ivalor' not in menu_response:
+            logger.error(f"No se pudo obtener ivalor para: {self.titulo_tramite}")
+            return self._handle_api_error(dispatcher)
+
+        ivalor = menu_response.get('ivalor')
+        logger.info(f"ivalor obtenido: {ivalor}")
+
+        # Paso 2: Consultar requisitos del TUPA
+        requisitos_response = sat_client.consultar_requisitos_tupa(ivalor)
+
+        if not requisitos_response or not isinstance(requisitos_response, list) or len(requisitos_response) == 0:
+            logger.error(f"No se pudieron obtener requisitos para ivalor: {ivalor}")
+            return self._handle_api_error(dispatcher)
+
+        # Paso 3: Extraer y formatear el texto de requisitos
+        vdetalle = requisitos_response[0].get('vdetalle', '')
+
+        if not vdetalle:
+            logger.error(f"vdetalle vacío para ivalor: {ivalor}")
+            return self._handle_api_error(dispatcher)
+
+        # Convertir HTML a texto plano
+        texto_requisitos = sat_client.format_html_to_text(vdetalle)
+
+        # Paso 4: Enviar mensaje con los requisitos
+        dispatcher.utter_message(text=texto_requisitos)
+
+        # Paso 5: Enviar mensaje con enlaces útiles
+        mensaje_enlaces = self._get_enlaces_message()
+        dispatcher.utter_message(text=mensaje_enlaces)
+
+        return []
+
+    def _get_enlaces_message(self) -> str:
+        """Genera mensaje con enlaces útiles según el tipo de trámite"""
+
+        base_message = """**¿Qué más necesitas?**
+- 'Menú principal' - Otras opciones
+- 'Finalizar chat'"""
+
+        if self.tipo_tramite == "papeletas":
+            return f"""📋 **Ingrese su trámite por Mesa de Partes Digital:**
+📌 https://www.sat.gob.pe/MesaPartesDigital
+
+⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
+📌 https://casilla.mtc.gob.pe/#/registro
+
+📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
+
+{base_message}"""
+
+        else:  # tributarios
+            return f"""📋 **Ingrese su trámite por Mesa de Partes Digital:**
+📌 https://www.sat.gob.pe/MesaPartesDigital
+
+{base_message}"""
+
+    def _handle_api_error(self, dispatcher: CollectingDispatcher) -> List[Dict[Text, Any]]:
+        """Maneja errores de la API"""
+
+        message = f"""😔 Lo siento, tuve un problema técnico al consultar los requisitos de este trámite.
+
+🔧 **Esto puede ocurrir por:**
+- Mantenimiento del sistema del SAT
+- Problemas temporales de conexión
+
+📱 **Mientras tanto puedes:**
+- Consultar directamente en: https://www.sat.gob.pe/WebSiteV9/Tramites/TramitesTUPA/TUPA
+- Intentar nuevamente en unos minutos
+
+**¿Qué más necesitas?**
+- 'Otros trámites' - Ver otras opciones de trámites
+- 'Menú principal' - Volver al menú principal
+- 'Finalizar chat'
+"""
+
+        dispatcher.utter_message(text=message)
+        return []
+
+
+class ActionTramitesRecursoReconsideracion(BaseTramiteRequisitos):
     """Action para recurso de reconsideración de papeletas"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "RECURSO DE RECONSIDERACIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_recurso_reconsideracion"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando requisitos para recurso de reconsideración")
-
-        message = """📋 **REQUISITOS PARA RECURSO DE RECONSIDERACIÓN EN MATERIA DE TRÁNSITO Y TRANSPORTE**
-
-1. **Presentar escrito fundamentado consignando lo siguiente:**
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso.
-   b) Domicilio del solicitante.
-   c) Expresión concreta de lo pedido, señalando el número del documento impugnado.
-   d) Fundamentos de hecho y derecho.
-   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante de ser caso.
-
-2. **Adjuntar nueva prueba.** En caso no se cumpla con adjuntar nueva prueba o esta no califique como tal, este procedimiento será tramitado como recurso de apelación, de acuerdo a lo señalado en el artículo 213° de la Ley 27444, Ley de Procedimiento Administrativo General.
-
-3. **En caso el trámite fuera presentado por un representante,** adjuntar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito.
-
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 – 28/08/2018).
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesDescargoInfracciones(Action):
+class ActionTramitesDescargoInfracciones(BaseTramiteRequisitos):
     """Action para descarga de infracciones"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "DESCARGO DE INFRACCIONES"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_descargo_infracciones"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando información para descarga de infracciones")
-
-        message = """📋 **DESCARGA DE INFRACCIONES**
-
-**REQUISITOS PARA RECURSO DE DESCARGO DE INFRACCIONES:**  
-1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
-   b) Domicilio del solicitante. 
-   c) Expresión concreta de lo pedido, señalando el número del documento impugnado. 
-   d) Fundamentos de hecho y de derecho. 
-   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso.
-
-2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
-📋 **Fuente:** Directiva N°  001-006-00000025 Directiva que establece lineamientos para la presentación del trámite de descargo en materia de tránsito y transporte, y de verificación de datos en el Servicio de Administración Tributaria de la Municipalidad Metropolitana de Lima. -  21/12/2017.
-
-**Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesApelacionPapeletas(Action):
+class ActionTramitesApelacionPapeletas(BaseTramiteRequisitos):
     """Action para apelación de papeletas"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "RECURSO DE APELACIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_apelacion_papeletas"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando requisitos para apelación de papeletas")
-
-        message = """📋 **RECURSO DE APELACIÓN DE PAPELETAS**
-
-**REQUISITOS PARA RECURSO DE APELACIÓN EN MATERIA NO TRIBUTARIA** 
-1. Presentar escrito conteniendo lo siguiente: 
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
-   b) Domicilio del solicitante. 
-   c) Expresión concreta de lo pedido, señalando el número del documento impugnado. 
-   d) Fundamentos de hecho y de derecho. 
-   e) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso. 
-
-2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
- 
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
-
-📋 **Puede ingresar su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-✍️Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
-📌https://casilla.mtc.gob.pe/#/registro
-
-Base Legal: R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesPrescripcionPapeletas(Action):
+class ActionTramitesPrescripcionPapeletas(BaseTramiteRequisitos):
     """Action para prescripción de papeletas"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "PRESCRIPCIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_prescripcion_papeletas"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando requisitos para prescripción de papeletas")
-
-        message = """📋 **REQUISITOS PARA LA SOLICITUD DE PRESCRIPCIÓN EN MATERIA DE TRÁNSITO, MULTAS DE TRANSPORTE Y MULTAS ADMINISTRATIVAS**
-
-⏰ **El plazo para prescripción de las multas por infracciones al Reglamento Nacional de Tránsito es de dos años computados a partir de la firmeza de la Resolución de Sanción.**
-
-**REQUISITOS:**
-1. **Presentar solicitud según formato publicado por el SAT** conteniendo lo siguiente:
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso.
-   b) Domicilio del solicitante.
-   c) Indicar la obligación cuya prescripción se invoca.
-   d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso.
-
-2. **En caso el trámite fuera presentado por un representante,** deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito.
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesDevolucionPapeletas(Action):
+class ActionTramitesDevolucionPapeletas(BaseTramiteRequisitos):
     """Action para devolución y/o compensación de papeletas"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "DEVOLUCIÓN Y/O COMPENSACIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_devolucion_papeletas"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando requisitos para devolución de papeletas")
-
-        message = """📋 **DEVOLUCIÓN Y/O COMPENSACIÓN DE PAPELETAS**
-
-
-**REQUISITOS PARA LA DEVOLUCIÓN Y/O COMPENSACIÓN EN MATERIA DE MULTAS DE TRÁNSITO, MULTAS DE TRANSPORTE Y MULTAS ADMINISTRATIVAS**
-1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o número de RUC del solicitante y de su representante, de ser el caso. 
-   b) Domicilio del solicitante. 
-   c) Indicar la obligación cuya devolución y/o compensación se solicita. 
-   d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o representante, de ser el caso. 
-2. En caso el trámite fuera presentado por un representante, adjuntar documento que acredite la representación. 
- 
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
-
-Ingrese su trámite por Mesa de Partes Digital:
-📌https://www.sat.gob.pe/MesaPartesDigital
-
-⚠️ **Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.**
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesTerceriaRequisitos(Action):
+class ActionTramitesTerceriaRequisitos(BaseTramiteRequisitos):
     """Action para tercería de propiedad (requisitos papeletas)"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "TERCERIA DE PROPIEDAD"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_terceria_requisitos"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Mostrando requisitos para tercería de propiedad (papeletas)")
-
-        message = """📋 **TERCERÍA DE PROPIEDAD - REQUISITOS ADMINISTRATIVOS**
-
-**REQUISITOS PARA LA SOLICITUD DE TERCERÍA DE PROPIEDAD ANTE COBRANZA DE OBLIGACIONES NO TRIBUTARIAS**
-1. Presentar solicitud según formato publicado por el SAT conteniendo lo siguiente: 
-   a) Nombres y apellidos o denominación o razón social, número de documento de identidad o Número de RUC del solicitante y de su representante, de ser el caso. 
-   b) Domicilio del solicitante. 
-   c) Indicación del bien afectado. 
-   d) Firma o huella digital (en caso de no saber firmar o estar impedido) del solicitante o Representante de ser el caso. 
-2. En caso el trámite fuera presentado por un representante, deberá presentar Carta Poder Simple con firma del administrado o designación de persona cierta debidamente identificada en el escrito. 
-3. Presentar copia simple del documento privado con fecha cierta, documento público o de otro documento, que acredite fehacientemente la propiedad de los bienes antes de haberse trabado la medida cautelar, acompañada de la declaración jurada del administrado acerca de su autenticidad. 
- 
-📋 **Fuente:** TUPA - SAT de Lima (Decreto de Alcaldía N° 0008 28/08/2018).
-
-📋 **Puede ingresar su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-✍️ Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []
-
-
-class ActionTramitesSuspensionRequisitos(Action):
+class ActionTramitesSuspensionRequisitos(BaseTramiteRequisitos):
     """Action para suspensión de cobranza coactiva (requisitos papeletas)"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "SUSPENSION DE LA COBRANZA COACTIVA"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
         return "action_tramites_suspension_requisitos"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        logger.info("Mostrando requisitos para suspensión de cobranza (papeletas)")
-
-        message = """📋 **SOLICITUD DE SUSPENSIÓN DE COBRANZA COACTIVA - REQUISITOS ADMINISTRATIVOS**
-
-**REQUISITOS PARA LA SUSPENSIÓN DE LA COBRANZA COACTIVA NO TRIBUTARIA**
-1. Adjuntar formato de la solicitud de suspensión publicado por el SAT debidamente llenado, por cada papeleta, resolución de sanción o multa administrativa, y por cada una de las causales contempladas en la ley. 
-2. Indicar el domicilio real o procesal dentro del radio urbano de la provincia de Lima. 
-3. En el caso de representación, presentar poder específico en documento público o privado con firma legalizada ante notario o certificada por fedatario del SAT. 
-4. Argumentar y sustentar su solicitud en virtud del Art. 16 de la Ley de Procedimiento de Ejecución Coactiva (Ley 26979). 
- 
-📋 **Fuente:** Directiva N° 001-006-00000023 (Resolución Jefatural N° 001-004-00003951 – 18/07/2017).
-
-📋 **Ingrese su trámite por Mesa de Partes Digital:**
-📌 https://www.sat.gob.pe/MesaPartesDigital
-
-✍️ Para iniciar un procedimiento administrativo vinculado a tránsito o transporte, es obligatorio inscribirse en la Casilla Electrónica del MTC, así recibirás oportunamente nuestras comunicaciones.
-📌 https://casilla.mtc.gob.pe/#/registro
-
-📋 **Base Legal:** R. Directoral N°023-2024-MTC/18
-
-**¿Qué más necesitas?**
-• 'Menú principal' - Otras opciones
-• 'Finalizar chat'
-"""
-
-        dispatcher.utter_message(text=message)
-        return []

@@ -366,7 +366,7 @@ responses:
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
 
-  # ========== OPCIÓN 7: LUGARES Y PAGOS MENÚ ==========
+  # ========== OPCIÓN 6: LUGARES Y PAGOS MENÚ ==========
   utter_lugares_pagos_menu:
   - text: |
       🏢 **LUGARES Y PAGOS**
@@ -378,7 +378,7 @@ responses:
 
       ¿Qué opción necesitas?
 
-  # ========== OPCIÓN 8: SERVICIOS VIRTUALES ==========
+  # ========== OPCIÓN 7: SERVICIOS VIRTUALES ==========
   utter_servicios_virtuales_menu:
   - text: |
       💻 **SERVICIOS VIRTUALES**
@@ -393,18 +393,22 @@ responses:
 
       ¿Qué servicio necesitas, dime?
 
-  # ========== OPCIÓN 9: OTROS TRÁMITES MENÚ ==========
+  # ========== OPCIÓN 8: OTROS TRÁMITES MENÚ ==========
   utter_otros_tramites_menu:
   - text: |
       📋 **OTROS TRÁMITES ADMINISTRATIVOS**
 
-      📝 **OPCIONES DISPONIBLES:**
-      • **"Consultar trámite 12345678901234"** (14 dígitos)
+      🔍 **CONSULTAR ESTADO DE TRÁMITE:**
+      Para consultar el estado de tu trámite, escribe el número de 14 dígitos.
+
+      **Ejemplo:** 12345678901234
+
+      📝 **OTRAS OPCIONES:**
       • **"Requisitos papeletas"** - Trámites administrativos de papeletas
       • **"Requisitos tributarios"** - Trámites administrativos de impuestos
       • **"Constancias no adeudo"** - Obtener constancias
 
-      ¿Qué opción necesitas?
+      ¿Qué necesitas?
       
   # ========== SUB-MENÚS OTROS TRÁMITES ==========
   utter_tramites_requisitos_papeletas:
