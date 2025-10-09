@@ -41,7 +41,7 @@ intents:
   - consulta_rapida_impuestos_codigo      # "Impuestos código contribuyente 94539"
 
   # --------------------------------------------------------------------------
-  # NAVEGACIÓN - Ir a opciones principales (8 opciones del menú)
+  # NAVEGACIÓN - Ir a opciones principales
   # --------------------------------------------------------------------------
   - ir_a_casilla_mtc                      # Opción 1: Casilla MTC
   - ir_a_pagos_linea                      # Opción 2: Pagos por internet
