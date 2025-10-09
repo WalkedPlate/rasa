@@ -1,123 +1,184 @@
 version: "3.1"
 
+# ============================================================================
+# CONFIGURACIÓN DE DOMINIO - CHATBOT SAT LIMA
+# ============================================================================
+# Este archivo define todos los componentes del diálogo:
+# - Intents: Intenciones del usuario
+# - Entities: Datos extraíbles (placa, DNI, RUC, etc.)
+# - Slots: Variables de estado de la conversación
+# - Responses: Respuestas predefinidas del bot
+# - Actions: Acciones personalizadas
+# ============================================================================
+
+
+# ============================================================================
+# INTENTS - Intenciones del usuario
+# ============================================================================
+
 intents:
-  # ========== GLOBAL (funcionan siempre) ==========
-  - greet
-  - goodbye
-  - menu_principal
+  # --------------------------------------------------------------------------
+  # GLOBALES - Funcionan en cualquier contexto
+  # --------------------------------------------------------------------------
+  - greet                                 # Saludo inicial
+  - goodbye                               # Despedida
+  - menu_principal                        # Volver al menú principal
+  - solicitar_asesor                      # Escalación a humano
 
-  # ========== GLOBAL - CONSULTAS RÁPIDAS ESPECÍFICAS ==========
-  - consulta_rapida_papeletas_placa
-  - consulta_rapida_papeletas_dni
-  - consulta_rapida_papeletas_ruc
-  - consulta_rapida_codigo_falta
-  - consulta_rapida_impuestos_placa
-  - consulta_rapida_impuestos_dni
-  - consulta_rapida_impuestos_ruc
-  - consulta_rapida_impuestos_codigo
+  # --------------------------------------------------------------------------
+  # CONSULTAS RÁPIDAS GLOBALES - Sin necesidad de navegación
+  # --------------------------------------------------------------------------
+  # Papeletas
+  - consulta_rapida_papeletas_placa       # "Ver papeletas de mi placa ABC123"
+  - consulta_rapida_papeletas_dni         # "Papeletas de mi DNI 12345678"
+  - consulta_rapida_papeletas_ruc         # "Multas del RUC 20123456789"
+  - consulta_rapida_codigo_falta          # "Qué significa el código G40"
 
-  # ========== NAVEGACIÓN A CONTEXTOS ==========
-  - ir_a_casilla_mtc          # Opción 1
-  - ir_a_pagos_linea          # Opción 2
-  - ir_a_papeletas            # Opción 3
-  - ir_a_impuestos            # Opción 4
-  - ir_a_retencion_captura    # Opción 5
-  - ir_a_lugares_pagos        # Opción 6
-  - ir_a_servicios_virtuales  # Opción 7
-  - ir_a_otros_tramites       # Opción 8
+  # Impuestos
+  - consulta_rapida_impuestos_placa       # "Impuestos de mi placa ABC123"
+  - consulta_rapida_impuestos_dni         # "Deuda tributaria DNI 12345678"
+  - consulta_rapida_impuestos_ruc         # "Impuestos del RUC 20123456789"
+  - consulta_rapida_impuestos_codigo      # "Impuestos código contribuyente 94539"
 
-  # ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
-  - papeletas_consultar_placa
-  - papeletas_consultar_dni
-  - papeletas_consultar_ruc
-  - papeletas_consultar_codigo_falta
-  - papeletas_consultar_generico
-  - papeletas_registrar
-  - papeletas_facilidades
-  - papeletas_frecuentes
+  # --------------------------------------------------------------------------
+  # NAVEGACIÓN - Ir a opciones principales (8 opciones del menú)
+  # --------------------------------------------------------------------------
+  - ir_a_casilla_mtc                      # Opción 1: Casilla MTC
+  - ir_a_pagos_linea                      # Opción 2: Pagos por internet
+  - ir_a_papeletas                        # Opción 3: Papeletas
+  - ir_a_impuestos                        # Opción 4: Impuestos
+  - ir_a_retencion_captura                # Opción 5: Retención y captura
+  - ir_a_lugares_pagos                    # Opción 6: Lugares y pagos
+  - ir_a_servicios_virtuales              # Opción 7: Servicios virtuales
+  - ir_a_otros_tramites                   # Opción 8: Otros trámites
 
-  # ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
-  - impuestos_consultar_placa
-  - impuestos_consultar_dni
-  - impuestos_consultar_ruc
-  - impuestos_consultar_codigo
-  - impuestos_consultar_generico
-  - impuestos_cuadernillo
-  - impuestos_cuadernillo_agencia_virtual
-  - impuestos_declarar_liquide
-  - impuestos_declarar_vehicular
-  - impuestos_declarar_predial
-  - impuestos_liquidar_alcabala
-  - impuestos_fraccionar_deuda
-  - impuestos_beneficios
-  - impuestos_beneficios_pensionista
-  - impuestos_beneficios_adulto_mayor
+  # --------------------------------------------------------------------------
+  # CONTEXTO: PAPELETAS - Consultas específicas dentro del contexto
+  # --------------------------------------------------------------------------
+  - papeletas_consultar_placa             # Placa dentro del contexto papeletas
+  - papeletas_consultar_dni               # DNI dentro del contexto papeletas
+  - papeletas_consultar_ruc               # RUC dentro del contexto papeletas
+  - papeletas_consultar_codigo_falta      # Código de falta en contexto
+  - papeletas_consultar_generico          # Consulta sin especificar documento
+  - papeletas_registrar                   # Registrar papeleta no encontrada
+  - papeletas_facilidades                 # Facilidades de pago papeletas
+  - papeletas_frecuentes                  # Preguntas frecuentes papeletas
 
-  # ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ==========
-  - retencion_embargo_cuentas
-  - retencion_orden_captura
-  - retencion_vehiculo_internado
-  - retencion_suspender_cobranza
-  - retencion_terceria_propiedad
-  - retencion_remate_vehicular
-  - retencion_consultar_placa
+  # --------------------------------------------------------------------------
+  # CONTEXTO: IMPUESTOS - Consultas específicas dentro del contexto
+  # --------------------------------------------------------------------------
+  - impuestos_consultar_placa             # Placa dentro del contexto impuestos
+  - impuestos_consultar_dni               # DNI dentro del contexto impuestos
+  - impuestos_consultar_ruc               # RUC dentro del contexto impuestos
+  - impuestos_consultar_codigo            # Código contribuyente en contexto
+  - impuestos_consultar_generico          # Consulta sin especificar documento
 
-  # ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
-  - lugares_pagos_agencias_horarios
-  - lugares_pagos_lugares_pago
-  - lugares_pagos_formas_pago
+  # Cuadernillo tributario
+  - impuestos_cuadernillo                 # Cuadernillo genérico
+  - impuestos_cuadernillo_agencia_virtual # Cuadernillo vía agencia virtual
 
-  # ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ==========
-  - servicios_virtuales_mesa_partes
-  - servicios_virtuales_agencia_virtual
-  - servicios_virtuales_pitazo
-  - servicios_virtuales_correo
-  - servicios_virtuales_libro_reclamaciones
-  - servicios_virtuales_cursos
+  # Declaraciones y liquidaciones
+  - impuestos_declarar_liquide            # Declare y liquide genérico
+  - impuestos_declarar_vehicular          # Declaración impuesto vehicular
+  - impuestos_declarar_predial            # Declaración impuesto predial
+  - impuestos_liquidar_alcabala           # Liquidación de alcabala
+  - impuestos_fraccionar_deuda            # Fraccionar deuda tributaria
 
-  # ========== CONTEXTO OTROS TRÁMITES ==========
-  - tramites_consultar_numero
-  - tramites_requisitos_papeletas
-  - tramites_requisitos_tributarios
-  - tramites_constancias_no_adeudo
-  # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
-  - tramites_recurso_reconsideracion
-  - tramites_descargo_infracciones
-  - tramites_apelacion_papeletas
-  - tramites_prescripcion_papeletas
-  - tramites_devolucion_papeletas
-  - tramites_terceria_requisitos
-  - tramites_suspension_requisitos
-  # ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
-  - tramites_predial_requisitos
-  - tramites_vehicular_requisitos
-  - tramites_alcabala_requisitos
-  - tramites_reclamacion_tributaria
-  - tramites_prescripcion_tributaria
-  - tramites_devolucion_tributaria
-  - tramites_apelacion_tributaria
-  - tramites_terceria_tributaria
-  - tramites_suspension_tributaria
+  # Beneficios tributarios
+  - impuestos_beneficios                  # Beneficios genéricos
+  - impuestos_beneficios_pensionista      # Beneficios para pensionistas
+  - impuestos_beneficios_adulto_mayor     # Beneficios adulto mayor
 
-  # ========== CLARIFICACIÓN Y AMBIGÜEDAD ==========
-  - clarify_papeletas
-  - clarify_impuestos
-  - consulta_ambigua_documento
+  # --------------------------------------------------------------------------
+  # CONTEXTO: RETENCIÓN Y CAPTURA - Sub-opciones específicas
+  # --------------------------------------------------------------------------
+  - retencion_embargo_cuentas             # Retención o embargo bancario
+  - retencion_orden_captura               # Consultar orden de captura
+  - retencion_vehiculo_internado          # Consultar vehículo internado
+  - retencion_suspender_cobranza          # Suspender cobranza coactiva
+  - retencion_terceria_propiedad          # Tercería de propiedad
+  - retencion_remate_vehicular            # Información sobre remates
+  - retencion_consultar_placa             # Placa en contexto retención
 
-  # ========== NAVEGACIÓN y SOLICITAR ASESOR ==========
-  - otra_consulta
-  - solicitar_asesor
+  # --------------------------------------------------------------------------
+  # CONTEXTO: LUGARES Y PAGOS - Sub-opciones específicas
+  # --------------------------------------------------------------------------
+  - lugares_pagos_agencias_horarios       # Oficinas y horarios
+  - lugares_pagos_lugares_pago            # Dónde pagar
+  - lugares_pagos_formas_pago             # Cómo pagar
+
+  # --------------------------------------------------------------------------
+  # CONTEXTO: SERVICIOS VIRTUALES - Sub-opciones específicas
+  # --------------------------------------------------------------------------
+  - servicios_virtuales_mesa_partes       # Mesa de partes digital
+  - servicios_virtuales_agencia_virtual   # Agencia virtual SAT
+  - servicios_virtuales_pitazo            # Suscripción a Pitazo
+  - servicios_virtuales_correo            # Enviar correo al SAT
+  - servicios_virtuales_libro_reclamaciones # Libro de reclamaciones
+  - servicios_virtuales_cursos            # Cursos SAT
+
+  # --------------------------------------------------------------------------
+  # CONTEXTO: OTROS TRÁMITES - Consultas y sub-opciones
+  # --------------------------------------------------------------------------
+  - tramites_consultar_numero             # Consultar por número de trámite
+  - tramites_requisitos_papeletas         # Requisitos trámites papeletas
+  - tramites_requisitos_tributarios       # Requisitos trámites tributarios
+  - tramites_constancias_no_adeudo        # Constancias de no adeudo
+
+  # Trámites específicos de papeletas
+  - tramites_recurso_reconsideracion      # Recurso de reconsideración
+  - tramites_descargo_infracciones        # Descargo de infracciones
+  - tramites_apelacion_papeletas          # Apelación de papeletas
+  - tramites_prescripcion_papeletas       # Prescripción de papeletas
+  - tramites_devolucion_papeletas         # Devolución de papeletas
+  - tramites_terceria_requisitos          # Tercería de propiedad
+  - tramites_suspension_requisitos        # Suspensión de cobranza
+
+  # Trámites específicos tributarios
+  - tramites_predial_requisitos           # Declaración predial
+  - tramites_vehicular_requisitos         # Declaración vehicular
+  - tramites_alcabala_requisitos          # Liquidación alcabala
+  - tramites_reclamacion_tributaria       # Reclamación tributaria
+  - tramites_prescripcion_tributaria      # Prescripción tributaria
+  - tramites_devolucion_tributaria        # Devolución tributaria
+  - tramites_apelacion_tributaria         # Apelación tributaria
+  - tramites_terceria_tributaria          # Tercería tributaria
+  - tramites_suspension_tributaria        # Suspensión tributaria
+
+  # --------------------------------------------------------------------------
+  # SISTEMA DE CLARIFICACIÓN - Router inteligente
+  # --------------------------------------------------------------------------
+  - clarify_papeletas                     # Usuario confirma papeletas
+  - clarify_impuestos                     # Usuario confirma impuestos
+  - consulta_ambigua_documento            # Documento sin contexto claro
+
+  # --------------------------------------------------------------------------
+  # NAVEGACIÓN AUXILIAR
+  # --------------------------------------------------------------------------
+  - otra_consulta                         # Nueva consulta
+
+
+# ============================================================================
+# ENTITIES - Datos extraíbles del mensaje del usuario
+# ============================================================================
 
 entities:
-  - placa
-  - dni
-  - ruc
-  - codigo_falta
-  - codigo_contribuyente
-  - numero_tramite
+  - placa                                 # Placa vehicular (6 caracteres)
+  - dni                                   # DNI peruano (8 dígitos)
+  - ruc                                   # RUC peruano (11 dígitos)
+  - codigo_falta                          # Código de infracción (ej: G40, M08)
+  - codigo_contribuyente                  # Código de contribuyente (1-10 dígitos)
+  - numero_tramite                        # Número de trámite (14 dígitos)
+
+
+# ============================================================================
+# SLOTS - Variables de estado de la conversación
+# ============================================================================
 
 slots:
-  # ========== SLOTS DE CONTEXTO ==========
+  # --------------------------------------------------------------------------
+  # CONTEXTO DE NAVEGACIÓN
+  # --------------------------------------------------------------------------
   contexto_actual:
     type: categorical
     values:
@@ -131,69 +192,92 @@ slots:
     influence_conversation: true
     mappings:
       - type: custom
+    # Descripción: Mantiene el contexto actual de la conversación para
+    # permitir que el bot entienda en qué sección se encuentra el usuario
 
-  # ========== SLOTS DEL SISTEMA DE ROUTING INTELIGENTE ==========
-  # Indica si el bot está esperando que el usuario clarifique entre papeletas o impuestos
+  # --------------------------------------------------------------------------
+  # SISTEMA DE ROUTING INTELIGENTE (Disambiguación papeletas vs impuestos)
+  # --------------------------------------------------------------------------
   esperando_clarificacion:
     type: bool
     influence_conversation: true
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Indica si el bot está esperando que el usuario clarifique
+    # entre papeletas o impuestos cuando el contexto es ambiguo
 
-  # Almacena temporalmente el documento (placa/DNI/RUC) mientras se espera clarificación
   documento_pendiente:
     type: text
     influence_conversation: false
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Almacena temporalmente el documento (placa/DNI/RUC)
+    # mientras se espera clarificación del usuario
 
-  # Almacena el tipo de documento pendiente (placa, dni, ruc, codigo_contribuyente)
   tipo_documento_pendiente:
     type: text
     influence_conversation: false
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Almacena el tipo de documento pendiente
+    # (placa, dni, ruc, codigo_contribuyente)
 
-  # Almacena el documento que se está consultando después del routing
   documento_consulta:
     type: text
     influence_conversation: false
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Almacena el documento que se está consultando
+    # después del routing exitoso
 
-  # Almacena el tipo del documento que se está consultando
   tipo_documento:
     type: text
     influence_conversation: false
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Almacena el tipo del documento que se está consultando
 
-  # ========== SLOTS PARA LOGGING/TRACKING ==========
-  # Registra el último documento consultado para fines de logging y métricas
+  # --------------------------------------------------------------------------
+  # TRACKING Y LOGGING
+  # --------------------------------------------------------------------------
   ultimo_documento:
     type: text
     influence_conversation: false
     mappings:
-    - type: custom
+      - type: custom
+    # Descripción: Registra el último documento consultado para
+    # fines de logging y métricas
 
-  # ========== SLOT PARA SOLICITAR ASESOR ==========
-  # Indica si el usuario solicitó un asesor humano durante la conversación
   asesor_solicitado:
     type: bool
     influence_conversation: false
     mappings:
       - type: custom
+    # Descripción: Indica si el usuario solicitó un asesor humano
+    # durante la conversación (para tracking)
 
-  # ========== SLOT PARA SISTEMA DE FALLBACK INTELIGENTE ==========
-  # Cuenta el número de veces consecutivas que el usuario activó el fallback
+  # --------------------------------------------------------------------------
+  # SISTEMA DE FALLBACK INTELIGENTE
+  # --------------------------------------------------------------------------
   fallback_count:
     type: float
     initial_value: 0
     influence_conversation: true
     mappings:
       - type: custom
+    # Descripción: Contador de fallbacks consecutivos
+    # Nivel 1: Mensaje simple con opciones
+    # Nivel 2+: Ofrece escalación a asesor humano
+
+
+# ============================================================================
+# RESPONSES - Respuestas predefinidas del bot
+# ============================================================================
 
 responses:
+  # --------------------------------------------------------------------------
+  # RESPUESTAS GLOBALES
+  # --------------------------------------------------------------------------
   utter_greet:
   - text: |
       Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
@@ -238,7 +322,9 @@ responses:
 
       ¿En qué puedo ayudarte?
 
-  # ========== OPCIÓN 1: CASILLA MTC ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 1: CASILLA MTC
+  # --------------------------------------------------------------------------
   utter_casilla_mtc:
   - text: |
       📋 **CASILLA ELECTRÓNICA MTC**
@@ -253,7 +339,9 @@ responses:
       • 'Menú principal' - Ver otras opciones
       • 'Finalizar chat'
 
-  # ========== OPCIÓN 2: PAGOS ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 2: PAGOS
+  # --------------------------------------------------------------------------
   utter_pagos_linea:
   - text: |
       💳 **PAGAR POR INTERNET**
@@ -269,7 +357,9 @@ responses:
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
 
-  # ========== OPCIÓN 3: PAPELETAS MENÚ ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 3: PAPELETAS - MENÚ
+  # --------------------------------------------------------------------------
   utter_papeletas_menu:
   - text: |
       🚗 **PAPELETAS - ¿Qué necesitas?**
@@ -283,40 +373,6 @@ responses:
 
       ¿Qué necesitas?
 
-  # ========== OPCIÓN 4: IMPUESTOS MENÚ ==========
-  utter_impuestos_menu:
-  - text: |
-      💰 **IMPUESTOS - ¿Qué necesitas?**
-
-      Escribe directamente:
-      • **Placa:** "Impuestos de mi placa ABC123" - para ver deuda tributarias de la placa
-      • **DNI:** "Deuda tributaria DNI 12345678" - para consultar deudas tributarias con tu DNI
-      • **RUC:** "Impuestos de RUC 20123456789" - para deudas tributarias relacionadas a tu RUC 
-      • **"Cuadernillo tributario"** - Ver tu cuadernillo
-      • **"Declare y liquide"** - Declarar nuevos predios/vehículos
-      • **"Fraccionar deuda"** - Pagar en cuotas
-      • **"Beneficios"** - Descuentos especiales
-
-      ¿Qué necesitas?
-
-  # ========== OPCIÓN 5: RETENCIÓN Y CAPTURA MENÚ ==========
-  utter_retencion_menu:
-  - text: |
-      🚨 **RETENCIÓN Y CAPTURA - ¿Qué necesitas?**
-
-      📋 **OPCIONES DISPONIBLES:**
-      • **"Retención bancaria"** - Información sobre embargo de cuentas
-      • **"Orden de captura"** - Consultar si tu vehículo tiene orden de captura
-      • **"Vehículo internado"** - Consultar si tu vehículo está internado
-      • **"Suspender cobranza"** - Información para solicitar suspensión de cobranza coactiva
-      • **"Tercería de propiedad"** - Información del rrámite de tercería
-      • **"Remate vehicular"** - Información sobre remates
-
-      💡 **Para consultar orden de captura:** Escribe "orden de captura" 
-
-      ¿Qué opción necesitas?
-
-  # ========== PAPELETAS SUB-OPCIONES ==========
   utter_papeletas_registrar:
   - text: |
       📝 **REGISTRAR PAPELETA NO ENCONTRADA**
@@ -366,7 +422,46 @@ responses:
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
 
-  # ========== OPCIÓN 6: LUGARES Y PAGOS MENÚ ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 4: IMPUESTOS - MENÚ
+  # --------------------------------------------------------------------------
+  utter_impuestos_menu:
+  - text: |
+      💰 **IMPUESTOS - ¿Qué necesitas?**
+
+      Escribe directamente:
+      • **Placa:** "Impuestos de mi placa ABC123" - para ver deuda tributarias de la placa
+      • **DNI:** "Deuda tributaria DNI 12345678" - para consultar deudas tributarias con tu DNI
+      • **RUC:** "Impuestos de RUC 20123456789" - para deudas tributarias relacionadas a tu RUC 
+      • **"Cuadernillo tributario"** - Ver tu cuadernillo
+      • **"Declare y liquide"** - Declarar nuevos predios/vehículos
+      • **"Fraccionar deuda"** - Pagar en cuotas
+      • **"Beneficios"** - Descuentos especiales
+
+      ¿Qué necesitas?
+
+  # --------------------------------------------------------------------------
+  # OPCIÓN 5: RETENCIÓN Y CAPTURA - MENÚ
+  # --------------------------------------------------------------------------
+  utter_retencion_menu:
+  - text: |
+      🚨 **RETENCIÓN Y CAPTURA - ¿Qué necesitas?**
+
+      📋 **OPCIONES DISPONIBLES:**
+      • **"Retención bancaria"** - Información sobre embargo de cuentas
+      • **"Orden de captura"** - Consultar si tu vehículo tiene orden de captura
+      • **"Vehículo internado"** - Consultar si tu vehículo está internado
+      • **"Suspender cobranza"** - Información para solicitar suspensión de cobranza coactiva
+      • **"Tercería de propiedad"** - Información del rrámite de tercería
+      • **"Remate vehicular"** - Información sobre remates
+
+      💡 **Para consultar orden de captura:** Escribe "orden de captura" 
+
+      ¿Qué opción necesitas?
+
+  # --------------------------------------------------------------------------
+  # OPCIÓN 6: LUGARES Y PAGOS - MENÚ
+  # --------------------------------------------------------------------------
   utter_lugares_pagos_menu:
   - text: |
       🏢 **LUGARES Y PAGOS**
@@ -378,7 +473,9 @@ responses:
 
       ¿Qué opción necesitas?
 
-  # ========== OPCIÓN 7: SERVICIOS VIRTUALES ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 7: SERVICIOS VIRTUALES - MENÚ
+  # --------------------------------------------------------------------------
   utter_servicios_virtuales_menu:
   - text: |
       💻 **SERVICIOS VIRTUALES**
@@ -393,7 +490,9 @@ responses:
 
       ¿Qué servicio necesitas, dime?
 
-  # ========== OPCIÓN 8: OTROS TRÁMITES MENÚ ==========
+  # --------------------------------------------------------------------------
+  # OPCIÓN 8: OTROS TRÁMITES - MENÚ
+  # --------------------------------------------------------------------------
   utter_otros_tramites_menu:
   - text: |
       📋 **OTROS TRÁMITES ADMINISTRATIVOS**
@@ -409,8 +508,7 @@ responses:
       • **"Constancias no adeudo"** - Obtener constancias
 
       ¿Qué necesitas?
-      
-  # ========== SUB-MENÚS OTROS TRÁMITES ==========
+
   utter_tramites_requisitos_papeletas:
   - text: |
       📋 **REQUISITOS DE TRÁMITES - PAPELETAS**
@@ -441,7 +539,9 @@ responses:
 
       ¿Qué trámite tributario necesitas?
 
-  # ========== NAVEGACIÓN GLOBAL ==========
+  # --------------------------------------------------------------------------
+  # NAVEGACIÓN AUXILIAR
+  # --------------------------------------------------------------------------
   utter_otra_consulta:
   - text: |
       🔄 **NUEVA CONSULTA**
@@ -459,65 +559,93 @@ responses:
 
       ¿Qué necesitas?
 
+
+# ============================================================================
+# ACTIONS - Acciones personalizadas
+# ============================================================================
+
 actions:
-  # ========== RESPONSES ESTÁTICAS ==========
+  # --------------------------------------------------------------------------
+  # RESPONSES ESTÁTICAS (utterances predefinidas)
+  # --------------------------------------------------------------------------
   - utter_greet
   - utter_menu_principal
   - utter_casilla_mtc
   - utter_pagos_linea
   - utter_papeletas_menu
-  - utter_impuestos_menu
   - utter_papeletas_registrar
   - utter_papeletas_facilidades
   - utter_papeletas_frecuentes
-  - utter_otra_consulta
-
-  # ========== CUSTOM ACTIONS ==========
-  - action_consultar_papeletas
-  - action_consultar_codigo_falta
-  # ========== IMPUESTOS ACTIONS ==========
-  - action_consultar_impuestos
-  - action_cuadernillo_agencia_virtual
-  - action_declaracion_impuesto_vehicular
-  - action_liquidacion_alcabala
-  - action_declaracion_impuesto_predial
-  - action_fraccionar_deuda
-  - action_beneficios_pensionista
-  - action_beneficios_adulto_mayor
-  - action_route_document_consultation
-  # ========== RETENCIÓN ACTIONS ==========
-  - action_consultar_orden_captura
-  - action_retencion_embargo
-  - action_retencion_vehiculo_internado
-  - action_retencion_suspender_cobranza
-  - action_retencion_terceria_propiedad
-  - action_retencion_remate_vehicular
-  # ========== ACTUALIZAR DATOS ACTIONS ==========
-  - action_actualizar_datos
-  - action_actualizar_nombre
-  - action_procesar_nuevo_nombre
-  - action_actualizar_documento
-  - action_procesar_tipo_documento
-  - action_procesar_numero_documento
-  # ========== LUGARES Y PAGOS ACTIONS ==========
-  - action_lugares_agencias_horarios
-  - action_lugares_pago
-  - action_lugares_formas_pago
-  # ========== SERVICIOS VIRTUALES ACTIONS ==========
-  - action_servicios_mesa_partes
-  - action_servicios_agencia_virtual
-  - action_servicios_pitazo
-  - action_servicios_correo
-  - action_servicios_libro_reclamaciones
-  - action_servicios_cursos
-
-  # ========== OTROS TRÁMITES ACTIONS ==========
+  - utter_impuestos_menu
+  - utter_retencion_menu
+  - utter_lugares_pagos_menu
+  - utter_servicios_virtuales_menu
   - utter_otros_tramites_menu
   - utter_tramites_requisitos_papeletas
   - utter_tramites_requisitos_tributarios
-  - action_consultar_tramite
-  - action_tramites_constancias_no_adeudo
-  # ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+  - utter_otra_consulta
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - SHARED (Compartidas)
+  # --------------------------------------------------------------------------
+  - action_finalizar_chat                 # Finalizar conversación
+  - action_solicitar_asesor               # Escalar a asesor humano
+  - action_smart_fallback                 # Fallback progresivo
+  - action_reset_fallback_count           # Resetear contador fallback
+  - action_route_document_consultation    # Router papeletas vs impuestos
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - PAPELETAS
+  # --------------------------------------------------------------------------
+  - action_consultar_papeletas            # Consultar papeletas por placa/DNI/RUC
+  - action_consultar_codigo_falta         # Consultar código de infracción
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - IMPUESTOS
+  # --------------------------------------------------------------------------
+  - action_consultar_impuestos            # Consultar deuda tributaria
+  - action_cuadernillo_agencia_virtual    # Cuadernillo tributario
+  - action_declaracion_impuesto_vehicular # Declarar impuesto vehicular
+  - action_declaracion_impuesto_predial   # Declarar impuesto predial
+  - action_liquidacion_alcabala           # Liquidar alcabala
+  - action_fraccionar_deuda               # Fraccionar deuda tributaria
+  - action_beneficios_pensionista         # Beneficios pensionistas
+  - action_beneficios_adulto_mayor        # Beneficios adulto mayor
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - RETENCIÓN
+  # --------------------------------------------------------------------------
+  - action_consultar_orden_captura        # Consultar orden de captura
+  - action_retencion_embargo              # Info retención bancaria
+  - action_retencion_vehiculo_internado   # Info vehículo internado
+  - action_retencion_suspender_cobranza   # Info suspensión cobranza
+  - action_retencion_terceria_propiedad   # Info tercería de propiedad
+  - action_retencion_remate_vehicular     # Info remate vehicular
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - LUGARES Y PAGOS
+  # --------------------------------------------------------------------------
+  - action_lugares_agencias_horarios      # Agencias y horarios
+  - action_lugares_pago                   # Lugares de pago
+  - action_lugares_formas_pago            # Formas de pago
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - SERVICIOS VIRTUALES
+  # --------------------------------------------------------------------------
+  - action_servicios_mesa_partes          # Mesa de partes digital
+  - action_servicios_agencia_virtual      # Agencia virtual SAT
+  - action_servicios_pitazo               # Suscripción a Pitazo
+  - action_servicios_correo               # Correo SAT
+  - action_servicios_libro_reclamaciones  # Libro de reclamaciones
+  - action_servicios_cursos               # Cursos SAT
+
+  # --------------------------------------------------------------------------
+  # CUSTOM ACTIONS - TRÁMITES
+  # --------------------------------------------------------------------------
+  - action_consultar_tramite              # Consultar estado de trámite
+  - action_tramites_constancias_no_adeudo # Constancias de no adeudo
+
+  # Trámites de papeletas
   - action_tramites_recurso_reconsideracion
   - action_tramites_descargo_infracciones
   - action_tramites_apelacion_papeletas
@@ -525,7 +653,8 @@ actions:
   - action_tramites_devolucion_papeletas
   - action_tramites_terceria_requisitos
   - action_tramites_suspension_requisitos
-  # ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+
+  # Trámites tributarios
   - action_tramites_predial_requisitos
   - action_tramites_vehicular_requisitos
   - action_tramites_alcabala_requisitos
@@ -535,11 +664,11 @@ actions:
   - action_tramites_apelacion_tributaria
   - action_tramites_terceria_tributaria
   - action_tramites_suspension_tributaria
-  # ========== FINALIZAR CHAT Y SOLICITAR ASESOR==========
-  - action_finalizar_chat
-  - action_solicitar_asesor
-  - action_smart_fallback
-  - action_reset_fallback_count
+
+
+# ============================================================================
+# SESSION CONFIG - Configuración de sesión
+# ============================================================================
 
 session_config:
   session_expiration_time: 600

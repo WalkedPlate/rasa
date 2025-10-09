@@ -1,5 +1,5 @@
 """
-Actions para consulta de impuestos
+Actions para consulta de papeletas
 """
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
@@ -8,14 +8,12 @@ from rasa_sdk.events import SlotSet
 import logging
 import re
 
-from ..core.sat_api_client import sat_client
-
+from actions.api.sat_client import sat_client
 
 logger = logging.getLogger(__name__)
 
-
-class DocumentProcessorImpuestos:
-    """Procesador de documentos para consultas de impuestos"""
+class DocumentProcessor:
+    """Procesador de documentos para consultas directas"""
 
     @staticmethod
     def extract_document_from_message(tracker: Tracker) -> tuple[str, str]:
@@ -23,18 +21,23 @@ class DocumentProcessorImpuestos:
         Extrae documento y tipo del mensaje del usuario
 
         Returns:
-            tuple: (documento, tipo) donde tipo es 'placa', 'dni', 'ruc', 'codigo_contribuyente' o None
+            tuple: (documento, tipo) donde tipo es 'placa', 'dni', 'ruc' o None
         """
         entities = tracker.latest_message.get('entities', [])
         intent = tracker.latest_message.get('intent', {}).get('name', '')
 
         # Buscar en entities
         for entity in entities:
-            if entity['entity'] in ['placa', 'dni', 'ruc', 'codigo_contribuyente']:
-                return entity['value'], entity['entity']
+            if entity['entity'] == 'placa':
+                return entity['value'], 'placa'
+            elif entity['entity'] == 'dni':
+                return entity['value'], 'dni'
+            elif entity['entity'] == 'ruc':
+                return entity['value'], 'ruc'
 
         # Inferir por intent
-        if intent == 'consulta_rapida_impuestos_placa' or intent == 'impuestos_consultar_placa':
+        if intent == 'consulta_rapida_placa':
+            # Buscar patrón de placa en el texto
             texto = tracker.latest_message.get('text', '')
             placa_match = re.search(
                 r'[A-Z]{2,3}[\s\-]*\d{3,4}|[A-Z][\s\-]*\d[\s\-]*[A-Z][\s\-]*\d{3}|U[\s\-]*\d[\s\-]*[A-Z][\s\-]*\d{3}',
@@ -43,23 +46,17 @@ class DocumentProcessorImpuestos:
                 placa_limpia = re.sub(r'[\s\-]', '', placa_match.group())
                 return placa_limpia, 'placa'
 
-        elif intent == 'consulta_rapida_impuestos_dni' or intent == 'impuestos_consultar_dni':
+        elif intent == 'consulta_rapida_dni':
             texto = tracker.latest_message.get('text', '')
             dni_match = re.search(r'(?<![A-Z0-9])\d{8}(?![A-Z0-9])', texto)
             if dni_match:
                 return dni_match.group(), 'dni'
 
-        elif intent == 'consulta_rapida_impuestos_ruc' or intent == 'impuestos_consultar_ruc':
+        elif intent == 'consulta_rapida_ruc':
             texto = tracker.latest_message.get('text', '')
             ruc_match = re.search(r'\b[12]\d{10}\b', texto)
             if ruc_match:
                 return ruc_match.group(), 'ruc'
-
-        elif intent == 'consulta_rapida_impuestos_codigo' or intent == 'impuestos_consultar_codigo':
-            texto = tracker.latest_message.get('text', '')
-            codigo_match = re.search(r'\b\d{1,10}\b', texto)
-            if codigo_match:
-                return codigo_match.group(), 'codigo_contribuyente'
 
         return None, None
 
@@ -77,78 +74,65 @@ class DocumentProcessorImpuestos:
         documento_limpio = documento.strip().upper()
 
         if tipo == 'placa':
+            # Limpiar placa
             documento_limpio = re.sub(r'[^A-Z0-9]', '', documento_limpio)
+
             es_valido = len(documento_limpio) == 6 and documento_limpio.isalnum()
             return es_valido, documento_limpio
 
         elif tipo == 'dni':
+            # Limpiar DNI
             documento_limpio = re.sub(r'[^0-9]', '', documento_limpio)
             es_valido = len(documento_limpio) == 8 and documento_limpio.isdigit()
             return es_valido, documento_limpio
 
         elif tipo == 'ruc':
+            # Limpiar RUC
             documento_limpio = re.sub(r'[^0-9]', '', documento_limpio)
             es_valido = (len(documento_limpio) == 11 and
-                         documento_limpio.isdigit() and
-                         documento_limpio[0] in ['1', '2'])
-            return es_valido, documento_limpio
-
-        elif tipo == 'codigo_contribuyente':
-            documento_limpio = re.sub(r'[^0-9]', '', documento_limpio)
-            es_valido = (len(documento_limpio) >= 1 and
-                         len(documento_limpio) <= 10 and
-                         documento_limpio.isdigit())
+                        documento_limpio.isdigit() and
+                        documento_limpio[0] in ['1', '2'])
             return es_valido, documento_limpio
 
         return False, ""
 
-
-class ActionConsultarImpuestos(Action):
-    """Action para consulta de impuestos y deuda tributaria"""
+class ActionConsultarPapeletas(Action):
+    """Action para consulta directa de papeletas"""
 
     def name(self) -> Text:
-        return "action_consultar_impuestos"
+        return "action_consultar_papeletas"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        logger.info("Iniciando consulta de impuestos")
+        logger.info("Iniciando consulta de papeletas")
 
         # 1. Extraer documento del mensaje
-        documento, tipo = DocumentProcessorImpuestos.extract_document_from_message(tracker)
+        documento, tipo = DocumentProcessor.extract_document_from_message(tracker)
 
         if not documento or not tipo:
             return self._request_document(dispatcher)
 
         # 2. Validar formato
-        es_valido, documento_limpio = DocumentProcessorImpuestos.validate_document(documento, tipo)
+        es_valido, documento_limpio = DocumentProcessor.validate_document(documento, tipo)
 
         if not es_valido:
             return self._handle_invalid_document(dispatcher, tipo, documento)
 
-        # 3. Ejecutar consulta API
-        logger.info(f"Consultando impuestos para {tipo}: {documento_limpio}")
+        # 3. Ejecutar consulta API directamente
+        logger.info(f"Consultando {tipo}: {documento_limpio}")
         return self._execute_api_query(dispatcher, documento_limpio, tipo)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
                            documento: str, tipo: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API del SAT"""
 
-        tipo_display = {
-            'placa': 'PLACA',
-            'dni': 'DNI',
-            'ruc': 'RUC',
-            'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
-        }.get(tipo, tipo.upper())
-
-        dispatcher.utter_message(text=f"🔍 Consultando para {tipo_display} **{documento}**...")
+        dispatcher.utter_message(text=f"🔍 Consultando papeletas para {tipo.upper()} **{documento}**...")
 
         try:
             # Llamar API según tipo
-            if tipo == "codigo_contribuyente":
-                resultado = sat_client.consultar_por_codigo_contribuyente(documento)
-            elif tipo == "placa":
+            if tipo == "placa":
                 resultado = sat_client.consultar_papeletas_por_placa(documento)
             elif tipo == "dni":
                 resultado = sat_client.consultar_papeletas_por_dni(documento)
@@ -161,25 +145,25 @@ class ActionConsultarImpuestos(Action):
             if resultado is not None:
                 data_completa = resultado.get('data', [])
 
-                # Ordenar poniendo impuestos primero
-                data_ordenada = self._sort_results_impuestos_first(data_completa)
+                #  Ordenar poniendo papeletas primero
+                data_ordenada = self._sort_results_papeletas_first(data_completa)
 
-                message = self._format_impuestos_response(data_ordenada, tipo, documento)
+                message = self._format_papeletas_response(data_ordenada, tipo, documento)
                 dispatcher.utter_message(text=message)
             else:
                 self._handle_api_error(dispatcher, tipo, documento)
 
         except Exception as e:
-            logger.error(f"Error en consulta API de impuestos: {e}")
+            logger.error(f"Error en consulta API: {e}")
             self._handle_api_error(dispatcher, tipo, documento)
 
         return [SlotSet("ultimo_documento", documento),
                 SlotSet("fallback_count", 0)
                 ]
 
-    def _sort_results_impuestos_first(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def _sort_results_papeletas_first(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        Ordena resultados poniendo impuestos/tributos primero, luego papeletas y otros
+        Ordena resultados poniendo papeletas primero, luego el resto
 
         Args:
             data: Lista de resultados de la API
@@ -187,34 +171,20 @@ class ActionConsultarImpuestos(Action):
         Returns:
             Lista ordenada
         """
-        # Conceptos tributarios que van primero ()
-        impuesto_conceptos = [
-            'Imp. Predial',
-            'Impuesto Predial',
-            'Arbitrios',
-            'Arbitrio',
-            'Imp. Vehicular',
-            'Impuesto Vehicular',
-            'Alcabala',
-            'Liquidacion Alcabala',
-            'Mult. Tributaria',
-            'Multas Tributarias'
-        ]
-
-        impuestos = []
+        papeletas = []
         otros = []
 
         for item in data:
             concepto = item.get('concepto', '').strip()
-            if any(imp in concepto for imp in impuesto_conceptos):
-                impuestos.append(item)
+            if concepto == 'Papeletas':
+                papeletas.append(item)
             else:
                 otros.append(item)
 
-        # Impuestos primero, luego otros conceptos (papeletas, etc.)
-        return impuestos + otros
+        # Papeletas primero, luego otros conceptos
+        return papeletas + otros
 
-    def _format_impuestos_response(self, data: List[Dict[str, Any]],
+    def _format_papeletas_response(self, data: List[Dict[str, Any]],
                                    tipo: str, documento: str) -> str:
         """
         Formatea la respuesta mostrando TODOS los conceptos con resumen por tipo
@@ -230,8 +200,7 @@ class ActionConsultarImpuestos(Action):
         tipo_display = {
             'placa': 'PLACA',
             'dni': 'DNI',
-            'ruc': 'RUC',
-            'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
+            'ruc': 'RUC'
         }.get(tipo, tipo.upper())
 
         if not data:
@@ -243,7 +212,8 @@ class ActionConsultarImpuestos(Action):
 - 'Menú principal' - Otras opciones
 - 'Finalizar chat'
 
-💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
+💡 **Tip:** Si crees tener una papeleta, puedes registrarla aquí:
+https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT7AtQ4GWcIHx18c26JeR3X8"""
 
         cantidad_total = len(data)
 
@@ -251,7 +221,7 @@ class ActionConsultarImpuestos(Action):
         montos_por_concepto = self._calcular_montos_por_concepto(data)
         total_general = sum(montos_por_concepto.values())
 
-        # MOSTRAR HASTA 3 ITEMS DETALLADOS
+        # MOSTRAR HASTA 3 ITEMS DETALLADOS (límite)
         MAX_ITEMS = 3
         items_mostrar = data[:MAX_ITEMS]
         items_restantes = cantidad_total - MAX_ITEMS
@@ -265,9 +235,8 @@ class ActionConsultarImpuestos(Action):
             cuota = item.get('cuota', '0').strip()
             monto = float(item.get('monto', 0))
             referencia = item.get('referencia', '').strip()
-            estado = item.get('estado', '').strip()
 
-            # Datos específicos de papeletas (si vienen mezcladas)
+            # Datos específicos según concepto
             falta = item.get('falta', '').strip()
             fecha_infraccion = item.get('fechainfraccion', '').strip()
 
@@ -283,19 +252,14 @@ class ActionConsultarImpuestos(Action):
             if referencia:
                 message += f"• **Referencia:** {referencia}\n"
 
-            # Solo mostrar datos de papeletas si es una papeleta
+            # Solo mostrar datos de papeletas si aplica
             if concepto == 'Papeletas':
                 if falta:
                     message += f"• **Tipo de falta:** {falta}\n"
                 if fecha_infraccion:
                     message += f"• **Fecha infracción:** {fecha_infraccion}\n"
 
-            message += f"• **Monto:** S/ {monto:,.2f}\n"
-
-            if estado:
-                message += f"• **Estado:** {estado}\n"
-
-            message += "\n"
+            message += f"• **Monto:** S/ {monto:,.2f}\n\n"
 
         # Indicar si hay más items
         if items_restantes > 0:
@@ -317,7 +281,7 @@ class ActionConsultarImpuestos(Action):
 
         # Recomendaciones según monto
         if total_general > 2000:
-            message += "💡 **Recomendación:** El monto es considerable. Te sugiero ver la información sobre facilidades de pago.\n\n"
+            message += "💡 **Recomendación:** El monto es considerable. Te sugiero ver información sobre facilidades de pago.\n\n"
 
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"
@@ -354,16 +318,16 @@ class ActionConsultarImpuestos(Action):
     def _request_document(self, dispatcher: CollectingDispatcher) -> List[Dict[Text, Any]]:
         """Solicita documento cuando no se proporcionó información"""
 
-        message = """Para consultar deuda tributaria necesito uno de estos datos:
+        message = """Para consultar papeletas necesito uno de estos datos:
 
 🚗 **Placa del vehículo** - Ej: ABC123, APS583, U1A710
 🆔 **Tu DNI** - 8 dígitos (ej: 12345678)
 🏢 **RUC** - 11 dígitos (ej: 20123456789)
-🏠 **Código de contribuyente** - Ej: 94539
 
 **Ejemplos de cómo escribir:**
-• "Impuestos de mi placa APS583"
-• "Deuda tributaria DNI 87654321"
+• "Mi placa es APS583" o solo "APS583"
+• "DNI 87654321" o solo "87654321"
+• "RUC 20123456789"
 
 ¿Cuál puedes proporcionar?"""
 
@@ -371,15 +335,15 @@ class ActionConsultarImpuestos(Action):
         return []
 
     def _handle_invalid_document(self, dispatcher: CollectingDispatcher,
-                                 tipo: str, documento: str) -> List[Dict[Text, Any]]:
+                                tipo: str, documento: str) -> List[Dict[Text, Any]]:
         """Maneja documentos con formato inválido"""
 
         error_messages = {
             'placa': f"""❌ La placa **{documento}** no tiene un formato válido.
 
 **Formatos correctos:**
-• ABC123
-• U1A710
+• ABC123 (clásico)
+• U1A710 (nuevo formato)
 • DEF456, GHI789, etc.
 
 Por favor, proporciona una placa válida.""",
@@ -399,15 +363,7 @@ Por favor, proporciona un DNI válido.""",
 • Debe empezar con 1 o 2
 • Ejemplo: 20123456789
 
-Por favor, proporciona un RUC válido.""",
-
-            'codigo_contribuyente': f"""❌ El código de contribuyente **{documento}** no es válido.
-
-**Formato correcto:**
-• Solo números
-
-
-Por favor, proporciona un código válido."""
+Por favor, proporciona un RUC válido."""
         }
 
         message = error_messages.get(tipo, f"❌ El dato **{documento}** no es válido.")
@@ -415,17 +371,10 @@ Por favor, proporciona un código válido."""
         return []
 
     def _handle_api_error(self, dispatcher: CollectingDispatcher,
-                          tipo: str, documento: str):
+                         tipo: str, documento: str):
         """Maneja errores de la API"""
 
-        tipo_display = {
-            'placa': 'PLACA',
-            'dni': 'DNI',
-            'ruc': 'RUC',
-            'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
-        }.get(tipo, tipo.upper())
-
-        message = f"""😔 Lo siento, tuve un problema técnico al consultar {tipo_display} **{documento}**.
+        message = f"""😔 Lo siento, tuve un problema técnico al consultar {tipo.upper()} **{documento}**.
 
 🔧 **Esto puede ocurrir por:**
 • Mantenimiento del sistema del SAT
@@ -436,7 +385,8 @@ Por favor, proporciona un código válido."""
 • Intentar nuevamente en unos minutos
 
 **¿Qué más necesitas?**
-• Intentar con otro documento
-• 'Menú principal' - Otras opciones"""
+• 'Menú principal' - Otras opciones
+• 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)

@@ -4,10 +4,10 @@ Actions relacionados con solicitud de asesor humano
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, FollowupAction
+from rasa_sdk.events import SlotSet
 import logging
 
-from ..core.backend_client import backend_client
+from actions.api.backend_client import backend_client
 
 logger = logging.getLogger(__name__)
 

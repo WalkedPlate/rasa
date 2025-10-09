@@ -1,12 +1,12 @@
 """
-Actions para trámites administrativos tributarios
+Actions para trámites administrativos de papeletas
 """
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import logging
 
-from ..core.sat_api_client import sat_client
+from actions.api.sat_client import sat_client
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +18,10 @@ class BaseTramiteRequisitos(Action):
         super().__init__()
         self.titulo_tramite = ""  # Debe ser sobrescrito por cada clase hija
         self.tipo_tramite = ""  # "papeletas" o "tributarios"
+
+    def name(self) -> Text:
+        # Esta clase base NO debe ser registrada directamente
+        return "base_tramite_requisitos_papeletas"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -101,115 +105,92 @@ class BaseTramiteRequisitos(Action):
 **¿Qué más necesitas?**
 - 'Otros trámites' - Ver otras opciones de trámites
 - 'Menú principal' - Volver al menú principal
-- 'Finalizar chat'"""
+- 'Finalizar chat'
+"""
 
         dispatcher.utter_message(text=message)
         return []
 
 
-class ActionTramitesPredialRequisitos(BaseTramiteRequisitos):
-    """Action para requisitos de declaración predial"""
+class ActionTramitesRecursoReconsideracion(BaseTramiteRequisitos):
+    """Action para recurso de reconsideración de papeletas"""
 
     def __init__(self):
         super().__init__()
-        self.titulo_tramite = "DECLARACIÓN DEL IMPUESTO PREDIAL"
-        self.tipo_tramite = "tributarios"
+        self.titulo_tramite = "RECURSO DE RECONSIDERACIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
-        return "action_tramites_predial_requisitos"
+        return "action_tramites_recurso_reconsideracion"
 
 
-class ActionTramitesVehicularRequisitos(BaseTramiteRequisitos):
-    """Action para requisitos de declaración vehicular"""
+class ActionTramitesDescargoInfracciones(BaseTramiteRequisitos):
+    """Action para descarga de infracciones"""
 
     def __init__(self):
         super().__init__()
-        self.titulo_tramite = "DECLARACIÓN DEL IMPUESTO VEHICULAR"
-        self.tipo_tramite = "tributarios"
+        self.titulo_tramite = "DESCARGO DE INFRACCIONES"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
-        return "action_tramites_vehicular_requisitos"
+        return "action_tramites_descargo_infracciones"
 
 
-class ActionTramitesAlcabalaRequisitos(BaseTramiteRequisitos):
-    """Action para requisitos de liquidación de alcabala"""
-
-    def __init__(self):
-        super().__init__()
-        self.titulo_tramite = "LIQUIDACIÓN DE ALCABALA"
-        self.tipo_tramite = "tributarios"
-
-    def name(self) -> Text:
-        return "action_tramites_alcabala_requisitos"
-
-
-class ActionTramitesReclamacionTributaria(BaseTramiteRequisitos):
-    """Action para recurso de reclamación tributaria"""
-
-    def __init__(self):
-        super().__init__()
-        self.titulo_tramite = "RECURSO DE RECLAMACIÓN"
-        self.tipo_tramite = "tributarios"
-
-    def name(self) -> Text:
-        return "action_tramites_reclamacion_tributaria"
-
-
-class ActionTramitesPrescripcionTributaria(BaseTramiteRequisitos):
-    """Action para prescripción tributaria"""
-
-    def __init__(self):
-        super().__init__()
-        self.titulo_tramite = "SOLICITUD DE PRESCRIPCIÓN"
-        self.tipo_tramite = "tributarios"
-
-    def name(self) -> Text:
-        return "action_tramites_prescripcion_tributaria"
-
-
-class ActionTramitesDevolucionTributaria(BaseTramiteRequisitos):
-    """Action para devolución tributaria"""
-
-    def __init__(self):
-        super().__init__()
-        self.titulo_tramite = "SOLICITUD DE DEVOLUCIÓN / COMPENSACIÓN"
-        self.tipo_tramite = "tributarios"
-
-    def name(self) -> Text:
-        return "action_tramites_devolucion_tributaria"
-
-
-class ActionTramitesApelacionTributaria(BaseTramiteRequisitos):
-    """Action para apelación tributaria"""
+class ActionTramitesApelacionPapeletas(BaseTramiteRequisitos):
+    """Action para apelación de papeletas"""
 
     def __init__(self):
         super().__init__()
         self.titulo_tramite = "RECURSO DE APELACIÓN"
-        self.tipo_tramite = "tributarios"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
-        return "action_tramites_apelacion_tributaria"
+        return "action_tramites_apelacion_papeletas"
 
 
-class ActionTramitesTerceriaTributaria(BaseTramiteRequisitos):
-    """Action para tercería tributaria"""
+class ActionTramitesPrescripcionPapeletas(BaseTramiteRequisitos):
+    """Action para prescripción de papeletas"""
 
     def __init__(self):
         super().__init__()
-        self.titulo_tramite = "TERCERÍA DE PROPIEDAD"
-        self.tipo_tramite = "tributarios"
+        self.titulo_tramite = "PRESCRIPCIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
-        return "action_tramites_terceria_tributaria"
+        return "action_tramites_prescripcion_papeletas"
 
 
-class ActionTramitesSuspensionTributaria(BaseTramiteRequisitos):
-    """Action para suspensión tributaria"""
+class ActionTramitesDevolucionPapeletas(BaseTramiteRequisitos):
+    """Action para devolución y/o compensación de papeletas"""
 
     def __init__(self):
         super().__init__()
-        self.titulo_tramite = "SUSPENSIÓN DE COBRANZA COACTIVA"
-        self.tipo_tramite = "tributarios"
+        self.titulo_tramite = "DEVOLUCIÓN Y/O COMPENSACIÓN"
+        self.tipo_tramite = "papeletas"
 
     def name(self) -> Text:
-        return "action_tramites_suspension_tributaria"
+        return "action_tramites_devolucion_papeletas"
+
+
+class ActionTramitesTerceriaRequisitos(BaseTramiteRequisitos):
+    """Action para tercería de propiedad (requisitos papeletas)"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "TERCERIA DE PROPIEDAD"
+        self.tipo_tramite = "papeletas"
+
+    def name(self) -> Text:
+        return "action_tramites_terceria_requisitos"
+
+
+class ActionTramitesSuspensionRequisitos(BaseTramiteRequisitos):
+    """Action para suspensión de cobranza coactiva (requisitos papeletas)"""
+
+    def __init__(self):
+        super().__init__()
+        self.titulo_tramite = "SUSPENSION DE LA COBRANZA COACTIVA"
+        self.tipo_tramite = "papeletas"
+
+    def name(self) -> Text:
+        return "action_tramites_suspension_requisitos"

@@ -1,8 +1,28 @@
 version: "3.1"
 
+# ============================================================================
+# ARCHIVO DE REGLAS - CHATBOT SAT LIMA
+# ============================================================================
+# Las reglas definen comportamientos deterministas del bot que siempre
+# deben ejecutarse de la misma manera, sin importar el contexto previo.
+#
+# Usar reglas para:
+# - Saludos y despedidas
+# - Navegación directa a menús
+# - Consultas rápidas con datos completos
+# - Acciones que no requieren contexto conversacional
+#
+# NO usar reglas para:
+# - Flujos conversacionales complejos (usar stories)
+# - Comportamientos que dependen del historial
+# ============================================================================
+
 rules:
 
-# ========== REGLAS BÁSICAS ==========
+# ============================================================================
+# SECCIÓN 1: REGLAS BÁSICAS - Conversación general
+# ============================================================================
+
 - rule: Saludo inicial
   steps:
   - intent: greet
@@ -23,7 +43,23 @@ rules:
   - intent: menu_principal
   - action: utter_menu_principal
 
-# ========== CONSULTAS RÁPIDAS ESPECÍFICAS (GLOBAL) ==========
+- rule: Fallback inteligente progresivo
+  steps:
+  - intent: nlu_fallback
+  - action: action_smart_fallback
+
+
+# ============================================================================
+# SECCIÓN 2: CONSULTAS RÁPIDAS GLOBALES - Sin navegación previa
+# ============================================================================
+# Estas reglas permiten consultas directas sin necesidad de navegar por
+# el menú. Son las más usadas por los usuarios expertos.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# 2.1 Consultas rápidas de PAPELETAS
+# ----------------------------------------------------------------------------
+
 - rule: Consulta rápida papeletas con placa
   steps:
   - intent: consulta_rapida_papeletas_placa
@@ -43,6 +79,10 @@ rules:
   steps:
   - intent: consulta_rapida_codigo_falta
   - action: action_consultar_codigo_falta
+
+# ----------------------------------------------------------------------------
+# 2.2 Consultas rápidas de IMPUESTOS
+# ----------------------------------------------------------------------------
 
 - rule: Consulta rápida impuestos con placa
   steps:
@@ -64,7 +104,11 @@ rules:
   - intent: consulta_rapida_impuestos_codigo
   - action: action_consultar_impuestos
 
-# ========== NAVEGACIÓN A CONTEXTOS ==========
+
+# ============================================================================
+# SECCIÓN 3: NAVEGACIÓN A OPCIONES PRINCIPALES - Menú de 8 opciones
+# ============================================================================
+
 - rule: Ir a Casilla MTC
   steps:
   - intent: ir_a_casilla_mtc
@@ -85,7 +129,34 @@ rules:
   - intent: ir_a_impuestos
   - action: utter_impuestos_menu
 
-# ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
+- rule: Ir a Retención y Captura
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+
+- rule: Ir a Lugares y Pagos
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+
+- rule: Ir a Servicios Virtuales
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+
+- rule: Ir a Otros Trámites
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+
+
+# ============================================================================
+# SECCIÓN 4: CONTEXTO PAPELETAS - Consultas específicas
+# ============================================================================
+# Reglas que se activan cuando el usuario ya está en el contexto de
+# papeletas y proporciona datos o hace consultas específicas.
+# ============================================================================
+
 - rule: Papeletas - Consultar con placa
   steps:
   - intent: papeletas_consultar_placa
@@ -126,7 +197,11 @@ rules:
   - intent: papeletas_frecuentes
   - action: utter_papeletas_frecuentes
 
-# ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
+
+# ============================================================================
+# SECCIÓN 5: CONTEXTO IMPUESTOS - Consultas específicas
+# ============================================================================
+
 - rule: Impuestos - Consultar con placa
   steps:
   - intent: impuestos_consultar_placa
@@ -152,7 +227,10 @@ rules:
   - intent: impuestos_consultar_generico
   - action: action_consultar_impuestos
 
-# ========== CONTEXTO IMPUESTOS - CUADERNILLO TRIBUTARIO ==========
+# ----------------------------------------------------------------------------
+# 5.1 Sub-opciones: Cuadernillo tributario
+# ----------------------------------------------------------------------------
+
 - rule: Impuestos - Cuadernillo genérico
   steps:
   - intent: impuestos_cuadernillo
@@ -163,7 +241,10 @@ rules:
   - intent: impuestos_cuadernillo_agencia_virtual
   - action: action_cuadernillo_agencia_virtual
 
-# ========== CONTEXTO IMPUESTOS - DECLARE Y LIQUIDE ==========
+# ----------------------------------------------------------------------------
+# 5.2 Sub-opciones: Declaraciones y liquidaciones
+# ----------------------------------------------------------------------------
+
 - rule: Impuestos - Declare y liquide genérico
   steps:
   - intent: impuestos_declarar_liquide
@@ -189,7 +270,10 @@ rules:
   - intent: impuestos_fraccionar_deuda
   - action: action_fraccionar_deuda
 
-# ========== CONTEXTO IMPUESTOS - BENEFICIOS ==========
+# ----------------------------------------------------------------------------
+# 5.3 Sub-opciones: Beneficios tributarios
+# ----------------------------------------------------------------------------
+
 - rule: Impuestos - Beneficios genérico
   steps:
   - intent: impuestos_beneficios
@@ -206,13 +290,10 @@ rules:
   - action: action_beneficios_adulto_mayor
 
 
-# ========== NAVEGACIÓN A RETENCIÓN ==========
-- rule: Ir a Retención y Captura
-  steps:
-  - intent: ir_a_retencion_captura
-  - action: utter_retencion_menu
+# ============================================================================
+# SECCIÓN 6: CONTEXTO RETENCIÓN - Sub-opciones
+# ============================================================================
 
-# ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ==========
 - rule: Retención - Embargo de cuentas
   steps:
   - intent: retencion_embargo_cuentas
@@ -248,31 +329,11 @@ rules:
   - intent: retencion_consultar_placa
   - action: action_consultar_orden_captura
 
-# ========== NAVEGACIÓN GLOBAL ==========
-- rule: Otra consulta
-  steps:
-  - intent: otra_consulta
-  - action: utter_otra_consulta
 
-# ========== FALLBACK GLOBAL ==========
-- rule: Fallback inteligente progresivo
-  steps:
-  - intent: nlu_fallback
-  - action: action_smart_fallback
+# ============================================================================
+# SECCIÓN 7: CONTEXTO LUGARES Y PAGOS - Sub-opciones
+# ============================================================================
 
-# ========== FALLBACK GLOBAL ==========
-- rule: Fallback inteligente progresivo
-  steps:
-  - intent: nlu_fallback
-  - action: action_smart_fallback
-
-# ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
-- rule: Ir a Lugares y Pagos
-  steps:
-  - intent: ir_a_lugares_pagos
-  - action: utter_lugares_pagos_menu
-
-# ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
 - rule: Lugares - Agencias y horarios
   steps:
   - intent: lugares_pagos_agencias_horarios
@@ -288,13 +349,11 @@ rules:
   - intent: lugares_pagos_formas_pago
   - action: action_lugares_formas_pago
 
-# ========== NAVEGACIÓN A SERVICIOS VIRTUALES ==========
-- rule: Ir a Servicios Virtuales
-  steps:
-  - intent: ir_a_servicios_virtuales
-  - action: utter_servicios_virtuales_menu
 
-# ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ==========
+# ============================================================================
+# SECCIÓN 8: CONTEXTO SERVICIOS VIRTUALES - Sub-opciones
+# ============================================================================
+
 - rule: Servicios - Mesa de partes
   steps:
   - intent: servicios_virtuales_mesa_partes
@@ -326,19 +385,15 @@ rules:
   - action: action_servicios_cursos
 
 
-# ========== NAVEGACIÓN A OTROS TRÁMITES ==========
-- rule: Ir a Otros Trámites
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
+# ============================================================================
+# SECCIÓN 9: CONTEXTO OTROS TRÁMITES - Consultas y sub-opciones
+# ============================================================================
 
-# ========== CONTEXTO OTROS TRÁMITES - CONSULTAS ==========
 - rule: Trámites - Consultar número
   steps:
   - intent: tramites_consultar_numero
   - action: action_consultar_tramite
 
-# ========== CONTEXTO OTROS TRÁMITES - SUB-OPCIONES ==========
 - rule: Trámites - Requisitos papeletas
   steps:
   - intent: tramites_requisitos_papeletas
@@ -354,8 +409,10 @@ rules:
   - intent: tramites_constancias_no_adeudo
   - action: action_tramites_constancias_no_adeudo
 
+# ----------------------------------------------------------------------------
+# 9.1 Trámites específicos de PAPELETAS
+# ----------------------------------------------------------------------------
 
-# ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
 - rule: Trámites - Recurso reconsideración
   steps:
   - intent: tramites_recurso_reconsideracion
@@ -391,7 +448,10 @@ rules:
   - intent: tramites_suspension_requisitos
   - action: action_tramites_suspension_requisitos
 
-# ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+# ----------------------------------------------------------------------------
+# 9.2 Trámites específicos TRIBUTARIOS
+# ----------------------------------------------------------------------------
+
 - rule: Trámites - Predial requisitos
   steps:
   - intent: tramites_predial_requisitos
@@ -436,3 +496,13 @@ rules:
   steps:
   - intent: tramites_suspension_tributaria
   - action: action_tramites_suspension_tributaria
+
+
+# ============================================================================
+# SECCIÓN 10: NAVEGACIÓN AUXILIAR
+# ============================================================================
+
+- rule: Otra consulta
+  steps:
+  - intent: otra_consulta
+  - action: utter_otra_consulta

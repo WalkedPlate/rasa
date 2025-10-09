@@ -1,7 +1,26 @@
 version: "3.1"
 
+# ============================================================================
+# ARCHIVO NLU - ENTRENAMIENTO DEL CHATBOT SAT LIMA
+# ============================================================================
+# Este archivo contiene:
+# - Regex patterns: Patrones para extracción de entidades (placa, DNI, RUC)
+# - Intents: Ejemplos de mensajes del usuario para cada intención
+# - Entities: Datos específicos marcados en los ejemplos
+#
+# IMPORTANTE: Los ejemplos deben ser variados y naturales para mejorar
+# la precisión del modelo NLU.
+# ============================================================================
+
 nlu:
-# ========== REGEX PATTERNS ==========
+
+# ============================================================================
+# SECCIÓN 1: REGEX PATTERNS - Patrones de extracción de entidades
+# ============================================================================
+# Estos patrones ayudan al modelo a identificar datos estructurados como
+# placas vehiculares, DNI, RUC, códigos de falta, etc.
+# ============================================================================
+
 - regex: placa_pattern
   examples: |
     - \b[A-Z]{3}\s?\d{3}\b              # ABC123 o ABC 123 (UN espacio)
@@ -21,13 +40,17 @@ nlu:
 
 - regex: ruc_pattern
   examples: |
-    - \b[12]\d{10}\b
+    - \b[12]\d{10}\b                     # 11 dígitos que empiezan con 1 o 2
 
 - regex: codigo_pattern
   examples: |
-    - \b[A-Z]\d{1,2}\b
+    - \b[A-Z]\d{1,2}\b                   # Letra seguida de 1-2 dígitos (ej: G40)
 
-# ========== INTENTS BÁSICOS ==========
+
+# ============================================================================
+# SECCIÓN 2: INTENTS BÁSICOS - Conversación general
+# ============================================================================
+
 - intent: greet
   examples: |
     - hola
@@ -96,7 +119,7 @@ nlu:
     - hablar con representante
     - necesito atención directa
     - el chatbot no me entiende
-    - requiero asesoría personalizada    
+    - requiero asesoría personalizada
 
 - intent: menu_principal
   examples: |
@@ -113,7 +136,18 @@ nlu:
     - opciones principales
     - qué más puedes hacer
 
-# ========== CONSULTAS RÁPIDAS ESPECÍFICAS (GLOBAL) ==========
+
+# ============================================================================
+# SECCIÓN 3: CONSULTAS RÁPIDAS GLOBALES - Sin navegación previa
+# ============================================================================
+# Estos intents permiten al usuario hacer consultas directas sin necesidad
+# de navegar por el menú. Funcionan en cualquier momento de la conversación.
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# 3.1 Consultas rápidas de PAPELETAS
+# ----------------------------------------------------------------------------
+
 - intent: consulta_rapida_papeletas_placa
   examples: |
     - ver papeletas de mi placa [ABC123](placa)
@@ -182,7 +216,72 @@ nlu:
     - significado de [A05](codigo_falta)
     - qué es el código [T12](codigo_falta)
 
-# ========== NAVEGACIÓN A CONTEXTOS ==========
+# ----------------------------------------------------------------------------
+# 3.2 Consultas rápidas de IMPUESTOS
+# ----------------------------------------------------------------------------
+
+- intent: consulta_rapida_impuestos_placa
+  examples: |
+    - impuestos de mi placa [ABC123](placa)
+    - deuda tributaria de la placa [U1A710](placa)
+    - impuesto vehicular de mi placa [XYZ789](placa)
+    - quiero saber los impuestos de [DEF456](placa)
+    - tributos de mi placa [GHI789](placa)
+    - revisar impuestos de [MNO123](placa)
+    - consultar deuda tributaria de mi placa [PQR456](placa)
+    - ver si tengo impuestos en la placa [STU789](placa)
+    - impuestos pendientes de [ABC123](placa)
+    - deuda del vehículo [U1A710](placa)
+    - tributos de la placa [XYZ789](placa)
+    - consultar impuestos de [DEF456](placa)
+
+- intent: consulta_rapida_impuestos_dni
+  examples: |
+    - impuestos de mi DNI [12345678](dni)
+    - deuda tributaria de mi DNI [87654321](dni)
+    - tributos con mi DNI [11223344](dni)
+    - quiero saber los impuestos de [55667788](dni)
+    - revisar impuestos del DNI [99887766](dni)
+    - consultar deuda tributaria con DNI [44556677](dni)
+    - impuestos de mi documento [12345678](dni)
+    - ver si tengo impuestos con [87654321](dni)
+    - impuestos pendientes de [11223344](dni)
+    - tributos de mi DNI [55667788](dni)
+    - deuda con el DNI [99887766](dni)
+    - consultar impuestos del [44556677](dni)
+
+- intent: consulta_rapida_impuestos_ruc
+  examples: |
+    - impuestos del RUC [20123456789](ruc)
+    - deuda tributaria de mi empresa [10987654321](ruc)
+    - tributos del RUC [15555666677](ruc)
+    - quiero saber los impuestos de [12888999000](ruc)
+    - revisar impuestos de la empresa [20555444333](ruc)
+    - consultar deuda tributaria del RUC [11999888777](ruc)
+    - impuestos de mi negocio [20123456789](ruc)
+    - tributos de mi compañía [10987654321](ruc)
+    - deuda empresarial [15555666677](ruc)
+    - ver impuestos del RUC [12888999000](ruc)
+    - consultar tributos de [20555444333](ruc)
+
+- intent: consulta_rapida_impuestos_codigo
+  examples: |
+    - impuestos del código contribuyente [94539](codigo_contribuyente)
+    - deuda tributaria código [12345](codigo_contribuyente)
+    - tributos del código [67890](codigo_contribuyente)
+    - consultar código contribuyente [11111](codigo_contribuyente)
+    - impuesto predial código [22222](codigo_contribuyente)
+    - código de contribuyente [94539](codigo_contribuyente)
+    - mi código es [12345](codigo_contribuyente)
+    - código [67890](codigo_contribuyente) impuestos
+    - consultar [11111](codigo_contribuyente) tributos
+    - deuda del código [22222](codigo_contribuyente)
+
+
+# ============================================================================
+# SECCIÓN 4: NAVEGACIÓN - Ir a opciones principales del menú
+# ============================================================================
+
 - intent: ir_a_casilla_mtc
   examples: |
     - casilla mtc
@@ -194,7 +293,6 @@ nlu:
     - registro obligatorio
     - inscripción casilla MTC
     - casilla electrónica del MTC
-
 
 - intent: ir_a_pagos_linea
   examples: |
@@ -233,7 +331,89 @@ nlu:
     - multas de tránsito
     - infracciones vehiculares
 
-# ========== CONTEXTO PAPELETAS - CONSULTAS ESPECÍFICAS ==========
+- intent: ir_a_impuestos
+  examples: |
+    - impuestos
+    - quiero consultar impuestos
+    - consultar mis impuestos
+    - deuda tributaria
+    - tributos
+    - necesito ver mis impuestos
+    - quiero revisar mis impuestos
+    - tengo deuda tributaria
+    - consultar impuestos pendientes
+    - ver mis impuestos
+    - revisar impuestos
+    - tengo impuestos pendientes
+    - quiero saber si tengo impuestos
+    - me dijeron que tengo deuda tributaria
+    - necesito consultar tributos
+    - quiero ver tributos
+    - me llegó una carta sobre impuestos
+    - impuesto predial
+    - impuesto vehicular
+    - arbitrios
+
+- intent: ir_a_retencion_captura
+  examples: |
+    - retención y captura
+    - opción de retención
+    - necesito ayuda con retención
+    - quiero consultar medidas cautelares
+    - opciones de captura
+    - menú de retención
+    - ir a retención
+    - retención del SAT
+    - medidas cautelares SAT
+    - cobranza del SAT
+    - procedimientos de retención
+
+- intent: ir_a_lugares_pagos
+  examples: |
+    - lugares y pagos
+    - oficinas del SAT
+    - horarios de atención
+    - ubicaciones SAT
+    - centros de atención
+    - agencias del SAT
+    - horarios oficinas
+    - oficinas y horarios
+    - menú de lugares
+    - opciones de ubicaciones
+    - información sobre oficinas
+    - centros SAT
+
+- intent: ir_a_servicios_virtuales
+  examples: |
+    - servicios virtuales
+    - servicios online
+    - trámites virtuales
+    - servicios digitales
+    - plataformas virtuales SAT
+    - servicios por internet
+    - trámites online
+    - servicios web SAT
+    - plataforma digital
+    - servicios electrónicos
+    - herramientas virtuales
+
+- intent: ir_a_otros_tramites
+  examples: |
+    - otros trámites
+    - trámites administrativos
+    - requisitos administrativos
+    - procedimientos administrativos
+    - trámites del SAT
+    - consultar requisitos
+
+
+# ============================================================================
+# SECCIÓN 5: CONTEXTO PAPELETAS - Intents dentro del módulo de papeletas
+# ============================================================================
+# Estos intents se activan cuando el usuario ya está en el contexto de
+# papeletas y proporciona datos específicos o hace consultas relacionadas.
+# ============================================================================
+
 - intent: papeletas_consultar_placa
   examples: |
     - [ABC123](placa)
@@ -390,104 +570,11 @@ nlu:
     - más información
     - help
 
-# ========== NAVEGACIÓN ==========
-- intent: otra_consulta
-  examples: |
-    - otra consulta
-    - consultar otro
-    - nueva consulta
-    - consultar más
-    - revisar otro
-    - quiero consultar otro
-    - necesito otra consulta
-    - consultar algo más
-    - ver otro documento
-    - más consultas
-    - siguiente consulta
 
-# ========== NAVEGACIÓN A IMPUESTOS ==========
-- intent: ir_a_impuestos
-  examples: |
-    - impuestos
-    - quiero consultar impuestos
-    - consultar mis impuestos
-    - deuda tributaria
-    - tributos
-    - necesito ver mis impuestos
-    - quiero revisar mis impuestos
-    - tengo deuda tributaria
-    - consultar impuestos pendientes
-    - ver mis impuestos
-    - revisar impuestos
-    - tengo impuestos pendientes
-    - quiero saber si tengo impuestos
-    - me dijeron que tengo deuda tributaria
-    - necesito consultar tributos
-    - quiero ver tributos
-    - me llegó una carta sobre impuestos
-    - impuesto predial
-    - impuesto vehicular
-    - arbitrios
+# ============================================================================
+# SECCIÓN 6: CONTEXTO IMPUESTOS - Intents dentro del módulo de impuestos
+# ============================================================================
 
-# ========== CONSULTAS RÁPIDAS ESPECÍFICAS IMPUESTOS (GLOBAL) ==========
-- intent: consulta_rapida_impuestos_placa
-  examples: |
-    - impuestos de mi placa [ABC123](placa)
-    - deuda tributaria de la placa [U1A710](placa)
-    - impuesto vehicular de mi placa [XYZ789](placa)
-    - quiero saber los impuestos de [DEF456](placa)
-    - tributos de mi placa [GHI789](placa)
-    - revisar impuestos de [MNO123](placa)
-    - consultar deuda tributaria de mi placa [PQR456](placa)
-    - ver si tengo impuestos en la placa [STU789](placa)
-    - impuestos pendientes de [ABC123](placa)
-    - deuda del vehículo [U1A710](placa)
-    - tributos de la placa [XYZ789](placa)
-    - consultar impuestos de [DEF456](placa)
-
-- intent: consulta_rapida_impuestos_dni
-  examples: |
-    - impuestos de mi DNI [12345678](dni)
-    - deuda tributaria de mi DNI [87654321](dni)
-    - tributos con mi DNI [11223344](dni)
-    - quiero saber los impuestos de [55667788](dni)
-    - revisar impuestos del DNI [99887766](dni)
-    - consultar deuda tributaria con DNI [44556677](dni)
-    - impuestos de mi documento [12345678](dni)
-    - ver si tengo impuestos con [87654321](dni)
-    - impuestos pendientes de [11223344](dni)
-    - tributos de mi DNI [55667788](dni)
-    - deuda con el DNI [99887766](dni)
-    - consultar impuestos del [44556677](dni)
-
-- intent: consulta_rapida_impuestos_ruc
-  examples: |
-    - impuestos del RUC [20123456789](ruc)
-    - deuda tributaria de mi empresa [10987654321](ruc)
-    - tributos del RUC [15555666677](ruc)
-    - quiero saber los impuestos de [12888999000](ruc)
-    - revisar impuestos de la empresa [20555444333](ruc)
-    - consultar deuda tributaria del RUC [11999888777](ruc)
-    - impuestos de mi negocio [20123456789](ruc)
-    - tributos de mi compañía [10987654321](ruc)
-    - deuda empresarial [15555666677](ruc)
-    - ver impuestos del RUC [12888999000](ruc)
-    - consultar tributos de [20555444333](ruc)
-
-- intent: consulta_rapida_impuestos_codigo
-  examples: |
-    - impuestos del código contribuyente [94539](codigo_contribuyente)
-    - deuda tributaria código [12345](codigo_contribuyente)
-    - tributos del código [67890](codigo_contribuyente)
-    - consultar código contribuyente [11111](codigo_contribuyente)
-    - impuesto predial código [22222](codigo_contribuyente)
-    - código de contribuyente [94539](codigo_contribuyente)
-    - mi código es [12345](codigo_contribuyente)
-    - código [67890](codigo_contribuyente) impuestos
-    - consultar [11111](codigo_contribuyente) tributos
-    - deuda del código [22222](codigo_contribuyente)
-
-# ========== CONTEXTO IMPUESTOS - CONSULTAS ESPECÍFICAS ==========
 - intent: impuestos_consultar_placa
   examples: |
     - [ZZZ111](placa)
@@ -547,7 +634,10 @@ nlu:
     - revisar mi situación tributaria
     - consultar mi estado tributario
 
-# ========== CONTEXTO IMPUESTOS - SUB-OPCIONES ==========
+# ----------------------------------------------------------------------------
+# 6.1 Sub-opciones de impuestos: Cuadernillo
+# ----------------------------------------------------------------------------
+
 - intent: impuestos_cuadernillo
   examples: |
     - cuadernillo tributario
@@ -569,6 +659,10 @@ nlu:
     - agencia virtual SAT
     - registro agencia virtual
     - cuadernillo por internet
+
+# ----------------------------------------------------------------------------
+# 6.2 Sub-opciones de impuestos: Declaraciones y liquidaciones
+# ----------------------------------------------------------------------------
 
 - intent: impuestos_declarar_liquide
   examples: |
@@ -623,6 +717,10 @@ nlu:
     - dividir pago impuestos
     - facilidades tributarias
 
+# ----------------------------------------------------------------------------
+# 6.3 Sub-opciones de impuestos: Beneficios
+# ----------------------------------------------------------------------------
+
 - intent: impuestos_beneficios
   examples: |
     - beneficios generales
@@ -647,67 +745,11 @@ nlu:
     - no pensionista
     - adulto mayor no pensionista
 
-# ========== INTENTS DE CLARIFICACIÓN ==========
-- intent: clarify_papeletas
-  examples: |
-    - papeletas tránsito
-    - infracciones tránsito
-    - multas tránsito  
-    - papeletas de tránsito
-    - infracciones vehiculares tránsito
-    - sanciones tránsito
-    - quiero papeletas
-    - necesito papeletas
-    - busco papeletas
 
-- intent: clarify_impuestos
-  examples: |
-    - impuestos tributarios
-    - deuda tributaria específica
-    - tributos específicos
-    - impuesto predial específico
-    - impuesto vehicular específico
-    - arbitrios específicos
-    - alcabala específica
-    - deuda fiscal
-    - quiero impuestos
-    - necesito impuestos
-    - busco impuestos
+# ============================================================================
+# SECCIÓN 7: CONTEXTO RETENCIÓN - Intents del módulo de retención y captura
+# ============================================================================
 
-# ========== CONSULTA AMBIGUA VERDADERA ==========
-- intent: consulta_ambigua_documento
-  examples: |
-    - [13579135](dni)
-    - [ZAB789](placa)
-    - [19876543210](ruc)
-    - [98765](codigo_contribuyente)
-    - consultar [24681246](dni)
-    - ver [CDE012](placa)
-    - revisar [18765432109](ruc)
-    - información de [87654](codigo_contribuyente)
-    - mi documento [35792468](dni)
-    - la placa [FGH345](placa)
-    - empresa [17654321098](ruc)
-    - código [76543](codigo_contribuyente)
-    
-
-# ========== NAVEGACIÓN A RETENCIÓN ==========
-- intent: ir_a_retencion_captura
-  examples: |
-    - retención y captura
-    - opción de retención
-    - necesito ayuda con retención
-    - quiero consultar medidas cautelares
-    - opciones de captura
-    - menú de retención
-    - ir a retención
-    - retención del SAT
-    - medidas cautelares SAT
-    - cobranza del SAT
-    - procedimientos de retención
-
-
-# ========== CONTEXTO RETENCIÓN - SUB-OPCIONES ESPECÍFICAS ==========
 - intent: retencion_embargo_cuentas
   examples: |
     - retención bancaria específica
@@ -754,7 +796,7 @@ nlu:
     - suspensión del proceso coactivo
     - parar proceso de cobranza
     - detener procedimiento de cobranza
-
+    
 - intent: retencion_terceria_propiedad
   examples: |
     - tercería de propiedad específica
@@ -789,25 +831,12 @@ nlu:
     - [CAU008](placa)
     - [TER009](placa)
     - [SUS010](placa)
-    
 
-# ========== NAVEGACIÓN A LUGARES Y PAGOS ==========
-- intent: ir_a_lugares_pagos
-  examples: |
-    - lugares y pagos
-    - oficinas del SAT
-    - horarios de atención
-    - ubicaciones SAT
-    - centros de atención
-    - agencias del SAT
-    - horarios oficinas
-    - oficinas y horarios
-    - menú de lugares
-    - opciones de ubicaciones
-    - información sobre oficinas
-    - centros SAT
 
-# ========== CONTEXTO LUGARES Y PAGOS - SUB-OPCIONES ==========
+# ============================================================================
+# SECCIÓN 8: CONTEXTO LUGARES Y PAGOS - Intents del módulo de ubicaciones
+# ============================================================================
+
 - intent: lugares_pagos_agencias_horarios
   examples: |
     - agencias y horarios específicos
@@ -845,24 +874,12 @@ nlu:
     - modalidades de pago disponibles
     - tipos de pago disponibles SAT
     - alternativas específicas de pago
-    
 
-# ========== NAVEGACIÓN A SERVICIOS VIRTUALES ==========
-- intent: ir_a_servicios_virtuales
-  examples: |
-    - servicios virtuales
-    - servicios online
-    - trámites virtuales
-    - servicios digitales
-    - plataformas virtuales SAT
-    - servicios por internet
-    - trámites online
-    - servicios web SAT
-    - plataforma digital
-    - servicios electrónicos
-    - herramientas virtuales
 
-# ========== CONTEXTO SERVICIOS VIRTUALES - SUB-OPCIONES ESPECÍFICAS ==========
+# ============================================================================
+# SECCIÓN 9: CONTEXTO SERVICIOS VIRTUALES - Intents de servicios digitales
+# ============================================================================
+
 - intent: servicios_virtuales_mesa_partes
   examples: |
     - mesa de partes digital
@@ -935,17 +952,11 @@ nlu:
     - cursos especializados SAT
     - escuela virtual SAT
 
-# ========== NAVEGACIÓN A OTROS TRÁMITES ==========
-- intent: ir_a_otros_tramites
-  examples: |
-    - otros trámites
-    - trámites administrativos
-    - requisitos administrativos
-    - procedimientos administrativos
-    - trámites del SAT
-    - consultar requisitos
 
-# ========== CONSULTA DE TRÁMITES ==========
+# ============================================================================
+# SECCIÓN 10: CONTEXTO OTROS TRÁMITES - Intents de trámites administrativos
+# ============================================================================
+
 - intent: tramites_consultar_numero
   examples: |
     - consultar trámite [12345678901234](numero_tramite)
@@ -963,7 +974,10 @@ nlu:
     - estado de trámite
     - ver trámite
 
-# ========== SUB-MENÚS TRÁMITES ==========
+# ----------------------------------------------------------------------------
+# 10.1 Sub-menús de trámites
+# ----------------------------------------------------------------------------
+
 - intent: tramites_requisitos_papeletas
   examples: |
     - requisitos papeletas administrativos
@@ -990,7 +1004,6 @@ nlu:
     - documentación tributaria
     - requisitos deuda tributaria
 
-# ========== TRÁMITES ESPECÍFICOS ==========
 - intent: tramites_constancias_no_adeudo
   examples: |
     - constancias no adeudo
@@ -1004,7 +1017,10 @@ nlu:
     - documento no adeudo
     - certificación tributaria
 
-# ========== TRÁMITES PAPELETAS ESPECÍFICOS ==========
+# ----------------------------------------------------------------------------
+# 10.2 Trámites específicos de PAPELETAS
+# ----------------------------------------------------------------------------
+
 - intent: tramites_recurso_reconsideracion
   examples: |
     - recurso reconsideración requisitos
@@ -1094,7 +1110,10 @@ nlu:
     - suspensión procedimiento requisitos
     - necesito suspensión requisitos
 
-# ========== TRÁMITES TRIBUTARIOS ESPECÍFICOS ==========
+# ----------------------------------------------------------------------------
+# 10.3 Trámites específicos TRIBUTARIOS
+# ----------------------------------------------------------------------------
+
 - intent: tramites_predial_requisitos
   examples: |
     - predial requisitos administrativos
@@ -1209,3 +1228,71 @@ nlu:
     - necesito suspensión tributaria
     - quiero suspender cobranza
     - suspensión fiscal
+
+
+# ============================================================================
+# SECCIÓN 11: SISTEMA DE CLARIFICACIÓN - Router inteligente
+# ============================================================================
+# Estos intents se usan cuando el usuario necesita clarificar entre
+# papeletas o impuestos después de proporcionar un documento ambiguo.
+# ============================================================================
+
+- intent: clarify_papeletas
+  examples: |
+    - papeletas tránsito
+    - infracciones tránsito
+    - multas tránsito  
+    - papeletas de tránsito
+    - infracciones vehiculares tránsito
+    - sanciones tránsito
+    - quiero papeletas
+    - necesito papeletas
+    - busco papeletas
+
+- intent: clarify_impuestos
+  examples: |
+    - impuestos tributarios
+    - deuda tributaria específica
+    - tributos específicos
+    - impuesto predial específico
+    - impuesto vehicular específico
+    - arbitrios específicos
+    - alcabala específica
+    - deuda fiscal
+    - quiero impuestos
+    - necesito impuestos
+    - busco impuestos
+
+- intent: consulta_ambigua_documento
+  examples: |
+    - [13579135](dni)
+    - [ZAB789](placa)
+    - [19876543210](ruc)
+    - [98765](codigo_contribuyente)
+    - consultar [24681246](dni)
+    - ver [CDE012](placa)
+    - revisar [18765432109](ruc)
+    - información de [87654](codigo_contribuyente)
+    - mi documento [35792468](dni)
+    - la placa [FGH345](placa)
+    - empresa [17654321098](ruc)
+    - código [76543](codigo_contribuyente)
+
+
+# ============================================================================
+# SECCIÓN 12: NAVEGACIÓN AUXILIAR
+# ============================================================================
+
+- intent: otra_consulta
+  examples: |
+    - otra consulta
+    - consultar otro
+    - nueva consulta
+    - consultar más
+    - revisar otro
+    - quiero consultar otro
+    - necesito otra consulta
+    - consultar algo más
+    - ver otro documento
+    - más consultas
+    - siguiente consulta

@@ -8,8 +8,8 @@ from rasa_sdk.events import SlotSet
 import logging
 import re
 
-from ..core.sat_api_client import sat_client
-from ..core.validators import validator
+from actions.api.sat_client import sat_client
+from actions.utils.validators import validator
 
 logger = logging.getLogger(__name__)
 

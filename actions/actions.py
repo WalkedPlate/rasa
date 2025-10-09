@@ -1,30 +1,43 @@
-# Imports de actions
-from .shared.fallback_actions import ActionResetFallbackCount, ActionSmartFallback
-from .shared.session_actions import ActionFinalizarChat
-from .shared.advisor_actions import ActionSolicitarAsesor
-from .papeletas.consulta_actions import ActionConsultarPapeletas
-from .papeletas.codigo_actions import ActionConsultarCodigoFalta
-from .impuestos.consulta_actions import ActionConsultarImpuestos
+# ============================================================================
+# IMPORTS - HANDLERS COMPARTIDOS (Shared)
+# ============================================================================
+from actions.handlers.shared.session_actions import ActionFinalizarChat
+from actions.handlers.shared.advisor_actions import ActionSolicitarAsesor
+from actions.handlers.shared.fallback_actions import (
+    ActionSmartFallback,
+    ActionResetFallbackCount
+)
+from actions.handlers.shared.router_actions import ActionRouteDocumentConsultation
 
-# Imports de actions de impuestos
-from .impuestos.cuadernillo_actions import (
+# ============================================================================
+# IMPORTS - HANDLERS DE PAPELETAS
+# ============================================================================
+from actions.handlers.papeletas.consulta_actions import ActionConsultarPapeletas
+from actions.handlers.papeletas.codigo_actions import ActionConsultarCodigoFalta
+
+# ============================================================================
+# IMPORTS - HANDLERS DE IMPUESTOS
+# ============================================================================
+from actions.handlers.impuestos.consulta_actions import ActionConsultarImpuestos
+from actions.handlers.impuestos.cuadernillo_actions import (
     ActionCuadernilloAgenciaVirtual,
 )
-
-from .impuestos.declaracion_actions import (
+from actions.handlers.impuestos.declaracion_actions import (
     ActionDeclaracionImpuestoVehicular,
     ActionLiquidacionAlcabala,
     ActionDeclaracionImpuestoPredial,
     ActionFraccionarDeuda
 )
-from .impuestos.beneficios_actions import (
+from actions.handlers.impuestos.beneficios_actions import (
     ActionBeneficiosPensionista,
     ActionBeneficiosAdultoMayor
 )
 
-# Imports de actions de retención
-from .retencion.consulta_actions import ActionConsultarOrdenCaptura
-from .retencion.tramites_actions import (
+# ============================================================================
+# IMPORTS - HANDLERS DE RETENCIÓN Y CAPTURA
+# ============================================================================
+from actions.handlers.retencion.consulta_actions import ActionConsultarOrdenCaptura
+from actions.handlers.retencion.tramites_actions import (
     ActionRetencionEmbargo,
     ActionRetencionVehiculoInternado,
     ActionRetencionSuspenderCobranza,
@@ -32,15 +45,19 @@ from .retencion.tramites_actions import (
     ActionRetencionRemateVehicular
 )
 
-# Imports de actions de lugares y pagos
-from .lugares_pagos.informacion_actions import (
+# ============================================================================
+# IMPORTS - HANDLERS DE LUGARES Y PAGOS
+# ============================================================================
+from actions.handlers.lugares_pagos.informacion_actions import (
     ActionLugaresAgenciasHorarios,
     ActionLugaresPago,
     ActionLugaresFormasPago
 )
 
-# Imports de actions de servicios virtuales
-from .servicios_virtuales.servicios_actions import (
+# ============================================================================
+# IMPORTS - HANDLERS DE SERVICIOS VIRTUALES
+# ============================================================================
+from actions.handlers.servicios_virtuales.servicios_actions import (
     ActionServiciosMesaPartes,
     ActionServiciosAgenciaVirtual,
     ActionServiciosPitazo,
@@ -49,22 +66,22 @@ from .servicios_virtuales.servicios_actions import (
     ActionServiciosCursos
 )
 
-# Imports de actions de trámites
-from .tramites.consulta_actions import ActionConsultarTramite
-from .tramites.generales_actions import (
+# ============================================================================
+# IMPORTS - HANDLERS DE TRÁMITES
+# ============================================================================
+from actions.handlers.tramites.consulta_actions import ActionConsultarTramite
+from actions.handlers.tramites.generales_actions import (
     ActionTramitesConstanciasNoAdeudo
 )
-from .tramites.papeletas_tramites_actions import (
+from actions.handlers.tramites.papeletas_tramites_actions import (
     ActionTramitesRecursoReconsideracion,
-    ActionTramitesDescargoInfracciones,
     ActionTramitesApelacionPapeletas,
     ActionTramitesPrescripcionPapeletas,
     ActionTramitesDevolucionPapeletas,
     ActionTramitesTerceriaRequisitos,
     ActionTramitesSuspensionRequisitos
 )
-
-from .tramites.tributarios_tramites_actions import (
+from actions.handlers.tramites.tributarios_tramites_actions import (
     ActionTramitesPredialRequisitos,
     ActionTramitesVehicularRequisitos,
     ActionTramitesAlcabalaRequisitos,
@@ -75,21 +92,29 @@ from .tramites.tributarios_tramites_actions import (
     ActionTramitesTerceriaTributaria,
     ActionTramitesSuspensionTributaria
 )
-from .shared.router_actions import ActionRouteDocumentConsultation
 
-# Lista de todos los actions disponibles
+# ============================================================================
+# EXPORTACIÓN DE TODAS LAS ACTIONS
+# ============================================================================
 __all__ = [
-    # Actions básicos
+    # ========================================================================
+    # SHARED - Actions compartidos
+    # ========================================================================
     'ActionFinalizarChat',
     'ActionSolicitarAsesor',
     'ActionSmartFallback',
     'ActionResetFallbackCount',
+    'ActionRouteDocumentConsultation',
 
-    # Actions de papeletas
+    # ========================================================================
+    # PAPELETAS - Consultas de multas e infracciones
+    # ========================================================================
     'ActionConsultarPapeletas',
     'ActionConsultarCodigoFalta',
-    
-    # Actions de impuestos
+
+    # ========================================================================
+    # IMPUESTOS - Deuda tributaria y declaraciones
+    # ========================================================================
     'ActionConsultarImpuestos',
     'ActionCuadernilloAgenciaVirtual',
     'ActionDeclaracionImpuestoVehicular',
@@ -98,9 +123,10 @@ __all__ = [
     'ActionFraccionarDeuda',
     'ActionBeneficiosPensionista',
     'ActionBeneficiosAdultoMayor',
-    'ActionRouteDocumentConsultation',
 
-    # Actions de retención
+    # ========================================================================
+    # RETENCIÓN - Órdenes de captura y medidas cautelares
+    # ========================================================================
     'ActionConsultarOrdenCaptura',
     'ActionRetencionEmbargo',
     'ActionRetencionVehiculoInternado',
@@ -108,12 +134,16 @@ __all__ = [
     'ActionRetencionTerceriaPropiedad',
     'ActionRetencionRemateVehicular',
 
-    # Actions de lugares y pagos
+    # ========================================================================
+    # LUGARES Y PAGOS - Información presencial y pagos
+    # ========================================================================
     'ActionLugaresAgenciasHorarios',
     'ActionLugaresPago',
     'ActionLugaresFormasPago',
 
-    # Actions de servicios virtuales
+    # ========================================================================
+    # SERVICIOS VIRTUALES - Servicios digitales del SAT
+    # ========================================================================
     'ActionServiciosMesaPartes',
     'ActionServiciosAgenciaVirtual',
     'ActionServiciosPitazo',
@@ -121,15 +151,21 @@ __all__ = [
     'ActionServiciosLibroReclamaciones',
     'ActionServiciosCursos',
 
-    # Actions de trámites
+    # ========================================================================
+    # TRÁMITES - Trámites administrativos y requisitos
+    # ========================================================================
     'ActionConsultarTramite',
     'ActionTramitesConstanciasNoAdeudo',
+
+    # Trámites de papeletas
     'ActionTramitesRecursoReconsideracion',
     'ActionTramitesApelacionPapeletas',
     'ActionTramitesPrescripcionPapeletas',
     'ActionTramitesDevolucionPapeletas',
     'ActionTramitesTerceriaRequisitos',
     'ActionTramitesSuspensionRequisitos',
+
+    # Trámites tributarios
     'ActionTramitesPredialRequisitos',
     'ActionTramitesVehicularRequisitos',
     'ActionTramitesAlcabalaRequisitos',
@@ -139,6 +175,4 @@ __all__ = [
     'ActionTramitesApelacionTributaria',
     'ActionTramitesTerceriaTributaria',
     'ActionTramitesSuspensionTributaria',
-
-
 ]

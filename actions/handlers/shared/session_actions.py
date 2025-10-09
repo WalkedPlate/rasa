@@ -9,7 +9,7 @@ from rasa_sdk.events import Restarted
 import logging
 from datetime import datetime
 
-from ..core.backend_client import backend_client
+from actions.api.backend_client import backend_client
 
 logger = logging.getLogger(__name__)
 

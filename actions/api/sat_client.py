@@ -4,7 +4,7 @@ Cliente base para APIs del SAT con manejo automático de autenticación
 import requests
 import logging
 from typing import Optional, Dict, Any, Tuple
-from .auth_manager import auth_manager
+from .sat_auth import auth_manager
 
 logger = logging.getLogger(__name__)
 

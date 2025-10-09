@@ -1,8 +1,27 @@
 version: "3.1"
 
+# ============================================================================
+# ARCHIVO DE STORIES - CHATBOT SAT LIMA
+# ============================================================================
+# Las stories definen flujos conversacionales completos basados en ejemplos
+# reales de interacción del usuario con el bot.
+#
+# Usar stories para:
+# - Flujos conversacionales que dependen del contexto
+# - Navegación entre diferentes secciones
+# - Secuencias de consultas múltiples
+# - Comportamientos que cambian según el historial
+#
+# IMPORTANTE: Las stories entrenan al modelo para predecir la siguiente
+# acción basándose en el contexto de la conversación.
+# ============================================================================
+
 stories:
 
-# ========== FLUJOS BÁSICOS ==========
+# ============================================================================
+# SECCIÓN 1: FLUJOS BÁSICOS - Conversación inicial y navegación simple
+# ============================================================================
+
 - story: Saludo y despedida simple
   steps:
   - intent: greet
@@ -17,7 +36,50 @@ stories:
   - intent: menu_principal
   - action: utter_menu_principal
 
-# ========== CONSULTAS RÁPIDAS ESPECÍFICAS ==========
+- story: De saludo a casilla MTC
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+
+- story: De casilla MTC a pagos
+  steps:
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+- story: Navegación con menú principal
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+
+# ============================================================================
+# SECCIÓN 2: CONSULTAS RÁPIDAS - Flujos directos sin navegación
+# ============================================================================
+
+- story: Consulta rápida papeletas con placa desde inicio
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+
+- story: Consulta rápida papeletas con DNI directo
+  steps:
+  - intent: consulta_rapida_papeletas_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_papeletas
+
 - story: Consulta rápida papeletas con RUC directo
   steps:
   - intent: consulta_rapida_papeletas_ruc
@@ -43,20 +105,38 @@ stories:
     - dni: "12345678"
   - action: action_consultar_papeletas
 
-# ========== NAVEGACIÓN ENTRE OPCIONES ==========
-- story: De saludo a casilla MTC
+- story: Consulta rápida impuestos con RUC directo
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_casilla_mtc
-  - action: utter_casilla_mtc
+  - intent: consulta_rapida_impuestos_ruc
+    entities:
+    - ruc: "20123456789"
+  - action: action_consultar_impuestos
 
-- story: De casilla MTC a pagos
+- story: Consulta rápida impuestos con código contribuyente directo
   steps:
-  - intent: ir_a_casilla_mtc
-  - action: utter_casilla_mtc
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
+  - intent: consulta_rapida_impuestos_codigo
+    entities:
+    - codigo_contribuyente: "94539"
+  - action: action_consultar_impuestos
+
+- story: Consulta rápida impuestos con placa directo
+  steps:
+  - intent: consulta_rapida_impuestos_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_impuestos
+
+- story: Consulta rápida impuestos con DNI directo
+  steps:
+  - intent: consulta_rapida_impuestos_dni
+    entities:
+    - dni: "12345678"
+  - action: action_consultar_impuestos
+
+
+# ============================================================================
+# SECCIÓN 3: FLUJOS DE PAPELETAS - Navegación y consultas en contexto
+# ============================================================================
 
 - story: De pagos a papeletas
   steps:
@@ -65,16 +145,6 @@ stories:
   - intent: ir_a_papeletas
   - action: utter_papeletas_menu
 
-- story: Navegación con menú principal
-  steps:
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: menu_principal
-  - action: utter_menu_principal
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-# ========== FLUJO PAPELETAS COMPLETO ==========
 - story: Entrada a papeletas y consulta genérica
   steps:
   - intent: ir_a_papeletas
@@ -130,108 +200,6 @@ stories:
     - codigo_falta: "G40"
   - action: action_consultar_codigo_falta
 
-# ========== CAMBIOS DE CONTEXTO ==========
-- story: De papeletas a pagos
-  steps:
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-- story: De papeletas consulta a casilla MTC
-  steps:
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: ir_a_casilla_mtc
-  - action: utter_casilla_mtc
-
-- story: De código a consulta papeletas
-  steps:
-  - intent: consulta_rapida_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - intent: consulta_rapida_papeletas_dni
-    entities:
-    - dni: "87654321"
-  - action: action_consultar_papeletas
-
-# ========== USO DE NAVEGACIÓN GLOBAL ==========
-- story: Usar otra consulta después de resultado
-  steps:
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: otra_consulta
-  - action: utter_otra_consulta
-
-- story: Otra consulta desde papeletas a pagos
-  steps:
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: otra_consulta
-  - action: utter_otra_consulta
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-# ========== FLUJOS LARGOS REALISTAS ==========
-- story: Usuario explorador completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: papeletas_consultar_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-  - intent: otra_consulta
-  - action: utter_otra_consulta
-  - intent: consulta_rapida_papeletas_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-
-- story: Usuario con múltiples consultas específicas
-  steps:
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: consulta_rapida_codigo_falta
-    entities:
-    - codigo_falta: "C15"
-  - action: action_consultar_codigo_falta
-  - intent: consulta_rapida_papeletas_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-- story: Usuario empresa completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: consulta_rapida_papeletas_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_papeletas
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: papeletas_consultar_placa
-    entities:
-    - placa: "DEF456"
-  - action: action_consultar_papeletas
-  - intent: papeletas_facilidades
-  - action: utter_papeletas_facilidades
-
-# ========== FLUJOS DE NAVEGACIÓN ENTRE SECCIONES ==========
 - story: De facilidades a consulta
   steps:
   - intent: ir_a_papeletas
@@ -254,7 +222,6 @@ stories:
     - codigo_falta: "A05"
   - action: action_consultar_codigo_falta
 
-# ========== CASOS ESPECÍFICOS DE DEBUGGING ==========
 - story: Placa directa en contexto papeletas - caso APS583
   steps:
   - intent: ir_a_papeletas
@@ -286,48 +253,11 @@ stories:
     - dni: "87654321"
   - action: action_consultar_papeletas
 
-# ========== FLUJOS DE FINALIZACIÓN ==========
-- story: Consulta y despedida
-  steps:
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: goodbye
-  - action: action_finalizar_chat
 
-- story: Navegación completa y finalización
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_casilla_mtc
-  - action: utter_casilla_mtc
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-  - intent: papeletas_consultar_placa
-    entities:
-    - placa: "XYZ789"
-  - action: action_consultar_papeletas
-  - intent: goodbye
-  - action: action_finalizar_chat
+# ============================================================================
+# SECCIÓN 4: FLUJOS DE IMPUESTOS - Navegación y consultas en contexto
+# ============================================================================
 
-- story: Consulta rápida papeletas con placa desde inicio
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-
-- story: Consulta rápida papeletas con DNI directo
-  steps:
-  - intent: consulta_rapida_papeletas_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_papeletas
-
-# ========== FLUJOS BÁSICOS IMPUESTOS ==========
 - story: Saludo y navegación a impuestos
   steps:
   - intent: greet
@@ -342,51 +272,6 @@ stories:
   - intent: ir_a_impuestos
   - action: utter_impuestos_menu
 
-# ========== CONSULTAS RÁPIDAS ESPECÍFICAS IMPUESTOS ==========
-- story: Consulta rápida impuestos con RUC directo
-  steps:
-  - intent: consulta_rapida_impuestos_ruc
-    entities:
-    - ruc: "20123456789"
-  - action: action_consultar_impuestos
-
-- story: Consulta rápida impuestos con código contribuyente directo
-  steps:
-  - intent: consulta_rapida_impuestos_codigo
-    entities:
-    - codigo_contribuyente: "94539"
-  - action: action_consultar_impuestos
-
-- story: Consulta rápida impuestos con placa directo
-  steps:
-  - intent: consulta_rapida_impuestos_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_impuestos
-
-- story: Consulta rápida impuestos con DNI directo
-  steps:
-  - intent: consulta_rapida_impuestos_dni
-    entities:
-    - dni: "12345678"
-  - action: action_consultar_impuestos
-
-# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
-- story: De impuestos a papeletas
-  steps:
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-
-- story: De impuestos a pagos
-  steps:
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-# ========== FLUJO IMPUESTOS COMPLETO ==========
 - story: Entrada a impuestos y consulta genérica
   steps:
   - intent: ir_a_impuestos
@@ -421,7 +306,6 @@ stories:
     - codigo_contribuyente: "11111"
   - action: action_consultar_impuestos
 
-# ========== FLUJOS DE CUADERNILLO TRIBUTARIO ==========
 - story: Impuestos cuadernillo agencia virtual
   steps:
   - intent: ir_a_impuestos
@@ -429,7 +313,6 @@ stories:
   - intent: impuestos_cuadernillo_agencia_virtual
   - action: action_cuadernillo_agencia_virtual
 
-# ========== FLUJOS DE DECLARACIONES ==========
 - story: Impuestos declaración vehicular
   steps:
   - intent: ir_a_impuestos
@@ -458,7 +341,6 @@ stories:
   - intent: impuestos_fraccionar_deuda
   - action: action_fraccionar_deuda
 
-# ========== FLUJOS DE BENEFICIOS ==========
 - story: Impuestos beneficios pensionista
   steps:
   - intent: ir_a_impuestos
@@ -473,7 +355,18 @@ stories:
   - intent: impuestos_beneficios_adulto_mayor
   - action: action_beneficios_adulto_mayor
 
-# ========== FLUJOS DE ROUTER ==========
+- story: De impuestos a pagos
+  steps:
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+
+# ============================================================================
+# SECCIÓN 5: FLUJOS DE ROUTER - Sistema de disambiguación
+# ============================================================================
+
 - story: Router detecta contexto papeletas
   steps:
   - intent: ir_a_papeletas
@@ -514,54 +407,11 @@ stories:
   - action: action_route_document_consultation
   - action: action_consultar_impuestos
 
-# ========== FLUJOS LARGOS REALISTAS ==========
-- story: Usuario explorador completo impuestos
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: impuestos_consultar_placa
-    entities:
-    - placa: "ZZZ111"
-  - action: action_consultar_impuestos
 
-- story: Usuario empresa completo impuestos
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: consulta_rapida_impuestos_ruc
-    entities:
-    - ruc: "10111111111"
-  - action: action_consultar_impuestos
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-  - intent: impuestos_fraccionar_deuda
-  - action: action_fraccionar_deuda
+# ============================================================================
+# SECCIÓN 6: FLUJOS DE RETENCIÓN - Órdenes de captura y medidas cautelares
+# ============================================================================
 
-- story: Navegación mixta papeletas impuestos
-  steps:
-  - intent: consulta_rapida_papeletas_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_papeletas
-  - intent: consulta_rapida_impuestos_placa
-    entities:
-    - placa: "ABC123"
-  - action: action_consultar_impuestos
-  - intent: ir_a_pagos_linea
-  - action: utter_pagos_linea
-
-- story: Consulta impuestos y despedida
-  steps:
-  - intent: consulta_rapida_impuestos_codigo
-    entities:
-    - codigo_contribuyente: "11111"
-  - action: action_consultar_impuestos
-  - intent: goodbye
-  - action: action_finalizar_chat
-
-# ========== FLUJOS BÁSICOS RETENCIÓN ==========
 - story: Saludo y navegación a retención
   steps:
   - intent: greet
@@ -583,7 +433,6 @@ stories:
   - intent: ir_a_retencion_captura
   - action: utter_retencion_menu
 
-# ========== FLUJO RETENCIÓN COMPLETO ==========
 - story: Entrada a retención y embargo
   steps:
   - intent: ir_a_retencion_captura
@@ -626,7 +475,17 @@ stories:
   - intent: retencion_remate_vehicular
   - action: action_retencion_remate_vehicular
 
-# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: Orden de captura con placa en contexto
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_orden_captura
+  - action: action_consultar_orden_captura
+  - intent: retencion_consultar_placa
+    entities:
+    - placa: "CAP001"
+  - action: action_consultar_orden_captura
+
 - story: De retención a papeletas
   steps:
   - intent: ir_a_retencion_captura
@@ -648,30 +507,6 @@ stories:
   - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-# ========== FLUJOS ESPECÍFICOS CON PLACAS ==========
-- story: Orden de captura con placa en contexto
-  steps:
-  - intent: ir_a_retencion_captura
-  - action: utter_retencion_menu
-  - intent: retencion_orden_captura
-  - action: action_consultar_orden_captura
-  - intent: retencion_consultar_placa
-    entities:
-    - placa: "CAP001"
-  - action: action_consultar_orden_captura
-
-# ========== NAVEGACIÓN COMPLETA ==========
-- story: Usuario explorador retención completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_retencion_captura
-  - action: utter_retencion_menu
-  - intent: retencion_orden_captura
-  - action: action_consultar_orden_captura
-  - intent: retencion_embargo_cuentas
-  - action: action_retencion_embargo
-
 - story: Retención con menú principal
   steps:
   - intent: ir_a_retencion_captura
@@ -681,16 +516,11 @@ stories:
   - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-- story: Consulta retención y despedida
-  steps:
-  - intent: ir_a_retencion_captura
-  - action: utter_retencion_menu
-  - intent: retencion_remate_vehicular
-  - action: action_retencion_remate_vehicular
-  - intent: goodbye
-  - action: action_finalizar_chat
 
-# ========== FLUJOS BÁSICOS LUGARES Y PAGOS ==========
+# ============================================================================
+# SECCIÓN 7: FLUJOS DE LUGARES Y PAGOS - Oficinas y formas de pago
+# ============================================================================
+
 - story: Saludo y navegación a lugares y pagos
   steps:
   - intent: greet
@@ -705,7 +535,6 @@ stories:
   - intent: ir_a_lugares_pagos
   - action: utter_lugares_pagos_menu
 
-# ========== FLUJO LUGARES Y PAGOS COMPLETO ==========
 - story: Lugares - agencias y horarios
   steps:
   - intent: ir_a_lugares_pagos
@@ -727,7 +556,6 @@ stories:
   - intent: lugares_pagos_formas_pago
   - action: action_lugares_formas_pago
 
-# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
 - story: De lugares a papeletas
   steps:
   - intent: ir_a_lugares_pagos
@@ -742,18 +570,6 @@ stories:
   - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-# ========== FLUJOS COMPLETOS ==========
-- story: Usuario explorador lugares completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_lugares_pagos
-  - action: utter_lugares_pagos_menu
-  - intent: lugares_pagos_agencias_horarios
-  - action: action_lugares_agencias_horarios
-  - intent: lugares_pagos_formas_pago
-  - action: action_lugares_formas_pago
-
 - story: Lugares con menú principal
   steps:
   - intent: ir_a_lugares_pagos
@@ -761,16 +577,11 @@ stories:
   - intent: menu_principal
   - action: utter_menu_principal
 
-- story: Consulta lugares y despedida
-  steps:
-  - intent: ir_a_lugares_pagos
-  - action: utter_lugares_pagos_menu
-  - intent: lugares_pagos_lugares_pago
-  - action: action_lugares_pago
-  - intent: goodbye
-  - action: action_finalizar_chat
 
-# ========== FLUJOS BÁSICOS SERVICIOS VIRTUALES ==========
+# ============================================================================
+# SECCIÓN 8: FLUJOS DE SERVICIOS VIRTUALES - Servicios digitales del SAT
+# ============================================================================
+
 - story: Saludo y navegación a servicios virtuales
   steps:
   - intent: greet
@@ -785,7 +596,6 @@ stories:
   - intent: ir_a_servicios_virtuales
   - action: utter_servicios_virtuales_menu
 
-# ========== FLUJO SERVICIOS VIRTUALES COMPLETO ==========
 - story: Servicios - mesa de partes
   steps:
   - intent: ir_a_servicios_virtuales
@@ -828,7 +638,24 @@ stories:
   - intent: servicios_virtuales_cursos
   - action: action_servicios_cursos
 
-# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
+- story: Servicios múltiples en una sesión
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_mesa_partes
+  - action: action_servicios_mesa_partes
+  - intent: servicios_virtuales_agencia_virtual
+  - action: action_servicios_agencia_virtual
+
+- story: Servicios y navegación a otros contextos
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_pitazo
+  - action: action_servicios_pitazo
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
 - story: De servicios a papeletas
   steps:
   - intent: ir_a_servicios_virtuales
@@ -850,37 +677,6 @@ stories:
   - intent: ir_a_lugares_pagos
   - action: utter_lugares_pagos_menu
 
-# ========== FLUJOS ESPECÍFICOS MÚLTIPLES ==========
-- story: Servicios múltiples en una sesión
-  steps:
-  - intent: ir_a_servicios_virtuales
-  - action: utter_servicios_virtuales_menu
-  - intent: servicios_virtuales_mesa_partes
-  - action: action_servicios_mesa_partes
-  - intent: servicios_virtuales_agencia_virtual
-  - action: action_servicios_agencia_virtual
-
-- story: Servicios y navegación a otros contextos
-  steps:
-  - intent: ir_a_servicios_virtuales
-  - action: utter_servicios_virtuales_menu
-  - intent: servicios_virtuales_pitazo
-  - action: action_servicios_pitazo
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-
-# ========== FLUJOS COMPLETOS ==========
-- story: Usuario explorador servicios completo
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: ir_a_servicios_virtuales
-  - action: utter_servicios_virtuales_menu
-  - intent: servicios_virtuales_libro_reclamaciones
-  - action: action_servicios_libro_reclamaciones
-  - intent: servicios_virtuales_cursos
-  - action: action_servicios_cursos
-
 - story: Servicios con menú principal
   steps:
   - intent: ir_a_servicios_virtuales
@@ -888,16 +684,6 @@ stories:
   - intent: menu_principal
   - action: utter_menu_principal
 
-- story: Consulta servicios y despedida
-  steps:
-  - intent: ir_a_servicios_virtuales
-  - action: utter_servicios_virtuales_menu
-  - intent: servicios_virtuales_correo
-  - action: action_servicios_correo
-  - intent: goodbye
-  - action: action_finalizar_chat
-
-# ========== FLUJOS DE INTEGRACIÓN CON OTRAS OPCIONES ==========
 - story: De servicios a casilla MTC
   steps:
   - intent: ir_a_servicios_virtuales
@@ -916,7 +702,11 @@ stories:
   - intent: ir_a_pagos_linea
   - action: utter_pagos_linea
 
-# ========== FLUJOS BÁSICOS OTROS TRÁMITES ==========
+
+# ============================================================================
+# SECCIÓN 9: FLUJOS DE OTROS TRÁMITES - Trámites administrativos
+# ============================================================================
+
 - story: Saludo y navegación a otros trámites
   steps:
   - intent: greet
@@ -931,7 +721,6 @@ stories:
   - intent: ir_a_otros_tramites
   - action: utter_otros_tramites_menu
 
-# ========== FLUJO OTROS TRÁMITES COMPLETO ==========
 - story: Otros trámites - consultar número
   steps:
   - intent: ir_a_otros_tramites
@@ -948,22 +737,6 @@ stories:
   - intent: tramites_constancias_no_adeudo
   - action: action_tramites_constancias_no_adeudo
 
-# ========== NAVEGACIÓN ENTRE CONTEXTOS ==========
-- story: De otros trámites a papeletas
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: ir_a_papeletas
-  - action: utter_papeletas_menu
-
-- story: De otros trámites a impuestos
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: ir_a_impuestos
-  - action: utter_impuestos_menu
-
-# ========== CONSULTA RÁPIDA DE TRÁMITES ==========
 - story: Consulta rápida trámite directo
   steps:
   - intent: tramites_consultar_numero
@@ -971,24 +744,6 @@ stories:
     - numero_tramite: "98765432109876"
   - action: action_consultar_tramite
 
-# ========== FLUJOS CON MENÚ PRINCIPAL ==========
-- story: Otros trámites con menú principal
-  steps:
-  - intent: ir_a_otros_tramites
-  - action: utter_otros_tramites_menu
-  - intent: menu_principal
-  - action: utter_menu_principal
-
-- story: Consulta trámite y despedida
-  steps:
-  - intent: tramites_consultar_numero
-    entities:
-    - numero_tramite: "12345678901234"
-  - action: action_consultar_tramite
-  - intent: goodbye
-  - action: action_finalizar_chat
-
-# ========== FLUJOS COMPLETOS OTROS TRÁMITES ==========
 - story: Otros trámites - Flujo completo papeletas
   steps:
   - intent: ir_a_otros_tramites
@@ -1022,3 +777,159 @@ stories:
   - action: utter_otros_tramites_menu
   - intent: tramites_requisitos_tributarios
   - action: utter_tramites_requisitos_tributarios
+
+- story: De otros trámites a papeletas
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+
+- story: De otros trámites a impuestos
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: ir_a_impuestos
+  - action: utter_impuestos_menu
+
+- story: Otros trámites con menú principal
+  steps:
+  - intent: ir_a_otros_tramites
+  - action: utter_otros_tramites_menu
+  - intent: menu_principal
+  - action: utter_menu_principal
+
+
+# ============================================================================
+# SECCIÓN 10: NAVEGACIÓN ENTRE CONTEXTOS - Cambios múltiples
+# ============================================================================
+
+- story: De papeletas consulta a casilla MTC
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+
+- story: De código a consulta papeletas
+  steps:
+  - intent: consulta_rapida_codigo_falta
+    entities:
+    - codigo_falta: "C15"
+  - action: action_consultar_codigo_falta
+  - intent: consulta_rapida_papeletas_dni
+    entities:
+    - dni: "87654321"
+  - action: action_consultar_papeletas
+
+- story: Navegación mixta papeletas impuestos
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: consulta_rapida_impuestos_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_impuestos
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+
+# ============================================================================
+# SECCIÓN 11: USO DE NAVEGACIÓN AUXILIAR - Otra consulta
+# ============================================================================
+
+- story: Usar otra consulta después de resultado
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: otra_consulta
+  - action: utter_otra_consulta
+
+- story: Otra consulta desde papeletas a pagos
+  steps:
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: otra_consulta
+  - action: utter_otra_consulta
+  - intent: ir_a_pagos_linea
+  - action: utter_pagos_linea
+
+
+# ============================================================================
+# SECCIÓN 12: FLUJOS DE FINALIZACIÓN - Despedida en diferentes contextos
+# ============================================================================
+
+- story: Consulta y despedida
+  steps:
+  - intent: consulta_rapida_papeletas_placa
+    entities:
+    - placa: "ABC123"
+  - action: action_consultar_papeletas
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Navegación completa y finalización
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: ir_a_casilla_mtc
+  - action: utter_casilla_mtc
+  - intent: ir_a_papeletas
+  - action: utter_papeletas_menu
+  - intent: papeletas_consultar_placa
+    entities:
+    - placa: "XYZ789"
+  - action: action_consultar_papeletas
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Consulta impuestos y despedida
+  steps:
+  - intent: consulta_rapida_impuestos_codigo
+    entities:
+    - codigo_contribuyente: "11111"
+  - action: action_consultar_impuestos
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Consulta retención y despedida
+  steps:
+  - intent: ir_a_retencion_captura
+  - action: utter_retencion_menu
+  - intent: retencion_remate_vehicular
+  - action: action_retencion_remate_vehicular
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Consulta lugares y despedida
+  steps:
+  - intent: ir_a_lugares_pagos
+  - action: utter_lugares_pagos_menu
+  - intent: lugares_pagos_lugares_pago
+  - action: action_lugares_pago
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Consulta servicios y despedida
+  steps:
+  - intent: ir_a_servicios_virtuales
+  - action: utter_servicios_virtuales_menu
+  - intent: servicios_virtuales_correo
+  - action: action_servicios_correo
+  - intent: goodbye
+  - action: action_finalizar_chat
+
+- story: Consulta trámite y despedida
+  steps:
+  - intent: tramites_consultar_numero
+    entities:
+    - numero_tramite: "12345678901234"
+  - action: action_consultar_tramite
+  - intent: goodbye
+  - action: action_finalizar_chat
