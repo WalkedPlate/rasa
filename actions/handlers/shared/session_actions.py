@@ -42,7 +42,8 @@ class ActionFinalizarChat(Action):
         # Log para el sistema
         logger.info(f"Conversación finalizada para usuario: {sender_id} - {datetime.now()}")
 
-        return [Restarted()]
+        return []
+        #return [Restarted()]
 
     def _close_assistance_if_exists(self, phone_number: str) -> None:
         """

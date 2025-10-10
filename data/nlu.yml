@@ -70,30 +70,41 @@ nlu:
   examples: |
     - adiós
     - hasta luego
-    - gracias
-    - bye
+    - hasta pronto
     - nos vemos
     - chau
-    - hasta la vista
+    - chau chau
+    - me despido
     - me voy
-    - perfecto gracias
-    - muchas gracias
-    - está bien gracias
-    - ok gracias
-    - listo gracias
-    - eso es todo
-    - finalizar chat
-    - terminar
-    - finalizar
-    - salir
-    - cerrar
-    - exit
-    - quit
-    - ya terminé
-    - eso era todo lo que necesitaba
-    - cerrar chat
-    - terminar chat
-    - finalizar conversación
+    - hasta mañana
+    - hasta otro día
+    - que estés bien
+    - cuídate
+    - ya me voy
+    - tengo que irme
+    - me retiro
+    - nos vemos luego
+    - hasta la próxima
+    - adiós bot
+    - bye bye
+    - hasta lueguito
+    - chaito
+    - gracias adiós
+    - gracias hasta luego
+    - muchas gracias chau
+    - perfecto gracias adiós
+    - ok gracias nos vemos
+    - listo gracias me voy
+    - está bien gracias chau
+    - eso es todo gracias adiós
+    - ya terminé gracias chau
+    - eso era todo lo que necesitaba gracias
+    - finalizar chat por favor
+    - quiero terminar la conversación
+    - cerrar chat gracias
+    - quiero salir gracias
+    - terminar gracias
+    - finalizar gracias
 
 - intent: solicitar_asesor
   examples: |
