@@ -30,7 +30,10 @@ class BaseTramiteRequisitos(Action):
         logger.info(f"Consultando requisitos para: {self.titulo_tramite}")
 
         # Paso 1: Consultar menú de opciones para obtener ivalor
-        menu_response = sat_client.consultar_menu_opcion(self.titulo_tramite)
+        menu_response = sat_client.consultar_menu_opcion(
+            self.titulo_tramite,
+            tipo_tramite="tributarios"
+        )
 
         if not menu_response or 'ivalor' not in menu_response:
             logger.error(f"No se pudo obtener ivalor para: {self.titulo_tramite}")

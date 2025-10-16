@@ -263,12 +263,13 @@ class SATAPIClient:
         except Exception:
             return "No disponible"
 
-    def consultar_menu_opcion(self, titulo: str) -> Optional[Dict[str, Any]]:
+    def consultar_menu_opcion(self, titulo: str, tipo_tramite: str = "papeletas") -> Optional[Dict[str, Any]]:
         """
         Consulta el menú de opciones para obtener el ivalor de un trámite
 
         Args:
             titulo: Título del trámite en mayúsculas (ej: "RECURSO DE RECONSIDERACIÓN")
+            tipo_tramite: "papeletas" (usa /9/) o "tributarios" (usa /8/)
 
         Returns:
             Dict con la respuesta del menú o None si hay error
@@ -283,7 +284,10 @@ class SATAPIClient:
         from urllib.parse import quote
         titulo_encoded = quote(titulo)
 
-        endpoint = f"/saldomatico/menu/opciones/9/titulo/{titulo_encoded}"
+        # Seleccionar endpoint según tipo de trámite
+        opcion_id = "9" if tipo_tramite == "papeletas" else "8"
+
+        endpoint = f"/saldomatico/menu/opciones/{opcion_id}/titulo/{titulo_encoded}"
         return self._make_request("GET", endpoint)
 
     def consultar_requisitos_tupa(self, ivalor: int) -> Optional[Dict[str, Any]]:
