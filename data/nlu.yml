@@ -65,6 +65,14 @@ nlu:
     - buenos días, necesito ayuda
     - buenas tardes, quiero consultar
     - hola, me pueden ayudar
+    - buenas tengo una consulta
+    - hola tengo una duda
+    - buenas tardes tengo una pregunta
+    - buenos días necesito consultar algo
+    - hola quiero hacer una consulta
+    - buenas quisiera consultar algo
+    - hola tengo una consulta
+    - buenas noches tengo una pregunta
 
 - intent: goodbye
   examples: |
