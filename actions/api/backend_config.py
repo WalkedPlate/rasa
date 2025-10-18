@@ -26,15 +26,15 @@ class BackendConfig:
     # Endpoints de ciudadanos
     CITIZEN_GET_INFO = os.getenv(
         'CITIZEN_GET_INFO_ENDPOINT',
-        '/v1/channel-room/citizen/{phone}/basic-information'
+        '/v1/channel-citizen/{phone}/basic-information'
     )
 
     CITIZEN_REQUEST_ADVISOR = os.getenv(
         'CITIZEN_REQUEST_ADVISOR_ENDPOINT',
-        '/v1/channel-room/citizen/{phone}/request-advisor'
+        '/v1/channel-citizen/{phone}/request-advisor'
     )
 
     ASSISTANCE_CLOSE = os.getenv(
         'ASSISTANCE_CLOSE_ENDPOINT',
-        '/v1/channel-room/assistances/close'
+        '/v1/channel-room/assistances/assistance/close'
     )
