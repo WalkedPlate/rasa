@@ -9,6 +9,7 @@ import logging
 import re
 
 from actions.api.sat_client import sat_client
+from actions.api.backend_client import backend_client
 from actions.utils.validators import validator
 
 logger = logging.getLogger(__name__)
@@ -81,6 +82,7 @@ class ActionConsultarTramite(Action):
         return self._execute_tramite_api_query(dispatcher, numero_limpio)
 
     def _execute_tramite_api_query(self, dispatcher: CollectingDispatcher,
+                                   tracker: Tracker,
                                    numero_tramite: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API de trámites"""
 
@@ -89,6 +91,18 @@ class ActionConsultarTramite(Action):
         try:
             resultado = sat_client.consultar_tramite(numero_tramite)
 
+            # Registrar consulta de la conversación en el backend (no bloqueante)
+            try:
+                backend_client.log_bot_query(
+                    phone_number=tracker.sender_id,
+                    query_type='procedure_by_number',
+                    document_type='procedure_number',
+                    document_value=numero_tramite
+                )
+            except Exception as e:
+                logger.warning(f"No se pudo registrar consulta en backend: {e}")
+
+            # Procesar resultado de la API del SAT
             if resultado and isinstance(resultado, list) and len(resultado) > 0:
                 # La API devuelve un array, tomamos el primer elemento
                 tramite_data = resultado[0]

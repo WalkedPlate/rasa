@@ -9,6 +9,7 @@ import logging
 import re
 
 from actions.api.sat_client import sat_client
+from actions.api.backend_client import backend_client
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +63,7 @@ class CodigoProcessor:
         return es_valido, codigo_limpio
 
 class ActionConsultarCodigoFalta(Action):
-    """Action simplificado para consulta directa de códigos de falta"""
+    """Action para consulta directa de códigos de falta"""
 
     def name(self) -> Text:
         return "action_consultar_codigo_falta"
@@ -90,7 +91,8 @@ class ActionConsultarCodigoFalta(Action):
         return self._execute_codigo_api_query(dispatcher, codigo_limpio)
 
     def _execute_codigo_api_query(self, dispatcher: CollectingDispatcher,
-                                 codigo: str) -> List[Dict[Text, Any]]:
+                                  tracker: Tracker,
+                                  codigo: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API de códigos"""
 
         dispatcher.utter_message(text=f"🔍 Consultando información del código **{codigo}**...")
@@ -98,6 +100,18 @@ class ActionConsultarCodigoFalta(Action):
         try:
             resultado = sat_client.consultar_codigo_falta(codigo)
 
+            # Registrar consulta de la conversación en el backend (no bloqueante)
+            try:
+                backend_client.log_bot_query(
+                    phone_number=tracker.sender_id,
+                    query_type='infraction_code',
+                    document_type='infraction_code',
+                    document_value=codigo
+                )
+            except Exception as e:
+                logger.warning(f"No se pudo registrar consulta en backend: {e}")
+
+            # Procesar resultado de la API del SAT
             if resultado and isinstance(resultado, dict) and resultado:
                 message = self._format_codigo_response(resultado, codigo)
                 dispatcher.utter_message(text=message)

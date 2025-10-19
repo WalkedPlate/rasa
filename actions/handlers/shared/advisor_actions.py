@@ -72,7 +72,7 @@ class ActionSolicitarAsesor(Action):
         """Mensaje cuando hay error específico"""
         return f"""❌ **No pudimos conectarte con un asesor**
 
-**En este momento no hay asesores disponibles.****
+**En este momento no hay asesores disponibles.**
 
 **📞 Puedes contactarnos directamente:**
 • **Correo:** asuservicio@sat.gob.pe
@@ -80,7 +80,7 @@ class ActionSolicitarAsesor(Action):
 
 **🌐 También puedes:**
 • Consultar en: www.sat.gob.pe
-• Escribir 'menú principal' para ver otras opciones
+• Escribir 'menú principal' para continuar explorando otras opciones
 
 ¿Hay algo más en lo que pueda ayudarte?"""
 

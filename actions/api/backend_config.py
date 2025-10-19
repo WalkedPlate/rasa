@@ -14,8 +14,8 @@ class BackendConfig:
     BASE_URL = os.getenv('BACKEND_BASE_URL', 'http://localhost:3000')
 
     # Credenciales de autenticación
-    AUTH_EMAIL = os.getenv('BACKEND_AUTH_EMAIL', 'admin@mail.com')
-    AUTH_PASSWORD = os.getenv('BACKEND_AUTH_PASSWORD', '12345678')
+    AUTH_EMAIL = os.getenv('BACKEND_AUTH_EMAIL', 'rasa-bot@mail.com')
+    AUTH_PASSWORD = os.getenv('BACKEND_AUTH_PASSWORD', 'QiMAL5JDP8sfzfom')
 
     # Endpoints de autenticación
     AUTH_LOGIN_ENDPOINT = os.getenv(
@@ -37,4 +37,9 @@ class BackendConfig:
     ASSISTANCE_CLOSE = os.getenv(
         'ASSISTANCE_CLOSE_ENDPOINT',
         '/v1/channel-room/assistances/assistance/close'
+    )
+
+    BOT_QUERY_LOG = os.getenv(
+        'BOT_QUERY_LOG_ENDPOINT',
+        '/v1/channel-room/citizen/{phone}/bot-query'
     )

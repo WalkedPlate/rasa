@@ -9,6 +9,7 @@ import logging
 import re
 
 from actions.api.sat_client import sat_client
+from actions.api.backend_client import backend_client
 
 logger = logging.getLogger(__name__)
 
@@ -125,12 +126,26 @@ class ActionConsultarPapeletas(Action):
         return self._execute_api_query(dispatcher, documento_limpio, tipo)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
+                           tracker: Tracker,
                            documento: str, tipo: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API del SAT"""
 
         dispatcher.utter_message(text=f"🔍 Consultando papeletas para {tipo.upper()} **{documento}**...")
 
         try:
+            # Mapeo de tipo a query_type y document_type
+            query_type_map = {
+                'placa': 'tickets_by_plate',
+                'dni': 'tickets_by_dni',
+                'ruc': 'tickets_by_ruc'
+            }
+
+            document_type_map = {
+                'placa': 'plate',
+                'dni': 'dni',
+                'ruc': 'ruc'
+            }
+
             # Llamar API según tipo
             if tipo == "placa":
                 resultado = sat_client.consultar_papeletas_por_placa(documento)
@@ -141,7 +156,18 @@ class ActionConsultarPapeletas(Action):
             else:
                 return self._handle_api_error(dispatcher, tipo, documento)
 
-            # Procesar resultado
+            # Registrar consulta de la conversación en el backend (no bloqueante)
+            try:
+                backend_client.log_bot_query(
+                    phone_number=tracker.sender_id,
+                    query_type=query_type_map.get(tipo, tipo),
+                    document_type=document_type_map.get(tipo, tipo),
+                    document_value=documento
+                )
+            except Exception as e:
+                logger.warning(f"No se pudo registrar consulta en backend: {e}")
+
+            # Procesar resultado de la API del SAT
             if resultado is not None:
                 data_completa = resultado.get('data', [])
 
@@ -245,7 +271,7 @@ https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT
 
             # Año y Cuota en una sola línea
             if cuota and cuota != '0':
-                message += f"• **Año - cuota:** {ano} - {cuota}\n"
+                message += f"• **Año-cuota:** {ano}-{cuota}\n"
             else:
                 message += f"• **Año:** {ano}\n"
 

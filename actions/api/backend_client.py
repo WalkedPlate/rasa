@@ -192,6 +192,51 @@ class BackendAPIClient:
             logger.error(f"Error solicitando asesor {phone_number}: {response.status_code}")
             return False, f"Error del servidor: {response.status_code}"
 
+    def log_bot_query(
+            self,
+            phone_number: str,
+            query_type: str,
+            document_type: str,
+            document_value: str
+    ) -> Tuple[bool, str]:
+        """
+        Registra una consulta del bot a la API del SAT en el backend
+
+        Args:
+            phone_number: Número de teléfono del ciudadano
+            query_type: Tipo de consulta (tickets_by_plate, taxes_by_dni, etc.)
+            document_type: Tipo de documento (plate, dni, ruc, etc.)
+            document_value: Valor del documento
+
+        Returns:
+            Tuple[bool, str]: (éxito, mensaje)
+        """
+        endpoint = BackendConfig.BOT_QUERY_LOG.format(phone=phone_number)
+        url = f"{self.base_url}{endpoint}"
+
+        payload = {
+            "queryType": query_type,
+            "documentType": document_type,
+            "documentValue": document_value
+        }
+
+        response = self._make_authenticated_request(
+            "POST",
+            url,
+            json=payload
+        )
+
+        if response is None:
+            logger.warning(f"No se pudo registrar consulta del bot para {phone_number}")
+            return False, "Error de conexión al registrar consulta"
+
+        if response.status_code in [200, 201]:
+            logger.info(f"Consulta registrada: {query_type} - {document_type}:{document_value} para {phone_number}")
+            return True, "Consulta registrada exitosamente"
+        else:
+            logger.warning(f"Error registrando consulta {phone_number}: {response.status_code}")
+            return False, f"Error del servidor: {response.status_code}"
+
 
 # Instancia global del cliente backend
 backend_client = BackendAPIClient()

@@ -9,6 +9,7 @@ import logging
 import re
 
 from actions.api.sat_client import sat_client
+from actions.api.backend_client import backend_client
 
 logger = logging.getLogger(__name__)
 
@@ -93,6 +94,7 @@ class ActionConsultarOrdenCaptura(Action):
         return self._execute_api_query(dispatcher, placa_limpia)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
+                          tracker: Tracker,
                           placa: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API de órdenes de captura"""
 
@@ -101,6 +103,18 @@ class ActionConsultarOrdenCaptura(Action):
         try:
             resultado = sat_client.consultar_orden_captura_por_placa(placa)
 
+            # Registrar consulta de la conversación en el backend (no bloqueante)
+            try:
+                backend_client.log_bot_query(
+                    phone_number=tracker.sender_id,
+                    query_type='capture_order_by_plate',
+                    document_type='plate',
+                    document_value=placa
+                )
+            except Exception as e:
+                logger.warning(f"No se pudo registrar consulta en backend: {e}")
+
+            # Procesar resultado de la API del SAT
             if resultado is not None:
                 message = self._format_captura_response(resultado, placa)
                 dispatcher.utter_message(text=message)
