@@ -97,10 +97,6 @@ class BaseTramiteRequisitos(Action):
 
         message = f"""😔 Lo siento, tuve un problema técnico al consultar los requisitos de este trámite.
 
-🔧 **Esto puede ocurrir por:**
-- Mantenimiento del sistema del SAT
-- Problemas temporales de conexión
-
 📱 **Mientras tanto puedes:**
 - Consultar directamente en: https://www.sat.gob.pe/WebSiteV9/Tramites/TramitesTUPA/TUPA
 - Intentar nuevamente en unos minutos

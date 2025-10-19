@@ -214,10 +214,6 @@ Por favor, proporciona una placa válida."""
 
         message = f"""😔 Lo siento, tuve un problema técnico al consultar la placa **{placa}**.
 
-🔧 **Esto puede ocurrir por:**
-• Mantenimiento del sistema del SAT
-• Problemas temporales de conexión
-
 📱 **Mientras tanto puedes:**
 • Consultar directamente en: https://www.sat.gob.pe/websitev8/Popupv2.aspx?t=7
 • Intentar nuevamente en unos minutos

@@ -376,10 +376,6 @@ Por favor, proporciona un RUC válido."""
 
         message = f"""😔 Lo siento, tuve un problema técnico al consultar {tipo.upper()} **{documento}**.
 
-🔧 **Esto puede ocurrir por:**
-• Mantenimiento del sistema del SAT
-• Problemas temporales de conexión
-
 📱 **Mientras tanto puedes:**
 • Consultar directamente en: https://www.sat.gob.pe/pagosenlinea/
 • Intentar nuevamente en unos minutos

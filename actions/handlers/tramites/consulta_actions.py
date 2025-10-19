@@ -233,10 +233,6 @@ Por favor, proporciona un número de trámite válido."""
 
         message = f"""😔 Lo siento, tuve un problema técnico al consultar el trámite **{numero_tramite}**.
 
-🔧 **Esto puede ocurrir por:**
-• Mantenimiento del sistema del SAT
-• Problemas temporales de conexión
-
 📱 **Mientras tanto puedes:**
 • Consultar directamente en: https://www.sat.gob.pe/WebSiteV8/Modulos/Tramites/TramitesAdministv2.aspx
 • Intentar nuevamente en unos minutos

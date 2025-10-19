@@ -20,7 +20,7 @@ class BackendAuthManager:
         self.credentials = {
             "email": BackendConfig.AUTH_EMAIL,
             "password": BackendConfig.AUTH_PASSWORD,
-            "rememberMe": False  # Token válido por 1 día
+            "rememberMe": False
         }
 
     def get_valid_token(self) -> Optional[str]:

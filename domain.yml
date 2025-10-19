@@ -280,7 +280,7 @@ responses:
   # --------------------------------------------------------------------------
   utter_greet:
   - text: |
-      Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
+      Hola, puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
       
       
       • "Ver papeletas de mi placa ABC123" 

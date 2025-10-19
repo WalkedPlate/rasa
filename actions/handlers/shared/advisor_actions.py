@@ -66,18 +66,17 @@ class ActionSolicitarAsesor(Action):
 
 📱 **Mantén esta conversación abierta**
 
-Un asesor humano se conectará contigo para brindarte atención personalizada.
 """
 
     def _format_error_message(self, error_msg: str) -> str:
         """Mensaje cuando hay error específico"""
         return f"""❌ **No pudimos conectarte con un asesor**
 
-🔧 **Motivo:** {error_msg}
+**En este momento no hay asesores disponibles.****
 
 **📞 Puedes contactarnos directamente:**
 • **Correo:** asuservicio@sat.gob.pe
-• **Teléfono:** (01) 315-0730
+• **Teléfono:** (01) 315-2400
 
 **🌐 También puedes:**
 • Consultar en: www.sat.gob.pe
@@ -93,7 +92,7 @@ No pudimos procesar tu solicitud de asesor en este momento.
 
 **📞 Te recomendamos:**
 • **Correo:** asuservicio@sat.gob.pe  
-• **Teléfono:** (01) 315-0730
+• **Teléfono:** (01) 315-2400
 • **Web:** www.sat.gob.pe
 
 **🔄 O intenta nuevamente en unos minutos:**

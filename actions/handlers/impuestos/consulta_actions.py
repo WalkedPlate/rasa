@@ -427,10 +427,6 @@ Por favor, proporciona un código válido."""
 
         message = f"""😔 Lo siento, tuve un problema técnico al consultar {tipo_display} **{documento}**.
 
-🔧 **Esto puede ocurrir por:**
-• Mantenimiento del sistema del SAT
-• Problemas temporales de conexión
-
 📱 **Mientras tanto puedes:**
 • Consultar directamente en: https://www.sat.gob.pe/pagosenlinea/
 • Intentar nuevamente en unos minutos

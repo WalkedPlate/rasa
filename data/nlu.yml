@@ -390,17 +390,13 @@ nlu:
 - intent: ir_a_lugares_pagos
   examples: |
     - lugares y pagos
-    - oficinas del SAT
-    - horarios de atención
-    - ubicaciones SAT
-    - centros de atención
-    - agencias del SAT
-    - horarios oficinas
-    - oficinas y horarios
-    - menú de lugares
-    - opciones de ubicaciones
-    - información sobre oficinas
-    - centros SAT
+    - opción lugares y pagos
+    - sección de lugares y pagos
+    - menú lugares y pagos
+    - ir a lugares y pagos
+    - ver opciones de lugares y pagos
+    - información general de pagos y oficinas
+    
 
 - intent: ir_a_servicios_virtuales
   examples: |
@@ -858,41 +854,59 @@ nlu:
 
 - intent: lugares_pagos_agencias_horarios
   examples: |
-    - agencias y horarios específicos
+    - agencias y horarios
+    - horarios de atención
+    - horarios oficinas
+    - oficinas y horarios
+    - ubicaciones SAT
+    - centros de atención
+    - agencias del SAT
     - horarios de las oficinas SAT
-    - ubicaciones de oficinas específicas
-    - direcciones del SAT completas
-    - dónde están las oficinas exactamente
+    - ubicaciones de oficinas
+    - direcciones del SAT
+    - dónde están las oficinas
     - horarios de atención específicos
-    - centros de atención ubicaciones exactas
-    - agencias SAT direcciones completas
+    - centros de atención ubicaciones
+    - agencias SAT direcciones
     - oficinas principales ubicaciones
     - horarios detallados oficinas
     - direcciones completas SAT
+    - cuáles son las oficinas
+    - oficinas del SAT
+    - dónde queda el SAT
+    - direcciones de agencias
 
 - intent: lugares_pagos_lugares_pago
   examples: |
     - lugares de pago
-    - lugares específicos de pago
-    - dónde puedo pagar exactamente
-    - bancos para pagar SAT específicos
-    - lugares donde pagar multas específicos
-    - entidades para pago autorizadas
-    - opciones específicas de lugares pago
-    - bancos autorizados SAT específicos
-    - sitios específicos de pago
+    - lugares para pagar
+    - dónde puedo pagar
+    - dónde pagar
+    - bancos para pagar SAT
+    - lugares donde pagar multas
+    - entidades para pago
+    - opciones de lugares pago
+    - bancos autorizados SAT
+    - sitios de pago
     - puntos de pago autorizados
+    - en qué bancos puedo pagar
+    - dónde aceptan pagos
+    - puntos de pago
 
 - intent: lugares_pagos_formas_pago
   examples: |
-    - formas de pago opciones específicas
-    - cómo puedo pagar métodos
-    - métodos de pago SAT específicos
-    - opciones para pagar detalladas
-    - maneras específicas de pagar
-    - modalidades de pago disponibles
+    - formas de pago
+    - cómo puedo pagar
+    - métodos de pago SAT
+    - opciones para pagar
+    - maneras de pagar
+    - modalidades de pago
     - tipos de pago disponibles SAT
-    - alternativas específicas de pago
+    - alternativas de pago
+    - con qué puedo pagar
+    - qué métodos de pago aceptan
+    - puedo pagar con tarjeta
+    - aceptan yape
 
 
 # ============================================================================
