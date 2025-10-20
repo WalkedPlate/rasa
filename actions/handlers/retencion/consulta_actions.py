@@ -91,7 +91,7 @@ class ActionConsultarOrdenCaptura(Action):
 
         # 3. Ejecutar consulta API
         logger.info(f"Consultando orden de captura para placa: {placa_limpia}")
-        return self._execute_api_query(dispatcher, placa_limpia)
+        return self._execute_api_query(dispatcher, tracker, placa_limpia)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
                           tracker: Tracker,

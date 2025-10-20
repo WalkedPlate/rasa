@@ -129,7 +129,7 @@ class ActionConsultarImpuestos(Action):
 
         # 3. Ejecutar consulta API
         logger.info(f"Consultando impuestos para {tipo}: {documento_limpio}")
-        return self._execute_api_query(dispatcher, documento_limpio, tipo)
+        return self._execute_api_query(dispatcher, tracker, documento_limpio, tipo)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
                            tracker: Tracker,

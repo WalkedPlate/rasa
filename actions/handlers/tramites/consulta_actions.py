@@ -79,7 +79,7 @@ class ActionConsultarTramite(Action):
 
         # 3. Ejecutar consulta API
         logger.info(f"Consultando trámite: {numero_limpio}")
-        return self._execute_tramite_api_query(dispatcher, numero_limpio)
+        return self._execute_tramite_api_query(dispatcher, tracker, numero_limpio)
 
     def _execute_tramite_api_query(self, dispatcher: CollectingDispatcher,
                                    tracker: Tracker,

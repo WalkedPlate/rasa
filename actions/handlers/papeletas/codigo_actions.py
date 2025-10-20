@@ -88,7 +88,7 @@ class ActionConsultarCodigoFalta(Action):
 
         # 3. Ejecutar consulta API directamente
         logger.info(f"Consultando código: {codigo_limpio}")
-        return self._execute_codigo_api_query(dispatcher, codigo_limpio)
+        return self._execute_codigo_api_query(dispatcher, tracker, codigo_limpio)
 
     def _execute_codigo_api_query(self, dispatcher: CollectingDispatcher,
                                   tracker: Tracker,
