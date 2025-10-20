@@ -333,6 +333,7 @@ nlu:
 - intent: ir_a_papeletas
   examples: |
     - papeletas
+    - papeletas
     - quiero consultar papeletas
     - consultar mis papeletas
     - necesito ver si tengo papeletas
@@ -353,6 +354,7 @@ nlu:
 - intent: ir_a_impuestos
   examples: |
     - impuestos
+    - impuesto
     - quiero consultar impuestos
     - consultar mis impuestos
     - deuda tributaria
