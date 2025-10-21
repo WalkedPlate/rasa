@@ -73,6 +73,33 @@ nlu:
     - buenas quisiera consultar algo
     - hola tengo una consulta
     - buenas noches tengo una pregunta
+    - hola bot
+    - hola chatbot
+    - hola SAT
+    - buenos días SAT
+    - buenas tardes, quisiera información
+    - hola, requiero ayuda
+    - hola necesito información
+    - buen día, necesito consultar
+    - qué tal, tengo una duda
+    - saludos, necesito ayuda
+    - hey que tal
+    - hola como estas
+    - buenas
+    - buen dia
+    - holaa
+    - holaaa
+    - buenass
+    - holi
+    - holiwis
+    - holas
+    - buenos dias SAT
+    - buenas tardes SAT Lima
+    - hola servicio al cliente
+    - hola atención al ciudadano
+    - buenos días quisiera consultar
+    - buenas tardes tengo una duda sobre
+    - hola puedes ayudarme
 
 - intent: goodbye
   examples: |
@@ -113,6 +140,33 @@ nlu:
     - quiero salir gracias
     - terminar gracias
     - finalizar gracias
+    - adios
+    - chao
+    - bye
+    - nos vemos pronto
+    - hasta la vista
+    - me voy gracias
+    - ya está gracias
+    - listo chau
+    - ok chau
+    - ya gracias
+    - gracias eso es todo
+    - muchas gracias nos vemos
+    - perfecto hasta luego
+    - entendido gracias chau
+    - ok perfecto chau
+    - listo hasta luego
+    - ya me retiro
+    - me tengo que ir
+    - debo irme
+    - hasta luego SAT
+    - gracias SAT hasta luego
+    - adiós SAT
+    - chau SAT
+    - nos vemos SAT
+    - muchas gracias por la ayuda chau
+    - ok eso era todo gracias
+    
 
 - intent: solicitar_asesor
   examples: |
@@ -139,6 +193,35 @@ nlu:
     - necesito atención directa
     - el chatbot no me entiende
     - requiero asesoría personalizada
+    - quisiera hablar con una persona
+    - puedo hablar con alguien
+    - hay alguien que me pueda atender
+    - me puede atender una persona
+    - necesito que me atienda alguien
+    - quiero hablar con un humano
+    - no me está ayudando el bot
+    - el bot no entiende
+    - necesito atención real
+    - atención de persona
+    - quiero hablar con operador
+    - operador
+    - operador humano
+    - comunicarme con asesor
+    - derivar a asesor
+    - pasar con asesor
+    - transferir a asesor
+    - escalamiento a humano
+    - soporte humano
+    - ayuda de persona
+    - asistencia personalizada
+    - asesor por favor
+    - necesito asesor por favor
+    - puedo hablar con asesor
+    - hay asesores disponibles
+    - quiero asesor
+    - derivame a asesor
+    - pasame con asesor
+    - contactar asesor
 
 - intent: menu_principal
   examples: |
@@ -154,6 +237,42 @@ nlu:
     - mostrar opciones
     - opciones principales
     - qué más puedes hacer
+    - regresar al menu
+    - menu pls
+    - menu por favor
+    - quiero ver el menu
+    - regresame al menu
+    - llevame al menu principal
+    - ir al menu
+    - volver atras
+    - atras
+    - que opciones hay
+    - cuales son las opciones
+    - menu de opciones
+    - necesito el menu
+    - muéstrame el menú
+    - dame las opciones
+    - ver todas las opciones
+    - pantalla principal
+    - pantalla de inicio
+    - volver a opciones
+    - regresar a inicio
+    - ir a inicio
+    - opciones disponibles
+    - que puedo hacer
+    - que puedo consultar
+    - mostrar menu
+    - ver menu
+    - abrir menu
+    - menu completo
+    - ver opciones completas
+    - lista de opciones
+    - ayuda
+    - opciones de ayuda
+    - necesito ayuda
+    - que servicios tienen
+    - regresar
+    - volver
 
 
 # ============================================================================
@@ -191,6 +310,22 @@ nlu:
     - ver papeletas de mi placa [APS 583](placa)
     - consultar multas de la placa [ABC 123](placa)
     - papeletas de mi vehículo [DEF 456](placa)
+    - papeletas placa [ABC123](placa)
+    - multas placa [DEF456](placa)
+    - ver papeletas [GHI789](placa)
+    - consultar [ABC123](placa) papeletas
+    - [XYZ789](placa) tiene papeletas
+    - tengo papeletas en [ABC123](placa)
+    - cuantas papeletas tengo en [DEF456](placa)
+    - quiero ver papeletas [GHI789](placa)
+    - revisar multas [ABC123](placa)
+    - chequear papeletas [DEF456](placa)
+    - verificar multas [GHI789](placa)
+    - deuda de papeletas [ABC123](placa)
+    - cuanto debo de papeletas [DEF456](placa)
+    - saldo de multas [GHI789](placa)
+    - tengo multas en [ABC123](placa)
+    - hay papeletas para [DEF456](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -205,6 +340,29 @@ nlu:
     - infracciones de mi DNI [55667788](dni)
     - multas con el DNI [99887766](dni)
     - consultar papeletas del [44556677](dni)
+    - papeletas DNI [12345678](dni)
+    - multas DNI [87654321](dni)
+    - ver papeletas [11223344](dni)
+    - consultar [55667788](dni) papeletas
+    - [99887766](dni) tiene papeletas
+    - tengo papeletas DNI [44556677](dni)
+    - cuantas papeletas tengo DNI [12345678](dni)
+    - quiero ver papeletas DNI [87654321](dni)
+    - revisar multas DNI [11223344](dni)
+    - chequear papeletas [55667788](dni)
+    - verificar multas [99887766](dni)
+    - deuda de papeletas DNI [44556677](dni)
+    - cuanto debo de papeletas [12345678](dni)
+    - saldo de multas DNI [87654321](dni)
+    - tengo multas DNI [11223344](dni)
+    - hay papeletas para DNI [55667788](dni)
+    - mi DNI [99887766](dni) papeletas
+    - documento [44556677](dni) multas
+    - con mi documento [12345678](dni) papeletas
+    - dni [87654321](dni) consultar papeletas
+    - dni [11223344](dni) ver multas
+    - con dni [55667788](dni) infracciones
+    - documento de identidad [99887766](dni) papeletas
 
 - intent: consulta_rapida_papeletas_ruc
   examples: |
@@ -253,6 +411,27 @@ nlu:
     - deuda del vehículo [U1A710](placa)
     - tributos de la placa [XYZ789](placa)
     - consultar impuestos de [DEF456](placa)
+    - impuestos placa [ABC123](placa)
+    - tributos placa [DEF456](placa)
+    - ver impuestos [GHI789](placa)
+    - consultar [ABC123](placa) impuestos
+    - [XYZ789](placa) tiene impuestos
+    - tengo impuestos en [ABC123](placa)
+    - cuanto debo de impuestos [DEF456](placa)
+    - quiero ver impuestos [GHI789](placa)
+    - revisar tributos [ABC123](placa)
+    - chequear impuestos [DEF456](placa)
+    - verificar deuda tributaria [GHI789](placa)
+    - deuda de impuestos [ABC123](placa)
+    - saldo de tributos [DEF456](placa)
+    - tengo deuda en [GHI789](placa)
+    - hay impuestos para [ABC123](placa)
+    - deuda vehicular [DEF456](placa)
+    - impuesto vehicular [GHI789](placa)
+    - tributo vehicular [ABC123](placa)
+    - cuanto debo vehicular [DEF456](placa)
+    - deuda de vehicular [GHI789](placa)
+    - saldo vehicular [ABC123](placa)
 
 - intent: consulta_rapida_impuestos_dni
   examples: |
@@ -268,6 +447,31 @@ nlu:
     - tributos de mi DNI [55667788](dni)
     - deuda con el DNI [99887766](dni)
     - consultar impuestos del [44556677](dni)
+    - impuestos DNI [12345678](dni)
+    - tributos DNI [87654321](dni)
+    - ver impuestos [11223344](dni)
+    - consultar [55667788](dni) impuestos
+    - [99887766](dni) tiene impuestos
+    - tengo impuestos DNI [44556677](dni)
+    - cuanto debo de impuestos DNI [12345678](dni)
+    - quiero ver impuestos DNI [87654321](dni)
+    - revisar tributos DNI [11223344](dni)
+    - chequear impuestos [55667788](dni)
+    - verificar deuda tributaria [99887766](dni)
+    - deuda de impuestos DNI [44556677](dni)
+    - cuanto debo [12345678](dni)
+    - saldo de tributos DNI [87654321](dni)
+    - tengo deuda DNI [11223344](dni)
+    - hay impuestos para DNI [55667788](dni)
+    - mi DNI [99887766](dni) impuestos
+    - documento [44556677](dni) tributos
+    - con mi documento [12345678](dni) impuestos
+    - dni [87654321](dni) consultar impuestos
+    - dni [11223344](dni) ver tributos
+    - con dni [55667788](dni) deuda
+    - documento de identidad [99887766](dni) impuestos
+    - deuda predial DNI [44556677](dni)
+    - impuesto predial [12345678](dni)
 
 - intent: consulta_rapida_impuestos_ruc
   examples: |
@@ -312,6 +516,29 @@ nlu:
     - registro obligatorio
     - inscripción casilla MTC
     - casilla electrónica del MTC
+    - casilla del mtc
+    - registro mtc
+    - inscripcion mtc
+    - como me registro
+    - donde me registro
+    - necesito registrarme
+    - quiero registrarme
+    - registro en casilla mtc
+    - inscribirme en casilla mtc
+    - como registro casilla mtc
+    - que es casilla mtc
+    - para que sirve casilla mtc
+    - casilla electronica mtc
+    - casilla digital mtc
+    - registro digital mtc
+    - inscripcion electronica mtc
+    - casilla obligatoria
+    - debo registrarme en casilla mtc
+    - tengo que inscribirme
+    - es obligatorio casilla mtc
+    - registrarse casilla mtc
+    - crear casilla mtc
+    - abrir casilla mtc
 
 - intent: ir_a_pagos_linea
   examples: |
@@ -320,19 +547,35 @@ nlu:
     - pagar por internet
     - pagar en línea
     - información de pagos
-    - dónde puedo pagar
     - cómo pagar mis papeletas
     - necesito información para pagar
     - quiero pagar online
-    - formas de pago
     - métodos de pago
     - páginas para pagar
     - pago online
-    - opciones de pago
+    - como pago
+    - donde pago
+    - pagar
+    - quiero pagar
+    - necesito pagar
+    - realizar pago
+    - hacer un pago
+    - efectuar pago
+    - pago en linea
+    - pago por internet
+    - pago virtual
+    - pago web
+    - pagar online
+    - pagar virtualmente
+    - pagar por la web
+    - como puedo pagar
+    - formas para pagar
+    - metodos para pagar
+
 
 - intent: ir_a_papeletas
   examples: |
-    - papeletas
+    - papeleta
     - papeletas
     - quiero consultar papeletas
     - consultar mis papeletas
@@ -350,6 +593,22 @@ nlu:
     - me llegó una carta sobre papeletas
     - multas de tránsito
     - infracciones vehiculares
+    - ir a papeletas
+    - opción de papeletas
+    - seccion papeletas
+    - menu papeletas
+    - papeletas por favor
+    - quiero papeletas
+    - ver opcion papeletas
+    - consultar opcion papeletas
+    - necesito la opcion papeletas
+    - infracciones
+    - multas de transito
+    - infracciones de transito
+    - papeletas de transito
+    - sanciones de transito
+    - tengo multas
+    - quiero ver multas
 
 - intent: ir_a_impuestos
   examples: |
@@ -374,6 +633,20 @@ nlu:
     - impuesto predial
     - impuesto vehicular
     - arbitrios
+    - ir a impuestos
+    - opción de impuestos
+    - seccion impuestos
+    - menu impuestos
+    - impuestos por favor
+    - quiero impuestos
+    - ver opcion impuestos
+    - consultar opcion impuestos
+    - necesito la opcion impuestos
+    - deuda
+    - tributos municipales
+    - impuestos municipales
+    - tengo deuda
+    - quiero ver deuda
 
 - intent: ir_a_retencion_captura
   examples: |
@@ -388,6 +661,19 @@ nlu:
     - medidas cautelares SAT
     - cobranza del SAT
     - procedimientos de retención
+    - retencion
+    - captura
+    - retencion vehicular
+    - medidas cautelares
+    - opcion retencion
+    - seccion retencion
+    - menu retencion
+    - ir a retencion y captura
+    - ver opcion retencion
+    - consultar retencion
+    - necesito retencion
+    - cobranza coactiva
+    - procedimiento coactivo
 
 - intent: ir_a_lugares_pagos
   examples: |
@@ -413,6 +699,20 @@ nlu:
     - plataforma digital
     - servicios electrónicos
     - herramientas virtuales
+    - servicios
+    - servicios en linea
+    - servicios digitales SAT
+    - plataformas SAT
+    - servicios web
+    - tramites digitales
+    - tramites en linea
+    - opcion servicios
+    - seccion servicios
+    - menu servicios
+    - ver servicios
+    - consultar servicios
+    - servicios disponibles
+    - que servicios hay
 
 - intent: ir_a_otros_tramites
   examples: |
@@ -422,6 +722,7 @@ nlu:
     - procedimientos administrativos
     - trámites del SAT
     - consultar requisitos
+    
 
 
 # ============================================================================
@@ -541,6 +842,22 @@ nlu:
     - quiero saber si tengo multas
     - revisar mi situación multas
     - consultar mi estado papeletas
+    - quiero consultar
+    - ver mis multas
+    - revisar mis papeletas
+    - tengo papeletas
+    - cuantas papeletas tengo
+    - cuanto debo de multas
+    - cuanto debo de papeletas
+    - tengo deuda de papeletas
+    - consultar mi deuda
+    - ver mi deuda de multas
+    - revisar saldo de papeletas
+    - chequear mis papeletas
+    - verificar mis multas
+    - estado de mis papeletas
+    - situacion de mis multas
+    - hay papeletas a mi nombre
 
 - intent: papeletas_registrar
   examples: |
@@ -572,6 +889,18 @@ nlu:
     - puedo pagar en cuotas papeletas
     - pago en cuotas papeletas
     - financiamiento papeletas
+    - facilidades
+    - pagar en cuotas
+    - cuotas para papeletas
+    - fraccionamiento de multas
+    - dividir pago de multas
+    - pagar en partes
+    - financiar papeletas
+    - como pagar en cuotas
+    - puedo fraccionar
+    - facilidades de pago de multas
+    - compromiso de pago de papeletas
+    - quiero facilidades
 
 - intent: papeletas_frecuentes
   examples: |
@@ -585,7 +914,18 @@ nlu:
     - información adicional
     - dudas frecuentes
     - más información
-    - help
+    - preguntas
+    - dudas
+    - informacion
+    - faq
+    - preguntas y respuestas
+    - consultas comunes
+    - dudas comunes
+    - informacion general papeletas
+    - ayuda con papeletas
+    - mas informacion papeletas
+    - tengo dudas
+    - tengo preguntas
 
 
 # ============================================================================
@@ -640,7 +980,6 @@ nlu:
     - ver mis tributos
     - revisar deuda tributaria
     - consultar deuda impuestos
-    - quiero consultar mis impuestos específicos
     - necesito ver cuánto debo de impuestos
     - consultar impuestos pendientes específicos
     - ver si tengo impuestos
@@ -650,6 +989,19 @@ nlu:
     - quiero saber si tengo deuda
     - revisar mi situación tributaria
     - consultar mi estado tributario
+    - revisar mis impuestos
+    - tengo impuestos
+    - cuanto debo de impuestos
+    - cuanto debo de tributos
+    - consultar mi deuda tributaria
+    - ver mi deuda de impuestos
+    - revisar saldo de tributos
+    - chequear mis impuestos
+    - verificar mis tributos
+    - estado de mis impuestos
+    - situacion tributaria
+    - hay impuestos a mi nombre
+    - debo impuestos
 
 # ----------------------------------------------------------------------------
 # 6.1 Sub-opciones de impuestos: Cuadernillo
@@ -669,12 +1021,9 @@ nlu:
 
 - intent: impuestos_cuadernillo_agencia_virtual
   examples: |
-    - agencia virtual
     - cuadernillo agencia virtual
     - acceso online
     - cuadernillo online
-    - agencia virtual SAT
-    - registro agencia virtual
     - cuadernillo por internet
 
 # ----------------------------------------------------------------------------
@@ -702,6 +1051,24 @@ nlu:
     - declarar carro
     - inscribir auto
     - impuesto vehicular declaración
+    - declarar vehiculo
+    - declaracion vehicular
+    - inscribir vehiculo
+    - registrar vehiculo
+    - declarar auto
+    - declarar carro
+    - inscripcion de vehiculo
+    - registro vehicular
+    - como declaro vehiculo
+    - donde declaro vehiculo
+    - declarar nuevo vehiculo
+    - inscribir nuevo auto
+    - registrar nuevo carro
+    - requisitos declaracion vehicular
+    - documentos declaracion vehicular
+    - declarar impuesto vehicular
+    - inscribir impuesto vehicular
+    - registrar impuesto vehicular
 
 - intent: impuestos_declarar_predial
   examples: |
@@ -712,6 +1079,24 @@ nlu:
     - declarar casa
     - inscribir inmueble
     - impuesto predial declaración
+    - declarar predio
+    - declaracion predial
+    - inscribir predio
+    - registrar predio
+    - declarar inmueble
+    - declarar propiedad
+    - inscripcion de predio
+    - registro predial
+    - como declaro predio
+    - donde declaro predio
+    - declarar nuevo predio
+    - inscribir nueva casa
+    - registrar nuevo inmueble
+    - requisitos declaracion predial
+    - documentos declaracion predial
+    - declarar impuesto predial
+    - inscribir impuesto predial
+    - registrar impuesto predial
 
 - intent: impuestos_liquidar_alcabala
   examples: |
@@ -722,6 +1107,19 @@ nlu:
     - transferencia propiedad
     - venta casa
     - compra inmueble
+    - alcabala
+    - liquidar alcabala
+    - liquidacion alcabala
+    - impuesto de alcabala
+    - como liquido alcabala
+    - donde liquido alcabala
+    - pagar alcabala
+    - calcular alcabala
+    - alcabala de transferencia
+    - alcabala compra venta
+    - alcabala venta inmueble
+    - requisitos alcabala
+    - documentos alcabala
 
 - intent: impuestos_fraccionar_deuda
   examples: |
@@ -733,6 +1131,23 @@ nlu:
     - cuotas impuestos
     - dividir pago impuestos
     - facilidades tributarias
+    - fraccionar impuestos
+    - fraccionar deuda
+    - facilidades de pago impuestos
+    - pagar impuestos en cuotas
+    - cuotas para impuestos
+    - fraccionamiento de deuda
+    - dividir pago de impuestos
+    - pagar en partes impuestos
+    - financiar impuestos
+    - como pagar en cuotas impuestos
+    - puedo fraccionar impuestos
+    - facilidades tributarias pago
+    - compromiso de pago impuestos
+    - quiero facilidades impuestos
+    - fraccionamiento tributario
+    - facilidades deuda tributaria
+    - pagar poco a poco impuestos
 
 # ----------------------------------------------------------------------------
 # 6.3 Sub-opciones de impuestos: Beneficios
@@ -754,6 +1169,19 @@ nlu:
     - soy pensionista
     - jubilado
     - beneficios jubilado
+    - beneficios para pensionistas
+    - descuentos pensionistas
+    - beneficio pensionista
+    - descuento para jubilados
+    - beneficios jubilados
+    - soy jubilado
+    - tengo pension
+    - descuento por pension
+    - beneficio por pension
+    - requisitos pensionista
+    - como accedo beneficio pensionista
+    - descuento tributario pensionista
+    - exoneracion pensionista
 
 - intent: impuestos_beneficios_adulto_mayor
   examples: |
@@ -761,6 +1189,22 @@ nlu:
     - adulto mayor específico
     - no pensionista
     - adulto mayor no pensionista
+    - beneficios adulto mayor
+    - descuentos adulto mayor
+    - beneficio adulto mayor
+    - soy adulto mayor
+    - tengo mas de 60 años
+    - tercera edad
+    - beneficios tercera edad
+    - descuento tercera edad
+    - adulto mayor sin pension
+    - mayor de 60
+    - requisitos adulto mayor
+    - como accedo beneficio adulto mayor
+    - descuento tributario adulto mayor
+    - exoneracion adulto mayor
+    - beneficio por edad
+    - descuento por edad
 
 
 # ============================================================================
@@ -791,6 +1235,37 @@ nlu:
     - mi carro tiene órdenes de captura
     - consulta específica de captura
     - verificar órdenes vehiculares
+    - ordenes de captura
+    - consultar orden de captura
+    - mi vehiculo tiene orden de captura
+    - verificar orden de captura
+    - tiene orden de captura mi auto
+    - captura vehicular
+    - mi carro tiene orden de captura
+    - consultar captura
+    - ver orden de captura
+    - revisar orden de captura
+    - chequear orden de captura
+    - hay orden de captura
+    - tengo orden de captura
+    - mi placa tiene orden de captura
+    - verificar si tiene orden de captura
+    - orden de captura
+    - ordenes de captura
+    - consultar orden de captura
+    - mi vehiculo tiene orden de captura
+    - verificar orden de captura
+    - tiene orden de captura mi auto
+    - captura vehicular
+    - mi carro tiene orden de captura
+    - consultar captura
+    - ver orden de captura
+    - revisar orden de captura
+    - chequear orden de captura
+    - hay orden de captura
+    - tengo orden de captura
+    - mi placa tiene orden de captura
+    - verificar si tiene orden de captura
 
 - intent: retencion_vehiculo_internado
   examples: |
@@ -877,6 +1352,22 @@ nlu:
     - oficinas del SAT
     - dónde queda el SAT
     - direcciones de agencias
+    - donde queda el SAT
+    - ubicacion de oficinas
+    - donde esta el SAT
+    - direccion del SAT
+    - horarios SAT
+    - horarios de atencion
+    - a que hora atienden
+    - hasta que hora atienden
+    - horario de oficinas
+    - ubicaciones
+    - direcciones
+    - donde puedo ir
+    - donde me atienden
+    - oficinas cercanas
+    - agencias cercanas
+    - donde hay oficinas SAT
 
 - intent: lugares_pagos_lugares_pago
   examples: |
@@ -939,6 +1430,22 @@ nlu:
     - acceder servicios virtuales SAT
     - portal agencia virtual SAT
     - cuenta agencia virtual
+    - agencia virtual
+    - agencia virtual SAT
+    - registro agencia virtual
+    - acceso agencia virtual
+    - ingresar agencia virtual
+    - entrar agencia virtual
+    - como accedo agencia virtual
+    - como me registro agencia virtual
+    - crear cuenta agencia virtual
+    - usuario agencia virtual
+    - clave agencia virtual
+    - portal agencia virtual
+    - plataforma agencia virtual
+    - servicios agencia virtual
+    - acceder agencia
+    - registrarse agencia
 
 - intent: servicios_virtuales_pitazo
   examples: |
@@ -1008,6 +1515,20 @@ nlu:
     - consultar tramite
     - estado de trámite
     - ver trámite
+    - estado del tramite [12345678901234](numero_tramite)
+    - ver mi tramite [98765432109876](numero_tramite)
+    - revisar tramite [11111111111111](numero_tramite)
+    - chequear tramite [12345678901234](numero_tramite)
+    - verificar tramite [98765432109876](numero_tramite)
+    - como va mi tramite [11111111111111](numero_tramite)
+    - en que estado esta [12345678901234](numero_tramite)
+    - donde esta mi tramite [98765432109876](numero_tramite)
+    - rastrear tramite [11111111111111](numero_tramite)
+    - buscar tramite [12345678901234](numero_tramite)
+    - numero tramite [98765432109876](numero_tramite)
+    - tramite numero [11111111111111](numero_tramite)
+    - expediente [12345678901234](numero_tramite)
+    - numero de expediente [98765432109876](numero_tramite)
 
 # ----------------------------------------------------------------------------
 # 10.1 Sub-menús de trámites
@@ -1097,6 +1618,12 @@ nlu:
     - necesito información para la apelación
     - cómo apelar una papeleta
     - requisitos para apelar
+    - apelar papeleta
+    - apelacion de papeleta
+    - como apelo papeleta
+    - donde apelo papeleta
+    - requisitos apelacion
+    - documentos apelacion
 
 - intent: tramites_prescripcion_papeletas
   examples: |
@@ -1280,7 +1807,6 @@ nlu:
     - papeletas de tránsito
     - infracciones vehiculares tránsito
     - sanciones tránsito
-    - quiero papeletas
     - necesito papeletas
     - busco papeletas
 
@@ -1294,7 +1820,6 @@ nlu:
     - arbitrios específicos
     - alcabala específica
     - deuda fiscal
-    - quiero impuestos
     - necesito impuestos
     - busco impuestos
 
