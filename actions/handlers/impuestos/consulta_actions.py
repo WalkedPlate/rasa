@@ -1,7 +1,7 @@
 """
 Actions para consulta de impuestos
 """
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict, List,  Tuple
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
@@ -244,7 +244,7 @@ class ActionConsultarImpuestos(Action):
     def _format_impuestos_response(self, data: List[Dict[str, Any]],
                                    tipo: str, documento: str) -> str:
         """
-        Formatea la respuesta mostrando TODOS los conceptos con resumen por tipo
+        Formatea la respuesta agrupando por concepto+año y mostrando cuota 0 como encabezado
 
         Args:
             data: Lista COMPLETA de resultados (ya ordenada)
@@ -262,71 +262,101 @@ class ActionConsultarImpuestos(Action):
         }.get(tipo, tipo.upper())
 
         if not data:
-            return f"""✅ **¡Excelente noticia!** No encontré deudas pendientes para {tipo_display} **{documento}**.
+            return f"""✅ **¡Excelente noticia!** No encontré deudas para {tipo_display} **{documento}**.
 
-🎉 Estás al día.
+    🎉 Estás al día.
 
-**¿Qué más necesitas?**
-- 'Menú principal' - Otras opciones
-- 'Finalizar chat'
+    **¿Qué más necesitas?**
+    - 'Menú principal' - Otras opciones
+    - 'Finalizar chat'
 
-💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
+    💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
 
-        cantidad_total = len(data)
+        # Agrupar por concepto + año
+        grupos = self._agrupar_por_concepto_ano(data)
 
-        # CALCULAR MONTOS POR CONCEPTO
-        montos_por_concepto = self._calcular_montos_por_concepto(data)
-        total_general = sum(montos_por_concepto.values())
+        # Calcular solo cuotas individuales para el total
+        total_general = sum(
+            float(item.get('monto', 0))
+            for item in data
+            if item.get('cuota', '0').strip() != '0'
+        )
 
-        # MOSTRAR HASTA 3 ITEMS DETALLADOS
-        MAX_ITEMS = 3
-        items_mostrar = data[:MAX_ITEMS]
-        items_restantes = cantidad_total - MAX_ITEMS
+        # Calcular resumen por concepto (solo cuotas individuales)
+        montos_por_concepto = self._calcular_montos_por_concepto_sin_cuota_cero(data)
 
-        message = f"📋 **Encontré {cantidad_total} deuda{'s' if cantidad_total > 1 else ''} pendiente{'s' if cantidad_total > 1 else ''}** para {tipo_display} **{documento}**:\n\n"
+        message = f"📋 **Encontré deudas pendientes** para {tipo_display} **{documento}**:\n\n"
 
-        # Mostrar items detallados
-        for i, item in enumerate(items_mostrar, 1):
-            concepto = item.get('concepto', 'No especificado').strip()
-            ano = item.get('ano', 'N/A').strip()
-            cuota = item.get('cuota', '0').strip()
-            monto = float(item.get('monto', 0))
-            referencia = item.get('referencia', '').strip()
-            estado = item.get('estado', '').strip()
+        # Mostrar cada grupo
+        mostrados = 0
+        limite_detalles = 2  # Solo mostrar detalle de los primeros 2 años
 
-            # Datos específicos de papeletas (si vienen mezcladas)
-            falta = item.get('falta', '').strip()
-            fecha_infraccion = item.get('fechainfraccion', '').strip()
+        for grupo_key, grupo_data in grupos.items():
+            concepto, ano = grupo_key
 
-            message += f"**💰 Deuda #{i}:**\n"
-            message += f"• **Concepto:** {concepto}\n"
+            # Buscar registro con cuota 0 (resumen del año)
+            cuota_cero = next((item for item in grupo_data if item.get('cuota', '0').strip() == '0'), None)
 
-            # Año y Cuota en una sola línea
-            if cuota and cuota != '0':
-                message += f"• **Año-cuota:** {ano}-{cuota}\n"
-            else:
-                message += f"• **Año:** {ano}\n"
+            # Filtrar cuotas individuales
+            cuotas_individuales = [item for item in grupo_data if item.get('cuota', '0').strip() != '0']
 
-            if referencia:
-                message += f"• **Referencia:** {referencia}\n"
+            if not cuota_cero and not cuotas_individuales:
+                continue
 
-            # Solo mostrar datos de papeletas si es una papeleta
-            if concepto == 'Papeletas':
-                if falta:
-                    message += f"• **Tipo de falta:** {falta}\n"
-                if fecha_infraccion:
-                    message += f"• **Fecha infracción:** {fecha_infraccion}\n"
+            # Calcular monto del año
+            monto_ano = float(cuota_cero.get('monto', 0)) if cuota_cero else sum(
+                float(c.get('monto', 0)) for c in cuotas_individuales)
 
-            message += f"• **Monto:** S/ {monto:,.2f}\n"
+            message += f"💰 **{concepto} {ano} - Total año:** S/ {monto_ano:,.2f}\n"
 
-            if estado:
-                message += f"• **Estado:** {estado}\n"
+            # Solo mostrar detalle del primer año
+            if mostrados < limite_detalles:
+                # Mostrar cuota 0 si existe
+                if cuota_cero:
+                    message += f"   • **Año-cuota:** {ano}-0\n"
+                    documento_pago = cuota_cero.get('documento', '').strip()
+                    if documento_pago:
+                        message += f"   • **Doc. de pago:** {documento_pago}\n"
+                    message += f"   • **Monto:** S/ {float(cuota_cero.get('monto', 0)):,.2f}\n\n"
+
+                # Mostrar referencia una sola vez
+                referencia_item = cuotas_individuales[0] if cuotas_individuales else cuota_cero
+                if referencia_item:
+                    referencia = referencia_item.get('referencia', '').strip()
+                    if referencia:
+                        message += f"   **Referencia:** {referencia}\n\n"
+
+                # Mostrar cuotas individuales
+                for item in cuotas_individuales:
+                    cuota = item.get('cuota', '0').strip()
+                    monto = float(item.get('monto', 0))
+                    documento_pago = item.get('documento', '').strip()
+                    fecha_venc = item.get('fechavencimiento', '').strip()
+                    estado = item.get('estado', '').strip()
+
+                    message += f"   • **Año-cuota:** {ano}-{cuota}\n"
+
+                    if documento_pago:
+                        message += f"   • **Doc. de pago:** {documento_pago}\n"
+
+                    # Solo para papeletas: añadir estos campos adicionales
+
+                    if fecha_venc:
+                        message += f"   • **Fecha vencimiento:** {fecha_venc}\n"
+
+                    if estado:
+                        message += f"   • **Estado:** {estado}\n"
+
+                    message += f"   • **Monto:** S/ {monto:,.2f}\n\n"
+
+                mostrados += 1
 
             message += "\n"
 
-        # Indicar si hay más items
-        if items_restantes > 0:
-            message += f"... y {items_restantes} deuda{'s' if items_restantes > 1 else ''} más.\n\n"
+        # Si hay más años, indicar al usuario
+        if len(grupos) > limite_detalles:
+            message += "📌 **Para ver el detalle completo de todos los años, ingresa a:**\n"
+            message += "https://www.sat.gob.pe/PagosEnlinea/\n\n"
 
         # RESUMEN POR CONCEPTO
         message += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
@@ -336,11 +366,6 @@ class ActionConsultarImpuestos(Action):
 
         message += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         message += f"💵 **TOTAL GENERAL:** S/ {total_general:,.2f}\n\n"
-
-        # Mayor detalle cuando hay muchas deudas
-        if cantidad_total > MAX_ITEMS:
-            message += "📋 **MAYOR DETALLE EN EL SIGUIENTE LINK:**\n"
-            message += "📌 https://www.sat.gob.pe/pagosenlinea/\n\n"
 
         # Recomendaciones según monto
         if total_general > 2000:
@@ -355,9 +380,34 @@ class ActionConsultarImpuestos(Action):
 
         return message
 
-    def _calcular_montos_por_concepto(self, data: List[Dict[str, Any]]) -> Dict[str, float]:
+    def _agrupar_por_concepto_ano(self, data: List[Dict[str, Any]]) -> Dict[Tuple[str, str], List[Dict[str, Any]]]:
         """
-        Calcula el total por cada concepto
+        Agrupa los resultados por concepto y año
+
+        Args:
+            data: Lista completa de resultados
+
+        Returns:
+            Diccionario con clave (concepto, año) y valor lista de registros
+        """
+        grupos = {}
+
+        for item in data:
+            concepto = item.get('concepto', 'Otros').strip()
+            ano = item.get('ano', 'N/A').strip()
+
+            clave = (concepto, ano)
+
+            if clave not in grupos:
+                grupos[clave] = []
+
+            grupos[clave].append(item)
+
+        return grupos
+
+    def _calcular_montos_por_concepto_sin_cuota_cero(self, data: List[Dict[str, Any]]) -> Dict[str, float]:
+        """
+        Calcula el total por cada concepto excluyendo registros con cuota 0
 
         Args:
             data: Lista completa de resultados
@@ -368,6 +418,11 @@ class ActionConsultarImpuestos(Action):
         montos = {}
 
         for item in data:
+            # Ignorar registros con cuota 0
+            cuota = item.get('cuota', '0').strip()
+            if cuota == '0':
+                continue
+
             concepto = item.get('concepto', 'Otros').strip()
             monto = float(item.get('monto', 0))
 
