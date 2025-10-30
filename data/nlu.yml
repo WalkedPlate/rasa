@@ -864,16 +864,31 @@ nlu:
 
 - intent: retencion_consultar_placa
   examples: |
-    - [CAP001](placa)
-    - [EMB002](placa)
-    - [RET003](placa)
-    - [INT004](placa)
-    - [COA005](placa)
-    - [LEV006](placa)
-    - [REM007](placa)
-    - [CAU008](placa)
-    - [TER009](placa)
-    - [SUS010](placa)
+    - orden [CAP001](placa)
+    - captura [EMB002](placa)
+    - [RET003](placa) captura
+    - orden de captura [INT004](placa)
+    - verificar captura [COA005](placa)
+    - [LEV006](placa) tiene orden
+    - mi vehículo [REM007](placa) captura
+    - [CAU008](placa) orden
+    - consultar captura [TER009](placa)
+    - [SUS010](placa) está en captura
+    - retención [ABC123](placa)
+    - [U1A710](placa) orden de captura
+    - captura de [XYZ789](placa)
+    - [DEF456](placa) tiene orden de captura
+    - verificar orden [GHI789](placa)
+    - consultar [MNO123](placa) captura
+    - orden vehicular [PQR456](placa)
+    - [STU789](placa) retención
+    - captura vehicular [VWX012](placa)
+    - [YZA345](placa) orden coactiva
+    - revisar captura [BCD678](placa)
+    - [EFG901](placa) medida cautelar
+    - orden de [HIJ234](placa)
+    - captura [KLM567](placa) vehículo
+    - mi placa [NOP890](placa) orden
 
 
 # ============================================================================

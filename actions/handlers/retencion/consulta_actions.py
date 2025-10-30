@@ -197,12 +197,14 @@ class ActionConsultarOrdenCaptura(Action):
 
         message = """Para consultar órdenes de captura necesito la placa del vehículo.
 
-    🚗 **Formato de placa válido:**
-    - ABC123 
-    - U1A710
-    - DEF456, GHI789, etc.
+🚗 **Formato:**
+Escribe: **"Orden ABC123"** o **"Captura ABC123"**
 
-    ¿Cuál es la placa del vehículo a consultar?"""
+Ejemplos:
+- "Orden de captura ABC123"
+- "Captura de mi placa ABC123"
+
+¿Cuál es la placa a consultar?"""
 
         dispatcher.utter_message(text=message)
 

@@ -280,7 +280,7 @@ responses:
   # --------------------------------------------------------------------------
   utter_greet:
   - text: |
-      Hola, puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
+      Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
       
       
       • "Ver papeletas de mi placa ABC123" 
@@ -446,17 +446,18 @@ responses:
   utter_retencion_menu:
   - text: |
       🚨 **RETENCIÓN Y CAPTURA - ¿Qué necesitas?**
-
+      
       📋 **OPCIONES DISPONIBLES:**
       • **"Retención bancaria"** - Información sobre embargo de cuentas
       • **"Orden de captura"** - Consultar si tu vehículo tiene orden de captura
       • **"Vehículo internado"** - Consultar si tu vehículo está internado
       • **"Suspender cobranza"** - Información para solicitar suspensión de cobranza coactiva
-      • **"Tercería de propiedad"** - Información del rrámite de tercería
+      • **"Tercería de propiedad"** - Información del trámite de tercería
       • **"Remate vehicular"** - Información sobre remates
-
-      💡 **Para consultar orden de captura:** Escribe "orden de captura" 
-
+      
+      💡 **Para consultar orden de captura:**
+      Escribe: **"Orden ABC123"** o **"Captura de mi placa ABC123"**
+      
       ¿Qué opción necesitas?
 
   # --------------------------------------------------------------------------
