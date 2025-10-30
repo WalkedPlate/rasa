@@ -808,6 +808,7 @@ nlu:
 
 - intent: retencion_orden_captura
   examples: |
+    - orden de captura
     - orden de captura vehicular
     - consultar órdenes de captura
     - mi vehículo tiene orden de captura específica

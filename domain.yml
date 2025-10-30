@@ -283,9 +283,9 @@ responses:
       Puedo ayudarte con **consultas rápidas**. Puedes escribir directamente, por ejemplo:
       
       
-      • "Ver papeletas de mi placa ABC123" 
-      • "Impuestos de mi placa ABC123" 
-      • "Deuda tributaria de mi DNI 12345678" 
+      • "Ver papeletas de la placa ABC123" 
+      • "Ver deudas del DNI 12345678" 
+      • "Ver deudas del RUC 20123456789" 
       
       O si prefieres explorar las opciones completas:
       
@@ -305,9 +305,9 @@ responses:
   - text: |
       📋 **MENÚ PRINCIPAL SAT LIMA**
 
-      • "Ver papeletas de mi placa ABC123"
-      • "Impuestos de mi placa ABC123"
-      • "Deuda tributaria de mi DNI 12345678" 
+      • "Ver papeletas de la placa ABC123" 
+      • "Ver deudas del DNI 12345678" 
+      • "Ver deudas del RUC 20123456789" 
 
 
       📋 **OPCIONES PRINCIPALES:**
