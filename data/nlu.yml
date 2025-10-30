@@ -218,6 +218,18 @@ nlu:
     - ver papeletas de mi placa [APS 583](placa)
     - consultar multas de la placa [ABC 123](placa)
     - papeletas de mi vehículo [DEF 456](placa)
+    - ver deudas de multas placa [ABC123](placa)
+    - deudas de papeletas [APS583](placa)
+    - ver deudas de la placa [U1A710](placa)
+    - ver deudas de la placa [APS583](placa)
+    - ver deudas de la placa [CBO150](placa)
+    - ver deudas de la placa [DEF456](placa)
+    - ver deudas de la placa [MNO123](placa)
+    - deudas de mi placa [XYZ789](placa)
+    - consultar deudas placa [DEF456](placa)
+    - deudas de multas [GHI789](placa)
+    - ver mis deudas de multas [MNO123](placa)
+    - deudas pendientes placa [PQR456](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -277,7 +289,7 @@ nlu:
     - consultar deuda tributaria de mi placa [PQR456](placa)
     - ver si tengo impuestos en la placa [STU789](placa)
     - impuestos pendientes de [ABC123](placa)
-    - deuda del vehículo [U1A710](placa)
+    - deuda tributaria del vehículo [U1A710](placa)
     - tributos de la placa [XYZ789](placa)
     - consultar impuestos de [DEF456](placa)
 
@@ -294,6 +306,8 @@ nlu:
     - impuestos pendientes de [11223344](dni)
     - tributos de mi DNI [55667788](dni)
     - deuda con el DNI [99887766](dni)
+    - ver deudas del DNI [99887766](dni)
+    - ver deuda del DNI [55667788](dni)
     - consultar impuestos del [44556677](dni)
 
 - intent: consulta_rapida_impuestos_ruc
@@ -308,6 +322,9 @@ nlu:
     - tributos de mi compañía [10987654321](ruc)
     - deuda empresarial [15555666677](ruc)
     - ver impuestos del RUC [12888999000](ruc)
+    - ver deudas del RUC [12888999000](dni)
+    - ver deudas del RUC [20123456789](dni)
+    - ver deuda del RUC [20123456789](dni)
     - consultar tributos de [20555444333](ruc)
 
 - intent: consulta_rapida_impuestos_codigo
