@@ -197,15 +197,16 @@ class ActionConsultarOrdenCaptura(Action):
 
         message = """Para consultar órdenes de captura necesito la placa del vehículo.
 
-🚗 **Formato de placa válido:**
-• ABC123 
-• U1A710
-• DEF456, GHI789, etc.
+    🚗 **Formato de placa válido:**
+    - ABC123 
+    - U1A710
+    - DEF456, GHI789, etc.
 
-¿Cuál es la placa del vehículo a consultar?"""
+    ¿Cuál es la placa del vehículo a consultar?"""
 
         dispatcher.utter_message(text=message)
-        return []
+
+        return [SlotSet("contexto_actual", "retencion")]
 
     def _handle_invalid_placa(self, dispatcher: CollectingDispatcher,
                              placa: str) -> List[Dict[Text, Any]]:

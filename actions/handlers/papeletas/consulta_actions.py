@@ -130,7 +130,7 @@ class ActionConsultarPapeletas(Action):
                            documento: str, tipo: str) -> List[Dict[Text, Any]]:
         """Ejecuta consulta a la API del SAT"""
 
-        dispatcher.utter_message(text=f"🔍 Consultando papeletas para {tipo.upper()} **{documento}**...")
+        dispatcher.utter_message(text=f"🔍 Consultando deudas para {tipo.upper()} **{documento}**...")
 
         try:
             # Mapeo de tipo a query_type y document_type

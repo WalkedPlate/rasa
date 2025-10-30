@@ -128,7 +128,7 @@ class ActionConsultarImpuestos(Action):
             return self._handle_invalid_document(dispatcher, tipo, documento)
 
         # 3. Ejecutar consulta API
-        logger.info(f"Consultando impuestos para {tipo}: {documento_limpio}")
+        logger.info(f"Consultando deudas para {tipo}: {documento_limpio}")
         return self._execute_api_query(dispatcher, tracker, documento_limpio, tipo)
 
     def _execute_api_query(self, dispatcher: CollectingDispatcher,
@@ -143,7 +143,7 @@ class ActionConsultarImpuestos(Action):
             'codigo_contribuyente': 'CÓDIGO DE CONTRIBUYENTE'
         }.get(tipo, tipo.upper())
 
-        dispatcher.utter_message(text=f"🔍 Consultando para {tipo_display} **{documento}**...")
+        dispatcher.utter_message(text=f"🔍 Consultando deudas para {tipo_display} **{documento}**...")
 
         try:
             # Mapeo de tipo a query_type y document_type

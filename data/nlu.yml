@@ -23,16 +23,18 @@ nlu:
 
 - regex: placa_pattern
   examples: |
-    - \b[A-Z]{3}\s?\d{3}\b              # ABC123 o ABC 123 (UN espacio)
-    - \b[A-Z]{2}\s?\d{4}\b              # AB1234 o AB 1234 (UN espacio)  
-    - \b[A-Z]{3}\-\d{3}\b               # ABC-123 (con guión)
-    - \b[A-Z]{2}\-\d{4}\b               # AB-1234 (con guión)
-    - \b[A-Z]\d[A-Z]\s?\d{3}\b          # A1B234 o A1B 234
-    - \bU\d[A-Z]\s?\d{3}\b              # U1A710 o U1A 710
+    - [A-Z]{3}\d{3}
+    - [A-Z]{3}\s\d{3}
+    - [A-Z]{3}-\d{3}
+    - [A-Z]{2}\d{4}
+    - [A-Z]{2}\s\d{4}
+    - [A-Z]{2}-\d{4}
+    - [A-Z]\d[A-Z]\d{3}
+    - U\d[A-Z]\d{3}
     - \b[A-Z]{3}\d{3}\b
     - \b[A-Z]{2}\d{4}\b
-    - \b[A-Z]\d[A-Z]\d{3}\b
     - \bU\d[A-Z]\d{3}\b
+    - \b[A-Z]\d[A-Z]\d{3}\b
 
 - regex: dni_pattern
   examples: |
@@ -171,6 +173,31 @@ nlu:
   examples: |
     - ver papeletas de mi placa [ABC123](placa)
     - consultar multas de la placa [U1A710](placa)
+    - ver papeletas de mi placa [APS583](placa)
+    - ver papeletas de mi placa [BCD890](placa)
+    - ver papeletas de mi placa [EFG123](placa)
+    - ver papeletas de mi placa [HIJ456](placa)
+    - ver papeletas de mi placa [KLM789](placa)
+    - consultar multas de [APS583](placa)
+    - consultar multas de [BCD890](placa)
+    - consultar multas de [EFG123](placa)
+    - papeletas de [APS583](placa)
+    - papeletas de [BCD890](placa)
+    - papeletas [APS583](placa)
+    - papeletas [EFG123](placa)
+    - [APS583](placa) papeletas
+    - [BCD890](placa) multas
+    - ver papeletas [APS583](placa)
+    - consultar papeletas [BCD890](placa)
+    - mi placa [APS583](placa) papeletas
+    - mi placa [EFG123](placa) multas
+    - quiero ver papeletas [APS583](placa)
+    - necesito consultar [BCD890](placa)
+    - papeletas placa [APS583](placa)
+    - multas placa [EFG123](placa)
+    - ver multas [APS583](placa)
+    - revisar papeletas [BCD890](placa)
+    - consultar [APS583](placa)
     - papeletas de mi vehículo [XYZ789](placa)
     - quiero saber las papeletas de [DEF456](placa)
     - multas de mi placa [GHI789](placa)
