@@ -23,18 +23,18 @@ nlu:
 
 - regex: placa_pattern
   examples: |
-    - [A-Z]{3}\d{3}
-    - [A-Z]{3}\s\d{3}
-    - [A-Z]{3}-\d{3}
-    - [A-Z]{2}\d{4}
-    - [A-Z]{2}\s\d{4}
-    - [A-Z]{2}-\d{4}
-    - [A-Z]\d[A-Z]\d{3}
-    - U\d[A-Z]\d{3}
-    - \b[A-Z]{3}\d{3}\b
-    - \b[A-Z]{2}\d{4}\b
-    - \bU\d[A-Z]\d{3}\b
-    - \b[A-Z]\d[A-Z]\d{3}\b
+    - [A-Za-z]{3}\d{3}
+    - [A-Za-z]{3}\s\d{3}
+    - [A-Za-z]{3}-\d{3}
+    - [A-Za-z]{2}\d{4}
+    - [A-Za-z]{2}\s\d{4}
+    - [A-Za-z]{2}-\d{4}
+    - [A-Za-z]\d[A-Za-z]\d{3}
+    - [UuYy]\d[A-Za-z]\d{3}
+    - \b[A-Za-z]{3}\d{3}\b
+    - \b[A-Za-z]{2}\d{4}\b
+    - \b[UuYy]\d[A-Za-z]\d{3}\b
+    - \b[A-Za-z]\d[A-Za-z]\d{3}\b
 
 - regex: dni_pattern
   examples: |
@@ -46,8 +46,15 @@ nlu:
 
 - regex: codigo_pattern
   examples: |
-    - \b[A-Z]\d{1,2}\b                   # Letra seguida de 1-2 dígitos (ej: G40)
+    - \b[A-Za-z]\d{1,2}\b                 # Letra seguida de 1-2 dígitos (ej: G40)
 
+- regex: numero_tramite_pattern
+  examples: |
+    - \b\d{14}\b                         # Exactamente 14 dígitos
+
+- regex: codigo_contribuyente_pattern
+  examples: |
+    - \b\d{2,10}\b                       # Entre 2 y 10 dígitos
 
 # ============================================================================
 # SECCIÓN 2: INTENTS BÁSICOS - Conversación general
@@ -230,6 +237,34 @@ nlu:
     - deudas de multas [GHI789](placa)
     - ver mis deudas de multas [MNO123](placa)
     - deudas pendientes placa [PQR456](placa)
+    - mostrar papeletas de [RST456](placa)
+    - buscar multas de [UVW789](placa)
+    - dame las papeletas de [XYZ012](placa)
+    - quiero revisar multas [ABC789](placa)
+    - ver las infracciones de [DEF234](placa)
+    - mostrar infracciones [GHI567](placa)
+    - tengo papeletas en [JKL890](placa)?
+    - hay multas para [MNO345](placa)?
+    - cuántas papeletas tiene [PQR678](placa)?
+    - tengo infracciones? [STU901](placa)
+    - hay multas pendientes [VWX234](placa)?
+    - mi placa [YZA567](placa) tiene papeletas?
+    - a ver papeletas [BCD123](placa)
+    - chequear multas [EFG456](placa)
+    - quiero saber si [HIJ789](placa) tiene multas
+    - necesito ver las multas de [KLM012](placa)
+    - revisar si tengo papeletas [NOP345](placa)
+    - verificar multas [QRS678](placa)
+    - papeletas de mi carro [TUV901](placa)
+    - multas de mi auto [WXY234](placa)
+    - infracciones de mi vehículo [ZAB567](placa)
+    - ver papeletas del carro [CDE890](placa)
+    - multas del vehículo [FGH123](placa)
+    - papeletas [abc456](placa)
+    - multas [def789](placa)
+    - infracciones [ghi012](placa)
+    - ver papeletas [jkl345](placa)
+    - consultar multas [mno678](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -244,6 +279,49 @@ nlu:
     - infracciones de mi DNI [55667788](dni)
     - multas con el DNI [99887766](dni)
     - consultar papeletas del [44556677](dni)
+    - mostrar papeletas DNI [12345678](dni)
+    - buscar multas del [23456789](dni)
+    - dame las papeletas de mi DNI [34567890](dni)
+    - verificar papeletas [45678901](dni)
+    - revisar multas del DNI [56789012](dni)
+    - chequear papeletas [67890123](dni)
+    - ver multas con mi DNI [78901234](dni)
+    - tengo papeletas? DNI [89012345](dni)
+    - hay multas para el DNI [90123456](dni)?
+    - cuántas papeletas tengo? [01234567](dni)
+    - tengo infracciones con [13579246](dni)?
+    - hay multas pendientes DNI [24681357](dni)?
+    - mi DNI [97531864](dni) tiene papeletas?
+    - tengo multas? mi documento es [86420975](dni)
+    - a ver papeletas DNI [75319864](dni)
+    - quiero saber si tengo multas [64208531](dni)
+    - necesito ver papeletas del [53197420](dni)
+    - revisar si tengo multas [42086319](dni)
+    - ver mis multas DNI [31975208](dni)
+    - dame info de papeletas [20864197](dni)
+    - papeletas de mi documento [19753086](dni)
+    - multas con mi documento [08642197](dni)
+    - consultar papeletas documento [97531086](dni)
+    - ver multas de mi documento [86420197](dni)
+    - infracciones documento [75318642](dni)
+    - papeletas de mi DNI [64207531](dni)
+    - mis papeletas DNI [53196420](dni)
+    - mis multas [42085319](dni)
+    - ver mis papeletas [31974208](dni)
+    - consultar mis multas DNI [20863197](dni)
+    - papeletas [19752086](dni)
+    - multas [08641975](dni)
+    - infracciones [97530864](dni)
+    - papeletas DNI [86419753](dni)
+    - multas DNI [75308642](dni)
+    - papeletas del DNI [64197530](dni)
+    - multas del documento [53086419](dni)
+    - consultar infracciones del DNI [42075308](dni)
+    - ver papeletas del documento [31964207](dni)
+    - ver si tengo multas DNI [20853196](dni)
+    - saber si tengo papeletas [19742085](dni)
+    - tengo multas con [08631974](dni)?
+    - verificar si tengo papeletas DNI [97520863](dni)
 
 - intent: consulta_rapida_papeletas_ruc
   examples: |
@@ -258,6 +336,46 @@ nlu:
     - infracciones empresariales [15555666677](ruc)
     - ver multas del RUC [12888999000](ruc)
     - consultar papeletas de [20555444333](ruc)
+    - mostrar papeletas RUC [20111222333](ruc)
+    - buscar multas del [10222333444](ruc)
+    - dame las papeletas de mi RUC [20333444555](ruc)
+    - verificar papeletas [10444555666](ruc)
+    - revisar multas del RUC [20555666777](ruc)
+    - chequear papeletas empresa [10666777888](ruc)
+    - tengo papeletas? RUC [20777888999](ruc)
+    - hay multas para el RUC [10888999000](ruc)?
+    - cuántas papeletas tiene mi empresa? [20999000111](ruc)
+    - tengo infracciones RUC [10000111222](ruc)?
+    - hay multas pendientes [20111333555](ruc)?
+    - mi RUC [10222444666](ruc) tiene papeletas?
+    - a ver papeletas RUC [20333555777](ruc)
+    - quiero saber si mi empresa tiene multas [10444666888](ruc)
+    - necesito ver papeletas del [20555777999](ruc)
+    - revisar si tengo multas empresa [10666888000](ruc)
+    - ver papeletas de la empresa [20777999111](ruc)
+    - papeletas de mi empresa [10888000222](ruc)
+    - multas de mi negocio [20999111333](ruc)
+    - infracciones de la compañía [10000222444](ruc)
+    - papeletas del negocio [20111444666](ruc)
+    - multas de la empresa [10222555777](ruc)
+    - papeletas [20333666888](ruc)
+    - multas [10444777999](ruc)
+    - infracciones [20555888000](ruc)
+    - papeletas RUC [10666999111](ruc)
+    - multas RUC [20777000222](ruc)
+    - papeletas de mi RUC [10888111333](ruc)
+    - mis papeletas RUC [20999222444](ruc)
+    - mis multas empresa [10000333555](ruc)
+    - ver mis papeletas [20111555777](ruc)
+    - papeletas del RUC [10222666888](ruc)
+    - multas del RUC [20333777999](ruc)
+    - consultar infracciones del RUC [10444888000](ruc)
+    - ver papeletas empresariales [20555999111](ruc)
+    - ver si tengo multas RUC [10666000222](ruc)
+    - saber si tengo papeletas [20777111333](ruc)
+    - verificar si tengo multas empresa [10888222444](ruc)
+    - tengo infracciones con [20999333555](ruc)?
+    
 
 - intent: consulta_rapida_codigo_falta
   examples: |
@@ -273,6 +391,44 @@ nlu:
     - explicación del código [M08](codigo_falta)
     - significado de [A05](codigo_falta)
     - qué es el código [T12](codigo_falta)
+    - qué significa [D25](codigo_falta)
+    - que significa el código [E30](codigo_falta)
+    - significado del código [H15](codigo_falta)
+    - qué quiere decir [I08](codigo_falta)
+    - que quiere decir el código [J12](codigo_falta)
+    - información código [K18](codigo_falta)
+    - dame información del [N25](codigo_falta)
+    - detalles del código [O30](codigo_falta)
+    - info del código [P05](codigo_falta)
+    - información sobre [Q10](codigo_falta)
+    - qué infracción es [R15](codigo_falta)
+    - qué tipo de falta es [S20](codigo_falta)
+    - a qué corresponde [V08](codigo_falta)
+    - de qué trata el código [W12](codigo_falta)
+    - qué falta es [X18](codigo_falta)
+    - en mi papeleta sale [Y25](codigo_falta)
+    - me apareció el código [Z30](codigo_falta)
+    - tengo el código [A10](codigo_falta) en mi papeleta
+    - mi papeleta dice [B15](codigo_falta)
+    - me pusieron [C20](codigo_falta)
+    - código [D08](codigo_falta)
+    - [E12](codigo_falta) info
+    - [F18](codigo_falta) qué es
+    - [G25](codigo_falta) significado
+    - [H30](codigo_falta)
+    - explícame el código [I05](codigo_falta)
+    - explicar código [J10](codigo_falta)
+    - describe el código [K15](codigo_falta)
+    - explicación de [L20](codigo_falta)
+    - a ver qué es [M08](codigo_falta)
+    - quiero saber qué es [N12](codigo_falta)
+    - necesito saber del código [O18](codigo_falta)
+    - dime qué es [P25](codigo_falta)
+    - ver código [Q30](codigo_falta)- código [g40](codigo_falta)
+    - qué significa [m08](codigo_falta)
+    - [c15](codigo_falta) info
+    - información [a05](codigo_falta)
+    
 
 # ----------------------------------------------------------------------------
 # 3.2 Consultas rápidas de IMPUESTOS
@@ -292,6 +448,46 @@ nlu:
     - deuda tributaria del vehículo [U1A710](placa)
     - tributos de la placa [XYZ789](placa)
     - consultar impuestos de [DEF456](placa)
+    - deuda tributaria [VWX012](placa)
+    - ver deuda tributaria de [YZA345](placa)
+    - consultar deuda de la placa [BCD678](placa)
+    - cuánto debo de impuestos [EFG901](placa)
+    - deuda de impuestos [HIJ234](placa)
+    - impuesto vehicular [KLM567](placa)
+    - ver impuesto vehicular de [NOP890](placa)
+    - consultar impuesto vehicular [QRS123](placa)
+    - cuánto es el vehicular de [TUV456](placa)
+    - impuesto predial [WXY789](placa)
+    - predial y arbitrios [ZAB012](placa)
+    - ver predial de [CDE345](placa)
+    - arbitrios de la placa [FGH678](placa)
+    - tengo deuda tributaria? [IJK901](placa)
+    - cuánto debo de impuestos? [LMN234](placa)
+    - hay deuda en [OPQ567](placa)?
+    - tengo impuestos pendientes [RST890](placa)?
+    - debo impuestos? placa [UVW123](placa)
+    - tributos pendientes [XYZ456](placa)
+    - ver tributos de [ABC789](placa)
+    - consultar tributos [DEF012](placa)
+    - deuda de tributos [GHI345](placa)
+    - impuestos [JKL678](placa)
+    - deuda [MNO901](placa)
+    - tributos [PQR234](placa)
+    - impuestos placa [STU567](placa)
+    - deuda placa [VWX890](placa)
+    - mis impuestos placa [YZA123](placa)
+    - mi deuda tributaria [BCD456](placa)
+    - mis tributos [EFG789](placa)
+    - impuestos de mi vehículo [HIJ012](placa)
+    - deuda de mi carro [KLM345](placa)
+    - tributos de mi auto [NOP678](placa)
+    - impuestos del vehículo [QRS901](placa)
+    - verificar impuestos [TUV234](placa)
+    - revisar deuda tributaria [WXY567](placa)
+    - chequear impuestos [ZAB890](placa)
+    - ver deuda [CDE123](placa)
+    - impuestos [fgh456](placa)
+    - deuda [ijk789](placa)
 
 - intent: consulta_rapida_impuestos_dni
   examples: |
@@ -309,6 +505,44 @@ nlu:
     - ver deudas del DNI [99887766](dni)
     - ver deuda del DNI [55667788](dni)
     - consultar impuestos del [44556677](dni)
+    - deuda tributaria DNI [12345670](dni)
+    - ver deuda tributaria [23456781](dni)
+    - consultar deuda del DNI [34567892](dni)
+    - cuánto debo de impuestos [45678903](dni)
+    - deuda de impuestos DNI [56789014](dni)
+    - impuesto predial DNI [67890125](dni)
+    - ver predial de mi DNI [78901236](dni)
+    - consultar predial [89012347](dni)
+    - cuánto es el predial [90123458](dni)
+    - arbitrios del DNI [01234569](dni)
+    - ver arbitrios [13579260](dni)
+    - consultar arbitrios DNI [24681371](dni)- tengo deuda tributaria? [97531862](dni)
+    - cuánto debo de impuestos? [86420973](dni)
+    - hay deuda con [75319084](dni)?
+    - tengo impuestos pendientes DNI [64208195](dni)?
+    - debo tributos? [53197206](dni)
+    - tributos pendientes [42086317](dni)
+    - ver tributos del [31975428](dni)
+    - consultar tributos DNI [20864539](dni)
+    - deuda de tributos [19753640](dni)
+    - impuestos [08642751](dni)
+    - deuda [97531862](dni)
+    - tributos [86420973](dni)
+    - impuestos DNI [75319084](dni)
+    - deuda DNI [64208195](dni)
+    - mis impuestos DNI [53197206](dni)
+    - mi deuda tributaria [42086317](dni)
+    - impuestos de mi documento [31975428](dni)
+    - deuda de mi documento [20864539](dni)
+    - verificar impuestos [19753640](dni)
+    - revisar deuda tributaria DNI [08642751](dni)
+    - chequear impuestos [97531862](dni)
+    - ver deuda del DNI [86420973](dni)
+    - impuestos [75319084](dni)
+    - deuda [64208195](dni)
+    
+
+
 
 - intent: consulta_rapida_impuestos_ruc
   examples: |
@@ -326,6 +560,41 @@ nlu:
     - ver deudas del RUC [20123456789](dni)
     - ver deuda del RUC [20123456789](dni)
     - consultar tributos de [20555444333](ruc)
+    - deuda tributaria RUC [20111222333](ruc)
+    - ver deuda tributaria empresa [10222333444](ruc)
+    - consultar deuda del RUC [20333444555](ruc)
+    - cuánto debe la empresa [10444555666](ruc)
+    - deuda de impuestos RUC [20555666777](ruc)
+    - impuesto predial RUC [10666777888](ruc)
+    - predial de mi empresa [20777888999](ruc)
+    - consultar predial del RUC [10888999000](ruc)
+    - arbitrios del RUC [20999000111](ruc)
+    - ver arbitrios empresa [10000111222](ruc)
+    - consultar arbitrios RUC [20111333555](ruc)
+    - tengo deuda tributaria empresa? [10222444666](ruc)
+    - cuánto debo de impuestos? [20333555777](ruc)
+    - hay deuda RUC [10444666888](ruc)?
+    - mi empresa tiene deuda? [20555777999](ruc)
+    - tributos pendientes RUC [10666888000](ruc)
+    - ver tributos de la empresa [20777999111](ruc)
+    - consultar tributos del RUC [10888000222](ruc)
+    - impuestos [20999111333](ruc)
+    - deuda [10000222444](ruc)
+    - tributos [20111444666](ruc)
+    - impuestos RUC [10222555777](ruc)
+    - impuestos de mi empresa [20333666888](ruc)
+    - deuda de mi negocio [10444777999](ruc)
+    - tributos de la compañía [20555888000](ruc)
+    - impuestos del negocio [10666999111](ruc)
+    - verificar impuestos RUC [20777000222](ruc)
+    - revisar deuda tributaria empresa [10888111333](ruc)
+    - chequear impuestos [20999222444](ruc)
+    - ver deuda del RUC [10000333555](ruc)
+    - cuánto es la deuda del RUC [20111555777](ruc)
+    
+
+
+    
 
 - intent: consulta_rapida_impuestos_codigo
   examples: |
@@ -339,6 +608,43 @@ nlu:
     - código [67890](codigo_contribuyente) impuestos
     - consultar [11111](codigo_contribuyente) tributos
     - deuda del código [22222](codigo_contribuyente)
+    - código de contribuyente [33333](codigo_contribuyente)
+    - ver código contribuyente [44444](codigo_contribuyente)
+    - consultar código de contribuyente [55555](codigo_contribuyente)
+    - mi código de contribuyente es [66666](codigo_contribuyente)
+    - deuda tributaria código [77777](codigo_contribuyente)
+    - ver deuda del código [88888](codigo_contribuyente)
+    - consultar deuda código contribuyente [99999](codigo_contribuyente)
+    - cuánto debo código [10101](codigo_contribuyente)
+    - impuesto predial [20202](codigo_contribuyente)
+    - predial del código [30303](codigo_contribuyente)
+    - ver predial código contribuyente [40404](codigo_contribuyente)
+    - arbitrios código [50505](codigo_contribuyente)
+    - ver arbitrios del código [60606](codigo_contribuyente)
+    - consultar arbitrios [70707](codigo_contribuyente)
+    - tengo deuda código [80808](codigo_contribuyente)?
+    - cuánto debo código contribuyente [90909](codigo_contribuyente)?
+    - hay deuda en [12121](codigo_contribuyente)?
+    - impuestos [23232](codigo_contribuyente)
+    - deuda [34343](codigo_contribuyente)
+    - tributos [45454](codigo_contribuyente)
+    - código [56565](codigo_contribuyente) impuestos
+    - número de contribuyente [67676](codigo_contribuyente)
+    - mi número de contribuyente [78787](codigo_contribuyente)
+    - impuestos número contribuyente [89898](codigo_contribuyente)
+    - mi código [91919](codigo_contribuyente) impuestos
+    - mi código es [10203](codigo_contribuyente)
+    - impuestos de mi código [20304](codigo_contribuyente)
+    - tributos del código [30405](codigo_contribuyente)
+    - ver tributos código [40506](codigo_contribuyente)
+    - consultar tributos [50607](codigo_contribuyente)
+    - verificar impuestos código [60708](codigo_contribuyente)
+    - revisar deuda código [70809](codigo_contribuyente)
+    - chequear impuestos [80910](codigo_contribuyente)
+    - consultar impuestos código [91011](codigo_contribuyente)
+    - ver impuestos del código [10112](codigo_contribuyente)
+    - deuda tributaria del [20213](codigo_contribuyente)
+    - impuestos código contribuyente [30314](codigo_contribuyente)
 
 
 # ============================================================================
@@ -510,6 +816,14 @@ nlu:
     - ver papeletas de mi placa [U1A710](placa)
     - consultar multas de la placa [APS 583](placa)
     - papeletas de mi vehículo [U1A 710](placa)
+    - chequear [RST123](placa)
+    - a ver [UVW456](placa)
+    - dame info de [XYZ789](placa)
+    - buscar [ABC012](placa)
+    - mostrar [DEF345](placa)
+    - verificar [ghi678](placa)
+    - [jkl901](placa) info
+    - [mno234](placa)
 
 - intent: papeletas_consultar_dni
   examples: |
@@ -538,6 +852,26 @@ nlu:
     - mi documento [87654321](dni)
     - el documento [33445566](dni)
     - consultar [22334455](dni)
+    - chequear [12345670](dni)
+    - a ver [23456781](dni)
+    - dame info [34567892](dni)
+    - buscar [45678903](dni)
+    - mostrar [56789014](dni)
+    - verificar [67890125](dni)
+    - DNI [78901236](dni)
+    - documento [89012347](dni)
+    - [90123458](dni) info
+    - [01234569](dni)
+    - mi DNI [13579260](dni)
+    - el DNI [24681371](dni)
+    - con el [97531862](dni)
+    - documento [86420973](dni)
+    - [75319084](dni) ver
+    - revisar [64208195](dni)
+    - [53197206](dni) buscar
+    - info [42086317](dni)
+    - [31975428](dni) chequear
+    - el documento [20864539](dni)
 
 - intent: papeletas_consultar_ruc
   examples: |
@@ -553,6 +887,47 @@ nlu:
     - consultar RUC [12888999000](ruc)
     - papeletas del RUC [20555444333](ruc)
     - con mi RUC [11999888777](ruc)
+    - [20111222333](ruc)
+    - RUC [10222333444](ruc)
+    - [20333444555](ruc) info
+    - buscar [10444555666](ruc)
+    - verificar [20555666777](ruc)
+    - mi empresa [10666777888](ruc)
+    - la empresa [20777888999](ruc)
+    - de la empresa [10888999000](ruc)
+    - empresa [20999000111](ruc)
+    - RUC empresa [10000111222](ruc)
+    - mi negocio [20111333555](ruc)
+    - del negocio [10222444666](ruc)
+    - el negocio [20333555777](ruc)
+    - negocio [10444666888](ruc)
+    - mi compañía [20555777999](ruc)
+    - la compañía [10666888000](ruc)
+    - de la compañía [20777999111](ruc)
+    - consultar [10888000222](ruc)
+    - revisar [20999111333](ruc)
+    - chequear [10000222444](ruc)
+    - mostrar [20111444666](ruc)
+    - dame [10222555777](ruc)
+    - ver [20333666888](ruc)
+    - a ver [10444777999](ruc)
+    - mi RUC [20555888000](ruc)
+    - el RUC [10666999111](ruc)
+    - RUC de [20777000222](ruc)
+    - del RUC [10888111333](ruc)
+    - RUC de mi empresa [20999222444](ruc)
+    - el RUC de la empresa [10000333555](ruc)
+    - mi RUC empresa [20111555777](ruc)
+    - RUC del negocio [10222666888](ruc)
+    - consultar RUC empresa [20333777999](ruc)
+    - verificar RUC [10444888000](ruc)
+    - revisar RUC empresa [20555999111](ruc)
+    - chequear el RUC [10666000222](ruc)
+    - info del RUC [20777111333](ruc)
+    - datos RUC [10888222444](ruc)
+    - ver RUC empresa [20999333555](ruc)
+
+
 
 - intent: papeletas_consultar_codigo_falta
   examples: |
@@ -567,6 +942,47 @@ nlu:
     - información del código [C15](codigo_falta)
     - [M08](codigo_falta) qué significa
     - explicación de [A05](codigo_falta)
+    - [D25](codigo_falta)
+    - [E30](codigo_falta) info
+    - código [H15](codigo_falta)
+    - [I08](codigo_falta) qué es
+    - info [J12](codigo_falta)
+    - qué es [K18](codigo_falta)
+    - que es [N25](codigo_falta)
+    - [O30](codigo_falta) que es
+    - qué es el [P05](codigo_falta)
+    - [Q10](codigo_falta) significa
+    - significa [R15](codigo_falta)
+    - qué significa [S20](codigo_falta)
+    - ver [V08](codigo_falta)
+    - mostrar [W12](codigo_falta)
+    - dame [X18](codigo_falta)
+    - buscar [Y25](codigo_falta)
+    - consultar [Z30](codigo_falta)
+    - código [A10](codigo_falta) info
+    - el código [B15](codigo_falta)
+    - info código [C20](codigo_falta)
+    - ver código [D08](codigo_falta)
+    - falta [E12](codigo_falta)
+    - qué falta es [F18](codigo_falta)
+    - tipo de falta [G25](codigo_falta)
+    - infracción [H30](codigo_falta)
+    - qué infracción [I05](codigo_falta)
+    - tipo infracción [J10](codigo_falta)
+    - [K15](codigo_falta) tipo
+    - [L20](codigo_falta) falta
+    - [M08](codigo_falta) infracción
+    - detalles [N12](codigo_falta)
+    - info del [O18](codigo_falta)
+    - explicar [P25](codigo_falta)
+    - [Q30](codigo_falta) explicación
+    - describir [R05](codigo_falta)
+    - [g40](codigo_falta)
+    - código [m08](codigo_falta)
+    - [c15](codigo_falta)
+    - qué es [a05](codigo_falta)
+    
+
 
 - intent: papeletas_consultar_generico
   examples: |
@@ -584,6 +1000,33 @@ nlu:
     - quiero saber si tengo multas
     - revisar mi situación multas
     - consultar mi estado papeletas
+    - tengo papeletas?
+    - tengo multas?
+    - tengo infracciones?
+    - tengo deuda de papeletas?
+    - tengo algo pendiente?
+    - ver mis papeletas
+    - ver mis multas
+    - ver infracciones
+    - ver deuda de papeletas
+    - ver mi estado
+    - consultar papeletas
+    - consultar multas
+    - consultar infracciones
+    - consultar mi deuda
+    - consultar estado
+    - cuánto debo de multas?
+    - cuánto debo de papeletas?
+    - cuánto es mi deuda?
+    - cuánto tengo pendiente?
+    - hay multas?
+    - hay papeletas?
+    - hay infracciones?
+    - debo algo?
+    - tengo pendiente?
+    - a ver mis papeletas
+    - quiero ver si debo
+    - necesito saber si tengo multas
 
 - intent: papeletas_registrar
   examples: |
@@ -599,6 +1042,14 @@ nlu:
     - registrar una papeleta que no aparece
     - mi multa no está registrada
     - falta mi papeleta
+    - registrar infracción
+    - no sale mi papeleta
+    - papeleta no registrada
+    - inscribir papeleta
+    - dar de alta papeleta
+    - agregar papeleta
+    - mi multa no aparece
+    - no encuentro multa
 
 - intent: papeletas_facilidades
   examples: |
@@ -615,6 +1066,13 @@ nlu:
     - puedo pagar en cuotas papeletas
     - pago en cuotas papeletas
     - financiamiento papeletas
+    - pagar a plazos papeletas
+    - cuotas para papeletas
+    - facilidades pago multas
+    - fraccionar papeletas
+    - pagar en partes multas
+    - plan de pagos papeletas
+    - convenio de pago papeletas
 
 - intent: papeletas_frecuentes
   examples: |
@@ -628,7 +1086,15 @@ nlu:
     - información adicional
     - dudas frecuentes
     - más información
-    - help
+    - preguntas papeletas
+    - info papeletas
+    - ayuda papeletas
+    - dudas multas
+    - información multas
+    - FAQ papeletas
+    - preguntas comunes papeletas
+    - consultas comunes
+    - ayuda sobre papeletas
 
 
 # ============================================================================
@@ -647,6 +1113,44 @@ nlu:
     - [SSS888](placa)
     - [RRR999](placa)
     - [QQQ000](placa)
+    - [PPP111](placa)
+    - [OOO222](placa)
+    - [NNN333](placa)
+    - placa [MMM444](placa)
+    - [LLL555](placa) info
+    - ver [KKK666](placa)
+    - consultar [JJJ777](placa)
+    - buscar [III888](placa)
+    - mostrar [HHH999](placa)
+    - revisar [GGG000](placa)
+    - mi placa [FFF111](placa)
+    - mi placa es [EEE222](placa)
+    - la placa [DDD333](placa)
+    - de la placa [CCC444](placa)
+    - placa [BBB555](placa) ver
+    - chequear [AAA666](placa)
+    - verificar [ZZZ777](placa)
+    - dame [YYY888](placa)
+    - a ver [XXX999](placa)
+    - info [WWW000](placa)
+    - mi vehículo [VVV111](placa)
+    - del vehículo [UUU222](placa)
+    - mi carro [TTT333](placa)
+    - el carro [SSS444](placa)
+    - mi auto [RRR555](placa)
+    - del auto [QQQ666](placa)
+    - ver placa [PPP777](placa)
+    - consultar placa [OOO888](placa)
+    - placa del vehículo [NNN999](placa)
+    - la placa [MMM000](placa) info
+    - info de [LLL111](placa)
+    - datos [KKK222](placa)
+    - [JJJ333](placa) datos
+    - [III444](placa) ver info
+    - [hhh555](placa)
+    - [ggg666](placa)
+    - placa [fff777](placa)
+    - [eee888](placa)
 
 - intent: impuestos_consultar_dni
   examples: |
@@ -657,7 +1161,50 @@ nlu:
     - [55555559](dni)
     - [44444449](dni)
     - [33333339](dni)
-    - [22222229](dni)
+    - [22222229](dni)}
+    - [11111119](dni)
+    - [10101010](dni)
+    - [20202020](dni)
+    - [30303030](dni)
+    - [40404040](dni)
+    - DNI [50505050](dni)
+    - [60606060](dni) info
+    - ver [70707070](dni)
+    - consultar [80808080](dni)
+    - buscar [90909090](dni)
+    - mi DNI [12121212](dni)
+    - mi DNI es [23232323](dni)
+    - el DNI [34343434](dni)
+    - del DNI [45454545](dni)
+    - DNI [56565656](dni) ver
+    - mi documento [67676767](dni)
+    - el documento [78787878](dni)
+    - documento [89898989](dni)
+    - del documento [91919191](dni)
+    - [10203040](dni) documento
+    - chequear [20304050](dni)
+    - verificar [30405060](dni)
+    - revisar [40506070](dni)
+    - mostrar [50607080](dni)
+    - dame [60708090](dni)
+    - a ver [70809010](dni)
+    - ver DNI [80910120](dni)
+    - consultar DNI [91011213](dni)
+    - info DNI [10112131](dni)
+    - datos [20213141](dni)
+    - [30314151](dni) info
+    - [40415161](dni) datos
+    - el [50516171](dni)
+    - con el [60617181](dni)
+    - [70718191](dni) ver
+    - info [80819202](dni)
+    - [91920303](dni) chequear
+    - [10203141](dni) buscar
+    - [20304252](dni) revisar
+    - [30405363](dni) mostrar
+    - [40506474](dni)
+    - [50607585](dni)
+
 
 - intent: impuestos_consultar_ruc
   examples: |
@@ -667,6 +1214,52 @@ nlu:
     - [12888999002](ruc)
     - [20555444335](ruc)
     - [11999888779](ruc)
+    - [20111222334](ruc)
+    - [10222333445](ruc)
+    - [20333444556](ruc)
+    - [10444555667](ruc)
+    - [20555666778](ruc)
+    - RUC [10666777889](ruc)
+    - [20777888990](ruc) info
+    - ver [10888999001](ruc)
+    - consultar [20999000112](ruc)
+    - buscar [10000111223](ruc)
+    - mi empresa [20111333556](ruc)
+    - mi empresa es [10222444667](ruc)
+    - la empresa [20333555778](ruc)
+    - de la empresa [10444666889](ruc)
+    - empresa [20555777990](ruc)
+    - mi negocio [10666888001](ruc)
+    - el negocio [20777999112](ruc)
+    - del negocio [10888000223](ruc)
+    - negocio [20999111334](ruc)
+    - mi compañía [10000222445](ruc)
+    - la compañía [20111444667](ruc)
+    - de la compañía [10222555778](ruc
+    - chequear [20333666889](ruc)
+    - verificar [10444777990](ruc)
+    - revisar [20555888001](ruc)
+    - mostrar [10666999112](ruc)
+    - dame [20777000223](ruc))
+    - mi RUC [10888111334](ruc)
+    - mi RUC es [20999222445](ruc)
+    - el RUC [10000333556](ruc)
+    - del RUC [20111555778](ruc)
+    - ver RUC [10222666889](ruc)
+    - consultar RUC [20333777990](ruc)
+    - RUC empresa [10444888001](ruc)
+    - RUC de la empresa [20555999112](ruc)
+    - info RUC [10666000223](ruc)
+    - datos [20777111334](ruc)
+    - [10888222445](ruc) info
+    - [20999333556](ruc) datos
+    - RUC del negocio [10000444778](ruc)
+    - [20111666990](ruc) ver
+    - [10222777001](ruc) consultar
+    - empresa [20333888112](ruc) info
+    - [10444999223](ruc)
+
+
 
 - intent: impuestos_consultar_codigo
   examples: |
@@ -676,6 +1269,59 @@ nlu:
     - [44444](codigo_contribuyente)
     - [55555](codigo_contribuyente)
     - [66666](codigo_contribuyente)
+    - [11111](codigo_contribuyente)
+    - [22222](codigo_contribuyente)
+    - [33333](codigo_contribuyente)
+    - [44444](codigo_contribuyente)
+    - [55555](codigo_contribuyente)
+    - [66666](codigo_contribuyente)
+    - [77777](codigo_contribuyente)
+    - [88888](codigo_contribuyente)
+    - [99999](codigo_contribuyente)
+    - [10101](codigo_contribuyente)
+    - [20202](codigo_contribuyente)
+    - [30303](codigo_contribuyente)
+    - [40404](codigo_contribuyente)
+    - [50505](codigo_contribuyente)
+    - código [60606](codigo_contribuyente)
+    - [70707](codigo_contribuyente) info
+    - código de contribuyente [80808](codigo_contribuyente)
+    - mi código de contribuyente [90909](codigo_contribuyente)
+    - el código [12121](codigo_contribuyente)
+    - código contribuyente [23232](codigo_contribuyente)
+    - ver [34343](codigo_contribuyente)
+    - consultar [45454](codigo_contribuyente)
+    - buscar [56565](codigo_contribuyente)
+    - mostrar [67676](codigo_contribuyente)
+    - revisar [78787](codigo_contribuyente)
+    - chequear [89898](codigo_contribuyente)
+    - verificar [91919](codigo_contribuyente)
+    - dame [10203](codigo_contribuyente)
+    - mi código [20304](codigo_contribuyente)
+    - mi código es [30405](codigo_contribuyente)
+    - el código es [40506](codigo_contribuyente)
+    - código [50607](codigo_contribuyente) ver
+    - número de contribuyente [60708](codigo_contribuyente)
+    - mi número de contribuyente [70809](codigo_contribuyente)
+    - número [80910](codigo_contribuyente)
+    - mi número [91011](codigo_contribuyente)
+    - [10112](codigo_contribuyente) info
+    - [20213](codigo_contribuyente) datos
+    - info [30314](codigo_contribuyente)
+    - datos [40415](codigo_contribuyente)
+    - [50516](codigo_contribuyente) ver
+    - [60617](codigo_contribuyente) consultar
+    - del código [70718](codigo_contribuyente)
+    - código [80819](codigo_contribuyente) info
+    - [91920](codigo_contribuyente) chequear
+    - [10314](codigo_contribuyente) buscar
+    - [20415](codigo_contribuyente)
+    - [30516](codigo_contribuyente)
+    - [40617](codigo_contribuyente)
+    - [50718](codigo_contribuyente)
+    - [60819](codigo_contribuyente)
+    - [70920](codigo_contribuyente)
+    
 
 - intent: impuestos_consultar_generico
   examples: |
@@ -693,6 +1339,33 @@ nlu:
     - quiero saber si tengo deuda
     - revisar mi situación tributaria
     - consultar mi estado tributario
+    - tengo impuestos?
+    - tengo deuda?
+    - tengo tributos?
+    - tengo deuda tributaria?
+    - tengo algo pendiente?
+    - - ver mis impuestos
+    - ver mi deuda
+    - ver tributos
+    - ver deuda tributaria
+    - ver mi estado
+    - consultar impuestos
+    - consultar deuda
+    - consultar tributos
+    - consultar mi deuda tributaria
+    - consultar estado
+    - cuánto debo de impuestos?
+    - cuánto debo?
+    - cuánto es mi deuda?
+    - cuánto tengo de tributos?
+    - hay impuestos?
+    - hay deuda?
+    - hay tributos?
+    - debo impuestos?
+    - tengo pendiente?
+    - a ver mis impuestos
+    - quiero ver si debo
+    - necesito saber mi deuda
 
 # ----------------------------------------------------------------------------
 # 6.1 Sub-opciones de impuestos: Cuadernillo
@@ -709,6 +1382,18 @@ nlu:
     - acceder al cuadernillo
     - quiero ver cuadernillo
     - información del cuadernillo
+    - información del cuadernillo
+    - cómo obtener cuadernillo
+    - dónde está mi cuadernillo
+    - cuadernillo de tributos
+    - cuadernillo SAT
+    - obtener cuadernillo
+    - sacar cuadernillo
+    - cuadernillo online
+    - cuadernillo virtual
+    - ver cuadernillo tributario
+    - acceso a cuadernillo
+    - cuadernillo impuestos
 
 - intent: impuestos_cuadernillo_agencia_virtual
   examples: |
@@ -719,6 +1404,19 @@ nlu:
     - agencia virtual SAT
     - registro agencia virtual
     - cuadernillo por internet
+    - cuadernillo virtual
+    - agencia virtual cuadernillo
+    - obtener cuadernillo online
+    - descargar cuadernillo virtual
+    - cuadernillo en agencia virtual
+    - acceder agencia virtual
+    - cómo entrar a agencia virtual
+    - registro agencia virtual SAT
+    - crear cuenta agencia virtual
+    - ingresar a agencia virtual
+    - portal agencia virtual
+    - agencia virtual para cuadernillo
+    - cuadernillo digital
 
 # ----------------------------------------------------------------------------
 # 6.2 Sub-opciones de impuestos: Declaraciones y liquidaciones
@@ -745,6 +1443,19 @@ nlu:
     - declarar carro
     - inscribir auto
     - impuesto vehicular declaración
+    - cómo declarar impuesto vehicular
+    - requisitos declaración vehicular
+    - inscribir vehículo
+    - declarar mi vehículo
+    - declarar impuesto vehicular
+    - declaración de vehículo
+    - inscripción de auto
+    - registrar mi carro
+    - declarar vehículo nuevo
+    - inscribir mi auto
+    - cómo declarar vehículo
+    - declaración vehicular requisitos
+    - inscribir vehículo SAT
 
 - intent: impuestos_declarar_predial
   examples: |
@@ -755,6 +1466,19 @@ nlu:
     - declarar casa
     - inscribir inmueble
     - impuesto predial declaración
+    - cómo declarar impuesto predial
+    - requisitos declaración predial
+    - inscribir predio
+    - declarar mi predio
+    - declarar impuesto predial
+    - declaración de predio
+    - inscripción de inmueble
+    - registrar mi casa
+    - declarar predio nuevo
+    - inscribir mi inmueble
+    - cómo declarar predio
+    - declaración predial requisitos
+    - inscribir predio SAT
 
 - intent: impuestos_liquidar_alcabala
   examples: |
@@ -765,6 +1489,19 @@ nlu:
     - transferencia propiedad
     - venta casa
     - compra inmueble
+    - cómo liquidar alcabala
+    - requisitos alcabala
+    - liquidación de alcabala
+    - liquidar impuesto alcabala
+    - alcabala de transferencia
+    - pagar alcabala
+    - calcular alcabala
+    - alcabala por compra
+    - alcabala por venta
+    - liquidar alcabala de casa
+    - requisitos liquidación alcabala
+    - liquidación alcabala inmueble
+    - trámite alcabala
 
 - intent: impuestos_fraccionar_deuda
   examples: |
@@ -776,6 +1513,17 @@ nlu:
     - cuotas impuestos
     - dividir pago impuestos
     - facilidades tributarias
+    - cómo fraccionar deuda
+    - pagar en partes impuestos
+    - facilidades de pago tributarias
+    - pagar a plazos impuestos
+    - dividir deuda tributaria
+    - cuotas para impuestos
+    - fraccionamiento de deuda
+    - pago en cuotas tributos
+    - facilidades pago tributos
+    - convenio de pago
+    - plan de pagos impuestos
 
 # ----------------------------------------------------------------------------
 # 6.3 Sub-opciones de impuestos: Beneficios
@@ -788,6 +1536,14 @@ nlu:
     - descuentos impuestos
     - exoneraciones
     - descuentos especiales
+    - qué beneficios hay
+    - beneficios en impuestos
+    - descuentos en tributos
+    - exoneración tributaria
+    - beneficios SAT
+    - descuentos para impuestos
+    - beneficios fiscales
+    - exoneraciones tributarias
 
 - intent: impuestos_beneficios_pensionista
   examples: |
@@ -797,6 +1553,20 @@ nlu:
     - soy pensionista
     - jubilado
     - beneficios jubilado
+    - beneficios para pensionistas
+    - descuentos pensionistas
+    - soy jubilado
+    - beneficios tributarios pensionista
+    - exoneración pensionista
+    - descuento impuestos pensionista
+    - beneficios de jubilado
+    - pensionista beneficios tributarios
+    - requisitos beneficio pensionista
+    - cómo aplicar beneficio pensionista
+    - descuento predial pensionista
+    - exoneración jubilado
+    - beneficios impuestos pensionista
+    - pensionista descuentos
 
 - intent: impuestos_beneficios_adulto_mayor
   examples: |
@@ -804,6 +1574,22 @@ nlu:
     - adulto mayor específico
     - no pensionista
     - adulto mayor no pensionista
+    - beneficios para adulto mayor
+    - descuentos adulto mayor
+    - adulto mayor beneficios
+    - beneficios tercera edad
+    - descuento tercera edad
+    - adulto mayor no jubilado
+    - beneficios tributarios adulto mayor
+    - exoneración adulto mayor
+    - descuento impuestos adulto mayor
+    - adulto mayor sin pensión
+    - requisitos beneficio adulto mayor
+    - cómo aplicar beneficio adulto mayor
+    - descuento predial adulto mayor
+    - beneficios mayores de 60
+    - adulto mayor descuentos tributarios
+    - tercera edad beneficios
 
 
 # ============================================================================
@@ -822,6 +1608,16 @@ nlu:
     - mi cuenta está bloqueada
     - liberación de cuenta embargada
     - desbloquear cuenta bancaria
+    - retención de cuenta
+    - embargo bancario
+    - cuenta embargada
+    - retención bancaria
+    - desbloqueo de cuenta
+    - liberación de cuenta
+    - cuenta bloqueada SAT
+    - retención de fondos
+    - embargo de mi cuenta
+    - levantar embargo bancario
 
 - intent: retencion_orden_captura
   examples: |
@@ -835,6 +1631,36 @@ nlu:
     - mi carro tiene órdenes de captura
     - consulta específica de captura
     - verificar órdenes vehiculares
+    - orden de captura vehicular
+    - consultar orden de captura
+    - ver orden de captura
+    - tengo orden de captura?
+    - hay orden de captura?
+    - verificar orden de captura
+    - revisar orden de captura
+    - chequear orden de captura
+    - mi vehículo tiene orden?
+    - mi carro tiene orden de captura?
+    - mi auto tiene captura?
+    - orden de captura de mi vehículo
+    - captura de mi carro
+    - mi vehículo está en captura?
+    - tengo captura vehicular?
+    - hay captura en mi vehículo?
+    - mi vehículo tiene captura?
+    - está en captura mi carro?
+    - tiene orden mi vehículo?
+    - tengo captura vehicular?
+    - hay captura en mi vehículo?
+    - mi vehículo tiene captura?
+    - está en captura mi carro?
+    - tiene orden mi vehículo?
+    - a ver si tengo orden
+    - quiero saber si hay captura
+    - necesito ver orden de captura
+    - ver si mi carro tiene orden
+    - chequear captura vehicular
+    - revisar si tengo orden
 
 - intent: retencion_vehiculo_internado
   examples: |
@@ -846,6 +1672,18 @@ nlu:
     - mi carro está en el depósito
     - consultar si mi vehículo está internado
     - estado de internamiento vehicular
+    - vehículo internado
+    - internamiento vehicular
+    - mi carro está internado
+    - depósito vehicular
+    - vehículo en depósito
+    - consultar internamiento
+    - dónde está mi vehículo internado
+    - cómo saber si está internado
+    - vehículo en el depósito SAT
+    - recuperar vehículo internado
+    - liberar vehículo internado
+    - mi vehículo fue internado
 
 - intent: retencion_suspender_cobranza
   examples: |
@@ -857,6 +1695,18 @@ nlu:
     - suspensión del proceso coactivo
     - parar proceso de cobranza
     - detener procedimiento de cobranza
+    - suspender cobranza
+    - suspensión cobranza coactiva
+    - cómo suspender cobranza
+    - detener cobranza coactiva
+    - parar cobranza SAT
+    - solicitud suspensión cobranza
+    - requisitos suspensión cobranza
+    - suspender proceso coactivo
+    - detener proceso coactivo
+    - suspensión de ejecución coactiva
+    - parar ejecución coactiva
+    - requisitos para suspender cobranza
     
 - intent: retencion_terceria_propiedad
   examples: |
@@ -868,6 +1718,18 @@ nlu:
     - trámite específico de tercería
     - tercería para vehículo
     - acreditar propiedad de tercero
+    - tercería de propiedad
+    - trámite tercería
+    - tercería vehicular
+    - no soy el propietario
+    - tercería de bien
+    - demostrar propiedad de tercero
+    - requisitos tercería
+    - cómo hacer tercería
+    - tercería de propiedad requisitos
+    - no es mi propiedad
+    - tercero propietario
+    - tercería SAT
 
 - intent: retencion_remate_vehicular
   examples: |
@@ -879,6 +1741,18 @@ nlu:
     - información específica de remates
     - cuándo es el próximo remate
     - vehículos en remate del SAT
+    - remate de vehículos
+    - subasta SAT
+    - remate vehicular
+    - vehículos en remate
+    - próxima subasta
+    - cuándo hay remate
+    - información de remates
+    - remate público SAT
+    - subasta de vehículos
+    - participar en remate
+    - vehículos en subasta
+    - calendario de remates
 
 - intent: retencion_consultar_placa
   examples: |
@@ -907,6 +1781,30 @@ nlu:
     - orden de [HIJ234](placa)
     - captura [KLM567](placa) vehículo
     - mi placa [NOP890](placa) orden
+    - orden [ABC456](placa)
+    - orden de captura [DEF789](placa)
+    - tiene orden [GHI012](placa)
+    - orden vehicular [JKL345](placa)
+    - hay orden [MNO678](placa)?
+    - orden de [PQR901](placa)
+    - captura [STU234](placa)
+    - captura vehicular [VWX567](placa)
+    - tiene captura [YZA890](placa)
+    - hay captura [BCD123](placa)?
+    - está en captura [EFG456](placa)
+    - verificar captura [HIJ789](placa)
+    - consultar orden [KLM012](placa)
+    - ver orden [NOP345](placa)
+    - revisar captura [QRS678](placa)
+    - chequear orden [TUV901](placa)
+    - verificar orden [WXY234](placa)
+    - buscar orden [ZAB567](placa)
+    - mi placa [CDE890](placa) orden
+    - orden mi placa [FGH123](placa)
+    - captura mi vehículo [IJK456](placa)
+    - mi vehículo [LMN789](placa) captura
+    - orden [opq012](placa)
+    - captura [rst345](placa)
 
 
 # ============================================================================
@@ -936,6 +1834,16 @@ nlu:
     - oficinas del SAT
     - dónde queda el SAT
     - direcciones de agencias
+    - dónde están las oficinas
+    - dónde queda el SAT
+    - ubicación SAT
+    - direcciones oficinas
+    - horarios SAT
+    - oficinas SAT
+    - centros SAT
+    - agencias ubicación
+    - dónde atender presencial
+    - atención presencial SAT
 
 - intent: lugares_pagos_lugares_pago
   examples: |
@@ -953,6 +1861,12 @@ nlu:
     - en qué bancos puedo pagar
     - dónde aceptan pagos
     - puntos de pago
+    - dónde pagar impuestos
+    - dónde pagar papeletas
+    - lugares pago SAT
+    - sitios donde pagar
+    - bancos para pagar
+    - entidades de pago
 
 - intent: lugares_pagos_formas_pago
   examples: |
@@ -968,6 +1882,16 @@ nlu:
     - qué métodos de pago aceptan
     - puedo pagar con tarjeta
     - aceptan yape
+    - formas de pago SAT
+    - cómo pagar
+    - métodos de pago
+    - opciones de pago
+    - con qué pagar
+    - puedo pagar con tarjeta
+    - aceptan yape
+    - formas pagar impuestos
+    - cómo pagar papeletas
+    - modalidades pago SAT
 
 
 # ============================================================================
@@ -986,6 +1910,16 @@ nlu:
     - trámites por internet SAT
     - presentar solicitudes digitales
     - mesa de partes electrónica
+    - mesa de partes
+    - mesa digital
+    - presentar trámite online
+    - trámites virtuales
+    - enviar documentos online
+    - mesa de partes online
+    - presentación virtual trámites
+    - trámites digitales
+    - cómo presentar trámite
+    - enviar expediente digital
 
 - intent: servicios_virtuales_agencia_virtual
   examples: |
@@ -998,6 +1932,17 @@ nlu:
     - acceder servicios virtuales SAT
     - portal agencia virtual SAT
     - cuenta agencia virtual
+    - agencia virtual
+    - registrarme agencia virtual
+    - crear cuenta SAT
+    - acceso agencia virtual
+    - ingresar agencia virtual
+    - portal SAT
+    - plataforma SAT
+    - registro SAT online
+    - cómo registrarme
+    - usuario agencia virtual
+    - cuenta agencia virtual SAT
 
 - intent: servicios_virtuales_pitazo
   examples: |
@@ -1010,6 +1955,17 @@ nlu:
     - notificaciones automáticas multas
     - servicio pitazo alertas
     - avisos automáticos papeletas
+    - pitazo SAT
+    - pitazo informativo
+    - suscripción pitazo
+    - alertas pitazo
+    - registrarse en pitazo
+    - notificaciones SAT
+    - alertas de papeletas
+    - pitazo de multas
+    - cómo suscribirme a pitazo
+    - activar pitazo
+    - servicio pitazo
 
 - intent: servicios_virtuales_correo
   examples: |
@@ -1021,6 +1977,18 @@ nlu:
     - comunicación por email SAT
     - contacto correo electrónico
     - consultas vía correo SAT
+    - correo SAT
+    - email SAT
+    - contacto por correo
+    - enviar email
+    - escribir al SAT
+    - correo electrónico SAT
+    - contactar por correo
+    - comunicación por correo
+    - consulta por email
+    - enviar consulta correo
+    - email de contacto
+    - correo de contacto SAT
 
 - intent: servicios_virtuales_libro_reclamaciones
   examples: |
@@ -1033,6 +2001,17 @@ nlu:
     - reclamos por internet SAT
     - quejas digitales SAT
     - reclamo electrónico
+    - libro de reclamaciones
+    - presentar reclamo
+    - hacer un reclamo
+    - reclamo SAT
+    - queja SAT
+    - libro reclamaciones
+    - presentar queja
+    - reclamo online
+    - quejas online
+    - cómo hacer reclamo
+    - presentar queja SAT
 
 - intent: servicios_virtuales_cursos
   examples: |
@@ -1045,6 +2024,18 @@ nlu:
     - capacitación tributaria SAT
     - cursos especializados SAT
     - escuela virtual SAT
+    - cursos SAT
+    - escuela SAT
+    - capacitaciones SAT
+    - cursos online SAT
+    - formación SAT
+    - educación SAT
+    - cursos tributarios
+    - capacitación SAT
+    - cursos disponibles
+    - escuela virtual SAT
+    - inscripción cursos SAT
+    - qué cursos hay
 
 
 # ============================================================================
@@ -1067,6 +2058,48 @@ nlu:
     - consultar tramite
     - estado de trámite
     - ver trámite
+    - [22222222222222](numero_tramite)
+    - [33333333333333](numero_tramite) info
+    - [44444444444444](numero_tramite) estado
+    - trámite [55555555555555](numero_tramite)
+    - [66666666666666](numero_tramite) ver
+    - [77777777777777](numero_tramite)
+    - consultar [88888888888888](numero_tramite)
+    - consultar trámite [99999999999999](numero_tramite)
+    - consultar estado [10101010101010](numero_tramite)
+    - consultar el trámite [20202020202020](numero_tramite)
+    - ver trámite [30303030303030](numero_tramite)
+    - ver estado [40404040404040](numero_tramite)
+    - ver mi trámite [50505050505050](numero_tramite)
+    - ver el estado del [60606060606060](numero_tramite)
+    - estado del trámite [70707070707070](numero_tramite)
+    - estado de [80808080808080](numero_tramite)
+    - estado [90909090909090](numero_tramite)
+    - qué estado tiene [12121212121212](numero_tramite)
+    - seguimiento del trámite [23232323232323](numero_tramite)
+    - seguimiento de [34343434343434](numero_tramite)
+    - hacer seguimiento [45454545454545](numero_tramite)
+    - seguimiento [56565656565656](numero_tramite)
+    - mi trámite [67676767676767](numero_tramite)
+    - mi número de trámite [78787878787878](numero_tramite)
+    - mi trámite es el [89898989898989](numero_tramite)
+    - el trámite [91919191919191](numero_tramite)
+    - en qué estado está [10203040506070](numero_tramite)?
+    - cómo va mi trámite [20304050607080](numero_tramite)?
+    - qué pasó con [30405060708090](numero_tramite)?
+    - avanzó mi trámite [40506070809010](numero_tramite)?
+    - revisar [50607080910120](numero_tramite)
+    - verificar [60708091012130](numero_tramite)
+    - chequear [70809101213140](numero_tramite)
+    - buscar [80910121314150](numero_tramite)
+    - mostrar [91011121314151](numero_tramite)
+    - dame info del [10111213141516](numero_tramite)
+    - número [20212223242526](numero_tramite)
+    - número de trámite [30313233343536](numero_tramite)
+    - el número [40414243444546](numero_tramite)
+    - a ver el trámite [50515253545556](numero_tramite)
+    - quiero saber del [60616263646566](numero_tramite)
+    - necesito ver [70717273747576](numero_tramite)
 
 # ----------------------------------------------------------------------------
 # 10.1 Sub-menús de trámites
@@ -1110,6 +2143,16 @@ nlu:
     - constancia sin deuda
     - documento no adeudo
     - certificación tributaria
+    - constancia no adeudo tributaria
+    - cómo obtener constancia no adeudo
+    - requisitos constancia no adeudo
+    - sacar constancia no adeudo
+    - constancia sin deuda tributaria
+    - certificado sin deuda
+    - constancia de no adeudar
+    - trámite constancia no adeudo
+    - solicitar constancia no adeudo
+    - constancia libre de deuda SAT
 
 # ----------------------------------------------------------------------------
 # 10.2 Trámites específicos de PAPELETAS
@@ -1127,6 +2170,16 @@ nlu:
     - necesito reconsideración
     - quiero reconsideración
     - reconsideración administrativa
+    - recurso de reconsideración requisitos
+    - cómo hacer reconsideración
+    - reconsideración de multa
+    - requisitos recurso reconsideración
+    - trámite reconsideración
+    - reconsideración papeletas requisitos
+    - documentos para reconsideración
+    - recurso reconsideración multa
+    - presentar reconsideración
+    - hacer recurso reconsideración
 
 - intent: tramites_descargo_infracciones
   examples: |
@@ -1139,6 +2192,16 @@ nlu:
     - procedimiento descarga
     - cómo descargar infracciones
     - descarga papeletas agencia virtual
+    - descargo de infracciones
+    - descargo papeletas
+    - descargo multas
+    - requisitos descargo
+    - cómo hacer descargo
+    - descargo de papeletas requisitos
+    - trámite descargo infracciones
+    - presentar descargo
+    - descargo administrativo
+    - hacer descargo papeleta
 
 - intent: tramites_apelacion_papeletas
   examples: |
@@ -1156,6 +2219,16 @@ nlu:
     - necesito información para la apelación
     - cómo apelar una papeleta
     - requisitos para apelar
+    - apelación de multa
+    - apelar papeleta requisitos
+    - recurso de apelación requisitos
+    - cómo apelar papeleta
+    - trámite apelación
+    - requisitos para apelar
+    - apelar multa requisitos
+    - presentar apelación
+    - apelación requisitos
+    - hacer apelación papeleta
 
 - intent: tramites_prescripcion_papeletas
   examples: |
@@ -1170,6 +2243,16 @@ nlu:
     - necesito prescripción
     - quiero prescripción papeleta
     - información de prescripción
+    - prescripción papeleta requisitos
+    - cómo solicitar prescripción
+    - requisitos prescripción
+    - trámite prescripción papeletas
+    - prescripción de multa requisitos
+    - presentar prescripción
+    - solicitar prescripción multa
+    - prescripción administrativa papeletas
+    - hacer prescripción
+    - prescripción requisitos papeletas
 
 - intent: tramites_devolucion_papeletas
   examples: |
@@ -1182,6 +2265,16 @@ nlu:
     - devolución administrativa
     - compensación multas
     - necesito devolución papeleta
+    - devolución multa requisitos
+    - cómo solicitar devolución
+    - requisitos devolución papeletas
+    - trámite devolución
+    - devolución de pago papeletas
+    - compensación de papeletas
+    - presentar devolución
+    - solicitar devolución multa
+    - devolución y/o compensación
+    - requisitos devolución
 
 - intent: tramites_terceria_requisitos
   examples: |
@@ -1193,6 +2286,18 @@ nlu:
     - requisitos para tercería
     - tercería administrativos
     - necesito tercería requisitos
+    - tercería papeletas
+    - tercería de propiedad papeletas
+    - requisitos tercería
+    - cómo hacer tercería
+    - trámite tercería papeletas
+    - tercería requisitos
+    - tercería de propiedad requisitos papeletas
+    - presentar tercería
+    - solicitar tercería
+    - tercería administrativa papeletas
+    - documentos tercería
+    - requisitos trámite tercería
 
 - intent: tramites_suspension_requisitos
   examples: |
@@ -1203,6 +2308,18 @@ nlu:
     - requisitos suspender cobranza
     - suspensión procedimiento requisitos
     - necesito suspensión requisitos
+    - suspensión papeletas
+    - suspensión cobranza papeletas
+    - requisitos suspensión
+    - cómo suspender cobranza papeletas
+    - trámite suspensión papeletas
+    - suspensión coactiva requisitos papeletas
+    - presentar suspensión
+    - solicitar suspensión cobranza
+    - suspensión administrativa papeletas
+    - documentos suspensión
+    - requisitos trámite suspensión
+    - suspensión ejecución coactiva requisitos
 
 # ----------------------------------------------------------------------------
 # 10.3 Trámites específicos TRIBUTARIOS
@@ -1220,6 +2337,16 @@ nlu:
     - declarar predial requisitos
     - necesito requisitos predial
     - documentos para predial
+    - trámite predial requisitos
+    - requisitos declaración predial
+    - documentos declaración predial
+    - cómo declarar predial requisitos
+    - inscripción predial requisitos
+    - predial documentos
+    - requisitos inscribir predial
+    - declaración impuesto predial requisitos
+    - requisitos para predial
+    - trámite impuesto predial
 
 - intent: tramites_vehicular_requisitos
   examples: |
@@ -1233,6 +2360,16 @@ nlu:
     - declarar vehicular requisitos
     - necesito requisitos vehicular
     - documentos para vehicular
+    - trámite vehicular requisitos
+    - requisitos declaración vehicular
+    - documentos declaración vehicular
+    - cómo declarar vehicular requisitos
+    - inscripción vehicular requisitos
+    - vehicular documentos
+    - requisitos inscribir vehicular
+    - declaración impuesto vehicular requisitos
+    - requisitos para vehicular
+    - trámite impuesto vehicular
 
 - intent: tramites_alcabala_requisitos
   examples: |
@@ -1246,6 +2383,16 @@ nlu:
     - liquidar alcabala requisitos
     - necesito requisitos alcabala
     - documentos para alcabala
+    - trámite alcabala requisitos
+    - requisitos liquidación alcabala
+    - documentos liquidación alcabala
+    - cómo liquidar alcabala requisitos
+    - alcabala documentos
+    - requisitos impuesto alcabala trámite
+    - liquidación de alcabala requisitos
+    - requisitos para alcabala
+    - trámite impuesto alcabala
+    - alcabala transferencia requisitos
 
 - intent: tramites_reclamacion_tributaria
   examples: |
@@ -1259,6 +2406,16 @@ nlu:
     - necesito reclamar impuesto
     - quiero reclamación tributaria
     - reclamación de tributos
+    - reclamación tributaria
+    - requisitos reclamación impuestos
+    - cómo reclamar impuestos
+    - trámite reclamación tributaria
+    - reclamar tributos requisitos
+    - recurso reclamación impuestos
+    - presentar reclamación tributaria
+    - reclamación de impuestos requisitos
+    - hacer reclamación tributaria
+    - requisitos recurso reclamación
 
 - intent: tramites_prescripcion_tributaria
   examples: |
@@ -1272,6 +2429,16 @@ nlu:
     - necesito prescripción tributaria
     - quiero prescripción impuesto
     - prescripción fiscal
+    - prescripción tributaria
+    - requisitos prescripción impuestos
+    - cómo solicitar prescripción tributaria
+    - trámite prescripción tributaria
+    - prescripción de deuda tributaria
+    - solicitar prescripción impuestos
+    - presentar prescripción tributaria
+    - prescripción tributos requisitos
+    - hacer prescripción tributaria
+    - prescripción fiscal requisitos
 
 - intent: tramites_devolucion_tributaria
   examples: |
@@ -1285,6 +2452,16 @@ nlu:
     - necesito devolución tributaria
     - quiero devolución impuesto
     - devolución fiscal
+    - devolución tributaria
+    - requisitos devolución impuestos
+    - cómo solicitar devolución tributaria
+    - trámite devolución tributaria
+    - devolución de tributos requisitos
+    - compensación tributaria
+    - solicitar devolución impuestos
+    - presentar devolución tributaria
+    - devolución y compensación tributaria
+    - requisitos compensación impuestos
 
 - intent: tramites_apelacion_tributaria
   examples: |
@@ -1298,6 +2475,16 @@ nlu:
     - necesito apelar impuesto
     - quiero apelación tributaria
     - apelación de tributos
+    - apelación tributaria
+    - requisitos apelación impuestos
+    - cómo apelar tributaria
+    - trámite apelación tributaria
+    - apelar tributos requisitos
+    - recurso apelación impuestos
+    - presentar apelación tributaria
+    - apelación de impuestos requisitos
+    - hacer apelación tributaria
+    - requisitos recurso apelación tributaria
 
 - intent: tramites_terceria_tributaria
   examples: |
@@ -1310,6 +2497,16 @@ nlu:
     - necesito tercería tributaria
     - quiero tercería impuesto
     - tercería fiscal
+    - tercería tributaria
+    - requisitos tercería impuestos
+    - cómo hacer tercería tributaria
+    - trámite tercería tributaria
+    - tercería de propiedad impuestos
+    - presentar tercería tributaria
+    - tercería tributos requisitos
+    - solicitar tercería tributaria
+    - tercería administrativa impuestos
+    - requisitos trámite tercería tributaria
 
 - intent: tramites_suspension_tributaria
   examples: |
@@ -1322,6 +2519,16 @@ nlu:
     - necesito suspensión tributaria
     - quiero suspender cobranza
     - suspensión fiscal
+    - suspensión tributaria
+    - requisitos suspensión impuestos
+    - cómo suspender cobranza tributaria
+    - trámite suspensión tributaria
+    - suspensión coactiva tributaria requisitos
+    - suspender cobranza impuestos
+    - presentar suspensión tributaria
+    - suspensión ejecución coactiva tributaria
+    - solicitar suspensión cobranza tributaria
+    - requisitos suspensión cobranza impuestos
 
 
 # ============================================================================

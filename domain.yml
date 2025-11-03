@@ -300,6 +300,9 @@ responses:
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
       
       ¿En qué puedo ayudarte?
+    metadata:
+        slot_set:
+          contexto_actual: "general"
 
   utter_menu_principal:
   - text: |
@@ -321,6 +324,9 @@ responses:
       🔹 **Otros Trámites** - Trámites administrativos y requisitos
 
       ¿En qué puedo ayudarte?
+    metadata:
+        slot_set:
+          contexto_actual: "general"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 1: CASILLA MTC
@@ -338,7 +344,9 @@ responses:
       **¿Qué más necesitas?**
       • 'Menú principal' - Ver otras opciones
       • 'Finalizar chat'
-
+    metadata:
+      slot_set:
+        contexto_actual: "general"
   # --------------------------------------------------------------------------
   # OPCIÓN 2: PAGOS
   # --------------------------------------------------------------------------
@@ -356,6 +364,9 @@ responses:
       **¿Qué más necesitas?**
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
+    metadata:
+      slot_set:
+        contexto_actual: "general"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 3: PAPELETAS - MENÚ
@@ -372,6 +383,9 @@ responses:
       • **"Facilidades de pago"** - Pagar en cuotas
 
       ¿Qué necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "papeletas"
 
   utter_papeletas_registrar:
   - text: |
@@ -384,6 +398,9 @@ responses:
       **¿Algo más?**
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
+    metadata:
+      slot_set:
+        contexto_actual: "papeletas"
 
   utter_papeletas_facilidades:
   - text: |
@@ -402,6 +419,9 @@ responses:
       **¿Algo más?**
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
+    metadata:
+      slot_set:
+        contexto_actual: "papeletas"
 
   utter_papeletas_frecuentes:
   - text: |
@@ -421,6 +441,9 @@ responses:
       **¿Algo más?**
       • 'Menú principal' - Otras opciones
       • 'Finalizar chat'
+    metadata:
+      slot_set:
+        contexto_actual: "papeletas"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 4: IMPUESTOS - MENÚ
@@ -439,6 +462,9 @@ responses:
       • **"Beneficios"** - Descuentos especiales
 
       ¿Qué necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "impuestos"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 5: RETENCIÓN Y CAPTURA - MENÚ
@@ -459,6 +485,9 @@ responses:
       Escribe: **"Orden ABC123"** o **"Captura de mi placa ABC123"**
       
       ¿Qué opción necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "retencion"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 6: LUGARES Y PAGOS - MENÚ
@@ -473,6 +502,9 @@ responses:
       • **"Formas de pago"** - Opciones para pagar (online, facilidades, cuotas)
 
       ¿Qué opción necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "lugares_pagos"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 7: SERVICIOS VIRTUALES - MENÚ
@@ -490,6 +522,9 @@ responses:
       • **"Cursos SAT"** - Capacitaciones y certificaciones
 
       ¿Qué servicio necesitas, dime?
+    metadata:
+      slot_set:
+        contexto_actual: "servicios_virtuales"
 
   # --------------------------------------------------------------------------
   # OPCIÓN 8: OTROS TRÁMITES - MENÚ
@@ -509,6 +544,9 @@ responses:
       • **"Constancias no adeudo"** - Obtener constancias
 
       ¿Qué necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "otros_tramites"
 
   utter_tramites_requisitos_papeletas:
   - text: |
@@ -523,6 +561,9 @@ responses:
       • **"Suspensión requisitos"** - Requisitos para suspensión de cobranza
 
       ¿Qué trámite de papeletas necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "otros_tramites"
 
   utter_tramites_requisitos_tributarios:
   - text: |
@@ -539,6 +580,9 @@ responses:
       • **"Suspensión tributaria"** - Requisitos para suspensión de cobranza
 
       ¿Qué trámite tributario necesitas?
+    metadata:
+      slot_set:
+        contexto_actual: "otros_tramites"
 
   # --------------------------------------------------------------------------
   # NAVEGACIÓN AUXILIAR
@@ -559,7 +603,9 @@ responses:
       • 'Finalizar chat'
 
       ¿Qué necesitas?
-
+    metadata:
+      slot_set:
+        contexto_actual: "general"
 
 # ============================================================================
 # ACTIONS - Acciones personalizadas
