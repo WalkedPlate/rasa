@@ -191,7 +191,30 @@ slots:
       - general
     influence_conversation: true
     mappings:
-      - type: custom
+      - type: from_intent
+        intent: ir_a_papeletas
+        value: papeletas
+      - type: from_intent
+        intent: ir_a_impuestos
+        value: impuestos
+      - type: from_intent
+        intent: ir_a_retencion_captura
+        value: retencion
+      - type: from_intent
+        intent: ir_a_lugares_pagos
+        value: lugares_pagos
+      - type: from_intent
+        intent: ir_a_servicios_virtuales
+        value: servicios_virtuales
+      - type: from_intent
+        intent: ir_a_otros_tramites
+        value: otros_tramites
+      - type: from_intent
+        intent: greet
+        value: general
+      - type: from_intent
+        intent: menu_principal
+        value: general
     # Descripción: Mantiene el contexto actual de la conversación para
     # permitir que el bot entienda en qué sección se encuentra el usuario
 
