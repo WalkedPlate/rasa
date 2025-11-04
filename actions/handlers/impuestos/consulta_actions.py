@@ -443,8 +443,9 @@ class ActionConsultarImpuestos(Action):
 🏠 **Código de contribuyente** - Ej: 94539
 
 **Ejemplos de cómo escribir:**
-• "Impuestos de mi placa APS583"
-• "Deuda tributaria DNI 87654321"
+• "Deudas de la placa ABC123"
+• "Deudas del DNI 87654321"
+• "Deudas del RUC 20123456789"
 
 ¿Cuál puedes proporcionar?"""
 

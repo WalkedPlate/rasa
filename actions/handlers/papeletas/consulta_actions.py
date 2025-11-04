@@ -418,8 +418,8 @@ class ActionConsultarPapeletas(Action):
 🏢 **RUC** - 11 dígitos (ej: 20123456789)
 
 **Ejemplos de cómo escribir:**
-• "Mi placa es APS583" o solo "APS583"
-• "DNI 87654321" o solo "87654321"
+• "Mi placa es APS583"
+• "DNI 87654321"
 • "RUC 20123456789"
 
 ¿Cuál puedes proporcionar?"""
