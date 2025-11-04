@@ -350,7 +350,6 @@ class ActionConsultarPapeletas(Action):
         # Opciones contextuales
         message += "**¿Qué más necesitas?**\n"
         message += "• 'Cómo pago' - Información para pagar\n"
-        message += "• 'Facilidades' - Pagar en cuotas\n"
         message += "• 'Menú principal' - Otras opciones\n"
         message += "• 'Finalizar chat'\n"
 

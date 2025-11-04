@@ -23,8 +23,8 @@ nlu:
 
 - regex: placa
   examples: |
-    - (?i)(?<![a-z0-9])[a-z0-9]{6}(?![a-z0-9])
-    - (?i)(?<![a-z0-9])[a-z0-9]{3}[-\s]?[a-z0-9]{3}(?![a-z0-9])
+    - \b[a-zA-Z0-9]{6}\b
+    - \b[a-zA-Z0-9]{3}[-\s][a-zA-Z0-9]{3}\b
 
 - regex: dni
   examples: |
@@ -268,6 +268,44 @@ nlu:
     - consultar [9xy8zw](placa)
     - ver papeletas de la placa [a1b2c3](placa)
     - papeletas de [x9y8z7](placa)
+    - ver papeletas de mi placa [abc123](placa)
+    - papeletas de [xyz789](placa)
+    - multas de [def456](placa)
+    - consultar papeletas [ghi012](placa)
+    - ver multas [jkl345](placa)
+    - revisar papeletas [mno678](placa)
+    - mostrar papeletas [pqr901](placa)
+    - buscar multas [stu234](placa)
+    - consultar multas de [vwx567](placa)
+    - dame las papeletas de [yza890](placa)
+    - papeletas de [1abc23](placa)
+    - ver multas de [2def45](placa)
+    - consultar papeletas [3ghi67](placa)
+    - multas de [4jkl89](placa)
+    - ver papeletas [5mno01](placa)
+    - revisar multas [6pqr23](placa)
+    - mostrar papeletas de [7stu45](placa)
+    - buscar multas de [8vwx67](placa)
+    - papeletas de [a1b2c3](placa)
+    - ver multas de [x9y8z7](placa)
+    - consultar papeletas [d4e5f6](placa)
+    - multas de [g7h8i9](placa)
+    - revisar papeletas [j0k1l2](placa)
+    - ver multas [m3n4o5](placa)
+    - mostrar papeletas de [p6q7r8](placa)
+    - buscar multas [s9t0u1](placa)
+    - ver papeletas de mi placa [abc-123](placa)
+    - papeletas de [xyz-789](placa)
+    - multas de [def-456](placa)
+    - consultar papeletas [ghi 012](placa)
+    - ver multas de [jkl 345](placa)
+    - quiero ver las papeletas de [mno678](placa)
+    - necesito consultar multas de [pqr901](placa)
+    - me gustaría revisar papeletas [stu234](placa)
+    - quisiera ver las multas de [vwx567](placa)
+    - podrías mostrarme papeletas [yza890](placa)
+    - dame información de multas [bcd123](placa)
+    - ayúdame a ver papeletas [efg456](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -802,6 +840,38 @@ nlu:
     - [ZAB234](placa)
     - [CDE567](placa)
     - [FGH890](placa)
+    - [abc123](placa)
+    - [xyz789](placa)
+    - [def456](placa)
+    - [ghi012](placa)
+    - [jkl345](placa)
+    - [mno678](placa)
+    - [pqr901](placa)
+    - [stu234](placa)
+    - [vwx567](placa)
+    - [yza890](placa)
+    - [1abc23](placa)
+    - [2def45](placa)
+    - [3ghi67](placa)
+    - [a1b2c3](placa)
+    - [x9y8z7](placa)
+    - [4jkl89](placa)
+    - [5mno01](placa)
+    - [d4e5f6](placa)
+    - [abc-123](placa)
+    - [xyz 789](placa)
+    - [def-456](placa)
+    - [ghi 012](placa)
+    - mi placa es [abc123](placa)
+    - la placa [xyz789](placa)
+    - es [def456](placa)
+    - tengo la [ghi012](placa)
+    - [jkl345](placa) por favor
+    - buscar [mno678](placa)
+    - ver [pqr901](placa)
+    - dame [stu234](placa)
+    - chequear [vwx567](placa)
+    - revisar [yza890](placa)
     - mi placa es [ABC123](placa)
     - la placa es [U1A710](placa)
     - tengo la placa [XYZ789](placa)
@@ -2584,3 +2654,4 @@ nlu:
     - ver otro documento
     - más consultas
     - siguiente consulta
+    
