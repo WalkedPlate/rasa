@@ -21,38 +21,28 @@ nlu:
 # placas vehiculares, DNI, RUC, códigos de falta, etc.
 # ============================================================================
 
-- regex: placa_pattern
+- regex: placa
   examples: |
-    - [A-Za-z]{3}\d{3}
-    - [A-Za-z]{3}\s\d{3}
-    - [A-Za-z]{3}-\d{3}
-    - [A-Za-z]{2}\d{4}
-    - [A-Za-z]{2}\s\d{4}
-    - [A-Za-z]{2}-\d{4}
-    - [A-Za-z]\d[A-Za-z]\d{3}
-    - [UuYy]\d[A-Za-z]\d{3}
-    - \b[A-Za-z]{3}\d{3}\b
-    - \b[A-Za-z]{2}\d{4}\b
-    - \b[UuYy]\d[A-Za-z]\d{3}\b
-    - \b[A-Za-z]\d[A-Za-z]\d{3}\b
+    - (?i)(?<![a-z0-9])[a-z0-9]{6}(?![a-z0-9])
+    - (?i)(?<![a-z0-9])[a-z0-9]{3}[-\s]?[a-z0-9]{3}(?![a-z0-9])
 
-- regex: dni_pattern
+- regex: dni
   examples: |
     - (?<![A-Z0-9])\d{8}(?![A-Z0-9])    # 8 dígitos sin letras/números alrededor
 
-- regex: ruc_pattern
+- regex: ruc
   examples: |
     - \b[12]\d{10}\b                     # 11 dígitos que empiezan con 1 o 2
 
-- regex: codigo_pattern
+- regex: codigo
   examples: |
     - \b[A-Za-z]\d{1,2}\b                 # Letra seguida de 1-2 dígitos (ej: G40)
 
-- regex: numero_tramite_pattern
+- regex: numero_tramite
   examples: |
     - \b\d{14}\b                         # Exactamente 14 dígitos
 
-- regex: codigo_contribuyente_pattern
+- regex: codigo_contribuyente
   examples: |
     - \b\d{2,10}\b                       # Entre 2 y 10 dígitos
 
@@ -265,6 +255,19 @@ nlu:
     - infracciones [ghi012](placa)
     - ver papeletas [jkl345](placa)
     - consultar multas [mno678](placa)
+    - ver papeletas de [abc123](placa)
+    - papeletas de [xyz789](placa)
+    - consultar [def456](placa)
+    - ver papeletas de [Abc123](placa)
+    - papeletas [XyZ789](placa)
+    - consultar [DeF456](placa)
+    - ver papeletas de [abc123](placa)
+    - papeletas [xyz789](placa)
+    - ver papeletas de la placa [0xc87b](placa)
+    - papeletas de [1ab2cd](placa)
+    - consultar [9xy8zw](placa)
+    - ver papeletas de la placa [a1b2c3](placa)
+    - papeletas de [x9y8z7](placa)
 
 - intent: consulta_rapida_papeletas_dni
   examples: |
@@ -674,10 +677,8 @@ nlu:
     - necesito información para pagar
     - quiero pagar online
     - formas de pago
-    - métodos de pago
     - páginas para pagar
     - pago online
-    - opciones de pago
 
 - intent: ir_a_papeletas
   examples: |
@@ -689,7 +690,6 @@ nlu:
     - quiero revisar mis infracciones
     - me llegó una notificación de papeleta
     - consultar papeletas pendientes
-    - ver mis papeletas
     - revisar papeletas
     - tengo papeletas pendientes
     - quiero saber si tengo papeletas
@@ -753,7 +753,6 @@ nlu:
   examples: |
     - servicios virtuales
     - servicios online
-    - trámites virtuales
     - servicios digitales
     - plataformas virtuales SAT
     - servicios por internet
@@ -1004,28 +1003,28 @@ nlu:
     - tengo multas?
     - tengo infracciones?
     - tengo deuda de papeletas?
-    - tengo algo pendiente?
+    - tengo algo pendiente de papeletas?
     - ver mis papeletas
     - ver mis multas
     - ver infracciones
     - ver deuda de papeletas
-    - ver mi estado
+    - ver mi estado de papeletas 
     - consultar papeletas
     - consultar multas
     - consultar infracciones
     - consultar mi deuda
-    - consultar estado
+    - consultar estado de papeletas  
     - cuánto debo de multas?
-    - cuánto debo de papeletas?
+    - cuánto es mi deuda de papeletas?
     - cuánto es mi deuda?
     - cuánto tengo pendiente?
     - hay multas?
     - hay papeletas?
     - hay infracciones?
     - debo algo?
-    - tengo pendiente?
+    - tengo papeletas pendientes?
     - a ver mis papeletas
-    - quiero ver si debo
+    - quiero ver si debo papeletas 
     - necesito saber si tengo multas
 
 - intent: papeletas_registrar
@@ -1054,6 +1053,7 @@ nlu:
 - intent: papeletas_facilidades
   examples: |
     - facilidades de pago papeletas
+    - facilidades de pago
     - pagar en cuotas papeletas
     - fraccionamiento papeletas
     - compromiso de pago
@@ -1343,28 +1343,26 @@ nlu:
     - tengo deuda?
     - tengo tributos?
     - tengo deuda tributaria?
-    - tengo algo pendiente?
-    - - ver mis impuestos
+    - tengo algo pendiente de impuestos?
     - ver mi deuda
     - ver tributos
     - ver deuda tributaria
-    - ver mi estado
+    - ver mi estado tributario 
     - consultar impuestos
     - consultar deuda
     - consultar tributos
     - consultar mi deuda tributaria
-    - consultar estado
+    - consultar estado de impuestos 
     - cuánto debo de impuestos?
-    - cuánto debo?
-    - cuánto es mi deuda?
+    - cuánto es mi deuda tributaria?  
     - cuánto tengo de tributos?
     - hay impuestos?
     - hay deuda?
     - hay tributos?
     - debo impuestos?
-    - tengo pendiente?
+    - tengo deuda pendiente?
     - a ver mis impuestos
-    - quiero ver si debo
+    - quiero ver si debo impuestos
     - necesito saber mi deuda
 
 # ----------------------------------------------------------------------------
@@ -1389,15 +1387,13 @@ nlu:
     - cuadernillo SAT
     - obtener cuadernillo
     - sacar cuadernillo
-    - cuadernillo online
-    - cuadernillo virtual
     - ver cuadernillo tributario
     - acceso a cuadernillo
     - cuadernillo impuestos
 
 - intent: impuestos_cuadernillo_agencia_virtual
   examples: |
-    - agencia virtual
+    - cuadernillo en agencia virtual
     - cuadernillo agencia virtual
     - acceso online
     - cuadernillo online
@@ -1444,7 +1440,6 @@ nlu:
     - inscribir auto
     - impuesto vehicular declaración
     - cómo declarar impuesto vehicular
-    - requisitos declaración vehicular
     - inscribir vehículo
     - declarar mi vehículo
     - declarar impuesto vehicular
@@ -1454,7 +1449,6 @@ nlu:
     - declarar vehículo nuevo
     - inscribir mi auto
     - cómo declarar vehículo
-    - declaración vehicular requisitos
     - inscribir vehículo SAT
 
 - intent: impuestos_declarar_predial
@@ -1467,7 +1461,6 @@ nlu:
     - inscribir inmueble
     - impuesto predial declaración
     - cómo declarar impuesto predial
-    - requisitos declaración predial
     - inscribir predio
     - declarar mi predio
     - declarar impuesto predial
@@ -1477,7 +1470,6 @@ nlu:
     - declarar predio nuevo
     - inscribir mi inmueble
     - cómo declarar predio
-    - declaración predial requisitos
     - inscribir predio SAT
 
 - intent: impuestos_liquidar_alcabala
@@ -1490,7 +1482,6 @@ nlu:
     - venta casa
     - compra inmueble
     - cómo liquidar alcabala
-    - requisitos alcabala
     - liquidación de alcabala
     - liquidar impuesto alcabala
     - alcabala de transferencia
@@ -1724,9 +1715,6 @@ nlu:
     - no soy el propietario
     - tercería de bien
     - demostrar propiedad de tercero
-    - requisitos tercería
-    - cómo hacer tercería
-    - tercería de propiedad requisitos
     - no es mi propiedad
     - tercero propietario
     - tercería SAT
@@ -1870,7 +1858,6 @@ nlu:
 
 - intent: lugares_pagos_formas_pago
   examples: |
-    - formas de pago
     - cómo puedo pagar
     - métodos de pago SAT
     - opciones para pagar
@@ -2384,7 +2371,6 @@ nlu:
     - necesito requisitos alcabala
     - documentos para alcabala
     - trámite alcabala requisitos
-    - requisitos liquidación alcabala
     - documentos liquidación alcabala
     - cómo liquidar alcabala requisitos
     - alcabala documentos
