@@ -35,6 +35,10 @@ class DataValidator:
         # Validar que tenga exactamente 6 caracteres alfanuméricos
         es_valida = len(placa_limpia) == 6 and placa_limpia.isalnum()
 
+        digit_count = sum(1 for c in placa_limpia if c.isdigit())
+        if digit_count < 2:
+            return False, placa_limpia
+
         return es_valida, placa_limpia
 
     @staticmethod
