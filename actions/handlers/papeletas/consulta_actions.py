@@ -238,7 +238,7 @@ class ActionConsultarPapeletas(Action):
     - 'Menú principal' - Otras opciones
     - 'Finalizar chat'
 
-    💡 **Tip:** Si crees tener una papeleta, puedes registrarla aquí:
+    💡 **Tip:** Si te han puesto una papeleta recientemente, regístrala y págala aquí:
     https://www.sat.gob.pe/VirtualSAT/modulos/RegistrarDIC.aspx?mysession=pquJ7myzyT7AtQ4GWcIHx18c26JeR3X8"""
 
         # Agrupar por concepto + año

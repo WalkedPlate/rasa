@@ -70,17 +70,15 @@ class ActionSolicitarAsesor(Action):
 
     def _format_error_message(self, error_msg: str) -> str:
         """Mensaje cuando hay error específico"""
-        return f"""❌ **No pudimos conectarte con un asesor**
-
-**En este momento no hay asesores disponibles.**
+        return f"""❌ **Por el momento no contamos con esta opción**
 
 **📞 Puedes contactarnos directamente:**
-• **Correo:** asuservicio@sat.gob.pe
-• **Teléfono:** (01) 315-2400
+- **Correo:** asuservicio@sat.gob.pe
+- **Teléfono:** (01) 315-2400
 
 **🌐 También puedes:**
-• Consultar en: www.sat.gob.pe
-• Escribir 'menú principal' para continuar explorando otras opciones
+- Consultar en: www.sat.gob.pe
+- Escribir 'menú principal' para continuar explorando otras opciones
 
 ¿Hay algo más en lo que pueda ayudarte?"""
 

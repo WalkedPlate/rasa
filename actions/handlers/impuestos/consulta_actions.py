@@ -268,9 +268,7 @@ class ActionConsultarImpuestos(Action):
 
     **¿Qué más necesitas?**
     - 'Menú principal' - Otras opciones
-    - 'Finalizar chat'
-
-    💡 **Tip:** Puedes declarar nuevos predios o vehículos en Agencia Virtual SAT."""
+    - 'Finalizar chat'"""
 
         # Agrupar por concepto + año
         grupos = self._agrupar_por_concepto_ano(data)
