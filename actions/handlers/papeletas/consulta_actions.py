@@ -72,28 +72,14 @@ class DocumentProcessor:
         if not documento or not tipo:
             return False, ""
 
-        documento_limpio = documento.strip().upper()
+        from actions.utils.validators import validator
 
         if tipo == 'placa':
-            # Limpiar placa
-            documento_limpio = re.sub(r'[^A-Z0-9]', '', documento_limpio)
-
-            es_valido = len(documento_limpio) == 6 and documento_limpio.isalnum()
-            return es_valido, documento_limpio
-
+            return validator.validate_placa(documento)
         elif tipo == 'dni':
-            # Limpiar DNI
-            documento_limpio = re.sub(r'[^0-9]', '', documento_limpio)
-            es_valido = len(documento_limpio) == 8 and documento_limpio.isdigit()
-            return es_valido, documento_limpio
-
+            return validator.validate_dni(documento)
         elif tipo == 'ruc':
-            # Limpiar RUC
-            documento_limpio = re.sub(r'[^0-9]', '', documento_limpio)
-            es_valido = (len(documento_limpio) == 11 and
-                        documento_limpio.isdigit() and
-                        documento_limpio[0] in ['1', '2'])
-            return es_valido, documento_limpio
+            return validator.validate_ruc(documento)
 
         return False, ""
 

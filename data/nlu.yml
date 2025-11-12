@@ -23,8 +23,8 @@ nlu:
 
 - regex: placa
   examples: |
-    - \b[a-zA-Z0-9]{6}\b
-    - \b[a-zA-Z0-9]{3}[-\s][a-zA-Z0-9]{3}\b
+    - \b(?=.*\d.*\d)[a-zA-Z0-9]{6}\b
+    - \b(?=.*\d.*\d)[a-zA-Z0-9]{3}[-\s](?=.*\d)[a-zA-Z0-9]{3}\b
 
 - regex: dni
   examples: |
