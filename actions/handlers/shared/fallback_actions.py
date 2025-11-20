@@ -54,8 +54,8 @@ Escribe el nombre de la opción que necesitas:
 - "Pagos" - Para información de pagos
 - "Menú principal" - Ver todas las opciones
 
-👨‍💼 **¿Necesitas ayuda personalizada?**
-Escribe **"solicitar asesor"** para hablar con un asesor.
+💡 **Tip:** Intenta ser más específico con tu consulta
+Por ejemplo: "Ver papeletas de mi placa ABC123"
 """
 
         dispatcher.utter_message(text=message)

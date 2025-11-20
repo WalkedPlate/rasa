@@ -43,3 +43,12 @@ class BackendConfig:
         'BOT_QUERY_LOG_ENDPOINT',
         '/v1/channel-room/citizen/{phone}/bot-query'
     )
+
+
+    FAREWELL_MESSAGES = os.getenv(
+        'FAREWELL_MESSAGES_ENDPOINT',
+        '/v1/automatic-messages/farewell-by-channel/{categoryId}'
+    )
+
+    # Category ID para el canal (por defecto 4)
+    CHANNEL_CATEGORY_ID = int(os.getenv('CHANNEL_CATEGORY_ID', '4'))

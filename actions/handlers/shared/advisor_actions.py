@@ -26,9 +26,6 @@ class ActionSolicitarAsesor(Action):
 
         logger.info(f"Usuario {phone_number} solicita asesor humano")
 
-        # Mostrar mensaje de procesamiento
-        dispatcher.utter_message(text="Conectándote con un asesor...")
-
         try:
             # Llamar al endpoint para solicitar asesor
             success, message = backend_client.request_advisor(phone_number)
@@ -72,12 +69,8 @@ class ActionSolicitarAsesor(Action):
         """Mensaje cuando hay error específico"""
         return f"""❌ **Por el momento no contamos con esta opción**
 
-**📞 Puedes contactarnos directamente:**
-- **Correo:** asuservicio@sat.gob.pe
-- **Teléfono:** (01) 315-2400
-
-**🌐 También puedes:**
-- Consultar en: www.sat.gob.pe
+**🌐 Puedes consultar en:**
+- www.sat.gob.pe
 - Escribir 'menú principal' para continuar explorando otras opciones
 
 ¿Hay algo más en lo que pueda ayudarte?"""
@@ -86,14 +79,11 @@ class ActionSolicitarAsesor(Action):
         """Mensaje cuando hay error inesperado"""
         return """😔 **Error temporal del sistema**
 
-No pudimos procesar tu solicitud de asesor en este momento.
+No pudimos procesar tu solicitud en este momento.
 
-**📞 Te recomendamos:**
-• **Correo:** asuservicio@sat.gob.pe  
-• **Teléfono:** (01) 315-2400
-• **Web:** www.sat.gob.pe
+**🌐 Te recomendamos:**
+- Consultar en: www.sat.gob.pe
 
 **🔄 O intenta nuevamente en unos minutos:**
-• Escribe 'solicitar asesor'
 
 ¿Qué más necesitas?"""

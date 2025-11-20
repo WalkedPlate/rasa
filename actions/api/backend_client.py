@@ -13,7 +13,7 @@ Cliente para el backend del sistema de ciudadanos con autenticación JWT
 """
 import requests
 import logging
-from typing import Optional, Dict, Any, Tuple
+from typing import Optional, Dict, Any, Tuple, List
 from .backend_config import BackendConfig
 from .backend_auth import backend_auth
 
@@ -237,6 +237,43 @@ class BackendAPIClient:
             logger.warning(f"Error registrando consulta {phone_number}: {response.status_code}")
             return False, f"Error del servidor: {response.status_code}"
 
+    def get_farewell_messages(self, category_id: int = None) -> Optional[List[str]]:
+        """
+        Obtiene los mensajes de despedida configurados para el canal
+
+        Args:
+            category_id: ID de categoría del canal (por defecto usa el configurado)
+
+        Returns:
+            Lista de mensajes de despedida o None si hay error
+        """
+        if category_id is None:
+            category_id = BackendConfig.CHANNEL_CATEGORY_ID
+
+        endpoint = BackendConfig.FAREWELL_MESSAGES.format(categoryId=category_id)
+        url = f"{self.base_url}{endpoint}"
+
+        response = self._make_authenticated_request("GET", url)
+
+        if response is None:
+            logger.warning(f"No se pudieron obtener mensajes de despedida para categoryId: {category_id}")
+            return None
+
+        if response.status_code == 200:
+            try:
+                messages = response.json()
+                if isinstance(messages, list) and len(messages) > 0:
+                    logger.info(f"Mensajes de despedida obtenidos: {len(messages)} mensajes")
+                    return messages
+                else:
+                    logger.warning("Lista de mensajes de despedida vacía")
+                    return None
+            except Exception as e:
+                logger.error(f"Error parseando mensajes de despedida: {e}")
+                return None
+        else:
+            logger.error(f"Error obteniendo mensajes de despedida: {response.status_code}")
+            return None
 
 # Instancia global del cliente backend
 backend_client = BackendAPIClient()
